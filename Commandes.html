@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KidCycle - Mes commandes</title>
+  <link rel="stylesheet" href="Shared.css" />
+  <link rel="stylesheet" href="Commandes.css" />
+</head>
+<body>
+
+<header class="topnav">
+  <img class="logo" src="Kidcycle.png" />
+  <div class="nav-links">
+    <a href="Filters.html">Acheter maintenant</a>
+    <a href="#">Nouveautés</a>
+    <a href="#">Vente</a>
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="commandes.html" class="btn-cart active">
+      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
+    <a href="Produits.html" class="nav-icon" title="Mon compte">👤</a>
+    <div class="nav-avatar"><img src="logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <h1 class="page-title">Mes commandes</h1>
+
+  <div class="two-col">
+    <aside class="account-sidebar">
+      <h2>Mon compte</h2>
+      <a href="Favoris.html">♥ &nbsp;Mes favoris (2)</a>
+      <a href="#">🛒 &nbsp;Mon panier</a>
+      <a href="Produits.html">📦 &nbsp;Mes produits</a>
+      <a href="Commandes.html" class="active">📋 &nbsp;Mes commandes</a>
+    </aside>
+    <div class="main-content orders-list">
+      <div class="order-card">
+        <input type="checkbox" id="addr1" class="addr-toggle" />
+        <a href="#detail1" class="info-btn" title="Voir détails">ℹ</a>
+        <div class="order-body">
+          <div class="order-id">#P-024688254</div>
+          <div class="order-tags">
+            <span class="tag">5 Articles</span>
+            <span class="tag">Lorem</span>
+            <span class="tag tag-price"><span class="coin">⊙</span> 500.00</span>
+          </div>
+          <div class="order-address">📍 Livraison à QPWP+754, Manouba, Tunisie</div>
+        </div>
+
+        <div class="order-btns">
+          <label for="addr1" class="btn btn-primary addr-lbl">
+            <span class="lbl-valider">Valider mon adresse</span>
+            <span class="lbl-validee">✓ Adresse validée</span>
+          </label>
+          <a href="#modal-success" class="btn btn-confirm">Valider la commande</a>
+        </div>
+        <div id="detail1" class="order-detail">
+          <a href="#" class="detail-close">▲ Masquer</a>
+          <p><strong>Produits :</strong> Set Baby × 5</p>
+          <p><strong>Statut :</strong> En attente de validation d'adresse</p>
+          <p><strong>Date :</strong> 15 Février 2026</p>
+          <p><strong>Livraison :</strong> QPWP+754, Manouba, Tunisie</p>
+        </div>
+      </div>
+      <div class="order-card">
+        <input type="checkbox" id="addr2" class="addr-toggle" checked />
+        <a href="#detail2" class="info-btn">ℹ</a>
+        <div class="order-body">
+          <div class="order-id">#P-024688254</div>
+          <div class="order-tags">
+            <span class="tag">5 Articles</span>
+            <span class="tag">Lorem</span>
+            <span class="tag tag-price"><span class="coin">⊙</span> 500.00</span>
+          </div>
+          <div class="order-address">📍 Livraison à QPWP+754, Manouba, Tunisie</div>
+        </div>
+        <div class="order-btns">
+          <label for="addr2" class="btn btn-primary addr-lbl">
+            <span class="lbl-valider">Valider mon adresse</span>
+            <span class="lbl-validee">✓ Adresse validée</span>
+          </label>
+          <a href="#modal-success" class="btn btn-confirm">Valider la commande</a>
+        </div>
+        <div id="detail2" class="order-detail">
+          <a href="#" class="detail-close">▲ Masquer</a>
+          <p><strong>Produits :</strong> Set Baby × 5</p>
+          <p><strong>Statut :</strong> Adresse confirmée — prêt à valider</p>
+          <p><strong>Date :</strong> 18 Février 2026</p>
+          <p><strong>Livraison :</strong> QPWP+754, Manouba, Tunisie</p>
+        </div>
+      </div>
+      <div class="order-card">
+        <input type="checkbox" id="addr3" class="addr-toggle" />
+        <a href="#detail3" class="info-btn">ℹ</a>
+        <div class="order-body">
+          <div class="order-id">#P-024688254</div>
+          <div class="order-tags">
+            <span class="tag">5 Articles</span>
+            <span class="tag">Lorem</span>
+            <span class="tag tag-price"><span class="coin">⊙</span> 500.00</span>
+          </div>
+          <div class="order-address">📍 Livraison à QPWP+754, Manouba, Tunisie</div>
+        </div>
+        <div class="order-btns">
+          <label for="addr3" class="btn btn-primary addr-lbl">
+            <span class="lbl-valider">Valider mon adresse</span>
+            <span class="lbl-validee">✓ Adresse validée</span>
+          </label>
+          <a href="#modal-success" class="btn btn-confirm">Valider la commande</a>
+        </div>
+        <div id="detail3" class="order-detail">
+          <a href="#" class="detail-close">▲ Masquer</a>
+          <p><strong>Produits :</strong> Set Baby × 5</p>
+          <p><strong>Statut :</strong> En attente</p>
+          <p><strong>Date :</strong> 22 Février 2026</p>
+          <p><strong>Livraison :</strong> QPWP+754, Manouba, Tunisie</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div id="modal-success" class="modal-overlay">
+  <div class="modal-box" style="text-align:center">
+    <div ><img class="validation-icon" src="validation.png" /></div>
+    <p class="modal-title" style="text-align:center;">Commande validée !</p>
+    <p style="color:var(--text-mid);font-size:14px;margin-bottom:24px;">
+      Votre commande a été confirmée avec succès.
+    </p>
+    <a href="commandes.html" class="btn btn-primary" style="display:block;width:100%;">Fermer</a>
+  </div>
+</div>
+
+</body>
+</html>

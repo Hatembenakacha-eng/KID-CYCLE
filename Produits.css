@@ -1,0 +1,32 @@
+.produits-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.btn-add { padding: 11px 22px; }
+
+/* ══ Hide real checkboxes ══ */
+.cancel-toggle, .delete-toggle { display: none; }
+
+/* Card wrapper */
+.card-wrap { display: contents; }
+
+/* ══ CANCEL STATE ══
+   When annuler checked → card greys out, button changes */
+.lbl-annuler { display: inline; }
+.lbl-annule  { display: none; }
+
+.cancel-toggle:checked ~ .product-card { opacity: .45; pointer-events: none; }
+.cancel-toggle:checked ~ .product-card .cancel-lbl { pointer-events: all; background: #aaa; cursor: default; }
+.cancel-toggle:checked ~ .product-card .lbl-annuler { display: none; }
+.cancel-toggle:checked ~ .product-card .lbl-annule  { display: inline; }
+
+/* ══ DELETE STATE ══ */
+.lbl-suppr   { display: inline; }
+.lbl-supprime { display: none; }
+
+.delete-toggle:checked ~ .product-card { opacity: .35; pointer-events: none; }
+.delete-toggle:checked ~ .product-card .delete-lbl { pointer-events: all; background: #f0d6f0; cursor: default; }
+.delete-toggle:checked ~ .product-card .lbl-suppr   { display: none; }
+.delete-toggle:checked ~ .product-card .lbl-supprime { display: inline; }
+
+/* Labels act as buttons */
+.cancel-lbl, .delete-lbl { cursor: pointer; }

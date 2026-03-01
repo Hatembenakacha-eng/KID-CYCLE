@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KidCycle – Mes produits</title>
+  <link rel="stylesheet" href="Shared.css" />
+  <link rel="stylesheet" href="Produits.css" />
+</head>
+<body>
+
+<header class="topnav">
+  <img class="logo" src="Kidcycle.png" />
+  <div class="nav-links">
+    <a href="filters.html">Acheter maintenant</a>
+    <a href="#">Nouveautés</a>
+    <a href="#">Vente</a>
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="commandes.html" class="btn-cart">
+      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="favoris.html" class="nav-icon" title="Mes favoris">♡</a>
+    <a href="produits.html" class="nav-icon active" title="Mon compte">👤</a>
+    <div class="nav-avatar"><img src="logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+       <button><img class="search-icon"src="search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <div class="produits-topbar">
+    <h1 class="page-title" style="margin-bottom:0;">Mes produits</h1>
+    <a href="#modal-add" class="btn btn-primary btn-add">+ Ajouter un produit</a>
+  </div>
+
+  <div class="two-col" style="margin-top:32px;">
+    <!-- SIDEBAR -->
+    <aside class="account-sidebar">
+      <h2>Mon compte</h2>
+      <a href="favoris.html">♥ &nbsp;Mes favoris (2)</a>
+      <a href="#">🛒 &nbsp;Mon panier</a>
+      <a href="produits.html" class="active">📦 &nbsp;Mes produits</a>
+      <a href="commandes.html">📋 &nbsp;Mes commandes</a>
+    </aside>
+
+    <!-- GRID -->
+    <div class="main-content">
+      <div class="product-grid">
+
+        <!-- ══ PRODUIT 1 — En attente — checkbox annulation ══ -->
+        <div class="card-wrap">
+          <input type="checkbox" id="cancel1" class="cancel-toggle" />
+          <div class="product-card">
+            <div class="product-img">
+              <span class="badge-pending">En attente de validation</span>
+              <span class="img-icon">📦</span>
+              <span>Photo produit<br/>(body bébé floral)</span>
+            </div>
+            <div class="product-info">
+              <div class="product-top">
+                <span class="product-name">Set Baby</span>
+                <span class="product-price"><span class="coin">⊙</span> 34.00</span>
+              </div>
+              <p class="product-sub">5 types de set disponibles</p>
+              <div class="card-actions">
+                <label for="cancel1" class="btn btn-primary cancel-lbl">
+                  <span class="lbl-annuler">Annuler</span>
+                  <span class="lbl-annule">✓ Annulé</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ PRODUIT 2 — Actif — Modifier + Supprimer ══ -->
+        <div class="card-wrap">
+          <input type="checkbox" id="del2" class="delete-toggle" />
+          <div class="product-card">
+            <div class="product-img">
+              <span class="img-icon">📦</span>
+              <span>Photo produit<br/>(veste bébé rose)</span>
+            </div>
+            <div class="product-info">
+              <div class="product-top">
+                <span class="product-name">Set Baby</span>
+                <span class="product-price"><span class="coin">⊙</span> 34.00</span>
+              </div>
+              <p class="product-sub">5 types de set disponibles</p>
+              <div class="card-actions">
+                <a href="#modal-edit" class="btn btn-outline">Modifier</a>
+                <label for="del2" class="btn btn-danger delete-lbl">
+                  <span class="lbl-suppr">Supprimer</span>
+                  <span class="lbl-supprime">✓ Supprimé</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ PRODUIT 3 — En attente ══ -->
+        <div class="card-wrap">
+          <input type="checkbox" id="cancel3" class="cancel-toggle" />
+          <div class="product-card">
+            <div class="product-img">
+              <span class="badge-pending">En attente de validation</span>
+              <span class="img-icon">📦</span>
+              <span>Photo produit<br/>(veste jaune)</span>
+            </div>
+            <div class="product-info">
+              <div class="product-top">
+                <span class="product-name">Set Baby</span>
+                <span class="product-price"><span class="coin">⊙</span> 34.00</span>
+              </div>
+              <p class="product-sub">5 types de set disponibles</p>
+              <div class="card-actions">
+                <label for="cancel3" class="btn btn-primary cancel-lbl">
+                  <span class="lbl-annuler">Annuler</span>
+                  <span class="lbl-annule">✓ Annulé</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ PRODUIT 4 — Actif ══ -->
+        <div class="card-wrap">
+          <input type="checkbox" id="del4" class="delete-toggle" />
+          <div class="product-card">
+            <div class="product-img">
+              <span class="img-icon">📦</span>
+              <span>Photo produit<br/>(veste rose 2)</span>
+            </div>
+            <div class="product-info">
+              <div class="product-top">
+                <span class="product-name">Set Baby</span>
+                <span class="product-price"><span class="coin">⊙</span> 34.00</span>
+              </div>
+              <p class="product-sub">5 types de set disponibles</p>
+              <div class="card-actions">
+                <a href="#modal-edit" class="btn btn-outline">Modifier</a>
+                <label for="del4" class="btn btn-danger delete-lbl">
+                  <span class="lbl-suppr">Supprimer</span>
+                  <span class="lbl-supprime">✓ Supprimé</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ PRODUIT 5 — En attente ══ -->
+        <div class="card-wrap">
+          <input type="checkbox" id="cancel5" class="cancel-toggle" />
+          <div class="product-card">
+            <div class="product-img">
+              <span class="badge-pending">En attente de validation</span>
+              <span class="img-icon">📦</span>
+              <span>Photo produit<br/>(rose 3)</span>
+            </div>
+            <div class="product-info">
+              <div class="product-top">
+                <span class="product-name">Set Baby</span>
+                <span class="product-price"><span class="coin">⊙</span> 34.00</span>
+              </div>
+              <p class="product-sub">5 types de set disponibles</p>
+              <div class="card-actions">
+                <label for="cancel5" class="btn btn-primary cancel-lbl">
+                  <span class="lbl-annuler">Annuler</span>
+                  <span class="lbl-annule">✓ Annulé</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ PRODUIT 6 — Actif ══ -->
+        <div class="card-wrap">
+          <input type="checkbox" id="del6" class="delete-toggle" />
+          <div class="product-card">
+            <div class="product-img">
+              <span class="img-icon">📦</span>
+              <span>Photo produit<br/>(veste rose 4)</span>
+            </div>
+            <div class="product-info">
+              <div class="product-top">
+                <span class="product-name">Set Baby</span>
+                <span class="product-price"><span class="coin">⊙</span> 34.00</span>
+              </div>
+              <p class="product-sub">5 types de set disponibles</p>
+              <div class="card-actions">
+                <a href="#modal-edit" class="btn btn-outline">Modifier</a>
+                <label for="del6" class="btn btn-danger delete-lbl">
+                  <span class="lbl-suppr">Supprimer</span>
+                  <span class="lbl-supprime">✓ Supprimé</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /grid -->
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL — AJOUTER UN PRODUIT (:target)
+══════════════════════════════ -->
+<div id="modal-add" class="modal-overlay">
+  <div class="modal-box">
+    <a href="#" class="modal-close" title="Fermer">✕</a>
+    <p class="modal-title">Ajouter un produit</p>
+    <div class="form-group">
+      <label>Nom du produit</label>
+      <input type="text" placeholder="Ex : Set Baby" />
+    </div>
+    <div class="form-group">
+      <label>Prix (coins)</label>
+      <input type="number" placeholder="34.00" min="0" step="0.01" />
+    </div>
+    <div class="form-group">
+      <label>Catégorie</label>
+      <select>
+        <option>Lorem</option><option>Lorem</option><option>Lorem</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea placeholder="5 types de set disponibles…"></textarea>
+    </div>
+    <div class="modal-actions">
+      <a href="#" class="btn btn-outline">Annuler</a>
+      <a href="produits.html" class="btn btn-primary">Publier</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MODAL — MODIFIER (:target)
+══════════════════════════════ -->
+<div id="modal-edit" class="modal-overlay">
+  <div class="modal-box">
+    <a href="#" class="modal-close" title="Fermer">✕</a>
+    <p class="modal-title">Modifier le produit</p>
+    <div class="form-group">
+      <label>Nom du produit</label>
+      <input type="text" value="Set Baby" />
+    </div>
+    <div class="form-group">
+      <label>Prix (coins)</label>
+      <input type="number" value="34.00" min="0" step="0.01" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea>5 types de set disponibles</textarea>
+    </div>
+    <div class="modal-actions">
+      <a href="#" class="btn btn-outline">Annuler</a>
+      <a href="produits.html" class="btn btn-primary">Enregistrer</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
