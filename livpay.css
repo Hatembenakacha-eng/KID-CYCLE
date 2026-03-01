@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f2f8;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: white;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 22px;
+    color: #7d6cf4;
+}
+
+.logo span {
+    color: #b8aefc;
+}
+
+.navbar nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #666;
+}
+
+.nav-right input {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.search-btn {
+    padding: 6px 10px;
+    background: #7d6cf4;
+    border: none;
+    border-radius: 6px;
+    color: white;
+}
+.wrapper {
+    padding: 40px;
+}
+.steps {
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.steps span {
+    margin-right: 20px;
+    color: #aaa;
+}
+
+.steps .active {
+    color: orange;
+    border-bottom: 2px solid orange;
+    padding-bottom: 5px;
+}
+.content {
+    display: flex;
+    gap: 40px;
+}
+.left {
+    width: 55%;
+}
+
+.left h2 {
+    margin: 20px 0;
+}
+
+.address-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #b8aefc;
+    padding: 15px;
+    border-radius: 10px;
+    background: white;
+}
+
+.modify-btn {
+    margin: 15px 0 30px 0;
+    padding: 10px 20px;
+    background: #a89cf7;
+    border: none;
+    border-radius: 8px;
+    color: white;
+}
+
+.shipping-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    background: white;
+}
+
+.shipping-option input {
+    margin-right: 10px;
+}
+.right {
+    width: 45%;
+}
+
+.highlight {
+    color: orange;
+}
+
+.summary-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.item img {
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.item div {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.item a {
+    color: red;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.payment-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    background: #a89cf7;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.payment-btn:hover {
+    background: #8f82f5;
+}

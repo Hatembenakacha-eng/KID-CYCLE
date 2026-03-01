@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ajouter un produit</title>
+  <link rel="stylesheet" href="sample2.css" />
+  <link rel="stylesheet" href="Shared.css" />
+</head>
+<body>
+
+<header class="topnav">
+  <img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="filters.html">Acheter maintenant</a>
+    <a href="#">Nouveautés</a>
+    <a href="#">Vente</a>
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="commandes.html" class="btn-cart">
+      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="favoris.html" class="nav-icon active" title="Mes favoris">♥</a>
+    <a href="produits.html" class="nav-icon" title="Mon compte">👤</a>
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon" src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+
+<main class="container">
+  <div class="card">
+
+    <!-- LEFT FORM -->
+    <!-- LEFT FORM -->
+<div class="form">
+  <h3>Détails du produit</h3>
+
+  <label>ID</label>
+  <input type="text" value="#P-02468" disabled />
+
+  <label>Titre *</label>
+  <input type="text" placeholder="Titre" />
+
+  <label>État *</label>
+  <div class="radio-group">
+    <label><input type="radio" name="etat" /> Neuf</label>
+    <label><input type="radio" name="etat" checked /> Occasion</label>
+  </div>
+
+  <label>Genre *</label>
+  <select>
+    <option value="">Choisir le genre</option>
+    <option value="male">Garçon (Male)</option>
+    <option value="female">Fille (Female)</option>
+  </select>
+
+  <label>Taille *</label>
+  <select>
+    <option value="">Choisir la taille</option>
+    <option>0–3 mois</option>
+    <option>3–6 mois</option>
+    <option>6–12 mois</option>
+  </select>
+
+  <label>Description *</label>
+  <textarea placeholder="Description" maxlength="200"></textarea>
+</div>
+
+<!-- RIGHT PHOTOS -->
+<div class="photos">
+  <h3>Photos *</h3>
+
+  <div class="photo-grid">
+
+    <!-- CLICKABLE UPLOADER -->
+    <label class="upload">
+      ⬆
+      <span>File uploader<br>jpg / png</span>
+      <input type="file" accept="image/png, image/jpeg" multiple hidden>
+    </label>
+
+    <div class="photo"></div>
+    <div class="photo"></div>
+    <div class="photo"></div>
+    <div class="photo"></div>
+    <div class="photo"></div>
+  </div>
+
+  <button class="publish">Publier →</button>
+</div>
+
+  </div>
+</main>
+
+</body>
+</html>
