@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KidCycle – Mon Profil</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="profil.css">
+</head>
+<body>
+
+  <header class="topnav">
+  <img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="detail produit.html">Acheter maintenant</a>
+    <a href="#">Nouveautés</a>
+    <a href="#">Vente</a>
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
+    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+  <div class="layout">
+
+    
+    <aside class="sidebar">
+      <h2>Mon compte</h2>
+      <a class="sidebar-item active" href="#">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        Mon profil
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        Mes favoris (2)
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+        </svg>
+        Mon panier
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 9h18"/>
+        </svg>
+        Mon dressing
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 9h18M9 21V9"/>
+        </svg>
+        Mes commandes
+      </a>
+      <a class="sidebar-item" href="#">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        Mes Chats
+      </a>
+      <div class="sidebar-footer">
+        ℹ️ Mes <strong>SWAPS</strong> disponible : 500.00 <span class="swaps-coin">$</span>
+      </div>
+    </aside>
+
+    
+    <main class="main">
+
+      
+      <div class="view-profile">
+        <div class="section-title">Mes données</div>
+
+        <div class="profile-header">
+
+        
+          <details class="dropdown-wrap">
+            <summary class="three-dots">. . .</summary>
+            <div class="dropdown-menu">
+              <label for="toggle-edit" class="drop-btn">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                Modifier Mon Profile
+              </label>
+              <a href="#delete-modal" class="drop-btn danger">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+                  <path d="M10 11v6M14 11v6"/>
+                  <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+                </svg>
+                Supprimer Mon Profile
+              </a>
+            </div>
+          </details>
+
+          <div class="profile-info">
+            <img class="profile-avatar" src="https://i.pravatar.cc/150?img=47" alt="Karina">
+            <div>
+              <div class="profile-name">
+                Karina clarck
+                <span class="verified">✓</span>
+              </div>
+              <div class="profile-details">
+                <div class="detail-col">
+                  <div class="detail-row"><strong>Email :</strong> Karina.clarck@gmail.com</div>
+                  <div class="detail-row"><strong>Téléphone :</strong> (+33) 123 45 67 89</div>
+                </div>
+                <div class="detail-col">
+                  <div class="detail-row"><strong>Location :</strong> 12 Rue de la République</div>
+                  <div class="detail-row"><strong>Membre depuis :</strong> août 2022</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="subscription-title">Mon abonnement</div>
+        <div class="subscription-card">
+          <div class="sub-name">Abonnement "Premium"</div>
+          <div class="sub-price">49 € <span>/an</span></div>
+          <div class="sub-dates">
+            Date d'activation : 28-09-2024<br>
+            Date de renouvellement prochain : 28-09-2025
+          </div>
+          <div class="sub-details-label">Les détails de l'abonnement :</div>
+          <div class="sub-details">
+            - Accès illimité à toutes les fonctionnalités premium<br>
+            - Publication illimitée d'articles<br>
+            - Priorité dans les échanges et les ventes<br>
+            - Badge Premium visible sur votre profil<br>
+            - Support client prioritaire
+          </div>
+          <div class="sub-actions">
+            <button class="btn-outline">Modifier</button>
+            <button class="btn-filled">Résilier</button>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="view-edit">
+        <div class="edit-card">
+          <div class="edit-avatar-wrap">
+            <img class="edit-avatar" src="https://i.pravatar.cc/150?img=47" alt="Karina">
+            <span class="edit-avatar-btn">✏️</span>
+          </div>
+
+          <div class="section-sub">Informations personnels</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nom</label>
+              <input type="text" value="Karina">
+            </div>
+            <div class="form-group">
+              <label>Prénom</label>
+              <input type="text" value="Clarck">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" value="karina.clarck@gmail.com">
+            </div>
+            <div class="form-group">
+              <label>Numéro de téléphone</label>
+              <input type="tel" value="(+33) 123 45 67 89">
+            </div>
+            <div class="form-group full">
+              <label>Adresse</label>
+              <input type="text" value="12 Rue de la République, Paris France">
+            </div>
+          </div>
+        </div>
+
+        <div class="edit-card">
+          <div class="section-sub">Mot de passe</div>
+          <div class="form-grid-single">
+            <div class="form-group">
+              <label>Ancien mot de passe</label>
+              <input type="password" placeholder="••••••••••••••••">
+            </div>
+            <div class="form-group">
+              <label>Nouveau mot de passe</label>
+              <input type="password" placeholder="••••••••••••••••">
+            </div>
+            <div class="form-group">
+              <label>Confirmer le nouveau mot de passe</label>
+              <input type="password" placeholder="••••••••••••••••">
+            </div>
+          </div>
+        </div>
+
+        <div class="edit-footer">
+          
+          <label for="toggle-edit" class="btn-save">Enregistrer les modifications</label>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  
+  <div id="delete-modal" class="modal-overlay">
+    <a href="#" class="modal-bg"></a>
+    <div class="modal">
+      <div class="modal-illus">🗑️</div>
+      <h3>Vous souhaitez supprimer<br>votre compte Swappi ?</h3>
+      <p>
+        Avant de continuer, veuillez noter que cette action est définitive.
+        Certaines conditions s'appliquent pour la suppression de votre compte.
+      </p>
+      <label class="modal-checkbox">
+        <input type="checkbox"> Accepter <a href="#">les conditions de suppression</a>
+      </label>
+      <div class="modal-actions">
+        <a href="#" class="btn-cancel">Annuler</a>
+        <button class="btn-delete"><a href="Connexion.html">Supprimer</a></button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

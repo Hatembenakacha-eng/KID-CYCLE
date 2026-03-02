@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paiement - KidCycle</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="paiment.css">
+</head>
+<body>
+
+
+<header class="topnav">
+  <img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="detail produit.html">Acheter maintenant</a>
+    <a href="#">Nouveautés</a>
+    <a href="#">Vente</a>
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
+    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  
+  <div class="stepper">
+    <a href="livraison.html" class="step done">
+      <span class="step-num">1</span> Livraison
+    </a>
+    <span class="step active">
+      <span class="step-num">2</span> Payement
+    </span>
+  </div>
+
+  
+  <div class="checkout-layout">
+
+    
+    <div class="left-col">
+      <div class="recap-header">
+        <span>Total article(s)</span>
+        <span>9</span>
+      </div>
+
+      
+      <div class="recap-removed" id="rr1">Retiré &nbsp;<a href="#rc1" class="undo">↩</a></div>
+      <div class="recap-item" id="rc1">
+        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-info">
+          <div class="recap-name">Nom du produit</div>
+          <div class="recap-sub">Lorem: 8</div>
+          <a href="#rr1" class="recap-remove">✕ Supprimer</a>
+        </div>
+        <div class="recap-price">200.00 <span class="coin">ii</span></div>
+      </div>
+
+     
+      <div class="recap-removed" id="rr2">Retiré &nbsp;<a href="#rc2" class="undo">↩</a></div>
+      <div class="recap-item" id="rc2">
+        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-info">
+          <div class="recap-name">Nom du produit</div>
+          <div class="recap-sub">Lorem: 8</div>
+          <a href="#rr2" class="recap-remove">✕ Supprimer</a>
+        </div>
+        <div class="recap-price">200.00 <span class="coin">ii</span></div>
+      </div>
+
+      <!-- Article 3 -->
+      <div class="recap-removed" id="rr3">Retiré &nbsp;<a href="#rc3" class="undo">↩</a></div>
+      <div class="recap-item" id="rc3">
+        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-info">
+          <div class="recap-name">Nom du produit</div>
+          <div class="recap-sub">Lorem: 8</div>
+          <a href="#rr3" class="recap-remove">✕ Supprimer</a>
+        </div>
+        <div class="recap-price">200.00 <span class="coin">ii</span></div>
+      </div>
+
+      <!-- Article 4 -->
+      <div class="recap-removed" id="rr4">Retiré &nbsp;<a href="#rc4" class="undo">↩</a></div>
+      <div class="recap-item" id="rc4">
+        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-info">
+          <div class="recap-name">Nom du produit</div>
+          <div class="recap-sub">Lorem: 8</div>
+          <a href="#rr4" class="recap-remove">✕ Supprimer</a>
+        </div>
+        <div class="recap-price">200.00 <span class="coin">ii</span></div>
+      </div>
+
+      <!-- Article 5 -->
+      <div class="recap-removed" id="rr5">Retiré &nbsp;<a href="#rc5" class="undo">↩</a></div>
+      <div class="recap-item" id="rc5">
+        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-info">
+          <div class="recap-name">Nom du produit</div>
+          <div class="recap-sub">Lorem: 8</div>
+          <a href="#rr5" class="recap-remove">✕ Supprimer</a>
+        </div>
+        <div class="recap-price">200.00 <span class="coin">ii</span></div>
+      </div>
+    </div>
+
+    <!-- COLONNE DROITE — paiement -->
+    <div class="right-col">
+
+      <!-- Résumé financier -->
+      <div class="summary-card">
+        <div class="summary-row total">
+          <span>Total <span class="swaps-lbl">SWAPS</span></span>
+          <span>1200.00 <span class="coin">ii</span></span>
+        </div>
+        <div class="summary-row">
+          <span><span class="swaps-lbl">SWAPS</span> achetés</span>
+          <span>40.00€</span>
+        </div>
+        <div class="summary-row">
+          <span>Frais de protection <span class="info-ico">i</span></span>
+          <span>1.50€</span>
+        </div>
+        <div class="summary-row">
+          <span>Commission <span class="swaps-lbl">SWAPS</span> <span class="info-ico">i</span></span>
+          <span>1.90€</span>
+        </div>
+        <div class="summary-row">
+          <span>Frais de Livraison à domicile <span class="info-ico">i</span></span>
+          <span>5.9€</span>
+        </div>
+      </div>
+
+      <!-- Code parrainage -->
+      <div class="parrainage-card">
+        <div class="parrainage-label">Code ou lien de parrainage</div>
+        <div class="parrainage-row">
+          <input type="text" class="parrainage-input" placeholder="············">
+          <button class="btn-appliquer">Appliquer la code</button>
+        </div>
+      </div>
+
+      <!-- Méthode de paiement + carte -->
+      <div class="paiement-card">
+        <div class="paiement-title">Méthode de paiement</div>
+
+        <!-- Choix méthode -->
+        <div class="methode-row">
+          <input type="radio" name="methode" id="paypal" class="methode-opt" checked>
+          <label for="paypal" class="methode-label">
+            <div class="methode-radio"></div>
+            <span class="methode-icon">🅿</span> Paypal
+          </label>
+
+          <input type="radio" name="methode" id="mastercard" class="methode-opt">
+          <label for="mastercard" class="methode-label">
+            <div class="methode-radio"></div>
+            <span class="methode-icon">🔴</span> Mastercard
+          </label>
+
+          <input type="radio" name="methode" id="visa" class="methode-opt">
+          <label for="visa" class="methode-label">
+            <div class="methode-radio"></div>
+            <span class="methode-icon">💳</span> Visacard
+          </label>
+        </div>
+
+        <!-- Numéro de carte -->
+        <div class="card-label">Numéro de la carte</div>
+        <input type="text" class="card-input" placeholder="Ex: 23 456 687 9997 445 43">
+
+        <!-- Expiration, CVV, Nom -->
+        <div class="card-row">
+          <div class="card-group">
+            <div class="card-label">Date d'expiration</div>
+            <input type="text" class="card-input" placeholder="MM/AA">
+          </div>
+          <div class="card-group">
+            <div class="card-label">CVV</div>
+            <input type="text" class="card-input" placeholder="···">
+          </div>
+          <div class="card-group">
+            <div class="card-label">Nom sur la carte</div>
+            <input type="text" class="card-input" placeholder="Ex: charlie Juil">
+          </div>
+        </div>
+
+        
+        <a href="page acceuil.html" class="btn-paye">Payé</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

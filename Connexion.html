@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - KidCycle</title>
+  <link rel="stylesheet" href="Connexion.css">
+</head>
+<body>
+  <div class="bg">
+    <div class="bg-placeholder">
+      <span class="bg-text"><img src="Jardin.png" > </span>
+    </div>
+  </div>
+
+  
+  <div class="card">
+
+    <h1 class="card-title">Connexion</h1>
+
+    
+    <div class="field">
+      <input type="email" id="email" placeholder="Email">
+    </div>
+
+   
+    <div class="field">
+      <input type="password" id="pwd" placeholder="Password" class="has-eye">
+      <div class="eye-wrap">
+        <label for="eye-toggle" class="eye-icon">👁</label>
+      </div>
+    </div>
+
+    
+    <input type="checkbox" id="eye-toggle" class="eye-cb"
+      onchange="var p=document.getElementById('pwd'); p.type=this.checked?'text':'password';">
+
+   
+    <div class="row-middle">
+      <label class="remember">
+        <input type="checkbox"> Se souvenir de moi
+      </label>
+      <a href="#" class="forgot">Mot de passe oublié</a>
+    </div>
+
+    
+    <a href="page acceuil.html" class="btn-connect">
+      Connecter <span class="btn-arrow">→</span>
+    </a>
+    <p class="signup">
+      Vous n'avez pas de compte ?&nbsp;<a href="formulaire.html">S'inscrire</a>
+    </p>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Panier - KidCycle</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="panier.css">
+</head>
+<body>
+
+<header class="topnav">
+  <img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="detail produit.html">Acheter maintenant</a>
+    <a href="#">Nouveautés</a>
+    <a href="#">Vente</a>
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
+    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+
+
+<h1 class="page-title">Mon panier</h1>
+
+
+<div class="layout">
+
+  
+  <aside class="sidebar">
+    <h2>Mon compte</h2>
+    <ul class="sidebar-menu">
+      <li><a href="favoris.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
+      <li class="active"><a href="panier.html"><span class="menu-ico">🛒</span> Mon panier</a></li>
+      <li><a href="Produits.html"><span class="menu-ico">👕</span> Mes produits</a></li>
+      <li><a href="commandes.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
+    </ul>
+  </aside>
+
+  
+  <main class="main">
+
+    
+    <div class="cart-header">
+      <span>PRODUIT</span>
+      <span><span class="swaps">SWAPS</span> dépensés</span>
+    </div>
+
+    
+    <div class="item-wrap" id="iw1">
+      <div class="item-removed" id="rm1">
+        Article retiré &nbsp;<a href="#iw1" class="undo">↩ Annuler</a>
+      </div>
+      <div class="cart-item">
+        <div class="item-img"><span><img src="images/product1.jpg" ></span></div>
+        <div class="item-info">
+          <div class="item-name">Product name</div>
+          <div class="item-sub">Lorem: 8</div>
+          <a href="#rm1" class="item-remove">✕ Supprimer</a>
+        </div>
+        <div class="item-price">
+          100.00 <span class="coin">ii</span>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="item-sep"></div>
+
+    
+    <div class="item-wrap" id="iw2">
+      <div class="item-removed" id="rm2">
+        Article retiré &nbsp;<a href="#iw2" class="undo">↩ Annuler</a>
+      </div>
+      <div class="cart-item">
+        <div class="item-img"><span><img src="images/product2.jpg" ></span></div>
+        <div class="item-info">
+          <div class="item-name">Product name</div>
+          <div class="item-sub">Lorem: 8</div>
+          <a href="#rm2" class="item-remove">✕ Supprimer</a>
+        </div>
+        <div class="item-price">
+          100.00 <span class="coin">ii</span>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="subtotal-row">
+      Sous-total: &nbsp; 200.00 &nbsp; <span class="coin">ii</span>
+    </div>
+    <div class="subtotal-note">
+      Taxes et frais de livraison calculés lors du paiement.
+    </div>
+
+    <!-- Footer actions -->
+    <div class="cart-footer">
+      <a href="page acceuil.html" class="btn-back">‹ Retour aux articles</a>
+      <div class="cart-btns">
+        <a href="Commandes.html" class="btn-commander">Commander maintenant</a>
+        <a href="#" class="btn-points">Acheter des points</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,504 @@
+/* ================================
+   livraison.css
+   ================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Nunito", sans-serif;
+  background: #f0f0f0;
+  color: #333;
+  font-size: 14px;
+}
+
+/* ── Navbar ── */
+.navbar {
+  background: #fff;
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 800;
+  color: #b8a9d4;
+  text-decoration: none;
+  letter-spacing: -1px;
+  flex-shrink: 0;
+}
+
+.logo-text em {
+  font-style: normal;
+  color: #f5a623;
+}
+
+.nav-links { display: flex; gap: 28px; list-style: none; flex: 1; }
+.nav-links a { text-decoration: none; color: #555; font-size: 13px; font-weight: 600; transition: color .2s; }
+.nav-links a:hover { color: #7b9fc4; }
+
+.nav-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+
+.cart-btn {
+  display: flex; align-items: center; gap: 6px;
+  border: 1.5px solid #ddd; border-radius: 20px;
+  padding: 5px 14px; font-size: 13px; color: #555;
+  background: #fff; text-decoration: none; font-weight: 600;
+  transition: background .2s;
+}
+.cart-btn:hover { background: #f0eef8; }
+.cart-badge {
+  background: #6ab0d4; color: #fff; border-radius: 50%;
+  width: 20px; height: 20px; font-size: 11px;
+  display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+
+.nav-icon {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #f0eef8; display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: #b8a9d4; text-decoration: none; cursor: pointer;
+  transition: background .2s;
+}
+.nav-icon:hover { background: #e4e0f4; }
+.nav-icon.gold { background: #f5a623; color: #fff; font-size: 13px; font-weight: 800; font-family: "Nunito", sans-serif; }
+
+.search-wrap {
+  display: flex; align-items: center;
+  border: 1.5px solid #e0e0e0; border-radius: 20px;
+  overflow: hidden; padding: 5px 5px 5px 14px; background: #fff;
+}
+.search-wrap input { border: none; outline: none; font-size: 13px; width: 130px; font-family: "Nunito", sans-serif; color: #555; background: transparent; }
+.search-wrap input::placeholder { color: #bbb; }
+.search-wrap button {
+  background: #b8a9d4; border: none; color: #fff;
+  width: 30px; height: 30px; border-radius: 50%;
+  cursor: pointer; font-size: 13px;
+  display: flex; align-items: center; justify-content: center; transition: background .2s;
+}
+.search-wrap button:hover { background: #9e8cc4; }
+
+/* ── Page wrapper ── */
+.page-wrap { padding: 28px 24px 60px; }
+
+/* ── Stepper ── */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 32px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.step {
+  flex: 1;
+  padding: 16px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #bbb;
+  border-bottom: 3px solid transparent;
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.step .step-num {
+  display: inline-block;
+  margin-right: 6px;
+  font-weight: 800;
+}
+
+.step.active {
+  color: #f5a623;
+  border-bottom-color: #f5a623;
+}
+
+.step.done {
+  color: #bbb;
+  border-bottom-color: #ddd;
+}
+
+/* ── Main layout ── */
+.checkout-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* ── Left column ── */
+.left-col { flex: 1; }
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+/* Adresse field */
+.addr-field {
+  position: relative;
+  border: 1.5px solid #b8a9d4;
+  border-radius: 10px;
+  padding: 18px 16px 12px;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.addr-field-label {
+  position: absolute;
+  top: -9px;
+  left: 14px;
+  background: #fff;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #b8a9d4;
+}
+
+.addr-field input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: "Nunito", sans-serif;
+  color: #555;
+  background: transparent;
+  padding-right: 36px;
+}
+
+.addr-field input::placeholder { color: #bbb; }
+
+.addr-pin {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #888;
+}
+
+.addr-note {
+  font-size: 11px;
+  color: #aaa;
+  margin-bottom: 20px;
+  padding-left: 4px;
+}
+
+/* Modifier bouton */
+.btn-modifier {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: #b8a9d4;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Nunito", sans-serif;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background .2s;
+  margin-bottom: 32px;
+}
+.btn-modifier:hover { background: #9e8cc4; }
+
+/* Expedition */
+.expedition-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.expedition-option {
+  background: #fff;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.expedition-option:hover { border-color: #b8a9d4; }
+
+/* Radio CSS */
+.exp-radio { display: none; }
+.exp-radio:checked ~ .expedition-option { border-color: #b8a9d4; background: #faf8ff; }
+
+.exp-check {
+  width: 18px; height: 18px;
+  border: 2px solid #ccc; border-radius: 4px;
+  flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .2s, background .2s;
+  cursor: pointer;
+}
+
+.exp-label { cursor: pointer; display: flex; align-items: flex-start; gap: 12px; flex: 1; }
+
+input[type="checkbox"].exp-cb { display: none; }
+input[type="checkbox"].exp-cb:checked + .exp-label .exp-check {
+  background: #b8a9d4;
+  border-color: #b8a9d4;
+}
+input[type="checkbox"].exp-cb:checked + .exp-label .exp-check::after {
+  content: "✓";
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.exp-info { flex: 1; }
+.exp-name { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 2px; }
+.exp-sub { font-size: 11px; color: #aaa; line-height: 1.4; }
+.exp-price { font-size: 13px; font-weight: 700; color: #333; flex-shrink: 0; margin-top: 2px; }
+
+/* ── Right column (récap) ── */
+.right-col {
+  width: 360px;
+  min-width: 360px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 20px 24px;
+}
+
+.recap-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.recap-title .prix { color: #f5a623; }
+.recap-title .ttc  { color: #f5a623; }
+
+.recap-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Cart items in recap */
+.recap-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.recap-img {
+  width: 60px; height: 60px;
+  background: #f5f5f5;
+  border: 2px dashed #e0e0e0;
+  border-radius: 8px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2px; font-size: 8px; color: #ccc; font-weight: 700;
+  flex-shrink: 0;
+}
+.recap-img span { font-size: 18px; }
+
+.recap-info { flex: 1; }
+.recap-name { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 2px; }
+.recap-sub  { font-size: 11px; color: #b8a9d4; margin-bottom: 6px; }
+
+.recap-remove {
+  font-size: 11px; color: #999; text-decoration: none; font-weight: 600;
+  transition: color .2s; cursor: pointer;
+}
+.recap-remove:hover { color: #d44; }
+
+/* Removed state */
+.recap-removed {
+  display: none;
+  padding: 8px 0;
+  font-size: 11px; font-weight: 700; color: #ccc;
+  text-align: center;
+  border-bottom: 1px solid #f5f5f5;
+}
+.recap-removed:target { display: block; }
+.recap-removed:target ~ .recap-item { display: none; }
+.undo { color: #b8a9d4; text-decoration: underline; font-weight: 800; }
+
+.recap-price {
+  font-size: 13px; font-weight: 700; color: #333; flex-shrink: 0;
+  display: flex; align-items: center; gap: 4px;
+}
+
+.coin {
+  width: 18px; height: 18px;
+  background: #f5a623; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 8px; color: #fff; font-weight: 800; font-family: "Nunito", sans-serif;
+}
+
+/* Summary rows */
+.summary-block { margin-top: 14px; padding-top: 10px; border-top: 1.5px solid #f0f0f0; }
+
+.summary-row {
+  display: flex; justify-content: space-between;
+  align-items: center; padding: 5px 0;
+  font-size: 13px; color: #555;
+}
+
+.summary-row.total {
+  font-weight: 800; font-size: 14px; color: #333; margin-bottom: 4px;
+}
+.summary-row .swaps-lbl { color: #f5a623; font-weight: 800; }
+.summary-row .info-ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #e0e0e0; font-size: 9px; color: #888;
+  margin-left: 4px; cursor: pointer;
+}
+
+/* Passer au paiement */
+.btn-payer {
+  display: block; width: 100%; padding: 14px;
+  background: #c8bde0; color: #fff;
+  border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 700;
+  font-family: "Nunito", sans-serif; cursor: pointer;
+  text-align: center; text-decoration: none;
+  transition: background .2s; margin-top: 16px;
+}
+.btn-payer:hover { background: #b8a9d4; }
+
+/* ════════════
+   MODAL Edit address (CSS :target)
+════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay:target { display: flex; }
+
+.modal-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 30px 32px;
+  width: 460px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+
+.modal-close {
+  position: absolute; top: 14px; right: 16px;
+  width: 28px; height: 28px;
+  background: #f0f0f0; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; font-size: 14px; color: #555; font-weight: 700;
+  transition: background .2s;
+}
+.modal-close:hover { background: #e0e0e0; }
+
+.modal-title {
+  font-size: 18px; font-weight: 700; color: #333; margin-bottom: 22px;
+}
+
+.modal-label {
+  font-size: 12px; font-weight: 700; color: #555; margin-bottom: 6px;
+}
+
+.modal-input {
+  width: 100%; border: 1.5px solid #e8e8e8;
+  border-radius: 8px; padding: 11px 14px;
+  font-size: 13px; font-family: "Nunito", sans-serif;
+  color: #555; outline: none; margin-bottom: 14px;
+  display: block; background: #f9f9f9;
+  transition: border-color .2s;
+}
+.modal-input:focus { border-color: #b8a9d4; background: #fff; }
+.modal-input::placeholder { color: #bbb; }
+
+.modal-row { display: flex; gap: 14px; }
+.modal-row .modal-group { flex: 1; }
+
+/* Phone input */
+.phone-wrap {
+  display: flex; align-items: center;
+  border: 1.5px solid #e8e8e8; border-radius: 8px;
+  overflow: hidden; background: #f9f9f9;
+  margin-bottom: 14px; transition: border-color .2s;
+}
+.phone-wrap:focus-within { border-color: #b8a9d4; background: #fff; }
+.phone-flag {
+  padding: 0 10px; font-size: 18px; display: flex;
+  align-items: center; gap: 4px; border-right: 1px solid #e8e8e8;
+  color: #555; font-size: 12px; font-weight: 700; background: #f9f9f9; height: 100%;
+}
+.phone-flag span { font-size: 18px; }
+.phone-input {
+  flex: 1; border: none; outline: none; padding: 11px 12px;
+  font-size: 13px; font-family: "Nunito", sans-serif; background: transparent;
+}
+
+/* Pays select */
+.select-wrap {
+  position: relative; margin-bottom: 14px;
+}
+.select-wrap select {
+  width: 100%; border: 1.5px solid #e8e8e8; border-radius: 8px;
+  padding: 11px 36px 11px 14px; font-size: 13px;
+  font-family: "Nunito", sans-serif; color: #555;
+  outline: none; appearance: none; background: #f9f9f9; cursor: pointer;
+  transition: border-color .2s;
+}
+.select-wrap select:focus { border-color: #b8a9d4; background: #fff; }
+.select-arrow {
+  position: absolute; right: 12px; top: 50%;
+  transform: translateY(-50%); font-size: 12px; color: #aaa; pointer-events: none;
+}
+
+/* Modal actions */
+.modal-actions { display: flex; gap: 14px; margin-top: 6px; }
+
+.btn-annuler {
+  flex: 1; padding: 13px;
+  border: 2px solid #e0e0e0; border-radius: 10px;
+  background: #fff; color: #555;
+  font-size: 14px; font-weight: 700;
+  font-family: "Nunito", sans-serif; cursor: pointer;
+  text-align: center; text-decoration: none;
+  transition: border-color .2s;
+}
+.btn-annuler:hover { border-color: #b8a9d4; color: #b8a9d4; }
+
+.btn-submit {
+  flex: 1; padding: 13px;
+  background: #b8a9d4; color: #fff;
+  border: none; border-radius: 10px;
+  font-size: 14px; font-weight: 700;
+  font-family: "Nunito", sans-serif; cursor: pointer;
+  text-align: center; text-decoration: none;
+  transition: background .2s;
+}
+.btn-submit:hover { background: #9e8cc4; }

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Livraison - KidCycle</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="livraison.css">
+</head>
+<body>
+
+
+<header class="topnav">
+  <img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="detail produit.html">Acheter maintenant</a>
+    <a href="#">Nouveautés</a>
+    <a href="#">Vente</a>
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
+    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  
+  <div class="stepper">
+    <span class="step active">
+      <span class="step-num">1</span> Livraison
+    </span>
+    <a href="paiment.html" class="step done">
+      <span class="step-num">2</span> Payement
+    </a>
+  </div>
+
+  
+  <div class="checkout-layout">
+
+    
+    <div class="left-col">
+
+      <h2 class="section-title">Adresse de livraison</h2>
+
+      
+      <div class="addr-field">
+        <span class="addr-field-label">Mon adresse</span>
+        <input type="text" placeholder="Livraison àQPWP+...">
+        <span class="addr-pin">📍</span>
+      </div>
+      <p class="addr-note">Lorem Ipsum is simply dummy text of the printing ..</p>
+
+      
+      <a href="#modal-addr" class="btn-modifier">Modifier mon adresse</a>
+
+      <h2 class="expedition-title">Expedition</h2>
+
+      
+      <label class="expedition-option">
+        <input type="checkbox" class="exp-cb" id="exp1">
+        <label for="exp1" class="exp-label">
+          <div class="exp-check"></div>
+          <div class="exp-info">
+            <div class="exp-name">Chrono Relais - 2 à 4 jours</div>
+            <div class="exp-sub">Livraison en point relais<br>Gratuit dès 75€ d'achat en France Métropolitaine &amp; Belgique</div>
+          </div>
+          <div class="exp-price">€5.9</div>
+        </label>
+      </label>
+
+      
+      <label class="expedition-option">
+        <input type="checkbox" class="exp-cb" id="exp2">
+        <label for="exp2" class="exp-label">
+          <div class="exp-check"></div>
+          <div class="exp-info">
+            <div class="exp-name">Livraison à domicile - 2 à 4 jours</div>
+            <div class="exp-sub">Livraison à domicile<br>Gratuit dès 75€ d'achat en France Métropolitaine &amp; Belgique</div>
+          </div>
+          <div class="exp-price">€5.9</div>
+        </label>
+      </label>
+
+    </div>
+
+    
+    <aside class="right-col">
+      <div class="recap-title">
+        Récapitulatif <span class="prix">Prix</span> <span class="ttc">TTC</span>
+      </div>
+
+      <div class="recap-total-row">
+        <span>Total article(s)</span>
+        <span>9</span>
+      </div>
+
+      
+      <div class="recap-removed" id="rr1">Retiré &nbsp;<a href="#rc1" class="undo">↩</a></div>
+      <div class="recap-item" id="rc1">
+        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-info">
+          <div class="recap-name">Nom du produit</div>
+          <div class="recap-sub">Lorem: 8</div>
+          <a href="#rr1" class="recap-remove">✕ Supprimer</a>
+        </div>
+        <div class="recap-price">200.00 <span class="coin">ii</span></div>
+      </div>
+
+      
+      <div class="recap-removed" id="rr2">Retiré &nbsp;<a href="#rc2" class="undo">↩</a></div>
+      <div class="recap-item" id="rc2">
+        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-info">
+          <div class="recap-name">Nom du produit</div>
+          <div class="recap-sub">Lorem: 8</div>
+          <a href="#rr2" class="recap-remove">✕ Supprimer</a>
+        </div>
+        <div class="recap-price">200.00 <span class="coin">ii</span></div>
+      </div>
+
+      
+      <div class="recap-removed" id="rr3">Retiré &nbsp;<a href="#rc3" class="undo">↩</a></div>
+      <div class="recap-item" id="rc3">
+        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-info">
+          <div class="recap-name">Nom du produit</div>
+          <div class="recap-sub">Lorem: 8</div>
+          <a href="#rr3" class="recap-remove">✕ Supprimer</a>
+        </div>
+        <div class="recap-price">200.00 <span class="coin">ii</span></div>
+      </div>
+
+      
+      <div class="summary-block">
+        <div class="summary-row total">
+          <span>Total <span class="swaps-lbl">SWAPS</span></span>
+          <span>1200.00 <span class="coin">ii</span></span>
+        </div>
+        <div class="summary-row">
+          <span><span class="swaps-lbl">SWAPS</span> achetés</span>
+          <span>40.00€</span>
+        </div>
+        <div class="summary-row">
+          <span>Frais de protection <span class="info-ico">i</span></span>
+          <span>1.50€</span>
+        </div>
+        <div class="summary-row">
+          <span>Commission <span class="swaps-lbl">SWAPS</span> <span class="info-ico">i</span></span>
+          <span>1.90€</span>
+        </div>
+      </div>
+
+      <a href="paiment.html" class="btn-payer">Passer au paiement</a>
+    </aside>
+
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="modal-addr">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <h3 class="modal-title">Edit address</h3>
+
+    <div class="modal-label">Adresse</div>
+    <input type="text" class="modal-input" placeholder="Adresse de livraison">
+    <p style="font-size:11px;color:#aaa;margin-bottom:14px;margin-top:-10px;">Lorem ipsum is simply dummy text of the printing ...</p>
+
+    <div class="modal-row">
+      <div class="modal-group">
+        <div class="modal-label">Num de téléphone</div>
+        <div class="phone-wrap">
+          <div class="phone-flag"><span>🇫🇷</span> · +33</div>
+          <input type="text" class="phone-input" placeholder="">
+        </div>
+      </div>
+      <div class="modal-group">
+        <div class="modal-label">Pays</div>
+        <div class="select-wrap">
+          <select>
+            <option>France</option>
+            <option>Belgique</option>
+            <option>Suisse</option>
+          </select>
+          <span class="select-arrow">▼</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-group">
+        <div class="modal-label">Ville</div>
+        <input type="text" class="modal-input" placeholder="Ville">
+      </div>
+      <div class="modal-group">
+        <div class="modal-label">Code postal</div>
+        <input type="text" class="modal-input" placeholder="000000">
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <a href="#" class="btn-annuler">Annuler</a>
+      <a href="#" class="btn-submit">Submit</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

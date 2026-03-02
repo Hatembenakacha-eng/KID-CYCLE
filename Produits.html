@@ -12,21 +12,21 @@
 <header class="topnav">
   <img class="logo" src="images/Kidcycle.png" />
   <div class="nav-links">
-    <a href="filters.html">Acheter maintenant</a>
+    <a href="detail produit.html">Acheter maintenant</a>
     <a href="#">Nouveautés</a>
     <a href="#">Vente</a>
     <a href="produits.html">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="commandes.html" class="btn-cart">
+    <a href="panier.html" class="btn-cart active">
       <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
     </a>
-    <a href="favoris.html" class="nav-icon" title="Mes favoris">♡</a>
-    <a href="produits.html" class="nav-icon active" title="Mon compte">👤</a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
+    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
     <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
     <div class="search-wrap">
       <input type="text" placeholder="Search" />
-       <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
     </div>
   </div>
 </header>
@@ -34,24 +34,24 @@
 <div class="page-wrap">
   <div class="produits-topbar">
     <h1 class="page-title" style="margin-bottom:0;">Mes produits</h1>
-    <a href="#modal-add" class="btn btn-primary btn-add">+ Ajouter un produit</a>
+    <a href="ajout produit.html" class="btn btn-primary btn-add">+ Ajouter un produit</a>
   </div>
 
   <div class="two-col" style="margin-top:32px;">
-    <!-- SIDEBAR -->
+    
     <aside class="account-sidebar">
       <h2>Mon compte</h2>
       <a href="favoris.html">♥ &nbsp;Mes favoris (2)</a>
-      <a href="#">🛒 &nbsp;Mon panier</a>
+      <a href="panier.html">🛒 &nbsp;Mon panier</a>
       <a href="produits.html" class="active">📦 &nbsp;Mes produits</a>
       <a href="commandes.html">📋 &nbsp;Mes commandes</a>
     </aside>
 
-    <!-- GRID -->
+    
     <div class="main-content">
       <div class="product-grid">
 
-        <!-- ══ PRODUIT 1 — En attente — checkbox annulation ══ -->
+        
         <div class="card-wrap">
           <input type="checkbox" id="cancel1" class="cancel-toggle" />
           <div class="product-card">
@@ -75,7 +75,7 @@
           </div>
         </div>
 
-        <!-- ══ PRODUIT 2 — Actif — Modifier + Supprimer ══ -->
+        
         <div class="card-wrap">
           <input type="checkbox" id="del2" class="delete-toggle" />
           <div class="product-card">
@@ -99,7 +99,7 @@
           </div>
         </div>
 
-        <!-- ══ PRODUIT 3 — En attente ══ -->
+      
         <div class="card-wrap">
           <input type="checkbox" id="cancel3" class="cancel-toggle" />
           <div class="product-card">
@@ -123,7 +123,7 @@
           </div>
         </div>
 
-        <!-- ══ PRODUIT 4 — Actif ══ -->
+        
         <div class="card-wrap">
           <input type="checkbox" id="del4" class="delete-toggle" />
           <div class="product-card">
@@ -147,7 +147,7 @@
           </div>
         </div>
 
-        <!-- ══ PRODUIT 5 — En attente ══ -->
+       
         <div class="card-wrap">
           <input type="checkbox" id="cancel5" class="cancel-toggle" />
           <div class="product-card">
@@ -200,9 +200,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     MODAL — AJOUTER UN PRODUIT (:target)
-══════════════════════════════ -->
+
 <div id="modal-add" class="modal-overlay">
   <div class="modal-box">
     <a href="#" class="modal-close" title="Fermer">✕</a>
@@ -232,9 +230,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     MODAL — MODIFIER (:target)
-══════════════════════════════ -->
+
 <div id="modal-edit" class="modal-overlay">
   <div class="modal-box">
     <a href="#" class="modal-close" title="Fermer">✕</a>
