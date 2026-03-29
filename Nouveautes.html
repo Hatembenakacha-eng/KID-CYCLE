@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nouveautés - KidCycle</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="nouveautes.css">
+</head>
+<body>
+
+<header class="topnav">
+  <img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="detail produit.html">Acheter maintenant</a>
+    <a href="Nouveautes.html">Nouveautés</a>
+
+
+    <a href="#">Vente</a>
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
+    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="page-body">
+
+  <!-- FILTERS -->
+  <aside class="filters-panel">
+    <div class="filters-top">
+      <span class="filters-title">Filters</span>
+      <a href="#filters-cleared" class="btn-clear">Tout effacer 🗑</a>
+    </div>
+
+    <!-- VERSION EFFACÉE -->
+    <div id="filters-cleared">
+      <a href="#filters-active" class="btn-clear" style="margin-bottom:12px;display:inline-flex;color:#6ab0d4;border-color:#6ab0d4;">↩ Rétablir</a>
+      
+    <div class="fg">
+      <input type="checkbox" id="ncfg1" class="fg-toggle">
+      <label for="ncfg1" class="fg-head"><span class="fg-label">Catégorie</span><span class="chevron">▲</span></label>
+      <div class="fg-opts">
+        <div class="fg-row"><label><input type="checkbox" > Lorem</label><span class="fg-count">(18)</span></div>
+        <div class="fg-row"><label><input type="checkbox" > Lorem</label><span class="fg-count">(12)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(23)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(67)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(34)</span></div>
+      </div>
+    </div>
+    <div class="fg">
+      <input type="checkbox" id="ncfg2" class="fg-toggle">
+      <label for="ncfg2" class="fg-head"><span class="fg-label">Genre</span><span class="chevron">▲</span></label>
+      <div class="fg-opts">
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label></div>
+        <div class="fg-row"><label><input type="checkbox" > Lorem</label></div>
+      </div>
+    </div>
+    <div class="fg">
+      <input type="checkbox" id="ncfg3" class="fg-toggle">
+      <label for="ncfg3" class="fg-head"><span class="fg-label">Taille</span><span class="chevron">▲</span></label>
+      <div class="fg-opts">
+        <div class="fg-row"><label><input type="checkbox" > 0 - 1/2</label><span class="fg-count">(18)</span></div>
+        <div class="fg-row"><label><input type="checkbox" > 1/2 - 1</label><span class="fg-count">(12)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> 1 - 2</label><span class="fg-count">(23)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> 2 - 3</label><span class="fg-count">(67)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> 3 - 4</label><span class="fg-count">(34)</span></div>
+      </div>
+    </div>
+    <div class="fg">
+      <input type="checkbox" id="ncfg4" class="fg-toggle">
+      <label for="ncfg4" class="fg-head"><span class="fg-label">État</span><span class="chevron">▲</span></label>
+      <div class="fg-opts">
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label></div>
+        <div class="fg-row"><label><input type="checkbox" > Lorem</label></div>
+      </div>
+    </div>
+    </div>
+
+    <!-- VERSION ACTIVE -->
+    <div id="filters-active">
+      
+    <div class="fg">
+      <input type="checkbox" id="nafg1" class="fg-toggle">
+      <label for="nafg1" class="fg-head"><span class="fg-label">Catégorie</span><span class="chevron">▲</span></label>
+      <div class="fg-opts">
+        <div class="fg-row"><label><input type="checkbox" checked> Lorem</label><span class="fg-count">(18)</span></div>
+        <div class="fg-row"><label><input type="checkbox" checked> Lorem</label><span class="fg-count">(12)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(23)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(67)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(34)</span></div>
+      </div>
+    </div>
+    <div class="fg">
+      <input type="checkbox" id="nafg2" class="fg-toggle">
+      <label for="nafg2" class="fg-head"><span class="fg-label">Genre</span><span class="chevron">▲</span></label>
+      <div class="fg-opts">
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label></div>
+        <div class="fg-row"><label><input type="checkbox" checked> Lorem</label></div>
+      </div>
+    </div>
+    <div class="fg">
+      <input type="checkbox" id="nafg3" class="fg-toggle">
+      <label for="nafg3" class="fg-head"><span class="fg-label">Taille</span><span class="chevron">▲</span></label>
+      <div class="fg-opts">
+        <div class="fg-row"><label><input type="checkbox" checked> 0 - 1/2</label><span class="fg-count">(18)</span></div>
+        <div class="fg-row"><label><input type="checkbox" checked> 1/2 - 1</label><span class="fg-count">(12)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> 1 - 2</label><span class="fg-count">(23)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> 2 - 3</label><span class="fg-count">(67)</span></div>
+        <div class="fg-row"><label><input type="checkbox"> 3 - 4</label><span class="fg-count">(34)</span></div>
+      </div>
+    </div>
+    <div class="fg">
+      <input type="checkbox" id="nafg4" class="fg-toggle">
+      <label for="nafg4" class="fg-head"><span class="fg-label">État</span><span class="chevron">▲</span></label>
+      <div class="fg-opts">
+        <div class="fg-row"><label><input type="checkbox"> Lorem</label></div>
+        <div class="fg-row"><label><input type="checkbox" checked> Lorem</label></div>
+      </div>
+    </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="info-bar">
+      <span>Affichage de 12 résultats sur un total de 230</span>
+      <span class="swaps-info"><span class="swaps-lbl">SWAPS</span> disponible : 500.00 <span class="coin">ii</span></span>
+    </div>
+    <div class="products-grid">
+      
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          <span class="badge ">Lorem</span>
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca1">✓ Ajouté !</div>
+            <a href="#ca1" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          <span class="badge ">Lorem</span>
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca2">✓ Ajouté !</div>
+            <a href="#ca2" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca3">✓ Ajouté !</div>
+            <a href="#ca3" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          <span class="badge ">Lorem</span>
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca4">✓ Ajouté !</div>
+            <a href="#ca4" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          <span class="badge ">Lorem</span>
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca5">✓ Ajouté !</div>
+            <a href="#ca5" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca6">✓ Ajouté !</div>
+            <a href="#ca6" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          <span class="badge ">Lorem</span>
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca7">✓ Ajouté !</div>
+            <a href="#ca7" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          <span class="badge ">Lorem</span>
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca8">✓ Ajouté !</div>
+            <a href="#ca8" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+        <div class="product-card">
+          <a href="detail-produit.html" class="heart-btn">♡</a>
+          
+          <a href="detail-produit.html">
+            <div class="product-img">
+              <span>🖼️</span>
+              Ajouter une image
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-name">Set Baby</div>
+            <div class="card-meta">
+              <span class="card-sub">5 types de set disponibles</span>
+              <span class="card-price"><span class="coin">ii</span> 34.00</span>
+            </div>
+            <div class="cart-added" id="ca9">✓ Ajouté !</div>
+            <a href="#ca9" class="btn-add">Ajouter au panier</a>
+          </div>
+        </div>
+    </div>
+    <div class="pagination">
+      <a href="#" class="page-btn arrow">‹ Précédent</a>
+      <a href="#" class="page-btn active">1</a>
+      <a href="#" class="page-btn">2</a>
+      <a href="#" class="page-btn">3</a>
+      <a href="#" class="page-btn">4</a>
+      <a href="#" class="page-btn">5</a>
+      <a href="#" class="page-btn">6</a>
+      <a href="#" class="page-btn">7</a>
+      <a href="#" class="page-btn arrow">Suivant ›</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
