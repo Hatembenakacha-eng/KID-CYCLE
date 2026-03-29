@@ -3,14 +3,10 @@
 }
 .btn-add { padding: 11px 22px; }
 
-/* ══ Hide real checkboxes ══ */
 .cancel-toggle, .delete-toggle { display: none; }
 
-/* Card wrapper */
 .card-wrap { display: contents; }
 
-/* ══ CANCEL STATE ══
-   When annuler checked → card greys out, button changes */
 .lbl-annuler { display: inline; }
 .lbl-annule  { display: none; }
 
@@ -19,7 +15,6 @@
 .cancel-toggle:checked ~ .product-card .lbl-annuler { display: none; }
 .cancel-toggle:checked ~ .product-card .lbl-annule  { display: inline; }
 
-/* ══ DELETE STATE ══ */
 .lbl-suppr   { display: inline; }
 .lbl-supprime { display: none; }
 
@@ -28,5 +23,4 @@
 .delete-toggle:checked ~ .product-card .lbl-suppr   { display: none; }
 .delete-toggle:checked ~ .product-card .lbl-supprime { display: inline; }
 
-/* Labels act as buttons */
 .cancel-lbl, .delete-lbl { cursor: pointer; }

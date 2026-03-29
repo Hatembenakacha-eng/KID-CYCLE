@@ -12,19 +12,21 @@
 <header class="topnav">
   <img class="logo" src="images/Kidcycle.png" />
   <div class="nav-links">
-    <a href="detail produit.html">Acheter maintenant</a>
+    <a href="page acceuil.html">Acheter maintenant</a>
+
     <a href="Nouveautes.html">Nouveautés</a>
 
+    <a href="Vente.html">Vente</a>
 
-    <a href="#">Vente</a>
     <a href="produits.html">Mes produits</a>
   </div>
   <div class="nav-right">
     <a href="panier.html" class="btn-cart active">
-      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
-    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+
     <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
     <div class="search-wrap">
       <input type="text" placeholder="Search" />
@@ -33,40 +35,34 @@
   </div>
 </header>
 
-
-
 <div class="page-wrap">
   <h1 class="page-title">Mon panier</h1>
 
   <div class="two-col">
     <aside class="account-sidebar">
       <h2>Mon compte</h2>
-      <a href="Favoris.html">♥ &nbsp;Mes favoris (3)</a>
-      <a href="#" class="active">🛒 &nbsp;Mon panier</a>
+      <a href="Favoris.html"><img class="nav-emoji-icon" src="images/icon-heart-fill.svg" alt="favoris"> &nbsp;Mes favoris (3)</a>
+      <a href="#" class="active"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"> &nbsp;Mon panier</a>
       <a href="Produits.html">📦 &nbsp;Mes produits</a>
       <a href="Commandes.html">📋 &nbsp;Mes commandes</a>
     </aside>
-    
 
-  
   <main class="main">
 
-    
     <div class="cart-header">
       <span>PRODUITS</span>
       <span><span class="swaps">SWAPS</span> dépensés</span>
     </div>
 
-    
     <div class="item-wrap" id="iw1">
       <div class="item-removed" id="rm1">
         Article retiré &nbsp;<a href="#iw1" class="undo">↩ Annuler</a>
       </div>
       <div class="cart-item">
-        <div class="item-img"><span><img src="images/product1.jpg" ></span></div>
+        <div class="item-img"><img src="cl1.png" ></div>
         <div class="item-info">
-          <div class="item-name">Product name</div>
-          <div class="item-sub">Lorem: 8</div>
+          <div class="item-name">Combinaison Velours Bébé</div>
+          <div class="item-sub">Taille : 12 mois · Couleur : Écru</div>
           <a href="#rm1" class="item-remove">✕ Supprimer</a>
         </div>
         <div class="item-price">
@@ -75,19 +71,17 @@
       </div>
     </div>
 
-    
     <div class="item-sep"></div>
 
-    
     <div class="item-wrap" id="iw2">
       <div class="item-removed" id="rm2">
         Article retiré &nbsp;<a href="#iw2" class="undo">↩ Annuler</a>
       </div>
       <div class="cart-item">
-        <div class="item-img"><span><img src="images/product2.jpg" ></span></div>
+        <div class="item-img"><img src="cl2.png" ></div>
         <div class="item-info">
-          <div class="item-name">Product name</div>
-          <div class="item-sub">Lorem: 8</div>
+          <div class="item-name">Robe Fleurie Fille</div>
+          <div class="item-sub">Taille : 4 ans · Couleur : Rose</div>
           <a href="#rm2" class="item-remove">✕ Supprimer</a>
         </div>
         <div class="item-price">
@@ -96,7 +90,6 @@
       </div>
     </div>
 
-    
     <div class="subtotal-row">
       Sous-total: &nbsp; 200.00 &nbsp; <span class="coin">ii</span>
     </div>
@@ -104,7 +97,6 @@
       Taxes et frais de livraison calculés lors du paiement.
     </div>
 
-    <!-- Footer actions -->
     <div class="cart-footer">
       <a href="page acceuil.html" class="btn-back">‹ Retour aux articles</a>
       <div class="cart-btns">

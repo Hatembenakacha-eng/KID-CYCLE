@@ -2,7 +2,6 @@
 
 .addr-toggle { display: none; }
 
-
 .order-card {
   background: white; border-radius: 16px;
   padding: 22px 24px; position: relative;
@@ -25,8 +24,8 @@
   transition: background .2s;
 }
 .validation-icon {
-  height: 40px; 
-  width: auto; 
+  height: 40px;
+  width: auto;
   margin-bottom: 5px;
 }
 .info-btn:hover { background: var(--purple); }
@@ -42,14 +41,11 @@
 .tag-price { border-color: var(--gold); color: var(--text-dark); }
 .order-address { font-size: 13px; color: var(--text-mid); margin-bottom: 14px; }
 
-
 .order-btns { display: flex; gap: 10px; }
-
 
 .addr-lbl { cursor: pointer; min-width: 180px; }
 .lbl-valider { display: inline; }
 .lbl-validee { display: none; }
-
 
 .addr-toggle:checked ~ .order-btns .addr-lbl { background: #6bbd8a; cursor: default; pointer-events: none; }
 .addr-toggle:checked ~ .order-btns .addr-lbl .lbl-valider { display: none; }
@@ -71,7 +67,7 @@
 .addr-toggle:checked ~ .order-btns .btn-confirm:hover { background: var(--purple); border-color: var(--purple); }
 
 .order-detail {
-  display: none; 
+  display: none;
   margin-top: 18px; padding-top: 16px;
   border-top: 1.5px dashed var(--border);
   font-size: 13px; color: var(--text-mid); line-height: 2;

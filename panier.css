@@ -1,8 +1,3 @@
-/* ================================
-   mon-panier.css
-   ================================ */
-
-/* ── Reset ── */
 * {
   margin: 0;
   padding: 0;
@@ -16,7 +11,6 @@ body {
   font-size: 14px;
 }
 
-/* ── Navbar ── */
 .navbar {
   background: #fff;
   margin: 16px 24px;
@@ -163,7 +157,6 @@ body {
   background: #9e8cc4;
 }
 
-/* ── Page title ── */
 .page-title {
   text-align: center;
   font-size: 26px;
@@ -172,7 +165,6 @@ body {
   margin: 24px 0 28px;
 }
 
-/* ── Layout ── */
 .layout {
   display: flex;
   gap: 24px;
@@ -180,7 +172,6 @@ body {
   align-items: flex-start;
 }
 
-/* ── Sidebar ── */
 .sidebar {
   background: #fff;
   border-radius: 14px;
@@ -235,12 +226,10 @@ body {
   flex-shrink: 0;
 }
 
-/* ── Main content ── */
 .main {
   flex: 1;
 }
 
-/* ── Cart table header ── */
 .cart-header {
   display: flex;
   justify-content: space-between;
@@ -261,7 +250,6 @@ body {
   font-weight: 800;
 }
 
-/* ── Item wrapper ── */
 .item-wrap {
   border: 1px solid #ebebeb;
   border-top: none;
@@ -271,7 +259,6 @@ body {
   border-radius: 0 0 8px 8px;
 }
 
-/* Supprimer via :target */
 .item-removed {
   display: none;
   padding: 18px 20px;
@@ -297,7 +284,6 @@ body {
   cursor: pointer;
 }
 
-/* ── Cart item ── */
 .cart-item {
   background: #fff;
   padding: 20px 20px;
@@ -311,7 +297,6 @@ body {
   background: #fafafa;
 }
 
-/* Separator between items */
 .item-sep {
   height: 1px;
   background: #ebebeb;
@@ -322,21 +307,17 @@ body {
   width: 76px;
   height: 76px;
   background: #f5f5f5;
-  border: 2px dashed #e0e0e0;
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-size: 9px;
-  color: #ccc;
-  font-weight: 700;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
-.item-img span {
-  font-size: 22px;
+.item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
 }
 
 .item-info {
@@ -395,7 +376,6 @@ body {
   font-weight: 800;
 }
 
-/* ── Sous-total ── */
 .subtotal-row {
   display: flex;
   justify-content: flex-end;
@@ -414,7 +394,6 @@ body {
   padding: 0 20px 22px;
 }
 
-/* ── Footer ── */
 .cart-footer {
   display: flex;
   align-items: center;

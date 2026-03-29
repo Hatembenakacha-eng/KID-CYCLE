@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modifier Profil - SwAPii</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="modifier profile.css">
+</head>
+<body>
+
+<header class="topnav">
+<img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="page acceuil.html">Acheter maintenant</a>
+
+    <a href="Nouveautes.html">Nouveautés</a>
+
+    <a href="Vente.html">Vente</a>
+
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+  <h2>Mon compte</h2>
+  <ul class="sidebar-menu">
+    <li class="active"><a href="profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></span> Mon profil</a></li>
+    <li class=""><a href="favoris profile.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
+    <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
+    <li class=""><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
+    <li class=""><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
+    <li class=""><a href="#"><span class="menu-ico">💬</span> Mes Chats</a></li>
+
+  </ul>
+  <div class="swaps-bar">
+    <span class="swaps-ico">ℹ</span>
+    Mes <strong>SWAPS</strong> disponible: 500.00
+    <span class="coin">ii</span>
+  </div>
+</aside>
+
+  <main class="main">
+    <div class="edit-card">
+
+      <div class="avatar-wrap">
+        <div class="avatar"><img class="avatar-photo" src="images/icon-avatar.svg" alt="Photo de profil"></div>
+        <div class="avatar-edit">✏️</div>
+      </div>
+
+      <div class="section-label">Informations personnels</div>
+      <div class="form-section">
+        <div class="form-row">
+          <div class="form-group">
+            <div class="field-label">Nom</div>
+            <input type="text" class="field-input" value="Karina">
+          </div>
+          <div class="form-group">
+            <div class="field-label">Prénom</div>
+            <input type="text" class="field-input" value="Clarck">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="field-label">Email</div>
+            <input type="email" class="field-input" value="karina.clarck@gmail.com">
+          </div>
+          <div class="form-group">
+            <div class="field-label">Numéro de téléphone</div>
+            <input type="text" class="field-input" value="(+33) 123 45 67 89">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group" style="flex:1;">
+            <div class="field-label">Adresse</div>
+            <input type="text" class="field-input" value="12 Rue de la République, Paris France">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">Mot de passe</div>
+      <div class="form-section">
+        <div class="field-label">Ancien mot de passe</div>
+        <input type="password" class="field-input" placeholder="··············" style="margin-bottom:14px;">
+        <div class="field-label">Nouveau mot de passe</div>
+        <input type="password" class="field-input" placeholder="··············" style="margin-bottom:14px;">
+        <div class="field-label">Confirmer le nouveau mot de passe</div>
+        <input type="password" class="field-input" placeholder="··············">
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div class="bottom-bar">
+  <a href="mon-profil.html"><button class="btn-save">Enregistrer les modifications</button></a>
+</div>
+
+</body>
+</html>

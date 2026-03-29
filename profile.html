@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Profil - SwAPii</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+<header class="topnav">
+<img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="page acceuil.html">Acheter maintenant</a>
+
+    <a href="Nouveautes.html">Nouveautés</a>
+
+    <a href="Vente.html">Vente</a>
+
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+  <h2>Mon compte</h2>
+  <ul class="sidebar-menu">
+    <li class="active"><a href="profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></span> Mon profil</a></li>
+    <li class=""><a href="favoris profile.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
+    <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
+    <li class=""><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
+    <li class=""><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
+    <li class=""><a href="#"><span class="menu-ico">💬</span> Mes Chats</a></li>
+
+  </ul>
+  <div class="swaps-bar">
+    <span class="swaps-ico">ℹ</span>
+    Mes <strong>SWAPS</strong> disponible: 500.00
+    <span class="coin">ii</span>
+  </div>
+</aside>
+
+  <main class="main">
+
+    <div class="title-row">
+      <h1 class="page-title">Mes données</h1>
+      <div class="dots-wrap">
+        <a href="#dropdown-profil" class="dots-btn">···</a>
+        <div class="dropdown" id="dropdown-profil">
+          <a href="modifier profile.html">✏️ Modifier Mon Profile</a>
+          <a href="#modal-delete">🗑️ Supprimer Mon Profile</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-info">
+        <div class="avatar">
+          <img class="avatar-photo" src="images/icon-avatar.svg" alt="Photo de profil">
+        </div>
+        <div>
+          <div class="profile-name">
+            Karina clarck
+            <span class="verified-badge">✓</span>
+          </div>
+          <div class="profile-detail"><span>Email :</span> Karina.clarck@gmail.com</div>
+          <div class="profile-detail"><span>Téléphone :</span> (+33) 123 45 67 89</div>
+        </div>
+        <div class="profile-right">
+          <div class="label">Location :</div>
+          <div class="value">12 Rue de la République</div>
+          <div class="label" style="margin-top:10px;">Membre depuis :</div>
+          <div class="value">août 2022</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">Mon abonnement</div>
+    <div class="abo-card">
+      <div class="abo-name">Abonnement "Premium"</div>
+      <div class="abo-price">49 € <span>/an</span></div>
+      <div class="abo-detail"><strong>Date d'activation :</strong> 28-09-2024</div>
+      <div class="abo-detail"><strong>Date de renouvellement prochain :</strong> 28-09-2025</div>
+      <div class="abo-detail" style="margin-top:10px;"><strong>Les détails de l'abonnement :</strong></div>
+      <div class="abo-details-txt">
+        - Compte vérifié depuis mars 2024<br>
+        - 47 articles vendus, note moyenne 4.9/5<br>
+        - Expédition sous 24h, emballage soigné<br>
+        - Livraison rapide, emballage recyclé<br>
+        - Retours acceptés sous 14 jours
+      </div>
+      <div class="abo-actions">
+        <a href="#" class="btn-modifier">Modifier</a>
+        <a href="#" class="btn-resilier">Résilier</a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modal-delete">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="delete-modal-img">🧑‍💼</div>
+    <div class="delete-modal-title">Vous souhaitez supprimer<br>votre compte Swappi ?</div>
+    <div class="delete-modal-text">Avant de continuer, veuillez noter que cette action est définitive. Certaines conditions s'appliquent pour la suppression de votre compte</div>
+    <div class="delete-check">
+      <input type="checkbox"> Accepter <a href="#">les conditions de suppression</a>
+    </div>
+    <div class="modal-actions">
+      <a href="#" class="btn-annuler">Annuler</a>
+      <a href="#" class="btn-supprimer">Supprimer</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

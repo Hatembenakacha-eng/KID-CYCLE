@@ -9,23 +9,24 @@
 </head>
 <body>
 
-
 <header class="topnav">
   <img class="logo" src="images/Kidcycle.png" />
   <div class="nav-links">
-    <a href="detail produit.html">Acheter maintenant</a>
+    <a href="page acceuil.html">Acheter maintenant</a>
+
     <a href="Nouveautes.html">Nouveautés</a>
 
+    <a href="Vente.html">Vente</a>
 
-    <a href="#">Vente</a>
     <a href="produits.html">Mes produits</a>
   </div>
   <div class="nav-right">
     <a href="panier.html" class="btn-cart active">
-      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
-    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+
     <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
     <div class="search-wrap">
       <input type="text" placeholder="Search" />
@@ -36,7 +37,6 @@
 
 <div class="page-wrap">
 
-  
   <div class="stepper">
     <span class="step active">
       <span class="step-num">1</span> Livraison
@@ -46,28 +46,23 @@
     </a>
   </div>
 
-  
   <div class="checkout-layout">
 
-    
     <div class="left-col">
 
       <h2 class="section-title">Adresse de livraison</h2>
 
-      
       <div class="addr-field">
         <span class="addr-field-label">Mon adresse</span>
         <input type="text" placeholder="Livraison àQPWP+...">
-        <span class="addr-pin">📍</span>
+        <span class="addr-pin"><img class="nav-emoji-icon" src="images/icon-pin.svg" alt="adresse"></span>
       </div>
-      <p class="addr-note">Lorem Ipsum is simply dummy text of the printing ..</p>
+      <p class="addr-note">Votre adresse de livraison principale enregistrée.</p>
 
-      
       <a href="#modal-addr" class="btn-modifier">Modifier mon adresse</a>
 
       <h2 class="expedition-title">Expedition</h2>
 
-      
       <label class="expedition-option">
         <input type="checkbox" class="exp-cb" id="exp1">
         <label for="exp1" class="exp-label">
@@ -80,7 +75,6 @@
         </label>
       </label>
 
-      
       <label class="expedition-option">
         <input type="checkbox" class="exp-cb" id="exp2">
         <label for="exp2" class="exp-label">
@@ -95,7 +89,6 @@
 
     </div>
 
-    
     <aside class="right-col">
       <div class="recap-title">
         Récapitulatif <span class="prix">Prix</span> <span class="ttc">TTC</span>
@@ -106,43 +99,39 @@
         <span>9</span>
       </div>
 
-      
       <div class="recap-removed" id="rr1">Retiré &nbsp;<a href="#rc1" class="undo">↩</a></div>
       <div class="recap-item" id="rc1">
-        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-img"><img src="cl1.png" alt="produit"></div>
         <div class="recap-info">
-          <div class="recap-name">Nom du produit</div>
-          <div class="recap-sub">Lorem: 8</div>
+          <div class="recap-name">Combinaison Velours Bébé</div>
+          <div class="recap-sub">Taille : 12 mois · Qté : 1</div>
           <a href="#rr1" class="recap-remove">✕ Supprimer</a>
         </div>
         <div class="recap-price">200.00 <span class="coin">ii</span></div>
       </div>
 
-      
       <div class="recap-removed" id="rr2">Retiré &nbsp;<a href="#rc2" class="undo">↩</a></div>
       <div class="recap-item" id="rc2">
-        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-img"><img src="cl2.png" alt="produit"></div>
         <div class="recap-info">
-          <div class="recap-name">Nom du produit</div>
-          <div class="recap-sub">Lorem: 8</div>
+          <div class="recap-name">Robe Fleurie Fille</div>
+          <div class="recap-sub">Taille : 4 ans · Qté : 2</div>
           <a href="#rr2" class="recap-remove">✕ Supprimer</a>
         </div>
         <div class="recap-price">200.00 <span class="coin">ii</span></div>
       </div>
 
-      
       <div class="recap-removed" id="rr3">Retiré &nbsp;<a href="#rc3" class="undo">↩</a></div>
       <div class="recap-item" id="rc3">
-        <div class="recap-img"><span>🖼️</span>img</div>
+        <div class="recap-img"><img src="cl3.png" alt="produit"></div>
         <div class="recap-info">
-          <div class="recap-name">Nom du produit</div>
-          <div class="recap-sub">Lorem: 8</div>
+          <div class="recap-name">Veste Matelassée Garçon</div>
+          <div class="recap-sub">Taille : 6 ans · Qté : 1</div>
           <a href="#rr3" class="recap-remove">✕ Supprimer</a>
         </div>
         <div class="recap-price">200.00 <span class="coin">ii</span></div>
       </div>
 
-      
       <div class="summary-block">
         <div class="summary-row total">
           <span>Total <span class="swaps-lbl">SWAPS</span></span>
@@ -168,7 +157,6 @@
   </div>
 </div>
 
-
 <div class="modal-overlay" id="modal-addr">
   <div class="modal-box">
     <a href="#" class="modal-close">✕</a>
@@ -176,13 +164,13 @@
 
     <div class="modal-label">Adresse</div>
     <input type="text" class="modal-input" placeholder="Adresse de livraison">
-    <p style="font-size:11px;color:#aaa;margin-bottom:14px;margin-top:-10px;">Lorem ipsum is simply dummy text of the printing ...</p>
+    <p style="font-size:11px;color:#aaa;margin-bottom:14px;margin-top:-10px;">Saisissez votre adresse complète pour une livraison précise.</p>
 
     <div class="modal-row">
       <div class="modal-group">
         <div class="modal-label">Num de téléphone</div>
         <div class="phone-wrap">
-          <div class="phone-flag"><span>🇫🇷</span> · +33</div>
+          <div class="phone-flag"><span class="flag-wrap"><img class="flag-icon" src="images/flag-fr.svg" alt="France"></span> · +33</div>
           <input type="text" class="phone-input" placeholder="">
         </div>
       </div>

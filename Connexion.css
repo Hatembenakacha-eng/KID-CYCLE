@@ -1,8 +1,3 @@
-/* ================================
-   connexion.css
-   ================================ */
-
-/* ── Reset ── */
 * {
   margin: 0;
   padding: 0;
@@ -24,7 +19,6 @@ body {
   overflow: hidden;
 }
 
-/* ── Background ── */
 .bg {
   position: fixed;
   inset: 0;
@@ -64,7 +58,6 @@ body {
   font-size: 13px;
 }
 
-/* ── Login card ── */
 .card {
   position: relative;
   z-index: 10;
@@ -77,7 +70,6 @@ body {
     0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* ── Titre ── */
 .card-title {
   text-align: center;
   font-size: 26px;
@@ -87,7 +79,6 @@ body {
   letter-spacing: -0.3px;
 }
 
-/* ── Champs input ── */
 .field {
   margin-bottom: 14px;
   position: relative;
@@ -120,7 +111,6 @@ body {
   padding-right: 46px;
 }
 
-/* ── Icône œil ── */
 .eye-wrap {
   position: absolute;
   right: 14px;
@@ -147,7 +137,6 @@ body {
   color: #888;
 }
 
-/* ── Ligne Se souvenir / Mot de passe oublié ── */
 .row-middle {
   display: flex;
   align-items: center;
@@ -183,7 +172,6 @@ body {
   text-decoration: underline;
 }
 
-/* ── Bouton Connecter ── */
 .btn-connect {
   display: flex;
   align-items: center;
@@ -220,7 +208,6 @@ body {
   line-height: 1;
 }
 
-/* ── Lien inscription ── */
 .signup {
   text-align: center;
   font-size: 13px;

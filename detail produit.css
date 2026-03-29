@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -11,7 +10,6 @@ body {
   color: #333;
   font-size: 14px;
 }
-
 
 .navbar {
   background: #fff;
@@ -160,16 +158,10 @@ body {
   background: #9e8cc4;
 }
 
-/* ════════════════════════════
-   PAGE WRAPPER
-════════════════════════════ */
 .page-wrap {
   padding: 28px 28px 50px;
 }
 
-/* ════════════════════════════
-   PRODUCT DETAIL SECTION
-════════════════════════════ */
 .product-section {
   display: flex;
   gap: 40px;
@@ -179,19 +171,18 @@ body {
   margin-bottom: 36px;
 }
 
-/* ── Left: galerie ── */
 .img-col {
   display: flex;
   gap: 14px;
   flex-shrink: 0;
 }
 
-/* Thumbnails colonne */
 .thumbnails {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  overflow: hidden;
 }
 
 .thumb-arrow {
@@ -208,62 +199,59 @@ body {
   color: #aaa;
   transition: background 0.2s, border-color 0.2s;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .thumb-arrow:hover {
   background: #f5f5f5;
   border-color: #b8a9d4;
   color: #b8a9d4;
+  overflow: hidden;
 }
 
 .thumb {
   width: 76px;
   height: 76px;
-  background: #f5f5f5;
+  background: #f5f4fb;
   border: 2px solid #e8e8e8;
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-size: 9px;
-  color: #ccc;
-  font-weight: 700;
+  overflow: hidden;
   cursor: pointer;
   transition: border-color 0.2s;
 }
 
 .thumb:hover {
   border-color: #b8a9d4;
+  overflow: hidden;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .thumb.active {
   border-color: #b8a9d4;
   background: #f0eef8;
+  overflow: hidden;
 }
 
-/* Image principale */
 .main-img {
   width: 340px;
   height: 340px;
-  background: #f0f0ee;
+  background: #f5f4fb;
   border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  color: #ccc;
-  font-size: 12px;
-  font-weight: 700;
+  overflow: hidden;
+}
+.main-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
-.main-img span {
-  font-size: 44px;
-}
-
-/* ── Right: infos produit ── */
 .info-col {
   flex: 1;
   padding-top: 6px;
@@ -281,7 +269,6 @@ body {
   color: #888;
 }
 
-/* Labels violet */
 .info-label {
   font-size: 14px;
   font-weight: 700;
@@ -289,7 +276,6 @@ body {
   margin-bottom: 5px;
 }
 
-/* Valeurs */
 .info-value {
   font-size: 13px;
   color: #555;
@@ -297,14 +283,12 @@ body {
   line-height: 1.6;
 }
 
-/* Ligne Genre + Catégorie côte à côte */
 .info-row {
   display: flex;
   gap: 50px;
   margin-bottom: 16px;
 }
 
-/* ── Sélecteur de taille ── */
 .taille-wrap {
   display: flex;
   gap: 8px;
@@ -312,7 +296,6 @@ body {
   flex-wrap: wrap;
 }
 
-/* Radio buttons cachés */
 .taille-option {
   display: none;
 }
@@ -341,7 +324,6 @@ body {
   color: #555;
 }
 
-/* ── Prix ── */
 .prix-row {
   display: flex;
   align-items: center;
@@ -369,7 +351,6 @@ body {
   font-family: "Nunito", sans-serif;
 }
 
-/* ── Bouton Ajouter au panier ── */
 .btn-cart-add {
   display: flex;
   align-items: center;
@@ -395,7 +376,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* État ajouté au panier via :target */
 .cart-added {
   display: none;
   background: #edfaed;
@@ -422,9 +402,6 @@ body {
   text-decoration: underline;
 }
 
-/* ════════════════════════════
-   MORE PRODUCTS SECTION
-════════════════════════════ */
 .more-section {
   background: #fff;
   border-radius: 16px;
@@ -457,14 +434,12 @@ body {
   text-decoration: underline;
 }
 
-/* Grille 5 colonnes */
 .more-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 12px;
 }
 
-/* Mini card */
 .mini-card {
   background: #f8f8f8;
   border-radius: 10px;
@@ -478,7 +453,6 @@ body {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
-/* Cœur favori */
 .mini-heart {
   position: absolute;
   top: 10px;
@@ -496,26 +470,14 @@ body {
   color: #f5a623;
 }
 
-/* Image mini */
 .mini-img {
   width: 100%;
   height: 130px;
-  background: #f0f0f0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  color: #ccc;
-  font-size: 9px;
-  font-weight: 700;
+  object-fit: contain;
+  display: block;
+  background: #f5f4fb;
 }
 
-.mini-img span {
-  font-size: 22px;
-}
-
-/* Body mini card */
 .mini-body {
   padding: 10px 10px 12px;
 }

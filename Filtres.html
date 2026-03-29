@@ -12,19 +12,21 @@
 <header class="topnav">
   <img class="logo" src="images/Kidcycle.png" />
   <div class="nav-links">
-    <a href="detail produit.html">Acheter maintenant</a>
+    <a href="page acceuil.html">Acheter maintenant</a>
+
     <a href="Nouveautes.html">Nouveautés</a>
 
+    <a href="Vente.html">Vente</a>
 
-    <a href="#">Vente</a>
     <a href="produits.html">Mes produits</a>
   </div>
   <div class="nav-right">
     <a href="panier.html" class="btn-cart active">
-      <span>🛒</span> Mon Panier <span class="nav-badge">2</span>
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris">♡</a>
-    <a href="profil.html" class="nav-icon" title="Mon compte">👤</a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+
     <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
     <div class="search-wrap">
       <input type="text" placeholder="Search" />
@@ -35,46 +37,41 @@
 
 <div class="page-wrap">
 
-
   <div class="filters-topbar">
     <span class="filters-label">Filters</span>
-    <!-- "Tout effacer" = lien vers la page elle-même sans fragment, ce qui reset les :target -->
+
     <a href="filters.html" class="btn-clear">Tout effacer 🗑</a>
   </div>
 
   <div class="filters-layout">
 
-    <!-- ══ PANNEAU FILTRES (checkbox hack pour collapsibles) ══ -->
     <aside class="filter-panel">
 
-      <!-- CATÉGORIE -->
       <div class="filter-section">
         <input type="checkbox" id="toggle-cat" class="section-toggle" checked />
         <label for="toggle-cat" class="section-header">
           Catégorie <span class="chevron">▲</span>
         </label>
         <div class="section-body">
-          <label class="filter-row"><input type="checkbox" checked /> Lorem <span class="count">(18)</span></label>
-          <label class="filter-row"><input type="checkbox" checked /> Lorem <span class="count">(12)</span></label>
-          <label class="filter-row"><input type="checkbox" /> Lorem <span class="count">(23)</span></label>
-          <label class="filter-row"><input type="checkbox" /> Lorem <span class="count">(67)</span></label>
-          <label class="filter-row"><input type="checkbox" /> Lorem <span class="count">(34)</span></label>
+          <label class="filter-row"><input type="checkbox" checked /> Bébé (0-2 ans) <span class="count">(18)</span></label>
+          <label class="filter-row"><input type="checkbox" checked /> Fille (2-8 ans) <span class="count">(12)</span></label>
+          <label class="filter-row"><input type="checkbox" /> Garçon (2-8 ans) <span class="count">(23)</span></label>
+          <label class="filter-row"><input type="checkbox" /> Junior (8-14 ans) <span class="count">(67)</span></label>
+          <label class="filter-row"><input type="checkbox" /> Unisexe <span class="count">(34)</span></label>
         </div>
       </div>
 
-      <!-- GENRE -->
       <div class="filter-section">
         <input type="checkbox" id="toggle-genre" class="section-toggle" checked />
         <label for="toggle-genre" class="section-header">
           Genre <span class="chevron">▲</span>
         </label>
         <div class="section-body">
-          <label class="filter-row"><input type="checkbox" /> Lorem</label>
-          <label class="filter-row"><input type="checkbox" checked /> Lorem</label>
+          <label class="filter-row"><input type="checkbox" /> Fille</label>
+          <label class="filter-row"><input type="checkbox" checked /> Garçon</label>
         </div>
       </div>
 
-      <!-- TAILLE -->
       <div class="filter-section">
         <input type="checkbox" id="toggle-taille" class="section-toggle" checked />
         <label for="toggle-taille" class="section-header">
@@ -89,21 +86,19 @@
         </div>
       </div>
 
-      <!-- ÉTAT -->
       <div class="filter-section no-border">
         <input type="checkbox" id="toggle-etat" class="section-toggle" checked />
         <label for="toggle-etat" class="section-header">
           État <span class="chevron">▲</span>
         </label>
         <div class="section-body">
-          <label class="filter-row"><input type="checkbox" /> Lorem</label>
-          <label class="filter-row"><input type="checkbox" checked /> Lorem</label>
+          <label class="filter-row"><input type="checkbox" /> Fille</label>
+          <label class="filter-row"><input type="checkbox" checked /> Garçon</label>
         </div>
       </div>
 
     </aside>
 
-    <!-- ══ ÉTAT VIDE ══ -->
     <div class="empty-state">
       <svg width="120" height="140" viewBox="0 0 120 140" fill="none">
         <path d="M30 50 Q20 50 18 65 L10 120 Q8 135 25 135 L95 135 Q112 135 110 120 L102 65 Q100 50 90 50 Z"

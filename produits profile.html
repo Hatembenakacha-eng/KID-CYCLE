@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Produits - SwAPii</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="produits profile.css">
+</head>
+<body>
+<header class="topnav">
+<img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="page acceuil.html">Acheter maintenant</a>
+
+    <a href="Nouveautes.html">Nouveautés</a>
+
+    <a href="Vente.html">Vente</a>
+
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+  <h2>Mon compte</h2>
+  <ul class="sidebar-menu"><li class=""><a href="profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></span> Mon profil</a></li>
+    <li class=""><a href="favoris profile.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
+    <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
+    <li class="active"><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
+    <li class=""><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
+    <li class=""><a href="#"><span class="menu-ico">💬</span> Mes Chats</a></li>
+    </ul>
+  <div class="swaps-bar">
+    <span class="swaps-ico">ℹ</span>
+    <strong>SWAPS</strong> disponible: 500.00 <span class="coin">ii</span>
+  </div>
+</aside>
+  <main class="main">
+    <div class="page-header">
+      <h1 class="page-title">Mes produits</h1>
+      <a href="ajout produit.html" class="btn-add-product">+ Ajouter un produit</a>
+    </div>
+    <div class="products-grid">
+  <div class="card-wrap" id="cw1">
+    <div class="state-removed" id="del1">✓ Annulé &nbsp;<a href="#cw1" class="undo">↩ Rétablir</a></div>
+    <div class="product-card">
+      <span class="badge">En attente de validation</span>
+      <a href="detail produit.html"><img class="prod-img" src="cl1.png" alt="produit" /></a>
+      <div class="prod-body">
+        <div class="prod-top">
+          <span class="prod-name">Set Baby</span>
+          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="prod-sub">5 types de set disponibles</div>
+        <div class="prod-actions"><a href="#del1" class="btn-action">Annuler</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-wrap" id="cw2">
+    <div class="edit-panel" id="edit2"><h4>✏️ Modifier</h4>
+          <input class="edit-input" type="text" value="Set Baby">
+          <input class="edit-input" type="text" value="34.00">
+          <div class="edit-acts">
+            <a href="#cw2" class="btn-action">✓ Enregistrer</a>
+            <a href="#cw2" class="btn-action">Annuler</a>
+          </div></div>
+        <div class="state-removed" id="del2">🗑 Supprimé &nbsp;<a href="#cw2" class="undo">↩ Annuler</a></div>
+    <div class="product-card">
+
+      <a href="detail produit.html"><img class="prod-img" src="cl2.png" alt="produit" /></a>
+      <div class="prod-body">
+        <div class="prod-top">
+          <span class="prod-name">Set Baby</span>
+          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="prod-sub">5 types de set disponibles</div>
+        <div class="prod-actions"><a href="#edit2" class="btn-action">Modifier</a><a href="#del2" class="btn-action btn-del">Supprimer</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-wrap" id="cw3">
+    <div class="state-removed" id="del3">✓ Annulé &nbsp;<a href="#cw3" class="undo">↩ Rétablir</a></div>
+    <div class="product-card">
+      <span class="badge">En attente de validation</span>
+      <a href="detail produit.html"><img class="prod-img" src="cl3.png" alt="produit" /></a>
+      <div class="prod-body">
+        <div class="prod-top">
+          <span class="prod-name">Set Baby</span>
+          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="prod-sub">5 types de set disponibles</div>
+        <div class="prod-actions"><a href="#del3" class="btn-action">Annuler</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-wrap" id="cw4">
+    <div class="edit-panel" id="edit4"><h4>✏️ Modifier</h4>
+          <input class="edit-input" type="text" value="Set Baby">
+          <input class="edit-input" type="text" value="34.00">
+          <div class="edit-acts">
+            <a href="#cw4" class="btn-action">✓ Enregistrer</a>
+            <a href="#cw4" class="btn-action">Annuler</a>
+          </div></div>
+        <div class="state-removed" id="del4">🗑 Supprimé &nbsp;<a href="#cw4" class="undo">↩ Annuler</a></div>
+    <div class="product-card">
+
+      <a href="detail produit.html"><img class="prod-img" src="cl4.png" alt="produit" /></a>
+      <div class="prod-body">
+        <div class="prod-top">
+          <span class="prod-name">Set Baby</span>
+          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="prod-sub">5 types de set disponibles</div>
+        <div class="prod-actions"><a href="#edit4" class="btn-action">Modifier</a><a href="#del4" class="btn-action btn-del">Supprimer</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-wrap" id="cw5">
+    <div class="state-removed" id="del5">✓ Annulé &nbsp;<a href="#cw5" class="undo">↩ Rétablir</a></div>
+    <div class="product-card">
+      <span class="badge">En attente de validation</span>
+      <a href="detail produit.html"><img class="prod-img" src="cl5.png" alt="produit" /></a>
+      <div class="prod-body">
+        <div class="prod-top">
+          <span class="prod-name">Set Baby</span>
+          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="prod-sub">5 types de set disponibles</div>
+        <div class="prod-actions"><a href="#del5" class="btn-action">Annuler</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-wrap" id="cw6">
+    <div class="edit-panel" id="edit6"><h4>✏️ Modifier</h4>
+          <input class="edit-input" type="text" value="Set Baby">
+          <input class="edit-input" type="text" value="34.00">
+          <div class="edit-acts">
+            <a href="#cw6" class="btn-action">✓ Enregistrer</a>
+            <a href="#cw6" class="btn-action">Annuler</a>
+          </div></div>
+        <div class="state-removed" id="del6">🗑 Supprimé &nbsp;<a href="#cw6" class="undo">↩ Annuler</a></div>
+    <div class="product-card">
+
+      <a href="detail produit.html"><img class="prod-img" src="cl1.png" alt="produit" /></a>
+      <div class="prod-body">
+        <div class="prod-top">
+          <span class="prod-name">Set Baby</span>
+          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="prod-sub">5 types de set disponibles</div>
+        <div class="prod-actions"><a href="#edit6" class="btn-action">Modifier</a><a href="#del6" class="btn-action btn-del">Supprimer</a></div>
+      </div>
+    </div>
+  </div></div>
+  </main>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Favoris</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="favoris profile.css">
+</head>
+<body>
+<header class="topnav">
+<img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="page acceuil.html">Acheter maintenant</a>
+
+    <a href="Nouveautes.html">Nouveautés</a>
+
+    <a href="Vente.html">Vente</a>
+
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+<div class="layout">
+  <aside class="sidebar">
+  <h2>Mon compte</h2>
+  <ul class="sidebar-menu"><li class=""><a href="profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></span> Mon profil</a></li>
+    <li class="active"><a href="favoris profile.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
+    <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
+    <li class=""><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
+    <li class=""><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
+    <li class=""><a href="#"><span class="menu-ico">💬</span> Mes Chats</a></li>
+    </ul>
+  <div class="swaps-bar">
+    <span class="swaps-ico">ℹ</span>
+    <strong>SWAPS</strong> disponible: 500.00 <span class="coin">ii</span>
+  </div>
+</aside>
+  <main class="main">
+    <h1 class="page-title">Mes favoris</h1>
+    <div class="products-grid">
+
+  <div class="fav-wrap">
+    <div class="fav-removed" id="rm1">💔 Retiré des favoris &nbsp;<a href="#fc1" class="undo">↩ Rétablir</a></div>
+    <div class="fav-card" id="fc1">
+      <a href="#rm1" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart-fill.svg" alt="favoris"></a>
+      <a href="detail produit.html"><img class="fav-img" src="cl1.png" alt="produit" /></a>
+      <div class="fav-body">
+        <div class="fav-top">
+          <span class="fav-name">Set Baby</span>
+          <span class="fav-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="fav-sub">5 types de set disponibles</div>
+        <div class="cart-done" id="ic1">✓ Dans mon panier &nbsp;<a href="#fc1" class="undo" style="font-size:11px;">Retirer</a></div>
+        <a href='#ic1' class='btn-add'>Ajouter au panier</a>
+      </div>
+    </div>
+  </div>
+  <div class="fav-wrap">
+    <div class="fav-removed" id="rm2">💔 Retiré des favoris &nbsp;<a href="#fc2" class="undo">↩ Rétablir</a></div>
+    <div class="fav-card" id="fc2">
+      <a href="#rm2" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart-fill.svg" alt="favoris"></a>
+      <a href="detail produit.html"><img class="fav-img" src="cl2.png" alt="produit" /></a>
+      <div class="fav-body">
+        <div class="fav-top">
+          <span class="fav-name">Set Baby</span>
+          <span class="fav-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="fav-sub">5 types de set disponibles</div>
+        <div class="cart-done" id="ic2">✓ Dans mon panier &nbsp;<a href="#fc2" class="undo" style="font-size:11px;">Retirer</a></div>
+        <a href='#ic2' class='btn-add'>Ajouter au panier</a>
+      </div>
+    </div>
+  </div>
+  <div class="fav-wrap">
+    <div class="fav-removed" id="rm3">💔 Retiré des favoris &nbsp;<a href="#fc3" class="undo">↩ Rétablir</a></div>
+    <div class="fav-card" id="fc3">
+      <a href="#rm3" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart-fill.svg" alt="favoris"></a>
+      <a href="detail produit.html"><img class="fav-img" src="cl3.png" alt="produit" /></a>
+      <div class="fav-body">
+        <div class="fav-top">
+          <span class="fav-name">Set Baby</span>
+          <span class="fav-price"><span class="coin">ii</span> 34.00</span>
+        </div>
+        <div class="fav-sub">5 types de set disponibles</div>
+        <div class="cart-done" id="ic3">✓ Dans mon panier &nbsp;<a href="#fc3" class="undo" style="font-size:11px;">Retirer</a></div>
+        <a href='#' class='btn-dans'>Dans mon panier</a>
+      </div>
+    </div>
+  </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -8,10 +8,6 @@ body {
   margin: 0;
 }
 
-
-
-
-/* NAVBAR */
 .navbar {
   background: white;
   height: 70px;
@@ -22,20 +18,16 @@ body {
   box-shadow: 0 2px 12px rgba(0,0,0,0.05);
 }
 
-
-/* LEFT */
 .nav-left {
   display: flex;
   align-items: center;
   gap: 35px;
 }
 
-
 .logo img {
   height: 32px;
   display: block;
 }
-
 
 .nav-links a {
   margin-right: 22px;
@@ -44,21 +36,16 @@ body {
   font-size: 14px;
 }
 
-
 .nav-links a:hover {
   color: #9b8bdc;
 }
 
-
-/* RIGHT */
 .nav-right {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-
-/* CART */
 .cart {
   text-decoration: none;
   background: #f3f1fb;
@@ -71,13 +58,10 @@ body {
   gap: 6px;
 }
 
-
 .cart:hover {
   background: #e8e5fa;
 }
 
-
-/* ICON BUTTONS */
 .icon-btn {
   width: 36px;
   height: 36px;
@@ -88,12 +72,6 @@ body {
   font-size: 16px;
 }
 
-
-
-
-
-
-/* SEARCH */
 .search-box {
   display: flex;
   align-items: center;
@@ -101,7 +79,6 @@ body {
   border-radius: 20px;
   overflow: hidden;
 }
-
 
 .search-box input {
   border: none;
@@ -111,7 +88,6 @@ body {
   width: 140px;
 }
 
-
 .search-btn {
   border: none;
   background: #9b8bdc;
@@ -120,8 +96,6 @@ body {
   cursor: pointer;
 }
 
-
-/* MAIN */
 .container {
   padding: 40px;
 }
@@ -135,7 +109,6 @@ body {
   border-radius: 12px;
 }
 
-/* FORM */
 .form label {
   display: block;
   margin-top: 15px;
@@ -163,7 +136,6 @@ textarea {
   margin-top: 5px;
 }
 
-/* PHOTOS */
 .photos h3 {
   margin-bottom: 15px;
 }
@@ -197,7 +169,6 @@ textarea {
   background: #fafafa;
 }
 
-/* BUTTON */
 .publish {
   margin-top: 30px;
   width: 100%;

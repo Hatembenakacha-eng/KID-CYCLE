@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Commandes - SwAPii</title>
+  <link rel="stylesheet" href="Shared.css">
+  <link rel="stylesheet" href="Mes commande profile.css">
+</head>
+<body>
+
+<header class="topnav">
+<img class="logo" src="images/Kidcycle.png" />
+  <div class="nav-links">
+    <a href="page acceuil.html">Acheter maintenant</a>
+
+    <a href="Nouveautes.html">Nouveautés</a>
+
+    <a href="Vente.html">Vente</a>
+
+    <a href="produits.html">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart active">
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+
+    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+  <h2>Mon compte</h2>
+  <ul class="sidebar-menu">
+    <li class=""><a href="profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></span> Mon profil</a></li>
+    <li class=""><a href="favoris profile.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
+    <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
+    <li class=""><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
+    <li class="active"><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
+    <li class=""><a href="#"><span class="menu-ico">💬</span> Mes Chats</a></li>
+
+  </ul>
+  <div class="swaps-bar">
+    <span class="swaps-ico">ℹ</span>
+    Mes <strong>SWAPS</strong> disponible: 500.00
+    <span class="coin">ii</span>
+  </div>
+</aside>
+
+  <main class="main">
+    <h1 class="page-title">Mes commandes</h1>
+
+    <div class="tabs">
+      <input type="radio" name="tab" id="t1" class="tab-cb">
+      <label for="t1" class="tab-lbl">Commandes en cours</label>
+      <input type="radio" name="tab" id="t2" class="tab-cb" checked>
+      <label for="t2" class="tab-lbl">Commandes livrées</label>
+      <input type="radio" name="tab" id="t3" class="tab-cb">
+      <label for="t3" class="tab-lbl">Commandes annuler</label>
+    </div>
+
+  <div class="order-wrap">
+    <div class="order-card">
+      <a href="#modal-confirm1" class="order-info-btn">i</a>
+      <div class="order-id">#P-024688254</div>
+      <div class="order-row">
+        <div class="order-tags">
+          <span class="tag">5 Articles</span>
+          <span class="tag">En cours de livraison</span>
+          <span class="price-tag"><span class="coin-sm">ii</span> 500.00</span>
+        </div>
+        <div class="order-actions">
+          <a href="#modal-confirm1" class="btn-confirm">Confirmer la réception du coli</a>
+          <a href="#" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
+        </div>
+      </div>
+      <div class="order-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
+    </div>
+  </div>
+
+  <div class="order-wrap">
+    <div class="order-card">
+      <a href="#modal-confirm2" class="order-info-btn">i</a>
+      <div class="order-id">#P-024688254</div>
+      <div class="order-row">
+        <div class="order-tags">
+          <span class="tag">5 Articles</span>
+          <span class="tag">Livré</span>
+          <span class="price-tag"><span class="coin-sm">ii</span> 500.00</span>
+        </div>
+        <div class="order-actions">
+
+          <a href="#" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
+        </div>
+      </div>
+      <div class="order-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
+    </div>
+  </div>
+
+  <div class="order-wrap">
+    <div class="order-card">
+      <a href="#modal-confirm3" class="order-info-btn">i</a>
+      <div class="order-id">#P-024688254</div>
+      <div class="order-row">
+        <div class="order-tags">
+          <span class="tag">5 Articles</span>
+          <span class="tag">En préparation</span>
+          <span class="price-tag"><span class="coin-sm">ii</span> 500.00</span>
+        </div>
+        <div class="order-actions">
+
+          <a href="#" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
+        </div>
+      </div>
+      <div class="order-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
+    </div>
+  </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modal-confirm1">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Confirmer la réception de votre colis</div>
+    <div class="modal-order-id">
+      <div class="oid">#P-024688254</div>
+      <div class="modal-order-tags">
+        <span class="tag" style="font-size:11px;padding:3px 9px;">5 Articles</span>
+        <span class="tag" style="font-size:11px;padding:3px 9px;">En cours de livraison</span>
+        <span class="price-tag" style="font-size:11px;"><span class="coin-sm">ii</span> 500.00</span>
+      </div>
+      <div class="modal-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
+    </div>
+    <div class="items-grid">
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl1.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Combinaison Velours Bébé</div>
+        <div class="item-sub">Velours · 0–24 mois</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl2.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Robe Fleurie Fille</div>
+        <div class="item-sub">Coton bio · 2–8 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl3.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Veste Matelassée Garçon</div>
+        <div class="item-sub">Ajusté · 3–10 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl4.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Pyjama 2 Pièces Étoiles</div>
+        <div class="item-sub">OEKO-TEX · 6 mois–4 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl5.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Ensemble Jogger Enfant</div>
+        <div class="item-sub">Sweat + pantalon · 4–12 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div></div>
+    <div class="modal-bottom-actions">
+      <a href="#modal-problem1" class="btn-problem">✕ Problème avec ma commande</a>
+      <a href="#modal-review1" class="btn-received">✓ Colis reçu et articles conformes</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-confirm2">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Confirmer la réception de votre colis</div>
+    <div class="modal-order-id">
+      <div class="oid">#P-024688254</div>
+      <div class="modal-order-tags">
+        <span class="tag" style="font-size:11px;padding:3px 9px;">5 Articles</span>
+        <span class="tag" style="font-size:11px;padding:3px 9px;">Livré</span>
+        <span class="price-tag" style="font-size:11px;"><span class="coin-sm">ii</span> 500.00</span>
+      </div>
+      <div class="modal-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
+    </div>
+    <div class="items-grid">
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl1.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Manteau Capuche Enfant</div>
+        <div class="item-sub">Imperméable · 2–10 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl2.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Robe de Soirée Fille</div>
+        <div class="item-sub">Dentelle · 4–12 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl3.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Doudoune Légère Enfant</div>
+        <div class="item-sub">Ultralégère · 2–10 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl4.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Salopette Denim Enfant</div>
+        <div class="item-sub">100% coton · 3–12 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl5.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Combinaison Velours Bébé</div>
+        <div class="item-sub">Velours · 0–24 mois</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div></div>
+    <div class="modal-bottom-actions">
+      <a href="#modal-problem2" class="btn-problem">✕ Problème avec ma commande</a>
+      <a href="#modal-review2" class="btn-received">✓ Colis reçu et articles conformes</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-confirm3">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Confirmer la réception de votre colis</div>
+    <div class="modal-order-id">
+      <div class="oid">#P-024688254</div>
+      <div class="modal-order-tags">
+        <span class="tag" style="font-size:11px;padding:3px 9px;">5 Articles</span>
+        <span class="tag" style="font-size:11px;padding:3px 9px;">En préparation</span>
+        <span class="price-tag" style="font-size:11px;"><span class="coin-sm">ii</span> 500.00</span>
+      </div>
+      <div class="modal-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
+    </div>
+    <div class="items-grid">
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl1.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Robe Fleurie Fille</div>
+        <div class="item-sub">Coton bio · 2–8 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl2.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Veste Matelassée Garçon</div>
+        <div class="item-sub">Ajusté · 3–10 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl3.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Pyjama 2 Pièces Étoiles</div>
+        <div class="item-sub">OEKO-TEX · 6 mois–4 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl4.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Ensemble Jogger Enfant</div>
+        <div class="item-sub">Sweat + pantalon · 4–12 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div>
+    <div class="item-mini">
+      <div class="item-img-sm"><img src="cl5.png" alt="produit" /></div>
+      <div>
+        <div class="item-name">Manteau Capuche Enfant</div>
+        <div class="item-sub">Imperméable · 2–10 ans</div>
+        <div class="item-price"><span class="coin-sm">ii</span> 34.00</div>
+      </div>
+    </div></div>
+    <div class="modal-bottom-actions">
+      <a href="#modal-problem3" class="btn-problem">✕ Problème avec ma commande</a>
+      <a href="#modal-review3" class="btn-received">✓ Colis reçu et articles conformes</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-problem1">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Problème avec ma commande</div>
+    <select class="select-motif">
+      <option value="">Veuillez choisir un motif</option>
+      <option>Article manquant</option>
+      <option>Article endommagé</option>
+      <option>Article non conforme à la description</option>
+      <option>Autres</option>
+    </select>
+    <div class="textarea-lbl"><span>Laisser un commentaire</span><span>00/250</span></div>
+    <textarea class="review-textarea" placeholder=""></textarea>
+    <div class="join-img">📷 Joindre une images</div>
+    <a href="#" class="btn-envoyer">Envoyer</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-problem2">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Problème avec ma commande</div>
+    <select class="select-motif">
+      <option value="">Veuillez choisir un motif</option>
+      <option>Article manquant</option>
+      <option>Article endommagé</option>
+      <option>Article non conforme à la description</option>
+      <option>Autres</option>
+    </select>
+    <div class="textarea-lbl"><span>Laisser un commentaire</span><span>00/250</span></div>
+    <textarea class="review-textarea" placeholder=""></textarea>
+    <div class="join-img">📷 Joindre une images</div>
+    <a href="#" class="btn-envoyer">Envoyer</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-problem3">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Problème avec ma commande</div>
+    <select class="select-motif">
+      <option value="">Veuillez choisir un motif</option>
+      <option>Article manquant</option>
+      <option>Article endommagé</option>
+      <option>Article non conforme à la description</option>
+      <option>Autres</option>
+    </select>
+    <div class="textarea-lbl"><span>Laisser un commentaire</span><span>00/250</span></div>
+    <textarea class="review-textarea" placeholder=""></textarea>
+    <div class="join-img">📷 Joindre une images</div>
+    <a href="#" class="btn-envoyer">Envoyer</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-review1">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Colis reçu et articles conformes</div>
+    <div style="font-size:13px;font-weight:700;color:#555;text-align:center;margin-bottom:4px;">Évaluez votre expérience avec [Nom du profil]</div>
+    <div class="stars">
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+    </div>
+    <div class="textarea-lbl"><span>Laisser un commentaire</span><span>00/250</span></div>
+    <textarea class="review-textarea" placeholder=""></textarea>
+    <a href="#modal-success1" class="btn-envoyer">Envoyer</a>
+    <a href="#" class="skip-link">Confirmer la reception du colis sans laisser un avis</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-review2">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Colis reçu et articles conformes</div>
+    <div style="font-size:13px;font-weight:700;color:#555;text-align:center;margin-bottom:4px;">Évaluez votre expérience avec [Nom du profil]</div>
+    <div class="stars">
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+    </div>
+    <div class="textarea-lbl"><span>Laisser un commentaire</span><span>00/250</span></div>
+    <textarea class="review-textarea" placeholder=""></textarea>
+    <a href="#modal-success2" class="btn-envoyer">Envoyer</a>
+    <a href="#" class="skip-link">Confirmer la reception du colis sans laisser un avis</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-review3">
+  <div class="modal-box">
+    <a href="#" class="modal-close">✕</a>
+    <div class="modal-title">Colis reçu et articles conformes</div>
+    <div style="font-size:13px;font-weight:700;color:#555;text-align:center;margin-bottom:4px;">Évaluez votre expérience avec [Nom du profil]</div>
+    <div class="stars">
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+    </div>
+    <div class="textarea-lbl"><span>Laisser un commentaire</span><span>00/250</span></div>
+    <textarea class="review-textarea" placeholder=""></textarea>
+    <a href="#modal-success3" class="btn-envoyer">Envoyer</a>
+    <a href="#" class="skip-link">Confirmer la reception du colis sans laisser un avis</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-success1">
+  <div class="modal-box">
+    <div class="success-modal">
+      <span class="success-icon">🛍️</span>
+      <div class="success-title">Votre avis à été envoyé<br>avec succès !</div>
+      <div class="success-text">Merci pour votre retour ! Votre avis a été publié et est maintenant visible sur le profil concerné.</div>
+      <a href="#" class="btn-parfait">Parfait !</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-success2">
+  <div class="modal-box">
+    <div class="success-modal">
+      <span class="success-icon">🛍️</span>
+      <div class="success-title">Votre avis à été envoyé<br>avec succès !</div>
+      <div class="success-text">Merci pour votre retour ! Votre avis a été publié et est maintenant visible sur le profil concerné.</div>
+      <a href="#" class="btn-parfait">Parfait !</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-success3">
+  <div class="modal-box">
+    <div class="success-modal">
+      <span class="success-icon">🛍️</span>
+      <div class="success-title">Votre avis à été envoyé<br>avec succès !</div>
+      <div class="success-text">Merci pour votre retour ! Votre avis a été publié et est maintenant visible sur le profil concerné.</div>
+      <a href="#" class="btn-parfait">Parfait !</a>
+    </div>
+  </div>
+</div>
+
+<a href="#" class="fab">💬</a>
+
+</body>
+</html>
