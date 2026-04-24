@@ -3,112 +3,320 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modifier Profil - KidCycle</title>
+  <title>Modifier Profil — KidCycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Shared.css">
-  <link rel="stylesheet" href="modifier profile.css">
+  <style>
+    :root{--purple:#9b8ec4;--purple-light:#b8aed8;--purple-dark:#7a6daa;--purple-bg:#ede9f7;--gold:#f5a623;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Nunito',sans-serif;background:#f4f4f6;color:#333;min-height:100vh;}
+
+    .topnav{background:#fff;display:flex;align-items:center;gap:24px;padding:0 60px;height:68px;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:200;}
+    .logo{height:44px;width:auto;cursor:pointer;transition:transform .3s;}
+    .logo:hover{transform:scale(1.05) rotate(-2deg);}
+    .nav-links{display:flex;gap:24px;flex:1;}
+    .nav-links a{text-decoration:none;color:#555;font-size:13.5px;font-weight:700;transition:color .2s;}
+    .nav-links a:hover{color:var(--purple);}
+    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+    .btn-cart{display:flex;align-items:center;gap:7px;border:1.5px solid #e8e4f4;border-radius:24px;padding:7px 14px;font-size:13px;font-weight:700;color:#666;text-decoration:none;transition:all .2s;}
+    .btn-cart:hover{border-color:var(--purple);color:var(--purple);}
+    .nav-badge{background:var(--purple-light);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;}
+    .nav-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s;}
+    .nav-icon:hover{background:var(--purple-bg);}
+    .nav-emoji-icon{width:20px;height:20px;}
+    .swaps-badge{background:linear-gradient(135deg,var(--gold),#e89a1a);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;cursor:pointer;box-shadow:0 2px 8px rgba(245,166,35,.4);}
+
+    .page-wrap{max-width:1100px;margin:36px auto;padding:0 24px;display:grid;grid-template-columns:260px 1fr;gap:24px;}
+
+    /* SIDEBAR */
+    .sidebar{background:#fff;border-radius:20px;padding:28px 20px;box-shadow:0 2px 14px rgba(0,0,0,.06);height:fit-content;position:sticky;top:90px;}
+    .sidebar-title{font-size:20px;font-weight:900;color:#222;text-align:center;margin-bottom:24px;}
+    .sidebar-menu{list-style:none;}
+    .sidebar-menu li a{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;text-decoration:none;font-size:14px;font-weight:700;color:#777;transition:all .2s;margin-bottom:4px;}
+    .sidebar-menu li a:hover{background:var(--purple-bg);color:var(--purple);}
+    .sidebar-menu li a.active{background:var(--purple);color:#fff;}
+    .sidebar-menu li a .ico{font-size:18px;width:22px;text-align:center;}
+    .sidebar-swaps{margin-top:28px;padding:14px 16px;background:linear-gradient(135deg,#fdf8ee,#fef3d0);border-radius:14px;border-left:4px solid var(--gold);}
+    .sidebar-swaps .sw-label{font-size:11px;font-weight:800;color:#c77a00;text-transform:uppercase;letter-spacing:.5px;}
+    .sidebar-swaps .sw-val{font-size:20px;font-weight:900;color:#333;margin-top:4px;display:flex;align-items:center;gap:8px;}
+    .gold-coin{width:22px;height:22px;background:linear-gradient(135deg,var(--gold),#e89a1a);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;}
+
+    /* EDIT CARD */
+    .edit-card{background:#fff;border-radius:20px;padding:32px;box-shadow:0 2px 14px rgba(0,0,0,.06);}
+
+    /* Avatar edit */
+    .avatar-edit-wrap{position:relative;width:88px;height:88px;margin-bottom:28px;cursor:pointer;}
+    .avatar-edit-img{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--purple-bg);}
+    .avatar-initials-edit{width:88px;height:88px;border-radius:50%;background:var(--purple-bg);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--purple);border:3px solid var(--purple-light);}
+    .avatar-edit-btn{position:absolute;bottom:0;right:0;width:28px;height:28px;border-radius:50%;background:var(--purple);color:#fff;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:background .2s;}
+    .avatar-edit-btn:hover{background:var(--purple-dark);}
+
+    /* Section labels */
+    .edit-section-title{font-size:15px;font-weight:900;color:#333;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #f0eef8;}
+
+    /* Fields grid */
+    .fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;}
+    .field-full{grid-column:1/-1;}
+    .form-group{display:flex;flex-direction:column;gap:6px;}
+    .form-group label{font-size:12px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.5px;}
+    .form-group input{
+      padding:13px 16px;background:#f7f5fc;border:2px solid transparent;
+      border-radius:12px;font-size:14px;font-weight:600;font-family:'Nunito',sans-serif;
+      color:#333;outline:none;transition:border-color .25s,background .25s,box-shadow .25s;
+    }
+    .form-group input:focus{border-color:var(--purple-light);background:#fff;box-shadow:0 0 0 4px rgba(155,142,196,.1);}
+    .form-group input::placeholder{color:#bbb;}
+
+    /* Password section */
+    .pwd-section{background:#f8f6ff;border-radius:16px;padding:24px;margin-bottom:28px;}
+    .pwd-section .form-group{margin-bottom:14px;}
+    .pwd-section .form-group:last-child{margin-bottom:0;}
+    #kc-pwd-err{font-size:12px;color:#e04040;font-weight:700;min-height:18px;margin-top:-8px;}
+
+    /* Save button */
+    .btn-save{
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      width:100%;padding:16px;border-radius:14px;border:none;
+      background:linear-gradient(135deg,var(--purple) 0%,var(--purple-dark) 100%);
+      color:#fff;font-size:15px;font-weight:900;font-family:'Nunito',sans-serif;
+      cursor:pointer;transition:transform .2s,box-shadow .2s;
+      box-shadow:0 6px 20px rgba(155,142,196,.4);position:relative;overflow:hidden;
+    }
+    .btn-save::before{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .5s;}
+    .btn-save:hover::before{left:120%;}
+    .btn-save:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(155,142,196,.5);}
+    .spinner{display:none;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .btn-save.loading .btn-save-text,.btn-save.loading .btn-arrow{display:none;}
+    .btn-save.loading .spinner{display:block;}
+
+    /* Toast */
+    #kc-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
+    #kc-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+    #kc-toast.err{background:#e04040;}
+
+    @media(max-width:768px){.page-wrap{grid-template-columns:1fr;}.topnav{padding:0 16px;}.fields-grid{grid-template-columns:1fr;}}
+  </style>
 </head>
 <body>
 
+<!-- NAV -->
 <header class="topnav">
-<img class="logo" src="images/Kidcycle.png" />
-  <div class="nav-links">
+  <a href="page acceuil.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
+  <nav class="nav-links">
     <a href="page acceuil.html">Acheter maintenant</a>
-
     <a href="Nouveautes.html">Nouveautés</a>
-
     <a href="Vente.html">Vente</a>
-
-    <a href="produits.html">Mes produits</a>
-  </div>
+    <a href="produits profile.html">Mes produits</a>
+  </nav>
   <div class="nav-right">
-    <a href="panier.html" class="btn-cart active">
-      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    <a href="panier.html" class="btn-cart">
+      <img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier">
+      Mon Panier <span class="nav-badge" id="cart-count">0</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
-
-    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
-    <div class="search-wrap">
-      <input type="text" placeholder="Search" />
-      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
-    </div>
+    <a href="Favoris.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+    <div class="swaps-badge">S</div>
   </div>
 </header>
 
-<div class="layout">
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-  <h2>Mon compte</h2>
-  <ul class="sidebar-menu">
-    <li class="active"><a href="profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></span> Mon profil</a></li>
-    <li class=""><a href="favoris profile.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
-    <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
-    <li class=""><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
-    <li class=""><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
-    <li class=""><a href="#"><span class="menu-ico">💬</span> Mes Chats</a></li>
-
-  </ul>
-  <div class="swaps-bar">
-    <span class="swaps-ico">ℹ</span>
-    Mes <strong>SWAPS</strong> disponible: 500.00
-    <span class="coin">ii</span>
-  </div>
-</aside>
-
-  <main class="main">
-    <div class="edit-card">
-
-      <div class="avatar-wrap">
-        <div class="avatar"><img class="avatar-photo" src="images/icon-avatar.svg" alt="Photo de profil"></div>
-        <div class="avatar-edit">✏️</div>
-      </div>
-
-      <div class="section-label">Informations personnels</div>
-      <div class="form-section">
-        <div class="form-row">
-          <div class="form-group">
-            <div class="field-label">Nom</div>
-            <input type="text" class="field-input" value="Karina">
-          </div>
-          <div class="form-group">
-            <div class="field-label">Prénom</div>
-            <input type="text" class="field-input" value="Clarck">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <div class="field-label">Email</div>
-            <input type="email" class="field-input" value="karina.clarck@gmail.com">
-          </div>
-          <div class="form-group">
-            <div class="field-label">Numéro de téléphone</div>
-            <input type="text" class="field-input" value="(+33) 123 45 67 89">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group" style="flex:1;">
-            <div class="field-label">Adresse</div>
-            <input type="text" class="field-input" value="12 Rue de la République, Paris France">
-          </div>
-        </div>
-      </div>
-
-      <div class="section-label">Mot de passe</div>
-      <div class="form-section">
-        <div class="field-label">Ancien mot de passe</div>
-        <input type="password" class="field-input" placeholder="··············" style="margin-bottom:14px;">
-        <div class="field-label">Nouveau mot de passe</div>
-        <input type="password" class="field-input" placeholder="··············" style="margin-bottom:14px;">
-        <div class="field-label">Confirmer le nouveau mot de passe</div>
-        <input type="password" class="field-input" placeholder="··············">
-      </div>
-
+    <div class="sidebar-title">Mon compte</div>
+    <ul class="sidebar-menu">
+      <li><a href="profile.html" class="active"><span class="ico">👤</span> Mon profil</a></li>
+      <li><a href="Favoris.html"><span class="ico">🤍</span> Mes favoris</a></li>
+      <li><a href="panier.html"><span class="ico">🛒</span> Mon panier</a></li>
+      <li><a href="produits profile.html"><span class="ico">👕</span> Mon dressing</a></li>
+      <li><a href="Commandes.html"><span class="ico">📦</span> Mes commandes</a></li>
+      <li><a href="#"><span class="ico">💬</span> Mes Chats</a></li>
+    </ul>
+    <div class="sidebar-swaps">
+      <div class="sw-label">Mes SWAPS disponibles</div>
+      <div class="sw-val"><span class="gold-coin">S</span><span id="swaps-num">0</span></div>
     </div>
-  </main>
+  </aside>
+
+  <!-- EDIT FORM -->
+  <div class="edit-card">
+
+    <!-- Avatar -->
+    <div class="avatar-edit-wrap" onclick="openAvatarPicker()" title="Changer la photo">
+      <div class="avatar-initials-edit" id="av-display">KC</div>
+      <div class="avatar-edit-btn">✏</div>
+    </div>
+    <input type="file" id="av-input" accept="image/*" style="display:none" onchange="handleAvatar(this)">
+
+    <!-- Informations personnelles -->
+    <div class="edit-section-title">Informations personnels</div>
+    <div class="fields-grid">
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" id="f-nom" data-field="nom" placeholder="Nom">
+      </div>
+      <div class="form-group">
+        <label>Prénom</label>
+        <input type="text" id="f-prenom" data-field="prenom" placeholder="Prénom">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="f-email" data-field="email" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <label>Numéro de téléphone</label>
+        <input type="tel" id="f-tel" data-field="tel" placeholder="(+216) 00 000 000">
+      </div>
+      <div class="form-group field-full">
+        <label>Adresse</label>
+        <input type="text" id="f-adresse" data-field="adresse" placeholder="Adresse complète">
+      </div>
+    </div>
+
+    <!-- Mot de passe -->
+    <div class="edit-section-title">Mot de passe</div>
+    <div class="pwd-section">
+      <div class="form-group">
+        <label>Ancien mot de passe</label>
+        <input type="password" id="f-old-pwd" placeholder="••••••••••••••">
+      </div>
+      <div class="form-group">
+        <label>Nouveau mot de passe</label>
+        <input type="password" id="f-new-pwd" data-field="new-pwd" placeholder="••••••••••••••">
+      </div>
+      <div class="form-group">
+        <label>Confirmer le nouveau mot de passe</label>
+        <input type="password" id="f-conf-pwd" data-field="conf-pwd" placeholder="••••••••••••••">
+      </div>
+      <div id="kc-pwd-err"></div>
+    </div>
+
+    <!-- Save -->
+    <button class="btn-save" onclick="saveProfile(this)">
+      <div class="spinner"></div>
+      <span class="btn-save-text">Enregistrer les modifications</span>
+      <span class="btn-arrow">→</span>
+    </button>
+
+  </div>
 </div>
 
-<div class="bottom-bar">
-  <a href="profile.html"><button class="btn-save">Enregistrer les modifications</button></a>
-</div>
+<div id="kc-toast"></div>
 
+<script>
+'use strict';
+var S={USERS:'kc_users',SESSION:'kc_session',CART:'kc_cart'};
+function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getSession(){return get(S.SESSION);}
+function getUsers(){return get(S.USERS)||[];}
+
+function toast(msg,isErr){
+  var t=document.getElementById('kc-toast');
+  t.textContent=msg; t.className='show'+(isErr?' err':'');
+  clearTimeout(t._t); t._t=setTimeout(function(){t.className='';},2800);
+}
+
+function loadForm(){
+  var s=getSession();
+  if(!s){location.href='Connexion.html';return;}
+
+  /* Pre-fill fields */
+  document.getElementById('f-nom').value=s.nom||'';
+  document.getElementById('f-prenom').value=s.prenom||'';
+  document.getElementById('f-email').value=s.email||'';
+  document.getElementById('f-tel').value=s.tel||'';
+  document.getElementById('f-adresse').value=s.adresse||'';
+
+  /* Avatar */
+  var stored=localStorage.getItem('kc_avatar');
+  var av=document.getElementById('av-display');
+  if(stored){
+    av.outerHTML='<img class="avatar-edit-img" id="av-display" src="'+stored+'" alt="Avatar">';
+  } else {
+    var init=((s.prenom||'')[0]||'')+((s.nom||'')[0]||'');
+    av.textContent=init.toUpperCase()||'KC';
+  }
+
+  /* SWAPS */
+  document.getElementById('swaps-num').textContent=Number(s.swaps||50).toFixed(2);
+  document.getElementById('cart-count').textContent=(get(S.CART)||[]).length;
+}
+
+/* Avatar picker */
+function openAvatarPicker(){document.getElementById('av-input').click();}
+function handleAvatar(input){
+  if(!input.files[0])return;
+  var fr=new FileReader();
+  fr.onload=function(e){
+    var data=e.target.result;
+    try{
+      localStorage.setItem('kc_avatar',data);
+      var av=document.getElementById('av-display');
+      av.outerHTML='<img class="avatar-edit-img" id="av-display" src="'+data+'" alt="Avatar">';
+      toast('📸 Photo mise à jour !');
+    }catch(err){toast('Image trop grande.',true);}
+  };
+  fr.readAsDataURL(input.files[0]);
+}
+
+/* Save */
+function saveProfile(btn){
+  var s=getSession(); if(!s)return;
+
+  var nom=document.getElementById('f-nom').value.trim();
+  var prenom=document.getElementById('f-prenom').value.trim();
+  var email=document.getElementById('f-email').value.trim();
+  var tel=document.getElementById('f-tel').value.trim();
+  var adresse=document.getElementById('f-adresse').value.trim();
+  var newpwd=document.getElementById('f-new-pwd').value;
+  var confpwd=document.getElementById('f-conf-pwd').value;
+  var oldpwd=document.getElementById('f-old-pwd').value;
+  var errEl=document.getElementById('kc-pwd-err');
+
+  errEl.textContent='';
+  if(!nom){toast('Le nom est obligatoire.',true);return;}
+
+  /* Password validation */
+  if(newpwd){
+    if(newpwd.length<6){errEl.textContent='⚠ Minimum 6 caractères.';return;}
+    if(newpwd!==confpwd){errEl.textContent='⚠ Mots de passe différents.';return;}
+    /* Check old password */
+    var users=getUsers();
+    var user=users.find(function(u){return u.email.toLowerCase()===s.email.toLowerCase();});
+    if(user&&oldpwd&&user.motdepasse!==oldpwd){errEl.textContent='⚠ Ancien mot de passe incorrect.';return;}
+  }
+
+  btn.classList.add('loading');
+  setTimeout(function(){
+    /* Update session */
+    var upd=Object.assign({},s,{nom:nom,prenom:prenom,email:email,tel:tel,adresse:adresse});
+    set(S.SESSION,upd);
+
+    /* Update kc_users */
+    var users=getUsers().map(function(u){
+      if(u.email.toLowerCase()===s.email.toLowerCase()){
+        return Object.assign({},u,{nom:nom,prenom:prenom,email:email,tel:tel,adresse:adresse},
+          newpwd?{motdepasse:newpwd}:{});
+      }
+      return u;
+    });
+    set(S.USERS,users);
+
+    btn.classList.remove('loading');
+    toast('✅ Profil enregistré avec succès !');
+    setTimeout(function(){location.href='profile.html';},900);
+  },850);
+}
+
+/* Field focus animation */
+document.querySelectorAll('input').forEach(function(inp){
+  inp.addEventListener('focus',function(){this.style.transform='scale(1.01)';});
+  inp.addEventListener('blur',function(){this.style.transform='';});
+});
+
+loadForm();
+</script>
 </body>
 </html>

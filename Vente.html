@@ -17,13 +17,13 @@
     <a href="Nouveautes.html">Nouveautés</a>
     <a href="Vente.html">Vente</a>
 
-    <a href="produits.html">Mes produits</a>
+    <a href="produits profile.html">Mes produits</a>
   </div>
   <div class="nav-right">
     <a href="panier.html" class="btn-cart active">
       <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris" style="position:relative"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"><span class="fav-nav-badge" id="fav-nav-count" style="position:absolute;top:-5px;right:-5px;background:#e04040;color:#fff;font-size:9px;font-weight:800;border-radius:50%;width:16px;height:16px;display:none;align-items:center;justify-content:center;line-height:1">0</span></a>
     <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
 
     <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
@@ -60,8 +60,8 @@
       <input type="checkbox" id="vcfg2" class="fg-toggle">
       <label for="vcfg2" class="fg-head"><span class="fg-label">Genre</span><span class="chevron">▲</span></label>
       <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox"> Lorem</label></div>
-        <div class="fg-row"><label><input type="checkbox" > Lorem</label></div>
+        <div class="fg-row"></div>
+        <div class="fg-row"></div>
       </div>
     </div>
     <div class="fg">
@@ -79,8 +79,8 @@
       <input type="checkbox" id="vcfg4" class="fg-toggle">
       <label for="vcfg4" class="fg-head"><span class="fg-label">État</span><span class="chevron">▲</span></label>
       <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox"> Lorem</label></div>
-        <div class="fg-row"><label><input type="checkbox" > Lorem</label></div>
+        <div class="fg-row"></div>
+        <div class="fg-row"></div>
       </div>
     </div>
     </div>
@@ -91,19 +91,19 @@
       <input type="checkbox" id="vafg1" class="fg-toggle">
       <label for="vafg1" class="fg-head"><span class="fg-label">Catégorie</span><span class="chevron">▲</span></label>
       <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox" checked> Lorem</label><span class="fg-count">(18)</span></div>
-        <div class="fg-row"><label><input type="checkbox" checked> Lorem</label><span class="fg-count">(12)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(23)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(67)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> Lorem</label><span class="fg-count">(34)</span></div>
+        <div class="fg-row"><span class="fg-count">(18)</span></div>
+        <div class="fg-row"><span class="fg-count">(12)</span></div>
+        <div class="fg-row"><span class="fg-count">(23)</span></div>
+        <div class="fg-row"><span class="fg-count">(67)</span></div>
+        <div class="fg-row"><span class="fg-count">(34)</span></div>
       </div>
     </div>
     <div class="fg">
       <input type="checkbox" id="vafg2" class="fg-toggle">
       <label for="vafg2" class="fg-head"><span class="fg-label">Genre</span><span class="chevron">▲</span></label>
       <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox"> Lorem</label></div>
-        <div class="fg-row"><label><input type="checkbox" checked> Lorem</label></div>
+        <div class="fg-row"></div>
+        <div class="fg-row"></div>
       </div>
     </div>
     <div class="fg">
@@ -121,8 +121,8 @@
       <input type="checkbox" id="vafg4" class="fg-toggle">
       <label for="vafg4" class="fg-head"><span class="fg-label">État</span><span class="chevron">▲</span></label>
       <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox"> Lorem</label></div>
-        <div class="fg-row"><label><input type="checkbox" checked> Lorem</label></div>
+        <div class="fg-row"></div>
+        <div class="fg-row"></div>
       </div>
     </div>
     </div>
@@ -135,10 +135,10 @@
     </div>
     <div class="products-grid">
 
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="1">
+          <a href="detail produit.html" class="heart-btn" data-coeur="1"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-30%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl1.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl1.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Combinaison Velours Bébé</div>
             <div class="card-meta">
@@ -149,10 +149,10 @@
             <a href="#ca101" class="btn-add">Ajouter au panier</a>
           </div>
         </div>
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="2">
+          <a href="detail produit.html" class="heart-btn" data-coeur="2"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-20%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl2.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl2.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Robe Fleurie Fille</div>
             <div class="card-meta">
@@ -163,10 +163,10 @@
             <a href="#ca102" class="btn-add">Ajouter au panier</a>
           </div>
         </div>
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="3">
+          <a href="detail produit.html" class="heart-btn" data-coeur="3"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-40%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl3.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl3.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Veste Matelassée Garçon</div>
             <div class="card-meta">
@@ -177,10 +177,10 @@
             <a href="#ca103" class="btn-add">Ajouter au panier</a>
           </div>
         </div>
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="4">
+          <a href="detail produit.html" class="heart-btn" data-coeur="4"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-25%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl4.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl4.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Pyjama 2 Pièces Étoiles</div>
             <div class="card-meta">
@@ -191,10 +191,10 @@
             <a href="#ca104" class="btn-add">Ajouter au panier</a>
           </div>
         </div>
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="5">
+          <a href="detail produit.html" class="heart-btn" data-coeur="5"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-50%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl5.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl5.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Ensemble Jogger Enfant</div>
             <div class="card-meta">
@@ -205,10 +205,10 @@
             <a href="#ca105" class="btn-add">Ajouter au panier</a>
           </div>
         </div>
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="1">
+          <a href="detail produit.html" class="heart-btn" data-coeur="1"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-15%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl1.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl1.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Manteau Capuche Enfant</div>
             <div class="card-meta">
@@ -219,10 +219,10 @@
             <a href="#ca106" class="btn-add">Ajouter au panier</a>
           </div>
         </div>
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="2">
+          <a href="detail produit.html" class="heart-btn" data-coeur="2"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-35%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl2.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl2.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Robe de Soirée Fille</div>
             <div class="card-meta">
@@ -233,10 +233,10 @@
             <a href="#ca107" class="btn-add">Ajouter au panier</a>
           </div>
         </div>
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="3">
+          <a href="detail produit.html" class="heart-btn" data-coeur="3"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-45%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl3.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl3.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Doudoune Légère Enfant</div>
             <div class="card-meta">
@@ -247,10 +247,10 @@
             <a href="#ca108" class="btn-add">Ajouter au panier</a>
           </div>
         </div>
-        <div class="product-card">
-          <a href="detail produit.html" class="heart-btn"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+        <div class="product-card" data-id="4">
+          <a href="detail produit.html" class="heart-btn" data-coeur="4"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
           <span class="badge badge-sale">-30%</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl4.png" alt="produit" /></a>
+          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl4.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
           <div class="card-body">
             <div class="card-name">Salopette Denim Enfant</div>
             <div class="card-meta">
@@ -276,5 +276,6 @@
   </div>
 
 </div>
+  <script src="kidcycle.js"></script>
 </body>
 </html>

@@ -223,3 +223,5 @@ body {
 .signup a:hover {
   text-decoration: underline;
 }
+
+button.btn-connect { width:100%; font-family:inherit; font-size:inherit; border:none; cursor:pointer; }

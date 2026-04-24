@@ -3,138 +3,366 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mon Profil - KidCycle</title>
+  <title>Mon Profil — KidCycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Shared.css">
-  <link rel="stylesheet" href="profile.css">
+  <style>
+    :root{--purple:#9b8ec4;--purple-light:#b8aed8;--purple-dark:#7a6daa;--purple-bg:#ede9f7;--gold:#f5a623;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Nunito',sans-serif;background:#f4f4f6;color:#333;min-height:100vh;}
+
+    /* NAV */
+    .topnav{background:#fff;display:flex;align-items:center;gap:24px;padding:0 60px;height:68px;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:200;}
+    .logo{height:44px;width:auto;cursor:pointer;transition:transform .3s;}
+    .logo:hover{transform:scale(1.05) rotate(-2deg);}
+    .nav-links{display:flex;gap:24px;flex:1;}
+    .nav-links a{text-decoration:none;color:#555;font-size:13.5px;font-weight:700;transition:color .2s;}
+    .nav-links a:hover{color:var(--purple);}
+    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+    .btn-cart{display:flex;align-items:center;gap:7px;border:1.5px solid #e8e4f4;border-radius:24px;padding:7px 14px;font-size:13px;font-weight:700;color:#666;text-decoration:none;transition:all .2s;}
+    .btn-cart:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-bg);}
+    .nav-badge{background:var(--purple-light);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;}
+    .nav-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s;}
+    .nav-icon:hover{background:var(--purple-bg);}
+    .nav-emoji-icon{width:20px;height:20px;}
+    .swaps-badge{background:linear-gradient(135deg,var(--gold),#e89a1a);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;cursor:pointer;box-shadow:0 2px 8px rgba(245,166,35,.4);transition:transform .2s;}
+    .swaps-badge:hover{transform:scale(1.1);}
+
+    /* PAGE LAYOUT */
+    .page-wrap{max-width:1100px;margin:36px auto;padding:0 24px;display:grid;grid-template-columns:260px 1fr;gap:24px;}
+
+    /* SIDEBAR */
+    .sidebar{background:#fff;border-radius:20px;padding:28px 20px;box-shadow:0 2px 14px rgba(0,0,0,.06);height:fit-content;position:sticky;top:90px;}
+    .sidebar-title{font-size:20px;font-weight:900;color:#222;text-align:center;margin-bottom:24px;}
+    .sidebar-menu{list-style:none;}
+    .sidebar-menu li a{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;text-decoration:none;font-size:14px;font-weight:700;color:#777;transition:all .2s;margin-bottom:4px;}
+    .sidebar-menu li a:hover{background:var(--purple-bg);color:var(--purple);}
+    .sidebar-menu li a.active{background:var(--purple);color:#fff;}
+    .sidebar-menu li a .ico{font-size:18px;width:22px;text-align:center;}
+    .sidebar-swaps{margin-top:28px;padding:14px 16px;background:linear-gradient(135deg,#fdf8ee,#fef3d0);border-radius:14px;border-left:4px solid var(--gold);}
+    .sidebar-swaps .sw-label{font-size:11px;font-weight:800;color:#c77a00;text-transform:uppercase;letter-spacing:.5px;}
+    .sidebar-swaps .sw-val{font-size:20px;font-weight:900;color:#333;margin-top:4px;display:flex;align-items:center;gap:8px;}
+    .gold-coin{width:22px;height:22px;background:linear-gradient(135deg,var(--gold),#e89a1a);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;}
+
+    /* MAIN CONTENT */
+    .main-col{display:flex;flex-direction:column;gap:20px;}
+
+    /* SECTION CARD */
+    .section-card{background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 14px rgba(0,0,0,.06);position:relative;}
+    .section-card-title{font-size:22px;font-weight:900;color:var(--purple);margin-bottom:22px;}
+
+    /* PROFILE HEADER */
+    .profile-header{display:flex;align-items:flex-start;gap:24px;}
+    .avatar-wrap{position:relative;flex-shrink:0;}
+    .avatar-img{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid var(--purple-bg);box-shadow:0 4px 16px rgba(155,142,196,.3);transition:transform .3s;}
+    .avatar-img:hover{transform:scale(1.05);}
+    .avatar-initials{width:88px;height:88px;border-radius:50%;background:var(--purple-bg);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--purple);border:3px solid var(--purple-light);}
+    .avatar-verified{position:absolute;bottom:2px;right:2px;width:24px;height:24px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid #fff;}
+    .profile-info{flex:1;}
+    .profile-name{font-size:22px;font-weight:900;color:#222;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+    .profile-name .check{font-size:16px;}
+    .info-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+    .info-item{font-size:13px;color:#888;}
+    .info-item strong{color:var(--purple);margin-right:4px;}
+    .info-item span{color:#444;font-weight:600;}
+
+    /* DROPDOWN MENU (3 dots) */
+    .menu-btn{position:absolute;top:20px;right:20px;background:none;border:none;cursor:pointer;font-size:20px;color:#aaa;transition:color .2s;padding:4px 8px;border-radius:8px;}
+    .menu-btn:hover{color:var(--purple);background:var(--purple-bg);}
+    .dropdown-menu{position:absolute;top:54px;right:20px;background:#fff;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.15);padding:8px;min-width:200px;z-index:100;opacity:0;transform:translateY(-8px) scale(0.96);pointer-events:none;transition:all .2s;border:1px solid #f0eef8;}
+    .dropdown-menu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+    .dropdown-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:700;color:#555;cursor:pointer;transition:background .15s;}
+    .dropdown-item:hover{background:var(--purple-bg);color:var(--purple);}
+    .dropdown-item.danger:hover{background:#fff0f0;color:#e04040;}
+    .dropdown-item .d-ico{font-size:16px;width:20px;text-align:center;}
+
+    /* ABONNEMENT */
+    .abo-card{background:linear-gradient(135deg,#fafafa 0%,#f5f4fb 100%);border:2px solid #f0eef8;border-radius:16px;padding:28px;text-align:center;max-width:480px;}
+    .abo-name{font-size:17px;font-weight:800;color:#333;margin-bottom:12px;}
+    .abo-price{font-size:42px;font-weight:900;color:var(--purple);line-height:1;}
+    .abo-price span{font-size:16px;color:#aaa;font-weight:600;}
+    .abo-detail-row{font-size:13px;color:#666;margin:6px 0;}
+    .abo-detail-row strong{color:#555;}
+    .abo-features{font-size:12px;color:#aaa;margin:14px 0;line-height:1.8;}
+    .abo-btns{display:flex;gap:10px;justify-content:center;margin-top:20px;}
+    .btn-modifier-abo{padding:11px 28px;border-radius:10px;border:2px solid var(--purple-light);background:#fff;color:var(--purple);font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;}
+    .btn-modifier-abo:hover{background:var(--purple-bg);}
+    .btn-resilier{padding:11px 28px;border-radius:10px;border:none;background:var(--purple);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;}
+    .btn-resilier:hover{background:var(--purple-dark);}
+
+    /* LOGOUT BTN */
+    .btn-logout{display:block;width:100%;margin-top:16px;padding:11px;border-radius:12px;background:#fff0f0;color:#e04040;border:none;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s;}
+    .btn-logout:hover{background:#fca5a5;}
+
+    /* DELETE MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+    .modal-overlay.open{opacity:1;pointer-events:all;}
+    .modal-box{background:#fff;border-radius:24px;padding:40px 36px;max-width:420px;width:90%;text-align:center;animation:modalIn .4s cubic-bezier(.34,1.56,.64,1);}
+    @keyframes modalIn{from{transform:scale(.85) translateY(20px)}to{transform:scale(1) translateY(0)}}
+    .modal-illus{font-size:72px;margin-bottom:8px;animation:bounce 1s ease infinite alternate;}
+    @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+    .modal-title{font-size:20px;font-weight:900;color:#222;margin-bottom:10px;line-height:1.35;}
+    .modal-sub{font-size:13px;color:#888;line-height:1.7;margin-bottom:20px;}
+    .modal-check-row{display:flex;align-items:flex-start;gap:10px;text-align:left;margin-bottom:24px;font-size:13px;color:#666;font-weight:600;}
+    .modal-check-row input{width:16px;height:16px;accent-color:#e04040;flex-shrink:0;margin-top:2px;}
+    .modal-check-row a{color:#e04040;font-weight:800;text-decoration:none;}
+    .modal-btns{display:flex;gap:12px;}
+    .btn-annuler{flex:1;padding:12px;border-radius:12px;border:2px solid #e5e5e5;background:#fff;color:#555;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s;}
+    .btn-annuler:hover{background:#f5f5f5;}
+    .btn-supprimer{flex:1;padding:12px;border-radius:12px;border:none;background:#ccc;color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s;}
+    .btn-supprimer.enabled{background:#e04040;}
+    .btn-supprimer.enabled:hover{background:#c53030;}
+
+    /* Toast */
+    #kc-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
+    #kc-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+    #kc-toast.err{background:#e04040;}
+
+    /* Responsive */
+    @media(max-width:768px){
+      .page-wrap{grid-template-columns:1fr;}
+      .topnav{padding:0 16px;}
+      .info-row{grid-template-columns:1fr;}
+    }
+  </style>
 </head>
 <body>
 
+<!-- NAV -->
 <header class="topnav">
-<img class="logo" src="images/Kidcycle.png" />
-  <div class="nav-links">
+  <a href="page acceuil.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
+  <nav class="nav-links">
     <a href="page acceuil.html">Acheter maintenant</a>
-
     <a href="Nouveautes.html">Nouveautés</a>
-
     <a href="Vente.html">Vente</a>
-
-    <a href="produits.html">Mes produits</a>
-  </div>
+    <a href="produits profile.html">Mes produits</a>
+  </nav>
   <div class="nav-right">
-    <a href="panier.html" class="btn-cart active">
-      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    <a href="panier.html" class="btn-cart">
+      <img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier">
+      Mon Panier <span class="nav-badge" id="cart-count">0</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
-
-    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
-    <div class="search-wrap">
-      <input type="text" placeholder="Search" />
-      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
-    </div>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris" style="position:relative">
+      <img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris">
+      <span id="fav-badge" style="position:absolute;top:-4px;right:-4px;background:#e04040;color:#fff;font-size:9px;font-weight:900;border-radius:50%;width:16px;height:16px;display:none;align-items:center;justify-content:center;">0</span>
+    </a>
+    <a href="profile.html" class="nav-icon" title="Mon compte">
+      <img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil">
+    </a>
+    <div class="swaps-badge" id="swaps-nav" title="Mes SWAPS">S</div>
   </div>
 </header>
 
-<div class="layout">
+<!-- PAGE -->
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
   <aside class="sidebar">
-  <h2>Mon compte</h2>
-  <ul class="sidebar-menu">
-    <li class="active"><a href="profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></span> Mon profil</a></li>
-    <li class=""><a href="favoris profile.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
-    <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
-    <li class=""><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
-    <li class=""><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
-    <li class=""><a href="#"><span class="menu-ico"
-      
-      
-      
-      
-      
-      
-      
-      
-      >💬</span> Mes Chats</a></li>
-
-  </ul>
-  <div class="swaps-bar">
-    <span class="swaps-ico">ℹ</span>
-    Mes <strong>SWAPS</strong> disponible: 500.00
-    <span class="coin">ii</span>
-  </div>
-</aside>
-
-  <main class="main">
-
-    <div class="title-row">
-      <h1 class="page-title">Mes données</h1>
-      <div class="dots-wrap">
-        <a href="#dropdown-profil" class="dots-btn">···</a>
-        <div class="dropdown" id="dropdown-profil">
-          <a href="modifier profile.html">✏️ Modifier Mon Profile</a>
-          <a href="#modal-delete">🗑️ Supprimer Mon Profile</a>
-        </div>
+    <div class="sidebar-title">Mon compte</div>
+    <ul class="sidebar-menu">
+      <li><a href="profile.html" class="active"><span class="ico">👤</span> Mon profil</a></li>
+      <li><a href="Favoris.html"><span class="ico">🤍</span> Mes favoris (<span id="fav-count">0</span>)</a></li>
+      <li><a href="panier.html"><span class="ico">🛒</span> Mon panier</a></li>
+      <li><a href="produits profile.html"><span class="ico">👕</span> Mon dressing</a></li>
+      <li><a href="Commandes.html"><span class="ico">📦</span> Mes commandes</a></li>
+      <li><a href="#"><span class="ico">💬</span> Mes Chats</a></li>
+    </ul>
+    <div class="sidebar-swaps">
+      <div class="sw-label">Mes SWAPS disponibles</div>
+      <div class="sw-val" id="swaps-val">
+        <span class="gold-coin">S</span>
+        <span id="swaps-num">0</span>
       </div>
     </div>
+    <button class="btn-logout" id="btn-logout" onclick="doLogout()">🚪 Se déconnecter</button>
+  </aside>
 
-    <div class="profile-card">
-      <div class="profile-info">
-        <div class="avatar">
-          <img class="avatar-photo" src="images/icon-avatar.svg" alt="Photo de profil">
+  <!-- MAIN -->
+  <div class="main-col">
+
+    <!-- MES DONNÉES -->
+    <div class="section-card">
+      <h2 class="section-card-title">Mes données</h2>
+
+      <!-- 3-dot menu -->
+      <button class="menu-btn" id="menu-btn" onclick="toggleMenu()" title="Options">⋯</button>
+      <div class="dropdown-menu" id="dropdown-menu">
+        <div class="dropdown-item" onclick="location.href='modifier profile.html'">
+          <span class="d-ico">✏️</span> Modifier Mon Profil
         </div>
-        <div>
+        <div class="dropdown-item danger" onclick="openDeleteModal()">
+          <span class="d-ico">🗑️</span> Supprimer Mon Profil
+        </div>
+      </div>
+
+      <!-- Profile header -->
+      <div class="profile-header">
+        <div class="avatar-wrap">
+          <div class="avatar-initials" id="avatar-display">KC</div>
+          <div class="avatar-verified">✓</div>
+        </div>
+        <div class="profile-info">
           <div class="profile-name">
-            Karina clarck
-            <span class="verified-badge">✓</span>
+            <span id="pf-name">Utilisateur</span>
+            <span class="check">✅</span>
           </div>
-          <div class="profile-detail"><span>Email :</span> Karina.clarck@gmail.com</div>
-          <div class="profile-detail"><span>Téléphone :</span> (+33) 123 45 67 89</div>
-        </div>
-        <div class="profile-right">
-          <div class="label">Location :</div>
-          <div class="value">12 Rue de la République</div>
-          <div class="label" style="margin-top:10px;">Membre depuis :</div>
-          <div class="value">août 2022</div>
+          <div class="info-row">
+            <div class="info-item"><strong>Email :</strong> <span id="pf-email">—</span></div>
+            <div class="info-item"><strong>Location :</strong> <span id="pf-adresse">—</span></div>
+            <div class="info-item"><strong>Téléphone :</strong> <span id="pf-tel">—</span></div>
+            <div class="info-item"><strong>Membre depuis :</strong> <span id="pf-since">—</span></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="section-title">Mon abonnement</div>
-    <div class="abo-card">
-      <div class="abo-name">Abonnement "Premium"</div>
-      <div class="abo-price">49 € <span>/an</span></div>
-      <div class="abo-detail"><strong>Date d'activation :</strong> 28-09-2024</div>
-      <div class="abo-detail"><strong>Date de renouvellement prochain :</strong> 28-09-2025</div>
-      <div class="abo-detail" style="margin-top:10px;"><strong>Les détails de l'abonnement :</strong></div>
-      <div class="abo-details-txt">
-        - Compte vérifié depuis mars 2024<br>
-        - 47 articles vendus, note moyenne 4.9/5<br>
-        - Expédition sous 24h, emballage soigné<br>
-        - Livraison rapide, emballage recyclé<br>
-        - Retours acceptés sous 14 jours
-      </div>
-      <div class="abo-actions">
-        <a href="#" class="btn-modifier">Modifier</a>
-        <a href="#" class="btn-resilier">Résilier</a>
+    <!-- MON ABONNEMENT -->
+    <div class="section-card">
+      <h2 class="section-card-title">Mon abonnement</h2>
+      <div class="abo-card">
+        <div class="abo-name">Abonnement "Premium"</div>
+        <div class="abo-price">49 <small>€</small> <span>/an</span></div>
+        <div class="abo-detail-row"><strong>Date d'activation :</strong> 28-09-2024</div>
+        <div class="abo-detail-row"><strong>Date de renouvellement prochain :</strong> 28-09-2025</div>
+        <div class="abo-detail-row" style="margin-top:10px"><strong>Les détails de l'abonnement :</strong></div>
+        <div class="abo-features">
+          - Accès illimité à tous les articles premium<br>
+          - Livraison gratuite sur toutes les commandes<br>
+          - SWAPS bonus chaque mois (+20 S/mois)<br>
+          - Support client prioritaire 24h/24<br>
+          - Ventes exclusives membres
+        </div>
+        <div class="abo-btns">
+          <button class="btn-modifier-abo" onclick="toast('Fonctionnalité bientôt disponible.')">Modifier</button>
+          <button class="btn-resilier" onclick="toast('Pour résilier, contactez le support.', true)">Résilier</button>
+        </div>
       </div>
     </div>
-  </main>
+
+  </div>
 </div>
 
+<!-- DELETE MODAL -->
 <div class="modal-overlay" id="modal-delete">
   <div class="modal-box">
-    <a href="#" class="modal-close">✕</a>
-    <div class="delete-modal-img">🧑‍💼</div>
-    <div class="delete-modal-title">Vous souhaitez supprimer<br>votre compte Swappi ?</div>
-    <div class="delete-modal-text">Avant de continuer, veuillez noter que cette action est définitive. Certaines conditions s'appliquent pour la suppression de votre compte</div>
-    <div class="delete-check">
-      <input type="checkbox"> Accepter <a href="#">les conditions de suppression</a>
+    <div class="modal-illus">🗑️</div>
+    <div class="modal-title">Vous souhaitez supprimer<br>votre compte KidCycle ?</div>
+    <div class="modal-sub">Avant de continuer, veuillez noter que cette action est définitive. Certaines conditions s'appliquent pour la suppression de votre compte.</div>
+    <div class="modal-check-row">
+      <input type="checkbox" id="del-confirm" onchange="toggleDeleteBtn()">
+      <label for="del-confirm">Accepter <a href="#">les conditions de suppression</a></label>
     </div>
-    <div class="modal-actions">
-      <a href="#" class="btn-annuler">Annuler</a>
-      <a href="#" class="btn-supprimer">Supprimer</a>
+    <div class="modal-btns">
+      <button class="btn-annuler" onclick="closeDeleteModal()">Annuler</button>
+      <button class="btn-supprimer" id="btn-del" onclick="doDelete()" disabled>Supprimer</button>
     </div>
   </div>
 </div>
 
+<div id="kc-toast"></div>
+
+<script>
+'use strict';
+var S={USERS:'kc_users',SESSION:'kc_session',FAVS:'kc_favs',CART:'kc_cart'};
+function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function del(k){localStorage.removeItem(k);}
+function getSession(){return get(S.SESSION);}
+function getFavs(){return get(S.FAVS)||[];}
+function getCart(){return get(S.CART)||[];}
+
+function toast(msg,isErr){
+  var t=document.getElementById('kc-toast');
+  t.textContent=msg; t.className='show'+(isErr?' err':'');
+  clearTimeout(t._t); t._t=setTimeout(function(){t.className='';},2800);
+}
+
+/* Load profile */
+function loadProfile(){
+  var s=getSession();
+  if(!s){location.href='Connexion.html';return;}
+
+  var fullName=((s.prenom||'')+' '+(s.nom||'')).trim()||s.email;
+  document.getElementById('pf-name').textContent=fullName;
+  document.getElementById('pf-email').textContent=s.email||'—';
+  document.getElementById('pf-tel').textContent=s.tel||'—';
+  document.getElementById('pf-adresse').textContent=s.adresse||'—';
+
+  /* Avatar initials */
+  var av=document.getElementById('avatar-display');
+  var stored=localStorage.getItem('kc_avatar');
+  if(stored){
+    av.outerHTML='<img class="avatar-img" id="avatar-display" src="'+stored+'" alt="Avatar">';
+  } else {
+    var initials=((s.prenom||'')[0]||'')+''+((s.nom||'')[0]||'');
+    av.textContent=initials.toUpperCase()||'KC';
+  }
+
+  /* Member since */
+  var since=localStorage.getItem('kc_since')||new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  document.getElementById('pf-since').textContent=since;
+
+  /* SWAPS */
+  var swaps=s.swaps||50;
+  document.getElementById('swaps-num').textContent=Number(swaps).toFixed(2);
+  var sn=document.getElementById('swaps-nav');
+  if(sn)sn.title='Mes SWAPS: '+swaps;
+
+  /* Favs count */
+  var fc=getFavs().length;
+  document.getElementById('fav-count').textContent=fc;
+  var fb=document.getElementById('fav-badge');
+  if(fb){fb.textContent=fc;fb.style.display=fc>0?'flex':'none';}
+
+  /* Cart */
+  var cc=document.getElementById('cart-count');
+  if(cc)cc.textContent=getCart().length;
+}
+
+/* Dropdown */
+function toggleMenu(){
+  var dd=document.getElementById('dropdown-menu');
+  dd.classList.toggle('open');
+}
+document.addEventListener('click',function(e){
+  var btn=document.getElementById('menu-btn');
+  var dd=document.getElementById('dropdown-menu');
+  if(btn&&dd&&!btn.contains(e.target)&&!dd.contains(e.target))dd.classList.remove('open');
+});
+
+/* Logout */
+function doLogout(){
+  if(!confirm('Se déconnecter ?'))return;
+  del(S.SESSION);
+  toast('👋 Déconnecté !');
+  setTimeout(function(){location.href='page acceuil.html';},800);
+}
+
+/* Delete modal */
+function openDeleteModal(){document.getElementById('modal-delete').classList.add('open');}
+function closeDeleteModal(){document.getElementById('modal-delete').classList.remove('open');document.getElementById('del-confirm').checked=false;toggleDeleteBtn();}
+function toggleDeleteBtn(){
+  var cb=document.getElementById('del-confirm');
+  var btn=document.getElementById('btn-del');
+  btn.disabled=!cb.checked;
+  btn.classList.toggle('enabled',cb.checked);
+}
+function doDelete(){
+  var s=getSession();
+  if(s){
+    var users=(get(S.USERS)||[]).filter(function(u){return u.email.toLowerCase()!==s.email.toLowerCase();});
+    set(S.USERS,users);
+  }
+  del(S.SESSION); del(S.FAVS); del(S.CART); localStorage.removeItem('kc_avatar');
+  closeDeleteModal();
+  toast('🗑️ Compte supprimé. À bientôt !');
+  setTimeout(function(){location.href='page acceuil.html';},1200);
+}
+
+/* Close modal on overlay click */
+document.getElementById('modal-delete').addEventListener('click',function(e){if(e.target===this)closeDeleteModal();});
+
+loadProfile();
+</script>
 </body>
 </html>

@@ -1,65 +1,468 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Créer votre compte</title>
-    <link rel="stylesheet" href="formulaire.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créer un compte — KidCycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple:#9b8ec4; --purple-light:#b8aed8; --purple-dark:#7a6daa; --purple-bg:#ede9f7; }
+    html, body { width:100%; min-height:100%; font-family:'Nunito',sans-serif; }
+
+    .topbar {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      background:rgba(255,255,255,0.92); backdrop-filter:blur(8px);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:11px 40px; font-size:13px; color:#555;
+      border-bottom:1px solid rgba(0,0,0,0.06);
+    }
+    .topbar-left { display:flex; align-items:center; gap:6px; font-weight:600; }
+    .topbar-left::before { content:'✓'; color:var(--purple); font-weight:900; }
+    .topbar-right { display:flex; gap:20px; }
+    .topbar-right a { color:#777; text-decoration:none; font-weight:600; }
+    .topbar-right a:hover { color:var(--purple); }
+
+    .bg {
+      position:fixed; inset:0; z-index:0;
+      background:url('Jardin.png') center center / cover no-repeat;
+      filter:brightness(0.68) saturate(1.05);
+      transform:scale(1.06);
+      animation:bgZoom 22s ease-in-out infinite alternate;
+    }
+    @keyframes bgZoom { from{transform:scale(1.06)} to{transform:scale(1.13)} }
+    .bg::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg,rgba(155,142,196,0.25) 0%,rgba(80,60,40,0.25) 100%);
+    }
+
+    .particles { position:fixed; inset:0; pointer-events:none; z-index:1; }
+    .particle {
+      position:absolute; border-radius:50%; background:rgba(255,255,255,0.15);
+      animation:floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+      10%{opacity:1} 90%{opacity:0.4}
+      100%{transform:translateY(-120px) rotate(360deg);opacity:0}
+    }
+
+    .page {
+      position:relative; z-index:10;
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      padding:76px 20px 30px;
+    }
+
+    .card {
+      background:rgba(255,255,255,0.97); backdrop-filter:blur(20px);
+      border-radius:24px; padding:38px 46px 42px;
+      width:100%; max-width:580px;
+      box-shadow:0 24px 80px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.5);
+      animation:cardIn 0.65s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes cardIn { from{opacity:0;transform:translateY(40px) scale(0.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+    .card-logo { display:block; text-align:center; margin-bottom:6px; }
+    .card-logo img { height:44px; width:auto; cursor:pointer; transition:transform 0.3s; filter:drop-shadow(0 2px 8px rgba(155,142,196,0.3)); }
+    .card-logo img:hover { transform:scale(1.06) rotate(-2deg); }
+
+    .card-title { text-align:center; font-size:25px; font-weight:900; color:#2d2d3a; margin-bottom:24px; letter-spacing:-0.5px; }
+
+    /* Grid layout for fields */
+    .fields-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .field-full { grid-column:1/-1; }
+
+    .field { position:relative; transition:transform 0.2s; }
+    .field input, .field select {
+      width:100%; padding:14px 18px;
+      background:#f7f5fc; border:2px solid transparent;
+      border-radius:14px; font-size:14px; font-weight:600;
+      font-family:'Nunito',sans-serif; color:#333; outline:none;
+      transition:border-color 0.25s, background 0.25s, box-shadow 0.25s;
+      appearance:none; -webkit-appearance:none;
+    }
+    .field input::placeholder { color:#bbb; font-weight:500; }
+    .field select { color:#999; cursor:pointer; }
+    .field select:valid { color:#333; }
+    .field input:focus, .field select:focus {
+      border-color:var(--purple-light); background:#fff;
+      box-shadow:0 0 0 4px rgba(155,142,196,0.12);
+    }
+    .field input.has-error, .field select.has-error { border-color:#e04040; }
+    .field.focused { transform:scale(1.01); }
+
+    /* Select arrow */
+    .field.select-wrap::after {
+      content:'▾'; position:absolute; right:16px; top:50%;
+      transform:translateY(-50%); color:#aaa; pointer-events:none; font-size:14px;
+    }
+
+    /* Eye btn */
+    .eye-btn {
+      position:absolute; right:15px; top:50%; transform:translateY(-50%);
+      background:none; border:none; cursor:pointer; color:#bbb; font-size:17px; transition:color 0.2s;
+    }
+    .eye-btn:hover { color:var(--purple); }
+
+    /* Phone field row */
+    .phone-row { display:flex; gap:0; border-radius:14px; overflow:hidden; background:#f7f5fc; border:2px solid transparent; transition:border-color 0.25s, background 0.25s, box-shadow 0.25s; }
+    .phone-row:focus-within { border-color:var(--purple-light); background:#fff; box-shadow:0 0 0 4px rgba(155,142,196,0.12); }
+    .phone-flag {
+      display:flex; align-items:center; gap:6px; padding:0 14px;
+      border-right:1.5px solid #e8e4f4; white-space:nowrap;
+      font-size:13px; font-weight:700; color:#555; cursor:pointer;
+      background:none; border:none; border-right:1.5px solid #e8e4f4;
+    }
+    .phone-flag img { width:20px; height:14px; object-fit:cover; border-radius:2px; }
+    .phone-row input {
+      flex:1; padding:14px 16px; background:none; border:none;
+      font-size:14px; font-weight:600; font-family:'Nunito',sans-serif;
+      color:#333; outline:none;
+    }
+    .phone-row input::placeholder { color:#bbb; }
+
+    /* Checkbox newsletter */
+    .newsletter-row {
+      display:flex; align-items:flex-start; gap:10px;
+      margin:16px 0; font-size:13px; color:#666; font-weight:600; cursor:pointer;
+      line-height:1.5;
+    }
+    .newsletter-row input[type=checkbox] {
+      width:17px; height:17px; margin-top:1px; flex-shrink:0;
+      accent-color:var(--purple); cursor:pointer;
+    }
+
+    /* Submit */
+    .btn-submit {
+      width:100%; padding:16px;
+      background:linear-gradient(135deg,var(--purple) 0%,var(--purple-dark) 100%);
+      color:#fff; border:none; border-radius:14px;
+      font-size:16px; font-weight:800; font-family:'Nunito',sans-serif;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
+      transition:transform 0.2s, box-shadow 0.2s;
+      box-shadow:0 6px 20px rgba(155,142,196,0.45);
+      position:relative; overflow:hidden; letter-spacing:0.3px;
+    }
+    .btn-submit::before {
+      content:''; position:absolute; top:-50%; left:-60%;
+      width:40%; height:200%; background:rgba(255,255,255,0.18); transform:skewX(-20deg); transition:left 0.5s;
+    }
+    .btn-submit:hover::before { left:120%; }
+    .btn-submit:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(155,142,196,0.55); }
+    .btn-submit:active { transform:translateY(0); }
+    .btn-arrow { transition:transform 0.2s; }
+    .btn-submit:hover .btn-arrow { transform:translateX(5px); }
+
+    .spinner { display:none; width:18px; height:18px; border:2.5px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin 0.7s linear infinite; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .btn-submit.loading .btn-text,.btn-submit.loading .btn-arrow { display:none; }
+    .btn-submit.loading .spinner { display:block; }
+
+    /* Error */
+    .err-msg {
+      background:#fff0f0; border:1.5px solid #fca5a5; border-radius:10px;
+      padding:10px 14px; font-size:13px; color:#e04040; font-weight:700;
+      margin-bottom:14px; display:none;
+    }
+    .err-msg.show { display:block; animation:shake 0.4s; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%,75%{transform:translateX(-6px)} 50%{transform:translateX(6px)} }
+
+    /* Password strength bar */
+    .strength-bar { height:4px; border-radius:4px; background:#eee; margin-top:6px; overflow:hidden; }
+    .strength-fill { height:100%; width:0%; border-radius:4px; transition:width 0.3s, background 0.3s; }
+
+    /* Login link */
+    .login-row { text-align:center; margin-top:18px; font-size:14px; color:#777; font-weight:600; }
+    .login-row a { color:var(--purple-light); font-weight:800; text-decoration:none; }
+    .login-row a:hover { color:var(--purple-dark); }
+
+    /* Success overlay */
+    .success-overlay {
+      position:fixed; inset:0; z-index:999;
+      background:rgba(155,142,196,0.96);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+      opacity:0; pointer-events:none; transition:opacity 0.5s;
+    }
+    .success-overlay.show { opacity:1; pointer-events:all; }
+    .success-icon { font-size:80px; animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+    .success-text { color:#fff; font-size:24px; font-weight:900; }
+    .success-sub { color:rgba(255,255,255,0.8); font-size:15px; font-weight:600; }
+    @keyframes popIn { from{transform:scale(0)} to{transform:scale(1)} }
+
+    /* Ripple */
+    .ripple { position:absolute; border-radius:50%; background:rgba(255,255,255,0.4); width:10px; height:10px; transform:scale(0); animation:rippleAnim 0.6s linear; pointer-events:none; }
+    @keyframes rippleAnim { to{transform:scale(40);opacity:0} }
+
+    /* Field validation tick */
+    .field .valid-tick { position:absolute; right:15px; top:50%; transform:translateY(-50%); color:#22c55e; font-size:16px; display:none; }
+    .field input.valid ~ .valid-tick { display:block; }
+  </style>
 </head>
 <body>
 
-<div class="background">
-    <div class="overlay"></div>
-
-    <div class="form-container">
-        <h2>Créez votre compte</h2>
-
-        <form>
-            <div class="row">
-                <input type="text" placeholder="Nom">
-                <input type="text" placeholder="Prénom">
-            </div>
-
-            <input type="email" placeholder="Email">
-
-            <div class="row">
-                <select>
-                    <option>Homme</option>
-                    <option>Femme</option>
-                </select>
-                <input type="tel" placeholder="+216">
-
-            </div>
-
-            <div class="row">
-                <select>
-                    <option>Pays</option>
-                </select>
-                <input type="text" placeholder="Adresse de livraison ou expédition">
-            </div>
-
-            <div class="row">
-                <input type="text" placeholder="Code postal">
-                <input type="text" placeholder="Ville">
-            </div>
-
-            <div class="row">
-                <input type="password" placeholder="Mot de passe">
-                <input type="password" placeholder="Confirmer mot de passe">
-            </div>
-
-            <label class="checkbox">
-                <input type="checkbox">
-                Oui, je veux recevoir la newsletter : nouveautés et bons plans garantis.
-            </label>
-
-            <button type="submit"><a href="page acceuil.html">S'inscrire →</a></button>
-
-            <p class="login-link">
-                Vous avez un compte ? <a href="Connexion.html">Se connecter</a>
-            </p>
-        </form>
-    </div>
+<div class="topbar">
+  <div class="topbar-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="topbar-right">
+    <a href="#">Faqs</a>
+    <a href="#">ⓘ Besoin d'aide?</a>
+  </div>
 </div>
 
+<div class="bg"></div>
+<div class="particles" id="particles"></div>
+
+<div class="page">
+  <div class="card">
+
+    <a class="card-logo" href="page acceuil.html">
+      <img src="images/Kidcycle.png" alt="KidCycle">
+    </a>
+
+    <div class="card-title">Créez votre compte</div>
+
+    <div class="err-msg" id="err-msg"></div>
+
+    <div class="fields-grid">
+
+      <!-- Nom -->
+      <div class="field">
+        <input type="text" id="nom" placeholder="Nom" autocomplete="family-name">
+        <span class="valid-tick">✓</span>
+      </div>
+
+      <!-- Prénom -->
+      <div class="field">
+        <input type="text" id="prenom" placeholder="Prénom" autocomplete="given-name">
+        <span class="valid-tick">✓</span>
+      </div>
+
+      <!-- Email full width -->
+      <div class="field field-full">
+        <input type="email" id="email" placeholder="Email" autocomplete="email">
+        <span class="valid-tick">✓</span>
+      </div>
+
+      <!-- Genre -->
+      <div class="field select-wrap">
+        <select id="genre">
+          <option value="" disabled selected>Genre</option>
+          <option value="fille">Fille</option>
+          <option value="garcon">Garçon</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+
+      <!-- Téléphone avec drapeau -->
+      <div class="field">
+        <div class="phone-row">
+          <button class="phone-flag" type="button" id="flag-btn" onclick="cyclePays()">
+            <img id="flag-img" src="images/flag-fr.svg" alt="FR"> +216
+          </button>
+          <input type="tel" id="tel" placeholder="Téléphone" autocomplete="tel">
+        </div>
+      </div>
+
+      <!-- Pays -->
+      <div class="field select-wrap">
+        <select id="pays">
+          <option value="" disabled selected>Pays</option>
+          <option value="TN">Tunisie</option>
+          <option value="FR">France</option>
+          <option value="BE">Belgique</option>
+          <option value="CH">Suisse</option>
+          <option value="MA">Maroc</option>
+          <option value="DZ">Algérie</option>
+        </select>
+      </div>
+
+      <!-- Adresse -->
+      <div class="field">
+        <input type="text" id="adresse" placeholder="Adresse de livraison ou expédition" autocomplete="street-address">
+      </div>
+
+      <!-- Code postal -->
+      <div class="field">
+        <input type="text" id="cp" placeholder="Code postal" autocomplete="postal-code">
+      </div>
+
+      <!-- Ville -->
+      <div class="field">
+        <input type="text" id="ville" placeholder="Ville" autocomplete="address-level2">
+      </div>
+
+      <!-- Mot de passe -->
+      <div class="field">
+        <input type="password" id="pwd" placeholder="Mot de passe" autocomplete="new-password" oninput="checkStrength(this.value)">
+        <button class="eye-btn" type="button" onclick="togglePwd('pwd','eye1')" id="eye1">👁</button>
+        <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+      </div>
+
+      <!-- Confirmer mot de passe -->
+      <div class="field">
+        <input type="password" id="conf" placeholder="Confirmer mot de passe" autocomplete="new-password">
+        <button class="eye-btn" type="button" onclick="togglePwd('conf','eye2')" id="eye2">👁</button>
+      </div>
+
+    </div><!-- /fields-grid -->
+
+    <!-- Newsletter -->
+    <label class="newsletter-row">
+      <input type="checkbox" id="newsletter">
+      Oui, je veux recevoir la newsletter : nouveautés et bons plans garantis.
+    </label>
+
+    <!-- Submit -->
+    <button class="btn-submit" id="btn-register" onclick="doRegister(this, event)">
+      <div class="spinner"></div>
+      <span class="btn-text">S'inscrire</span>
+      <span class="btn-arrow">→</span>
+    </button>
+
+    <div class="login-row">Vous avez un compte ?&nbsp;<a href="Connexion.html">se connecter</a></div>
+
+  </div>
+</div>
+
+<!-- Success -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-icon">🎊</div>
+  <div class="success-text" id="success-text">Bienvenue !</div>
+  <div class="success-sub">Votre compte a été créé avec succès</div>
+</div>
+
+<script>
+'use strict';
+
+/* ── Particles ── */
+(function(){
+  var c=document.getElementById('particles');
+  for(var i=0;i<16;i++){
+    var p=document.createElement('div'); p.className='particle';
+    var s=Math.random()*12+4;
+    p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+(Math.random()*100)+'%;animation-duration:'+(Math.random()*14+8)+'s;animation-delay:'+(Math.random()*-16)+'s;opacity:'+(Math.random()*0.3+0.07);
+    c.appendChild(p);
+  }
+})();
+
+/* ── Flag cycle ── */
+var pays_list=[
+  {code:'TN',prefix:'+216',flag:'images/flag-fr.svg',label:'TN'},
+  {code:'FR',prefix:'+33', flag:'images/flag-fr.svg',label:'FR'},
+  {code:'BE',prefix:'+32', flag:'images/flag-fr.svg',label:'BE'},
+  {code:'DZ',prefix:'+213',flag:'images/flag-fr.svg',label:'DZ'},
+  {code:'MA',prefix:'+212',flag:'images/flag-fr.svg',label:'MA'}
+];
+var payIdx=0;
+function cyclePays(){
+  payIdx=(payIdx+1)%pays_list.length;
+  var p=pays_list[payIdx];
+  document.getElementById('flag-btn').innerHTML='<img id="flag-img" src="'+p.flag+'" alt="'+p.code+'"> '+p.prefix;
+}
+
+/* ── Eye toggle ── */
+function togglePwd(id,btnId){
+  var i=document.getElementById(id), b=document.getElementById(btnId);
+  i.type=i.type==='password'?'text':'password'; b.textContent=i.type==='text'?'🙈':'👁';
+}
+
+/* ── Password strength ── */
+function checkStrength(v){
+  var fill=document.getElementById('strength-fill');
+  var score=0;
+  if(v.length>=6) score++;
+  if(v.length>=10) score++;
+  if(/[A-Z]/.test(v)) score++;
+  if(/[0-9]/.test(v)) score++;
+  if(/[^A-Za-z0-9]/.test(v)) score++;
+  var pct=[0,20,40,65,85,100][score];
+  var col=['','#e04040','#f59e0b','#f59e0b','#22c55e','#16a34a'][score];
+  fill.style.width=pct+'%'; fill.style.background=col;
+}
+
+/* ── Storage ── */
+var S={USERS:'kc_users',SESSION:'kc_session'};
+function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getUsers(){return get(S.USERS)||[];}
+function findUser(email){return getUsers().find(function(u){return u.email.toLowerCase()===email.toLowerCase();})||null;}
+
+/* ── Error ── */
+function showErr(msg){
+  var el=document.getElementById('err-msg');
+  el.textContent='❌ '+msg; el.classList.add('show');
+  el.style.animation='none'; void el.offsetWidth; el.style.animation='shake 0.4s';
+}
+function clearErr(){ document.getElementById('err-msg').classList.remove('show'); }
+
+/* ── Register ── */
+function doRegister(btn,e){
+  clearErr();
+  var nom   =document.getElementById('nom').value.trim();
+  var prenom=document.getElementById('prenom').value.trim();
+  var email =document.getElementById('email').value.trim().toLowerCase();
+  var pwd   =document.getElementById('pwd').value;
+  var conf  =document.getElementById('conf').value;
+  var tel   =document.getElementById('tel').value.trim();
+  var adresse=document.getElementById('adresse').value.trim();
+  var cp    =document.getElementById('cp').value.trim();
+  var ville =document.getElementById('ville').value.trim();
+
+  if(!nom||!prenom||!email||!pwd){showErr('Remplissez tous les champs obligatoires.');return;}
+  if(!email.includes('@')||!email.includes('.')){showErr('Email invalide.');return;}
+  if(pwd.length<6){showErr('Mot de passe : 6 caractères minimum.');return;}
+  if(pwd!==conf){showErr('Les mots de passe ne correspondent pas.');return;}
+  if(findUser(email)){
+    showErr('Un compte existe déjà avec cet email.');
+    setTimeout(function(){location.href='Connexion.html';},1500); return;
+  }
+
+  /* Ripple */
+  var r=document.createElement('span'); r.className='ripple';
+  btn.appendChild(r); setTimeout(function(){r.remove();},700);
+
+  btn.classList.add('loading');
+
+  setTimeout(function(){
+    var users=getUsers();
+    var adresseComplete=(adresse+' '+cp+' '+ville).trim();
+    users.push({
+      nom:nom, prenom:prenom, email:email,
+      motdepasse:pwd, tel:tel,
+      adresse:adresseComplete,
+      role:'user', swaps:50
+    });
+    set(S.USERS,users);
+    set(S.SESSION,{email:email,nom:nom,prenom:prenom,tel:tel,adresse:adresseComplete,role:'user',swaps:50});
+
+    btn.classList.remove('loading');
+    var ov=document.getElementById('success-overlay');
+    document.getElementById('success-text').textContent='Bienvenue '+prenom+' ! 🎊';
+    ov.classList.add('show');
+    setTimeout(function(){location.href='page acceuil.html';},1400);
+  },950);
+}
+
+/* ── Enter key ── */
+document.addEventListener('keydown',function(e){if(e.key==='Enter')doRegister(document.getElementById('btn-register'),e);});
+
+/* ── Field animations ── */
+document.querySelectorAll('.field input, .field select').forEach(function(inp){
+  inp.addEventListener('focus',function(){this.closest('.field').classList.add('focused');});
+  inp.addEventListener('blur',function(){
+    this.closest('.field').classList.remove('focused');
+    if(this.value && this.type==='email' && this.value.includes('@')) this.classList.add('valid');
+    else if(this.value && this.type==='text' && this.value.length>=2) this.classList.add('valid');
+    else this.classList.remove('valid');
+  });
+});
+
+/* ── Ripple on btn ── */
+document.getElementById('btn-register').addEventListener('click',function(e){
+  var r=document.createElement('span'); r.className='ripple';
+  var rect=this.getBoundingClientRect();
+  r.style.left=(e.clientX-rect.left-5)+'px'; r.style.top=(e.clientY-rect.top-5)+'px';
+  this.appendChild(r); setTimeout(function(){r.remove();},700);
+});
+</script>
 </body>
 </html>

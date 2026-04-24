@@ -1,171 +1,207 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mes Produits - kidcycle </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Produits — KidCycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Shared.css">
-  <link rel="stylesheet" href="produits profile.css">
+  <style>
+    :root{--purple:#9b8ec4;--purple-light:#b8aed8;--purple-dark:#7a6daa;--purple-bg:#ede9f7;--gold:#f5a623;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Nunito',sans-serif;background:#f4f4f6;min-height:100vh;}
+    .topnav{background:#fff;display:flex;align-items:center;gap:24px;padding:0 60px;height:68px;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:200;}
+    .logo{height:44px;width:auto;cursor:pointer;transition:transform .3s;}
+    .logo:hover{transform:scale(1.05) rotate(-2deg);}
+    .nav-links{display:flex;gap:24px;flex:1;}
+    .nav-links a{text-decoration:none;color:#555;font-size:13.5px;font-weight:700;transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--purple);}
+    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+    .btn-cart{display:flex;align-items:center;gap:7px;border:1.5px solid #e8e4f4;border-radius:24px;padding:7px 14px;font-size:13px;font-weight:700;color:#666;text-decoration:none;transition:all .2s;}
+    .btn-cart:hover{border-color:var(--purple);color:var(--purple);}
+    .nav-badge{background:var(--purple-light);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;}
+    .nav-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;}
+    .nav-emoji-icon{width:20px;height:20px;}
+    .swaps-badge{background:linear-gradient(135deg,var(--gold),#e89a1a);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
+    .gold-coin{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:linear-gradient(135deg,var(--gold),#e89a1a);border-radius:50%;font-size:7px;font-weight:900;color:#fff;flex-shrink:0;}
+
+    /* PAGE */
+    .page-wrap{max-width:1100px;margin:32px auto;padding:0 24px;display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start;}
+    .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;}
+    .page-title{font-size:28px;font-weight:900;color:var(--purple);}
+
+    /* SIDEBAR */
+    .sidebar{background:#fff;border-radius:20px;padding:28px 20px;box-shadow:0 2px 14px rgba(0,0,0,.06);position:sticky;top:90px;}
+    .sidebar-title{font-size:20px;font-weight:900;color:#222;text-align:center;margin-bottom:22px;}
+    .sidebar-menu{list-style:none;}
+    .sidebar-menu li a{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;text-decoration:none;font-size:14px;font-weight:700;color:#777;transition:all .2s;margin-bottom:4px;}
+    .sidebar-menu li a:hover{background:var(--purple-bg);color:var(--purple);}
+    .sidebar-menu li a.active{background:var(--purple);color:#fff;}
+    .sidebar-menu li a .ico{font-size:17px;width:20px;text-align:center;}
+    .sidebar-swaps{margin-top:24px;padding:14px 16px;background:linear-gradient(135deg,#fdf8ee,#fef3d0);border-radius:14px;border-left:4px solid var(--gold);}
+    .sidebar-swaps .sw-label{font-size:11px;font-weight:800;color:#c77a00;text-transform:uppercase;letter-spacing:.5px;}
+    .sidebar-swaps .sw-val{font-size:18px;font-weight:900;color:#333;margin-top:4px;display:flex;align-items:center;gap:8px;}
+
+    /* ADD BTN */
+    .btn-ajouter{display:flex;align-items:center;gap:8px;padding:12px 22px;border-radius:12px;background:var(--purple);color:#fff;font-size:14px;font-weight:800;text-decoration:none;transition:all .2s;box-shadow:0 4px 14px rgba(155,142,196,.4);}
+    .btn-ajouter:hover{background:var(--purple-dark);transform:translateY(-2px);}
+
+    /* PRODUCTS GRID */
+    .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+
+    /* PRODUCT CARD */
+    .prod-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);position:relative;transition:transform .3s,box-shadow .3s;}
+    .prod-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(155,142,196,.15);}
+    .prod-card:hover .prod-img{transform:scale(1.05);}
+    .prod-status-badge{position:absolute;top:10px;left:10px;z-index:2;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.3px;}
+    .badge-pending{background:rgba(245,166,35,.9);color:#fff;}
+    .badge-actif{background:rgba(34,197,94,.9);color:#fff;}
+    .badge-vendu{background:rgba(224,64,64,.9);color:#fff;}
+    .prod-img-wrap{background:#f5f4fb;padding:14px;height:180px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .prod-img{width:100%;height:100%;object-fit:contain;transition:transform .4s;}
+    .prod-body{padding:12px 14px 14px;}
+    .prod-name{font-size:13px;font-weight:800;color:#333;margin-bottom:3px;}
+    .prod-sub{font-size:11px;color:#aaa;margin-bottom:10px;}
+    .prod-footer{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+    .prod-price{font-size:14px;font-weight:900;color:#333;display:flex;align-items:center;gap:5px;}
+    .prod-actions{display:flex;gap:8px;}
+    .btn-modifier{padding:8px 14px;border-radius:8px;background:var(--purple-bg);color:var(--purple);border:none;font-size:11px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;}
+    .btn-modifier:hover{background:var(--purple-light);color:#fff;}
+    .btn-supprimer{padding:8px 14px;border-radius:8px;background:#fff0f0;color:#e04040;border:none;font-size:11px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;}
+    .btn-supprimer:hover{background:#fca5a5;}
+    .btn-annuler{padding:8px 14px;border-radius:8px;background:#f5f5f5;color:#888;border:none;font-size:11px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;width:100%;}
+    .btn-annuler:hover{background:#e5e5e5;}
+
+    /* Empty */
+    .empty-prods{text-align:center;padding:60px;color:#aaa;grid-column:1/-1;}
+    .empty-prods .ico{font-size:60px;margin-bottom:14px;}
+
+    #kc-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;}
+    #kc-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+    #kc-toast.err{background:#e04040;}
+
+    @media(max-width:900px){.products-grid{grid-template-columns:repeat(2,1fr);}.page-wrap{grid-template-columns:1fr;}.topnav{padding:0 16px;}}
+  </style>
 </head>
 <body>
+
 <header class="topnav">
-<img class="logo" src="images/Kidcycle.png" />
-  <div class="nav-links">
+  <a href="page acceuil.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
+  <nav class="nav-links">
     <a href="page acceuil.html">Acheter maintenant</a>
-
     <a href="Nouveautes.html">Nouveautés</a>
-
     <a href="Vente.html">Vente</a>
-
-    <a href="produits.html">Mes produits</a>
-  </div>
+    <a href="produits profile.html" class="active">Mes produits</a>
+  </nav>
   <div class="nav-right">
-    <a href="panier.html" class="btn-cart active">
-      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
-    </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
-
-    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
-    <div class="search-wrap">
-      <input type="text" placeholder="Search" />
-      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
-    </div>
+    <a href="panier.html" class="btn-cart"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"> Mon Panier <span class="nav-badge" id="cart-count">0</span></a>
+    <a href="Favoris.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+    <div class="swaps-badge">S</div>
   </div>
 </header>
-<div class="layout">
+
+<div class="page-wrap">
   <aside class="sidebar">
-  <h2>Mon compte</h2>
-  <ul class="sidebar-menu"><li class=""><a href="profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></span> Mon profil</a></li>
-    <li class=""><a href="favoris profile.html"><span class="menu-ico">🤍</span> Mes favoris (2)</a></li>
-    <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
-    <li class="active"><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
-    <li class=""><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
-    <li class=""><a href="#"><span class="menu-ico">💬</span> Mes Chats</a></li>
+    <div class="sidebar-title">Mon compte</div>
+    <ul class="sidebar-menu">
+      <li><a href="Favoris.html"><span class="ico">🤍</span> Mes favoris</a></li>
+      <li><a href="panier.html"><span class="ico">🛒</span> Mon panier</a></li>
+      <li><a href="produits profile.html" class="active"><span class="ico">👕</span> Mes produits</a></li>
+      <li><a href="Commandes.html"><span class="ico">📦</span> Mes commandes</a></li>
     </ul>
-  <div class="swaps-bar">
-    <span class="swaps-ico">ℹ</span>
-    <strong>SWAPS</strong> disponible: 500.00 <span class="coin">ii</span>
-  </div>
-</aside>
-  <main class="main">
+    <div class="sidebar-swaps">
+      <div class="sw-label">SWAPS disponible</div>
+      <div class="sw-val"><span class="gold-coin">S</span><span id="swaps-num">500.00</span></div>
+    </div>
+  </aside>
+
+  <div>
     <div class="page-header">
-      <h1 class="page-title">Mes produits</h1>
-      <a href="ajout produit.html" class="btn-add-product">+ Ajouter un produit</a>
+      <div class="page-title">Mes produits</div>
+      <a href="ajout produit.html" class="btn-ajouter">+ Ajouter un produit</a>
     </div>
-    <div class="products-grid">
-  <div class="card-wrap" id="cw1">
-    <div class="state-removed" id="del1">✓ Annulé &nbsp;<a href="#cw1" class="undo">↩ Rétablir</a></div>
-    <div class="product-card">
-      <span class="badge">En attente de validation</span>
-      <a href="detail produit.html"><img class="prod-img" src="cl1.png" alt="produit" /></a>
-      <div class="prod-body">
-        <div class="prod-top">
-          <span class="prod-name">Set Baby</span>
-          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
-        </div>
-        <div class="prod-sub">5 types de set disponibles</div>
-        <div class="prod-actions"><a href="#del1" class="btn-action">Annuler</a></div>
-      </div>
-    </div>
+    <div class="products-grid" id="products-grid"></div>
   </div>
-  <div class="card-wrap" id="cw2">
-    <div class="edit-panel" id="edit2"><h4>✏️ Modifier</h4>
-          <input class="edit-input" type="text" value="Set Baby">
-          <input class="edit-input" type="text" value="34.00">
-          <div class="edit-acts">
-            <a href="#cw2" class="btn-action">✓ Enregistrer</a>
-            <a href="#cw2" class="btn-action">Annuler</a>
-          </div></div>
-        <div class="state-removed" id="del2">🗑 Supprimé &nbsp;<a href="#cw2" class="undo">↩ Annuler</a></div>
-    <div class="product-card">
-
-      <a href="detail produit.html"><img class="prod-img" src="cl2.png" alt="produit" /></a>
-      <div class="prod-body">
-        <div class="prod-top">
-          <span class="prod-name">Set Baby</span>
-          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
-        </div>
-        <div class="prod-sub">5 types de set disponibles</div>
-        <div class="prod-actions"><a href="#edit2" class="btn-action">Modifier</a><a href="#del2" class="btn-action btn-del">Supprimer</a></div>
-      </div>
-    </div>
-  </div>
-  <div class="card-wrap" id="cw3">
-    <div class="state-removed" id="del3">✓ Annulé &nbsp;<a href="#cw3" class="undo">↩ Rétablir</a></div>
-    <div class="product-card">
-      <span class="badge">En attente de validation</span>
-      <a href="detail produit.html"><img class="prod-img" src="cl3.png" alt="produit" /></a>
-      <div class="prod-body">
-        <div class="prod-top">
-          <span class="prod-name">Set Baby</span>
-          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
-        </div>
-        <div class="prod-sub">5 types de set disponibles</div>
-        <div class="prod-actions"><a href="#del3" class="btn-action">Annuler</a></div>
-      </div>
-    </div>
-  </div>
-  <div class="card-wrap" id="cw4">
-    <div class="edit-panel" id="edit4"><h4>✏️ Modifier</h4>
-          <input class="edit-input" type="text" value="Set Baby">
-          <input class="edit-input" type="text" value="34.00">
-          <div class="edit-acts">
-            <a href="#cw4" class="btn-action">✓ Enregistrer</a>
-            <a href="#cw4" class="btn-action">Annuler</a>
-          </div></div>
-        <div class="state-removed" id="del4">🗑 Supprimé &nbsp;<a href="#cw4" class="undo">↩ Annuler</a></div>
-    <div class="product-card">
-
-      <a href="detail produit.html"><img class="prod-img" src="cl4.png" alt="produit" /></a>
-      <div class="prod-body">
-        <div class="prod-top">
-          <span class="prod-name">Set Baby</span>
-          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
-        </div>
-        <div class="prod-sub">5 types de set disponibles</div>
-        <div class="prod-actions"><a href="#edit4" class="btn-action">Modifier</a><a href="#del4" class="btn-action btn-del">Supprimer</a></div>
-      </div>
-    </div>
-  </div>
-  <div class="card-wrap" id="cw5">
-    <div class="state-removed" id="del5">✓ Annulé &nbsp;<a href="#cw5" class="undo">↩ Rétablir</a></div>
-    <div class="product-card">
-      <span class="badge">En attente de validation</span>
-      <a href="detail produit.html"><img class="prod-img" src="cl5.png" alt="produit" /></a>
-      <div class="prod-body">
-        <div class="prod-top">
-          <span class="prod-name">Set Baby</span>
-          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
-        </div>
-        <div class="prod-sub">5 types de set disponibles</div>
-        <div class="prod-actions"><a href="#del5" class="btn-action">Annuler</a></div>
-      </div>
-    </div>
-  </div>
-  <div class="card-wrap" id="cw6">
-    <div class="edit-panel" id="edit6"><h4>✏️ Modifier</h4>
-          <input class="edit-input" type="text" value="Set Baby">
-          <input class="edit-input" type="text" value="34.00">
-          <div class="edit-acts">
-            <a href="#cw6" class="btn-action">✓ Enregistrer</a>
-            <a href="#cw6" class="btn-action">Annuler</a>
-          </div></div>
-        <div class="state-removed" id="del6">🗑 Supprimé &nbsp;<a href="#cw6" class="undo">↩ Annuler</a></div>
-    <div class="product-card">
-
-      <a href="detail produit.html"><img class="prod-img" src="cl1.png" alt="produit" /></a>
-      <div class="prod-body">
-        <div class="prod-top">
-          <span class="prod-name">Set Baby</span>
-          <span class="prod-price"><span class="coin">ii</span> 34.00</span>
-        </div>
-        <div class="prod-sub">5 types de set disponibles</div>
-        <div class="prod-actions"><a href="#edit6" class="btn-action">Modifier</a><a href="#del6" class="btn-action btn-del">Supprimer</a></div>
-      </div>
-    </div>
-  </div></div>
-  </main>
 </div>
 
+<div id="kc-toast"></div>
+
+<script>
+'use strict';
+var S={SESSION:'kc_session',CART:'kc_cart',FAVS:'kc_favs',MY_PRODS:'kc_my_products'};
+function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getSession(){return get(S.SESSION);}
+
+function toast(msg,isErr){var t=document.getElementById('kc-toast');t.textContent=msg;t.className='show'+(isErr?' err':'');clearTimeout(t._t);t._t=setTimeout(function(){t.className='';},2800);}
+
+var DEMO_PRODS=[
+  {id:101,titre:'Set Baby Rose',sub:'5 types de set disponibles',img:'cl2.png',prix:34,statut:'en_attente',date:'2024-05-20'},
+  {id:102,titre:'Veste Denim Enfant',sub:'5 types de set disponibles',img:'cl3.png',prix:34,statut:'actif',date:'2024-05-18'},
+  {id:103,titre:'Ensemble Été Bébé',sub:'5 types de set disponibles',img:'cl6.png',prix:34,statut:'en_attente',date:'2024-05-15'},
+  {id:104,titre:'Combinaison Hiver',sub:'5 types de set disponibles',img:'cl1.png',prix:34,statut:'actif',date:'2024-05-10'},
+  {id:105,titre:'Robe Été Fille',sub:'5 types de set disponibles',img:'cl4.png',prix:34,statut:'en_attente',date:'2024-05-08'},
+  {id:106,titre:'Pantalon Jogger',sub:'5 types de set disponibles',img:'cl5.png',prix:34,statut:'actif',date:'2024-05-05'}
+];
+
+function ensureProds(){
+  var mp=get(S.MY_PRODS);
+  if(!mp||!mp.length){set(S.MY_PRODS,DEMO_PRODS);}
+}
+
+function renderProds(){
+  var prods=get(S.MY_PRODS)||[];
+  var g=document.getElementById('products-grid');
+  if(!prods.length){
+    g.innerHTML='<div class="empty-prods"><div class="ico">👕</div><p style="font-size:15px;font-weight:700;color:#ccc;margin-bottom:20px">Aucun produit publié</p><a href="ajout produit.html" class="btn-ajouter" style="display:inline-flex">+ Ajouter mon premier produit</a></div>';
+    return;
+  }
+  g.innerHTML=prods.map(function(p,i){
+    var badgeClass=p.statut==='en_attente'?'badge-pending':p.statut==='vendu'?'badge-vendu':'badge-actif';
+    var badgeLabel=p.statut==='en_attente'?'En attente de validation':p.statut==='vendu'?'Vendu':'Actif';
+    var actions=p.statut==='en_attente'
+      ? '<div class="prod-actions"><button class="btn-annuler" onclick="cancelProd('+i+')">Annuler</button></div>'
+      : '<div class="prod-actions"><button class="btn-modifier" onclick="toast(\'✏️ Modification bientôt disponible.\')">Modifier</button><button class="btn-supprimer" onclick="deleteProd('+i+')">Supprimer</button></div>';
+    return '<div class="prod-card">'+
+      '<span class="prod-status-badge '+badgeClass+'">'+badgeLabel+'</span>'+
+      '<div class="prod-img-wrap"><img class="prod-img" src="'+p.img+'" alt="'+p.titre+'"></div>'+
+      '<div class="prod-body">'+
+        '<div class="prod-name">'+p.titre+'</div>'+
+        '<div class="prod-sub">'+(p.sub||'Article KidCycle')+'</div>'+
+        '<div class="prod-footer">'+
+          '<span class="prod-price"><span class="gold-coin">S</span> '+Number(p.prix).toFixed(2)+'</span>'+
+        '</div>'+
+        actions+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function cancelProd(idx){
+  if(!confirm('Annuler ce produit ?'))return;
+  var prods=get(S.MY_PRODS)||[];
+  prods.splice(idx,1);
+  set(S.MY_PRODS,prods);
+  toast('Produit annulé.');
+  renderProds();
+}
+function deleteProd(idx){
+  if(!confirm('Supprimer définitivement ce produit ?'))return;
+  var prods=get(S.MY_PRODS)||[];
+  prods.splice(idx,1);
+  set(S.MY_PRODS,prods);
+  toast('🗑️ Produit supprimé.');
+  renderProds();
+}
+
+/* Update nav */
+var s=getSession();
+var sn=document.getElementById('swaps-num');if(sn)sn.textContent=Number(s?s.swaps||50:50).toFixed(2);
+document.getElementById('cart-count').textContent=(get(S.CART)||[]).length;
+
+ensureProds();
+renderProds();
+</script>
 </body>
 </html>

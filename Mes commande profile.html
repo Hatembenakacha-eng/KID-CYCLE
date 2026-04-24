@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mes Commandes - KidCycle</title>
+  <title>Mes Commandes - SwAPii</title>
   <link rel="stylesheet" href="Shared.css">
   <link rel="stylesheet" href="Mes commande profile.css">
 </head>
@@ -18,13 +18,13 @@
 
     <a href="Vente.html">Vente</a>
 
-    <a href="produits.html">Mes produits</a>
+    <a href="produits profile.html">Mes produits</a>
   </div>
   <div class="nav-right">
     <a href="panier.html" class="btn-cart active">
       <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris" style="position:relative"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"><span class="fav-nav-badge" id="fav-nav-count" style="position:absolute;top:-5px;right:-5px;background:#e04040;color:#fff;font-size:9px;font-weight:800;border-radius:50%;width:16px;height:16px;display:none;align-items:center;justify-content:center;line-height:1">0</span></a>
     <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
 
     <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
@@ -44,7 +44,7 @@
     <li class=""><a href="panier profile.html"><span class="menu-ico"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon panier</a></li>
     <li class=""><a href="produits profile.html"><span class="menu-ico">👕</span> Mes produits</a></li>
     <li class="active"><a href="Mes commande profile.html"><span class="menu-ico">📦</span> Mes commandes</a></li>
-    <li class=""><a href="#"><span class="menu-ico">💬</span> Mes Chats</a></li>
+    <li class=""><a href="Commandes.html"><span class="menu-ico">💬</span> Mes Chats</a></li>
 
   </ul>
   <div class="swaps-bar">
@@ -78,7 +78,7 @@
         </div>
         <div class="order-actions">
           <a href="#modal-confirm1" class="btn-confirm">Confirmer la réception du coli</a>
-          <a href="#" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
+          <a href="javascript:window.print()" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
         </div>
       </div>
       <div class="order-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
@@ -97,7 +97,7 @@
         </div>
         <div class="order-actions">
 
-          <a href="#" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
+          <a href="javascript:window.print()" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
         </div>
       </div>
       <div class="order-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
@@ -116,7 +116,7 @@
         </div>
         <div class="order-actions">
 
-          <a href="#" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
+          <a href="javascript:window.print()" class="btn-print">🖨️ Imprimer l'étiquette d'envoi</a>
         </div>
       </div>
       <div class="order-address">Livrée le 27/05/2024 àQPWP+754, Sousse, Tunisie</div>
@@ -140,7 +140,7 @@
     </div>
     <div class="items-grid">
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl1.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl1.png" alt="produit" /></div>
       <div>
         <div class="item-name">Combinaison Velours Bébé</div>
         <div class="item-sub">Velours · 0–24 mois</div>
@@ -148,7 +148,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl2.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl2.png" alt="produit" /></div>
       <div>
         <div class="item-name">Robe Fleurie Fille</div>
         <div class="item-sub">Coton bio · 2–8 ans</div>
@@ -156,7 +156,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl3.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl3.png" alt="produit" /></div>
       <div>
         <div class="item-name">Veste Matelassée Garçon</div>
         <div class="item-sub">Ajusté · 3–10 ans</div>
@@ -164,7 +164,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl4.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl4.png" alt="produit" /></div>
       <div>
         <div class="item-name">Pyjama 2 Pièces Étoiles</div>
         <div class="item-sub">OEKO-TEX · 6 mois–4 ans</div>
@@ -172,7 +172,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl5.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl5.png" alt="produit" /></div>
       <div>
         <div class="item-name">Ensemble Jogger Enfant</div>
         <div class="item-sub">Sweat + pantalon · 4–12 ans</div>
@@ -201,7 +201,7 @@
     </div>
     <div class="items-grid">
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl1.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl1.png" alt="produit" /></div>
       <div>
         <div class="item-name">Manteau Capuche Enfant</div>
         <div class="item-sub">Imperméable · 2–10 ans</div>
@@ -209,7 +209,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl2.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl2.png" alt="produit" /></div>
       <div>
         <div class="item-name">Robe de Soirée Fille</div>
         <div class="item-sub">Dentelle · 4–12 ans</div>
@@ -217,7 +217,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl3.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl3.png" alt="produit" /></div>
       <div>
         <div class="item-name">Doudoune Légère Enfant</div>
         <div class="item-sub">Ultralégère · 2–10 ans</div>
@@ -225,7 +225,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl4.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl4.png" alt="produit" /></div>
       <div>
         <div class="item-name">Salopette Denim Enfant</div>
         <div class="item-sub">100% coton · 3–12 ans</div>
@@ -233,7 +233,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl5.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl5.png" alt="produit" /></div>
       <div>
         <div class="item-name">Combinaison Velours Bébé</div>
         <div class="item-sub">Velours · 0–24 mois</div>
@@ -262,7 +262,7 @@
     </div>
     <div class="items-grid">
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl1.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl1.png" alt="produit" /></div>
       <div>
         <div class="item-name">Robe Fleurie Fille</div>
         <div class="item-sub">Coton bio · 2–8 ans</div>
@@ -270,7 +270,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl2.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl2.png" alt="produit" /></div>
       <div>
         <div class="item-name">Veste Matelassée Garçon</div>
         <div class="item-sub">Ajusté · 3–10 ans</div>
@@ -278,7 +278,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl3.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl3.png" alt="produit" /></div>
       <div>
         <div class="item-name">Pyjama 2 Pièces Étoiles</div>
         <div class="item-sub">OEKO-TEX · 6 mois–4 ans</div>
@@ -286,7 +286,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl4.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl4.png" alt="produit" /></div>
       <div>
         <div class="item-name">Ensemble Jogger Enfant</div>
         <div class="item-sub">Sweat + pantalon · 4–12 ans</div>
@@ -294,7 +294,7 @@
       </div>
     </div>
     <div class="item-mini">
-      <div class="item-img-sm"><img src="cl5.png" alt="produit" /></div>
+      <div class="item-img-sm"><img style="width:100%;height:100%;object-fit:contain;display:block;background:#f5f4fb;padding:6px;box-sizing:border-box" src="cl5.png" alt="produit" /></div>
       <div>
         <div class="item-name">Manteau Capuche Enfant</div>
         <div class="item-sub">Imperméable · 2–10 ans</div>
@@ -454,5 +454,6 @@
 
 <a href="#" class="fab">💬</a>
 
+  <script src="kidcycle.js"></script>
 </body>
 </html>

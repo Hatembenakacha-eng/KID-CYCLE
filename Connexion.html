@@ -3,49 +3,304 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connexion - KidCycle</title>
-  <link rel="stylesheet" href="Connexion.css">
+  <title>Connexion — KidCycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple:#9b8ec4; --purple-light:#b8aed8; --purple-dark:#7a6daa; --purple-bg:#ede9f7; }
+    html, body { width:100%; height:100%; font-family:'Nunito',sans-serif; overflow:hidden; }
+
+    .topbar {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      background:rgba(255,255,255,0.92); backdrop-filter:blur(8px);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:11px 40px; font-size:13px; color:#555;
+      border-bottom:1px solid rgba(0,0,0,0.06);
+    }
+    .topbar-left { display:flex; align-items:center; gap:6px; color:#555; font-weight:600; }
+    .topbar-left::before { content:'✓'; color:var(--purple); font-weight:900; }
+    .topbar-right { display:flex; gap:20px; }
+    .topbar-right a { color:#777; text-decoration:none; font-weight:600; }
+    .topbar-right a:hover { color:var(--purple); }
+
+    .bg {
+      position:fixed; inset:0;
+      background:url('enfants.jpg') center center / cover no-repeat;
+      filter:brightness(0.72) saturate(1.1);
+      transform:scale(1.06);
+      animation:bgZoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgZoom { from{transform:scale(1.06)} to{transform:scale(1.13)} }
+    .bg::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg,rgba(155,142,196,0.35) 0%,rgba(0,0,0,0.2) 100%);
+    }
+
+    .particles { position:fixed; inset:0; pointer-events:none; z-index:1; }
+    .particle {
+      position:absolute; border-radius:50%; background:rgba(255,255,255,0.18);
+      animation:floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+      10%{opacity:1} 90%{opacity:0.5}
+      100%{transform:translateY(-120px) rotate(360deg);opacity:0}
+    }
+
+    .page {
+      position:relative; z-index:10;
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      padding:76px 20px 20px;
+    }
+
+    .card {
+      background:rgba(255,255,255,0.97); backdrop-filter:blur(20px);
+      border-radius:24px; padding:42px 46px;
+      width:100%; max-width:470px;
+      box-shadow:0 24px 80px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.5);
+      animation:cardIn 0.65s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes cardIn { from{opacity:0;transform:translateY(40px) scale(0.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+
+    .card-logo { display:block; text-align:center; margin-bottom:6px; }
+    .card-logo img { height:46px; width:auto; cursor:pointer; transition:transform 0.3s; filter:drop-shadow(0 2px 8px rgba(155,142,196,0.3)); }
+    .card-logo img:hover { transform:scale(1.06) rotate(-2deg); }
+
+    .card-title { text-align:center; font-size:26px; font-weight:900; color:#2d2d3a; margin-bottom:26px; letter-spacing:-0.5px; }
+
+    .field { position:relative; margin-bottom:14px; transition:transform 0.2s; }
+    .field input {
+      width:100%; padding:15px 18px;
+      background:#f7f5fc; border:2px solid transparent;
+      border-radius:14px; font-size:14px; font-weight:600;
+      font-family:'Nunito',sans-serif; color:#333; outline:none;
+      transition:border-color 0.25s, background 0.25s, box-shadow 0.25s;
+    }
+    .field input::placeholder { color:#bbb; font-weight:500; }
+    .field input:focus { border-color:var(--purple-light); background:#fff; box-shadow:0 0 0 4px rgba(155,142,196,0.12); }
+    .field input.has-error { border-color:#e04040; }
+    .field.focused { transform:scale(1.01); }
+
+    .eye-btn {
+      position:absolute; right:15px; top:50%; transform:translateY(-50%);
+      background:none; border:none; cursor:pointer; color:#bbb; font-size:18px; transition:color 0.2s;
+    }
+    .eye-btn:hover { color:var(--purple); }
+
+    .extras { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; font-size:13px; }
+    .remember { display:flex; align-items:center; gap:8px; color:#666; font-weight:600; cursor:pointer; }
+    .remember input { width:16px; height:16px; accent-color:var(--purple); cursor:pointer; }
+    .forgot { color:var(--purple-light); font-weight:700; text-decoration:none; }
+    .forgot:hover { color:var(--purple-dark); }
+
+    .btn-submit {
+      width:100%; padding:16px;
+      background:linear-gradient(135deg,var(--purple) 0%,var(--purple-dark) 100%);
+      color:#fff; border:none; border-radius:14px;
+      font-size:16px; font-weight:800; font-family:'Nunito',sans-serif;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px;
+      transition:transform 0.2s, box-shadow 0.2s;
+      box-shadow:0 6px 20px rgba(155,142,196,0.45); position:relative; overflow:hidden;
+      letter-spacing:0.3px;
+    }
+    .btn-submit::before {
+      content:''; position:absolute; top:-50%; left:-60%;
+      width:40%; height:200%; background:rgba(255,255,255,0.18); transform:skewX(-20deg); transition:left 0.5s;
+    }
+    .btn-submit:hover::before { left:120%; }
+    .btn-submit:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(155,142,196,0.55); }
+    .btn-submit:active { transform:translateY(0); }
+    .btn-arrow { transition:transform 0.2s; }
+    .btn-submit:hover .btn-arrow { transform:translateX(5px); }
+    .spinner { display:none; width:18px; height:18px; border:2.5px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin 0.7s linear infinite; }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    .btn-submit.loading .btn-text,.btn-submit.loading .btn-arrow { display:none; }
+    .btn-submit.loading .spinner { display:block; }
+
+    .err-msg {
+      background:#fff0f0; border:1.5px solid #fca5a5; border-radius:10px;
+      padding:10px 14px; font-size:13px; color:#e04040; font-weight:700;
+      margin-bottom:14px; display:none;
+    }
+    .err-msg.show { display:block; animation:shake 0.4s; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%,75%{transform:translateX(-6px)} 50%{transform:translateX(6px)} }
+
+    .divider { display:flex; align-items:center; gap:12px; margin:18px 0; color:#ccc; font-size:12px; font-weight:700; }
+    .divider::before, .divider::after { content:''; flex:1; height:1px; background:#eee; }
+
+    .social-btns { display:flex; gap:10px; }
+    .social-btn {
+      flex:1; padding:11px; border:2px solid #eee; border-radius:12px;
+      display:flex; align-items:center; justify-content:center; gap:7px;
+      font-size:13px; font-weight:700; color:#555; cursor:pointer; text-decoration:none;
+      background:#fafafa; transition:border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .social-btn:hover { border-color:var(--purple-light); background:var(--purple-bg); transform:translateY(-2px); }
+    .social-btn img { width:18px; height:18px; object-fit:contain; }
+
+    .signup-row { text-align:center; margin-top:20px; font-size:14px; color:#777; font-weight:600; }
+    .signup-row a { color:var(--purple-light); font-weight:800; text-decoration:none; }
+    .signup-row a:hover { color:var(--purple-dark); }
+
+    .success-overlay {
+      position:fixed; inset:0; z-index:999;
+      background:rgba(155,142,196,0.95);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none; transition:opacity 0.5s;
+    }
+    .success-overlay.show { opacity:1; pointer-events:all; }
+    .success-icon { font-size:80px; animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+    .success-text { color:#fff; font-size:24px; font-weight:900; margin-top:16px; }
+    @keyframes popIn { from{transform:scale(0)} to{transform:scale(1)} }
+
+    .ripple {
+      position:absolute; border-radius:50%;
+      background:rgba(255,255,255,0.4); width:10px; height:10px;
+      transform:scale(0); animation:rippleAnim 0.6s linear; pointer-events:none;
+    }
+    @keyframes rippleAnim { to{transform:scale(40);opacity:0} }
+  </style>
 </head>
 <body>
-  <div class="bg">
-    <div class="bg-placeholder">
-      <span class="bg-text"><img src="Jardin.png" > </span>
-    </div>
-  </div>
 
+<div class="topbar">
+  <div class="topbar-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="topbar-right">
+    <a href="#">Faqs</a>
+    <a href="#">ⓘ Besoin d'aide?</a>
+  </div>
+</div>
+
+<div class="bg"></div>
+<div class="particles" id="particles"></div>
+
+<div class="page">
   <div class="card">
 
-    <h1 class="card-title">Connexion</h1>
+    <a class="card-logo" href="page acceuil.html">
+      <img src="images/Kidcycle.png" alt="KidCycle">
+    </a>
 
-    <div class="field">
-      <input type="email" id="email" placeholder="Email">
+    <div class="card-title">Connexion</div>
+
+    <div class="err-msg" id="err-msg"></div>
+
+    <div class="field" id="f-email">
+      <input type="email" id="email" placeholder="Email" autocomplete="email">
     </div>
 
-    <div class="field">
-      <input type="password" id="pwd" placeholder="Password" class="has-eye">
-      <div class="eye-wrap">
-        <label for="eye-toggle" class="eye-icon">👁</label>
-      </div>
+    <div class="field" id="f-pwd">
+      <input type="password" id="pwd" placeholder="Password" autocomplete="current-password">
+      <button class="eye-btn" type="button" id="eye-btn" onclick="togglePwd()">👁</button>
     </div>
 
-    <input type="checkbox" id="eye-toggle" class="eye-cb"
-      onchange="var p=document.getElementById('pwd'); p.type=this.checked?'text':'password';">
-
-    <div class="row-middle">
-      <label class="remember">
-        <input type="checkbox"> Se souvenir de moi
-      </label>
+    <div class="extras">
+      <label class="remember"><input type="checkbox" id="remember"> Se souvenir de moi</label>
       <a href="#" class="forgot">Mot de passe oublié</a>
     </div>
 
-    <a href="page acceuil.html" class="btn-connect">
-      Connecter <span class="btn-arrow">→</span>
-    </a>
-    <p class="signup">
-      Vous n'avez pas de compte ?&nbsp;<a href="formulaire.html">S'inscrire</a>
-    </p>
+    <button class="btn-submit" id="btn-login" onclick="doLogin(this, event)">
+      <div class="spinner"></div>
+      <span class="btn-text">Connecter</span>
+      <span class="btn-arrow">→</span>
+    </button>
 
+    <div class="divider">ou continuer avec</div>
+
+    <div class="social-btns">
+      <a class="social-btn" href="#">
+        <img src="https://www.google.com/favicon.ico" alt="Google"> Google
+      </a>
+      <a class="social-btn" href="#">
+        <img src="https://www.facebook.com/favicon.ico" alt="Facebook"> Facebook
+      </a>
+    </div>
+
+    <div class="signup-row">Vous n'avez pas de compte ?&nbsp;<a href="formulaire.html">S'inscrire</a></div>
   </div>
+</div>
 
+<div class="success-overlay" id="success-overlay">
+  <div class="success-icon">🎉</div>
+  <div class="success-text" id="success-text">Bienvenue !</div>
+</div>
+
+<script>
+'use strict';
+/* Particles */
+(function(){
+  var c=document.getElementById('particles');
+  for(var i=0;i<18;i++){
+    var p=document.createElement('div'); p.className='particle';
+    var s=Math.random()*14+4;
+    p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+(Math.random()*100)+'%;animation-duration:'+(Math.random()*12+8)+'s;animation-delay:'+(Math.random()*-15)+'s;opacity:'+(Math.random()*0.35+0.08);
+    c.appendChild(p);
+  }
+})();
+
+/* Ripple */
+document.getElementById('btn-login').addEventListener('click',function(e){
+  var r=document.createElement('span'); r.className='ripple';
+  var rect=this.getBoundingClientRect();
+  r.style.left=(e.clientX-rect.left-5)+'px'; r.style.top=(e.clientY-rect.top-5)+'px';
+  this.appendChild(r); setTimeout(function(){r.remove();},700);
+});
+
+/* Password toggle */
+function togglePwd(){
+  var i=document.getElementById('pwd'), b=document.getElementById('eye-btn');
+  i.type=i.type==='password'?'text':'password'; b.textContent=i.type==='text'?'🙈':'👁';
+}
+
+/* Storage */
+var S={USERS:'kc_users',SESSION:'kc_session'};
+function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getUsers(){return get(S.USERS)||[];}
+function findUser(email){return getUsers().find(function(u){return u.email.toLowerCase()===email.toLowerCase();})||null;}
+
+function showErr(msg){
+  var el=document.getElementById('err-msg');
+  el.textContent='❌ '+msg; el.classList.add('show');
+  document.getElementById('email').classList.add('has-error');
+  document.getElementById('pwd').classList.add('has-error');
+}
+function clearErr(){
+  document.getElementById('err-msg').classList.remove('show');
+  document.getElementById('email').classList.remove('has-error');
+  document.getElementById('pwd').classList.remove('has-error');
+}
+
+function doLogin(btn, e){
+  clearErr();
+  var email=document.getElementById('email').value.trim();
+  var pwd=document.getElementById('pwd').value;
+  if(!email||!pwd){showErr('Veuillez remplir tous les champs.');return;}
+  btn.classList.add('loading');
+  setTimeout(function(){
+    var user=findUser(email);
+    if(!user){btn.classList.remove('loading');showErr('Aucun compte avec cet email.');return;}
+    if(user.motdepasse!==pwd){btn.classList.remove('loading');showErr('Mot de passe incorrect.');return;}
+    set(S.SESSION,{email:user.email,nom:user.nom,prenom:user.prenom||'',tel:user.tel||'',adresse:user.adresse||'',role:user.role||'user'});
+    if(document.getElementById('remember').checked) localStorage.setItem('kc_remember',email);
+    btn.classList.remove('loading');
+    var ov=document.getElementById('success-overlay');
+    document.getElementById('success-text').textContent='Bienvenue '+(user.prenom||user.nom)+' ! 🎉';
+    ov.classList.add('show');
+    setTimeout(function(){location.href=(user.role==='admin')?'admin/admin.php':'page acceuil.html';},1200);
+  },900);
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='Enter')doLogin(document.getElementById('btn-login'),e);});
+
+/* Remember */
+(function(){var r=localStorage.getItem('kc_remember');if(r){document.getElementById('email').value=r;document.getElementById('remember').checked=true;}})();
+
+/* Field focus animation */
+document.querySelectorAll('.field input').forEach(function(inp){
+  inp.addEventListener('focus',function(){this.closest('.field').classList.add('focused');});
+  inp.addEventListener('blur',function(){this.closest('.field').classList.remove('focused');});
+});
+</script>
 </body>
 </html>

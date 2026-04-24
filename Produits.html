@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> Mes produits - KidCycle</title>
+  <title>KidCycle – Mes produits</title>
   <link rel="stylesheet" href="Shared.css" />
   <link rel="stylesheet" href="Produits.css" />
 </head>
@@ -18,13 +18,13 @@
 
     <a href="Vente.html">Vente</a>
 
-    <a href="produits.html">Mes produits</a>
+    <a href="produits profile.html">Mes produits</a>
   </div>
   <div class="nav-right">
     <a href="panier.html" class="btn-cart active">
       <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris" style="position:relative"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"><span class="fav-nav-badge" id="fav-nav-count" style="position:absolute;top:-5px;right:-5px;background:#e04040;color:#fff;font-size:9px;font-weight:800;border-radius:50%;width:16px;height:16px;display:none;align-items:center;justify-content:center;line-height:1">0</span></a>
     <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
 
     <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
@@ -47,7 +47,7 @@
       <h2>Mon compte</h2>
       <a href="Favoris.html"><img class="nav-emoji-icon" src="images/icon-heart-fill.svg" alt="favoris"> &nbsp;Mes favoris (3)</a>
       <a href="panier.html"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"> &nbsp;Mon panier</a>
-      <a href="produits.html" class="active">📦 &nbsp;Mes produits</a>
+      <a href="produits profile.html" class="active">📦 &nbsp;Mes produits</a>
       <a href="commandes.html">📋 &nbsp;Mes commandes</a>
     </aside>
 
@@ -56,7 +56,7 @@
 
         <div class="card-wrap">
           <input type="checkbox" id="cancel1" class="cancel-toggle" />
-          <div class="product-card">
+          <div class="product-card" data-id="100">
             <div class="product-img">
               <span class="badge-pending">En attente de validation</span>
               <span class="img-icon"><img src="images/Rectangle 10 (1).png" /></span>
@@ -79,7 +79,7 @@
 
         <div class="card-wrap">
           <input type="checkbox" id="del2" class="delete-toggle" />
-          <div class="product-card">
+          <div class="product-card" data-id="101">
             <div class="product-img">
               <span class="img-icon"><img src="images/Rectangle 9.png" /></span>
             </div>
@@ -102,7 +102,7 @@
 
         <div class="card-wrap">
           <input type="checkbox" id="cancel3" class="cancel-toggle" />
-          <div class="product-card">
+          <div class="product-card" data-id="102">
             <div class="product-img">
               <span class="badge-pending">En attente de validation</span>
               <span class="img-icon"><img src="images/Rectangle 11.png" /></span>
@@ -125,7 +125,7 @@
 
         <div class="card-wrap">
           <input type="checkbox" id="del4" class="delete-toggle" />
-          <div class="product-card">
+          <div class="product-card" data-id="103">
             <div class="product-img">
             <span class="img-icon"><img src="images/Rectangle 10 (4).png" /></span>
             </div>
@@ -148,7 +148,7 @@
 
         <div class="card-wrap">
           <input type="checkbox" id="cancel5" class="cancel-toggle" />
-          <div class="product-card">
+          <div class="product-card" data-id="104">
             <div class="product-img">
               <span class="badge-pending">En attente de validation</span>
               <span class="img-icon"><img src="images/Rectangle 10 (5).png" /></span>
@@ -171,7 +171,7 @@
 
         <div class="card-wrap">
           <input type="checkbox" id="del6" class="delete-toggle" />
-          <div class="product-card">
+          <div class="product-card" data-id="105">
             <div class="product-img">
             <span class="img-icon"><img src="images/Rectangle 9 (1).png" /></span>
             </div>
@@ -221,7 +221,7 @@
     </div>
     <div class="modal-actions">
       <a href="#" class="btn btn-outline">Annuler</a>
-      <a href="produits.html" class="btn btn-primary">Publier</a>
+      <a href="produits profile.html" class="btn btn-primary">Publier</a>
     </div>
   </div>
 </div>
@@ -244,10 +244,11 @@
     </div>
     <div class="modal-actions">
       <a href="#" class="btn btn-outline">Annuler</a>
-      <a href="produits.html" class="btn btn-primary">Enregistrer</a>
+      <a href="produits profile.html" class="btn btn-primary">Enregistrer</a>
     </div>
   </div>
 </div>
 
+  <script src="kidcycle.js"></script>
 </body>
 </html>

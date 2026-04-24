@@ -3,207 +3,354 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Livraison - KidCycle</title>
+  <title>Livraison — KidCycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Shared.css">
-  <link rel="stylesheet" href="livraison.css">
+  <style>
+    :root{--purple:#9b8ec4;--purple-light:#b8aed8;--purple-dark:#7a6daa;--purple-bg:#ede9f7;--gold:#f5a623;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Nunito',sans-serif;background:#f4f4f6;min-height:100vh;}
+    .topnav{background:#fff;display:flex;align-items:center;gap:24px;padding:0 60px;height:68px;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:200;}
+    .logo{height:44px;width:auto;cursor:pointer;transition:transform .3s;}
+    .logo:hover{transform:scale(1.05) rotate(-2deg);}
+    .nav-links{display:flex;gap:24px;flex:1;}
+    .nav-links a{text-decoration:none;color:#555;font-size:13.5px;font-weight:700;transition:color .2s;}
+    .nav-links a:hover{color:var(--purple);}
+    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+    .btn-cart{display:flex;align-items:center;gap:7px;border:1.5px solid var(--purple);border-radius:24px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--purple);background:var(--purple-bg);text-decoration:none;}
+    .nav-badge{background:var(--purple-light);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;}
+    .nav-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;}
+    .nav-emoji-icon{width:20px;height:20px;}
+    .swaps-badge{background:linear-gradient(135deg,var(--gold),#e89a1a);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
+    .gold-coin{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:linear-gradient(135deg,var(--gold),#e89a1a);border-radius:50%;font-size:8px;font-weight:900;color:#fff;flex-shrink:0;}
+
+    /* STEPPER */
+    .checkout-bg{background:#f4f4f6;padding:32px 0;}
+    .stepper{display:flex;align-items:center;justify-content:center;gap:0;max-width:600px;margin:0 auto 32px;position:relative;}
+    .stepper::before{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:#e0e0e0;z-index:0;}
+    .step{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;padding:0 24px;position:relative;z-index:1;cursor:pointer;}
+    .step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;transition:all .3s;}
+    .step.active .step-num{background:var(--gold);color:#fff;box-shadow:0 3px 10px rgba(245,166,35,.5);}
+    .step.active{color:var(--gold);}
+    .step.done .step-num{background:var(--purple-light);color:#fff;}
+    .step.done{color:var(--purple-light);}
+    .step.inactive .step-num{background:#ddd;color:#aaa;}
+    .step.inactive{color:#aaa;}
+    .step-line{flex:1;height:2px;background:#e0e0e0;z-index:0;}
+    .step-line.done{background:var(--purple-light);}
+
+    /* LAYOUT */
+    .checkout-layout{display:grid;grid-template-columns:1fr 420px;gap:28px;max-width:1100px;margin:0 auto;padding:0 24px;}
+
+    /* LEFT PANEL */
+    .left-panel{background:#fff;border-radius:20px;padding:32px;box-shadow:0 2px 14px rgba(0,0,0,.06);}
+    .panel-title{font-size:22px;font-weight:900;color:#222;margin-bottom:24px;text-align:center;}
+
+    /* Address field */
+    .addr-field{position:relative;border:2px solid var(--purple-light);border-radius:14px;padding:14px 46px 14px 16px;margin-bottom:8px;background:#fff;transition:box-shadow .2s;}
+    .addr-field:focus-within{box-shadow:0 0 0 4px rgba(155,142,196,.12);}
+    .addr-field-label{font-size:11px;font-weight:800;color:var(--purple-light);display:block;margin-bottom:4px;}
+    .addr-field input{border:none;outline:none;font-size:14px;font-weight:600;color:#333;font-family:'Nunito',sans-serif;width:100%;background:transparent;}
+    .addr-field input::placeholder{color:#bbb;}
+    .addr-pin{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#aaa;}
+    .addr-note{font-size:12px;color:#aaa;margin-bottom:18px;}
+    .btn-modifier-addr{width:100%;padding:14px;border-radius:12px;background:var(--purple-light);color:#fff;border:none;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;margin-bottom:28px;}
+    .btn-modifier-addr:hover{background:var(--purple-dark);transform:translateY(-1px);}
+
+    /* Expedition */
+    .expedition-title{font-size:18px;font-weight:900;color:#222;margin-bottom:16px;text-align:center;}
+    .exp-option{display:block;margin-bottom:12px;}
+    .exp-option input[type=checkbox]{display:none;}
+    .exp-label{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid #f0eef8;border-radius:14px;cursor:pointer;transition:border-color .2s,background .2s;background:#fafafa;}
+    .exp-option input:checked + .exp-label{border-color:var(--purple-light);background:var(--purple-bg);}
+    .exp-label:hover{border-color:var(--purple-light);}
+    .exp-check{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .2s;}
+    .exp-option input:checked + .exp-label .exp-check{border-color:var(--purple-light);background:var(--purple-light);}
+    .exp-option input:checked + .exp-label .exp-check::after{content:'✓';color:#fff;font-size:11px;font-weight:900;}
+    .exp-info{flex:1;}
+    .exp-name{font-size:13px;font-weight:800;color:#333;}
+    .exp-sub{font-size:11px;color:#aaa;margin-top:3px;line-height:1.5;}
+    .exp-price{font-size:13px;font-weight:900;color:#555;white-space:nowrap;padding-top:2px;}
+
+    /* RIGHT PANEL - Recap */
+    .right-panel{background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 14px rgba(0,0,0,.06);height:fit-content;position:sticky;top:90px;}
+    .recap-title{font-size:17px;font-weight:900;color:#222;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+    .recap-title .prix{color:var(--gold);margin-left:6px;}
+    .recap-title .ttc{color:var(--gold);}
+    .recap-total-row{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#888;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0eef8;}
+
+    /* Recap items */
+    .recap-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;position:relative;}
+    .recap-img{width:52px;height:52px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#f5f4fb;}
+    .recap-img img{width:100%;height:100%;object-fit:contain;padding:4px;}
+    .recap-info{flex:1;}
+    .recap-name{font-size:12px;font-weight:800;color:#333;margin-bottom:2px;}
+    .recap-sub{font-size:11px;color:var(--purple-light);}
+    .recap-remove{font-size:11px;color:#e04040;font-weight:700;cursor:pointer;border:none;background:none;font-family:'Nunito',sans-serif;}
+    .recap-price{font-size:13px;font-weight:900;color:#333;white-space:nowrap;display:flex;align-items:center;gap:4px;}
+
+    /* Summary block */
+    .summary-block{margin-top:14px;border-top:1px solid #f0eef8;padding-top:14px;}
+    .summary-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;}
+    .summary-row.total{font-weight:900;font-size:15px;color:#333;}
+    .swaps-lbl{color:var(--gold);font-weight:900;}
+    .info-ico{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e8e4f4;color:var(--purple);font-size:9px;font-weight:900;cursor:help;margin-left:4px;position:relative;}
+    .tooltip{position:absolute;bottom:calc(100%+6px);left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;font-size:11px;padding:7px 12px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:10;font-weight:600;}
+    .info-ico:hover .tooltip{opacity:1;}
+
+    /* CTA */
+    .btn-payer{width:100%;padding:16px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:#fff;border:none;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:18px;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(155,142,196,.4);}
+    .btn-payer:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,142,196,.5);}
+
+    /* MODAL ADRESSE */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+    .modal-overlay.open{opacity:1;pointer-events:all;}
+    .modal-box{background:#fff;border-radius:22px;padding:32px;width:90%;max-width:520px;animation:modalIn .4s cubic-bezier(.34,1.56,.64,1);}
+    @keyframes modalIn{from{transform:scale(.9) translateY(20px)}to{transform:scale(1) translateY(0)}}
+    .modal-close{float:right;font-size:20px;cursor:pointer;color:#aaa;background:none;border:none;line-height:1;}
+    .modal-close:hover{color:#333;}
+    .modal-title{font-size:18px;font-weight:900;color:#222;margin-bottom:22px;}
+    .modal-label{font-size:12px;font-weight:800;color:#888;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
+    .modal-input{width:100%;padding:13px 16px;border:2px solid #f0eef8;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;outline:none;margin-bottom:14px;transition:border-color .2s;font-weight:600;}
+    .modal-input:focus{border-color:var(--purple-light);box-shadow:0 0 0 4px rgba(155,142,196,.1);}
+    .modal-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .modal-group{display:flex;flex-direction:column;}
+    .phone-wrap{display:flex;border:2px solid #f0eef8;border-radius:12px;overflow:hidden;}
+    .phone-flag{display:flex;align-items:center;gap:6px;padding:0 12px;border-right:1.5px solid #f0eef8;font-size:12px;font-weight:700;color:#555;cursor:pointer;background:none;border:none;border-right:1.5px solid #f0eef8;white-space:nowrap;}
+    .flag-icon{width:20px;height:14px;border-radius:2px;}
+    .phone-input{flex:1;padding:13px 12px;border:none;outline:none;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;}
+    .select-wrap{position:relative;}
+    .select-wrap select{width:100%;padding:13px 36px 13px 14px;border:2px solid #f0eef8;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;outline:none;appearance:none;font-weight:600;color:#333;}
+    .select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#aaa;pointer-events:none;}
+    .modal-actions{display:flex;gap:12px;margin-top:20px;}
+    .btn-annuler{flex:1;padding:13px;border-radius:12px;border:2px solid #e5e5e5;background:#fff;color:#555;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;}
+    .btn-annuler:hover{background:#f5f5f5;}
+    .btn-submit-addr{flex:1;padding:13px;border-radius:12px;border:none;background:var(--purple-light);color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s;}
+    .btn-submit-addr:hover{background:var(--purple-dark);}
+
+    #kc-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;}
+    #kc-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+    @media(max-width:900px){.checkout-layout{grid-template-columns:1fr;}.topnav{padding:0 16px;}}
+  </style>
 </head>
 <body>
 
 <header class="topnav">
-  <img class="logo" src="images/Kidcycle.png" />
-  <div class="nav-links">
+  <a href="page acceuil.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
+  <nav class="nav-links">
     <a href="page acceuil.html">Acheter maintenant</a>
-
     <a href="Nouveautes.html">Nouveautés</a>
-
     <a href="Vente.html">Vente</a>
-
-    <a href="produits.html">Mes produits</a>
-  </div>
+    <a href="produits profile.html">Mes produits</a>
+  </nav>
   <div class="nav-right">
-    <a href="panier.html" class="btn-cart active">
-      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    <a href="panier.html" class="btn-cart">
+      <img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier">
+      Mon Panier <span class="nav-badge" id="cart-count">0</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
-
-    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
-    <div class="search-wrap">
-      <input type="text" placeholder="Search" />
-      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
-    </div>
+    <a href="Favoris.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+    <div class="swaps-badge">S</div>
   </div>
 </header>
 
-<div class="page-wrap">
-
+<div class="checkout-bg">
+  <!-- STEPPER -->
   <div class="stepper">
-    <span class="step active">
-      <span class="step-num">1</span> Livraison
-    </span>
-    <a href="paiment.html" class="step done">
-      <span class="step-num">2</span> Payement
-    </a>
+    <div class="step active"><span class="step-num">1</span> Livraison</div>
+    <div class="step-line"></div>
+    <div class="step inactive"><span class="step-num">2</span> Payement</div>
   </div>
 
   <div class="checkout-layout">
-
-    <div class="left-col">
-
-      <h2 class="section-title">Adresse de livraison</h2>
-
+    <!-- LEFT -->
+    <div class="left-panel">
+      <h2 class="panel-title">Adresse de livraison</h2>
       <div class="addr-field">
         <span class="addr-field-label">Mon adresse</span>
-        <input type="text" placeholder="Livraison àQPWP+...">
-        <span class="addr-pin"><img class="nav-emoji-icon" src="images/icon-pin.svg" alt="adresse"></span>
+        <input type="text" id="addr-display" placeholder="Adresse de livraison...">
+        <span class="addr-pin">📍</span>
       </div>
       <p class="addr-note">Votre adresse de livraison principale enregistrée.</p>
+      <button class="btn-modifier-addr" onclick="openAddrModal()">Modifier mon adresse</button>
 
-      <a href="#modal-addr" class="btn-modifier">Modifier mon adresse</a>
+      <h3 class="expedition-title">Expedition</h3>
 
-      <h2 class="expedition-title">Expedition</h2>
-
-      <label class="expedition-option">
-        <input type="checkbox" class="exp-cb" id="exp1">
-        <label for="exp1" class="exp-label">
+      <label class="exp-option">
+        <input type="checkbox" name="expedition" id="exp1" checked onchange="selectExp(this)">
+        <div class="exp-label">
           <div class="exp-check"></div>
           <div class="exp-info">
-            <div class="exp-name">Chrono Relais - 2 à 4 jours</div>
+            <div class="exp-name">Chrono Relais — 2 à 4 jours</div>
             <div class="exp-sub">Livraison en point relais<br>Gratuit dès 75€ d'achat en France Métropolitaine &amp; Belgique</div>
           </div>
           <div class="exp-price">€5.9</div>
-        </label>
+        </div>
       </label>
 
-      <label class="expedition-option">
-        <input type="checkbox" class="exp-cb" id="exp2">
-        <label for="exp2" class="exp-label">
+      <label class="exp-option">
+        <input type="checkbox" name="expedition" id="exp2" onchange="selectExp(this)">
+        <div class="exp-label">
           <div class="exp-check"></div>
           <div class="exp-info">
-            <div class="exp-name">Livraison à domicile - 2 à 4 jours</div>
+            <div class="exp-name">Livraison à domicile — 2 à 4 jours</div>
             <div class="exp-sub">Livraison à domicile<br>Gratuit dès 75€ d'achat en France Métropolitaine &amp; Belgique</div>
           </div>
           <div class="exp-price">€5.9</div>
-        </label>
+        </div>
       </label>
-
     </div>
 
-    <aside class="right-col">
+    <!-- RIGHT RECAP -->
+    <aside class="right-panel">
       <div class="recap-title">
         Récapitulatif <span class="prix">Prix</span> <span class="ttc">TTC</span>
       </div>
-
       <div class="recap-total-row">
         <span>Total article(s)</span>
-        <span>9</span>
+        <span id="recap-count">0</span>
       </div>
-
-      <div class="recap-removed" id="rr1">Retiré &nbsp;<a href="#rc1" class="undo">↩</a></div>
-      <div class="recap-item" id="rc1">
-        <div class="recap-img"><img src="cl1.png" alt="produit"></div>
-        <div class="recap-info">
-          <div class="recap-name">Combinaison Velours Bébé</div>
-          <div class="recap-sub">Taille : 12 mois · Qté : 1</div>
-          <a href="#rr1" class="recap-remove">✕ Supprimer</a>
-        </div>
-        <div class="recap-price">200.00 <span class="coin">ii</span></div>
-      </div>
-
-      <div class="recap-removed" id="rr2">Retiré &nbsp;<a href="#rc2" class="undo">↩</a></div>
-      <div class="recap-item" id="rc2">
-        <div class="recap-img"><img src="cl2.png" alt="produit"></div>
-        <div class="recap-info">
-          <div class="recap-name">Robe Fleurie Fille</div>
-          <div class="recap-sub">Taille : 4 ans · Qté : 2</div>
-          <a href="#rr2" class="recap-remove">✕ Supprimer</a>
-        </div>
-        <div class="recap-price">200.00 <span class="coin">ii</span></div>
-      </div>
-
-      <div class="recap-removed" id="rr3">Retiré &nbsp;<a href="#rc3" class="undo">↩</a></div>
-      <div class="recap-item" id="rc3">
-        <div class="recap-img"><img src="cl3.png" alt="produit"></div>
-        <div class="recap-info">
-          <div class="recap-name">Veste Matelassée Garçon</div>
-          <div class="recap-sub">Taille : 6 ans · Qté : 1</div>
-          <a href="#rr3" class="recap-remove">✕ Supprimer</a>
-        </div>
-        <div class="recap-price">200.00 <span class="coin">ii</span></div>
-      </div>
-
+      <div id="recap-items"></div>
       <div class="summary-block">
         <div class="summary-row total">
           <span>Total <span class="swaps-lbl">SWAPS</span></span>
-          <span>1200.00 <span class="coin">ii</span></span>
+          <span id="total-swaps">0.00 <span class="gold-coin">S</span></span>
         </div>
         <div class="summary-row">
           <span><span class="swaps-lbl">SWAPS</span> achetés</span>
-          <span>40.00€</span>
+          <span id="total-euros">0.00€</span>
         </div>
         <div class="summary-row">
-          <span>Frais de protection <span class="info-ico">i</span></span>
+          <span>Frais de protection <span class="info-ico">i<span class="tooltip">Paiement sécurisé + support client réactif sous 48h</span></span></span>
           <span>1.50€</span>
         </div>
         <div class="summary-row">
-          <span>Commission <span class="swaps-lbl">SWAPS</span> <span class="info-ico">i</span></span>
-          <span>1.90€</span>
+          <span>Commission <span class="swaps-lbl">SWAPS</span> <span class="info-ico">i<span class="tooltip">Commission de service KidCycle (5%)</span></span></span>
+          <span id="commission">0.00€</span>
         </div>
       </div>
-
-      <a href="paiment.html" class="btn-payer">Passer au paiement</a>
+      <button class="btn-payer" onclick="goPayment()">Posser au paiement →</button>
     </aside>
-
   </div>
 </div>
 
+<!-- MODAL ADRESSE -->
 <div class="modal-overlay" id="modal-addr">
   <div class="modal-box">
-    <a href="#" class="modal-close">✕</a>
-    <h3 class="modal-title">Edit address</h3>
-
+    <button class="modal-close" onclick="closeAddrModal()">✕</button>
+    <div class="modal-title">Edit address</div>
     <div class="modal-label">Adresse</div>
-    <input type="text" class="modal-input" placeholder="Adresse de livraison">
-    <p style="font-size:11px;color:#aaa;margin-bottom:14px;margin-top:-10px;">Saisissez votre adresse complète pour une livraison précise.</p>
-
+    <input type="text" class="modal-input" id="m-addr" placeholder="Adresse de livraison">
     <div class="modal-row">
       <div class="modal-group">
         <div class="modal-label">Num de téléphone</div>
         <div class="phone-wrap">
-          <div class="phone-flag"><span class="flag-wrap"><img class="flag-icon" src="images/flag-fr.svg" alt="France"></span> · +33</div>
-          <input type="text" class="phone-input" placeholder="">
+          <div class="phone-flag"><img class="flag-icon" src="images/flag-fr.svg" alt="FR"> +216</div>
+          <input type="tel" class="phone-input" id="m-tel" placeholder="">
         </div>
       </div>
       <div class="modal-group">
         <div class="modal-label">Pays</div>
         <div class="select-wrap">
-          <select>
-            <option>France</option>
-            <option>Belgique</option>
-            <option>Suisse</option>
-          </select>
-          <span class="select-arrow">▼</span>
+          <select id="m-pays"><option>Tunisie</option><option>France</option><option>Belgique</option><option>Suisse</option><option>Maroc</option></select>
         </div>
       </div>
     </div>
-
-    <div class="modal-row">
+    <div class="modal-row" style="margin-top:14px">
       <div class="modal-group">
         <div class="modal-label">Ville</div>
-        <input type="text" class="modal-input" placeholder="Ville">
+        <input type="text" class="modal-input" id="m-ville" placeholder="Ville" style="margin-bottom:0">
       </div>
       <div class="modal-group">
         <div class="modal-label">Code postal</div>
-        <input type="text" class="modal-input" placeholder="000000">
+        <input type="text" class="modal-input" id="m-cp" placeholder="000000" style="margin-bottom:0">
       </div>
     </div>
-
     <div class="modal-actions">
-      <a href="#" class="btn-annuler">Annuler</a>
-      <a href="#" class="btn-submit">Submit</a>
+      <button class="btn-annuler" onclick="closeAddrModal()">Annuler</button>
+      <button class="btn-submit-addr" onclick="saveAddr()">Submit</button>
     </div>
   </div>
 </div>
 
+<div id="kc-toast"></div>
+
+<script>
+'use strict';
+var S={SESSION:'kc_session',CART:'kc_cart'};
+function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getCart(){return get(S.CART)||[];}
+function getSession(){return get(S.SESSION);}
+
+function toast(msg){var t=document.getElementById('kc-toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2800);}
+
+function renderRecap(){
+  var cart=getCart();
+  var container=document.getElementById('recap-items');
+  document.getElementById('recap-count').textContent=cart.length;
+  var total=cart.reduce(function(a,c){return a+c.prix*(c.qty||1);},0);
+  container.innerHTML=cart.map(function(item,i){
+    return '<div class="recap-item">'+
+      '<div class="recap-img"><img src="'+item.img+'" alt="'+item.nom+'"></div>'+
+      '<div class="recap-info">'+
+        '<div class="recap-name">'+item.nom+'</div>'+
+        '<div class="recap-sub">'+(item.taille?'Taille: '+item.taille:'')+'</div>'+
+        '<button class="recap-remove" onclick="removeRecap('+i+')">✕ Supprimer</button>'+
+      '</div>'+
+      '<div class="recap-price">'+((item.prix*(item.qty||1)).toFixed(2))+' <span class="gold-coin">S</span></div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('total-swaps').innerHTML=total.toFixed(2)+' <span class="gold-coin">S</span>';
+  document.getElementById('total-euros').textContent=(total*0.20).toFixed(2)+'€';
+  document.getElementById('commission').textContent=(total*0.05).toFixed(2)+'€';
+  var cc=document.getElementById('cart-count'); if(cc)cc.textContent=cart.length;
+}
+function removeRecap(idx){var cart=getCart();cart.splice(idx,1);set(S.CART,cart);renderRecap();}
+
+/* Expedition single-select */
+function selectExp(cb){
+  document.querySelectorAll('.exp-option input').forEach(function(c){if(c!==cb)c.checked=false;});
+}
+
+/* Pre-fill address from session */
+function preloadAddr(){
+  var s=getSession();
+  if(s&&s.adresse)document.getElementById('addr-display').value=s.adresse;
+}
+
+/* Modal */
+function openAddrModal(){
+  var s=getSession();
+  if(s){document.getElementById('m-addr').value=s.adresse||'';document.getElementById('m-tel').value=s.tel||'';}
+  document.getElementById('modal-addr').classList.add('open');
+}
+function closeAddrModal(){document.getElementById('modal-addr').classList.remove('open');}
+function saveAddr(){
+  var addr=document.getElementById('m-addr').value.trim();
+  var ville=document.getElementById('m-ville').value.trim();
+  var cp=document.getElementById('m-cp').value.trim();
+  var full=(addr+' '+cp+' '+ville).trim();
+  document.getElementById('addr-display').value=full||addr;
+  var s=getSession();
+  if(s){s.adresse=full;set(S.SESSION,s);}
+  closeAddrModal();
+  toast('✅ Adresse mise à jour !');
+}
+
+/* Go to payment */
+function goPayment(){
+  if(!document.getElementById('addr-display').value.trim()){toast('Veuillez saisir une adresse de livraison.');return;}
+  if(!document.querySelector('.exp-option input:checked')){toast('Veuillez choisir un mode d\'expédition.');return;}
+  location.href='paiment.html';
+}
+
+/* Close modal on overlay click */
+document.getElementById('modal-addr').addEventListener('click',function(e){if(e.target===this)closeAddrModal();});
+
+preloadAddr();
+renderRecap();
+</script>
 </body>
 </html>

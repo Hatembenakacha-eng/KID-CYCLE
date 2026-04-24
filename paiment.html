@@ -3,193 +3,348 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paiement - KidCycle</title>
+  <title>Paiement — KidCycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Shared.css">
-  <link rel="stylesheet" href="paiment.css">
+  <style>
+    :root{--purple:#9b8ec4;--purple-light:#b8aed8;--purple-dark:#7a6daa;--purple-bg:#ede9f7;--gold:#f5a623;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Nunito',sans-serif;background:#f4f4f6;min-height:100vh;}
+    .topnav{background:#fff;display:flex;align-items:center;gap:24px;padding:0 60px;height:68px;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:200;}
+    .logo{height:44px;width:auto;cursor:pointer;transition:transform .3s;}
+    .logo:hover{transform:scale(1.05) rotate(-2deg);}
+    .nav-links{display:flex;gap:24px;flex:1;}
+    .nav-links a{text-decoration:none;color:#555;font-size:13.5px;font-weight:700;}
+    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+    .btn-cart{display:flex;align-items:center;gap:7px;border:1.5px solid var(--purple);border-radius:24px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--purple);background:var(--purple-bg);text-decoration:none;}
+    .nav-badge{background:var(--purple-light);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;}
+    .nav-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;}
+    .nav-emoji-icon{width:20px;height:20px;}
+    .swaps-badge{background:linear-gradient(135deg,var(--gold),#e89a1a);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
+    .gold-coin{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:linear-gradient(135deg,var(--gold),#e89a1a);border-radius:50%;font-size:8px;font-weight:900;color:#fff;flex-shrink:0;}
+
+    /* STEPPER */
+    .checkout-bg{background:#f4f4f6;padding:32px 0 48px;}
+    .stepper{display:flex;align-items:center;justify-content:center;gap:0;max-width:600px;margin:0 auto 32px;position:relative;}
+    .step{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;padding:0 24px;position:relative;z-index:1;cursor:pointer;text-decoration:none;}
+    .step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;transition:all .3s;}
+    .step.active .step-num{background:var(--gold);color:#fff;box-shadow:0 3px 10px rgba(245,166,35,.5);}
+    .step.active{color:var(--gold);}
+    .step.done .step-num{background:var(--purple-light);color:#fff;}
+    .step.done{color:var(--purple-light);}
+    .step-line{flex:1;height:2px;background:var(--purple-light);}
+
+    /* LAYOUT */
+    .checkout-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1100px;margin:0 auto;padding:0 24px;align-items:start;}
+
+    /* LEFT - Products list */
+    .left-panel{background:#fff;border-radius:20px;padding:24px;box-shadow:0 2px 14px rgba(0,0,0,.06);}
+    .recap-header{display:flex;justify-content:space-between;font-size:13px;font-weight:800;color:#888;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f0eef8;}
+    .recap-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;}
+    .recap-img{width:52px;height:52px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#f5f4fb;}
+    .recap-img img{width:100%;height:100%;object-fit:contain;padding:4px;}
+    .recap-info{flex:1;}
+    .recap-name{font-size:12px;font-weight:800;color:#333;margin-bottom:2px;}
+    .recap-sub{font-size:11px;color:var(--purple-light);}
+    .recap-remove{font-size:11px;color:#e04040;font-weight:700;cursor:pointer;border:none;background:none;font-family:'Nunito',sans-serif;}
+    .recap-price{font-size:13px;font-weight:900;color:#333;white-space:nowrap;display:flex;align-items:center;gap:4px;}
+
+    /* RIGHT - Payment form */
+    .right-panel{background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 14px rgba(0,0,0,.06);}
+
+    /* Summary rows */
+    .summary-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:10px;}
+    .summary-row.total-row{font-size:16px;font-weight:900;color:#333;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0eef8;}
+    .swaps-lbl{color:var(--gold);font-weight:900;}
+    .info-ico{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e8e4f4;color:var(--purple);font-size:9px;font-weight:900;cursor:help;margin-left:4px;position:relative;}
+    .tooltip{position:absolute;bottom:calc(100%+6px);left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;font-size:11px;padding:7px 12px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:10;}
+    .info-ico:hover .tooltip{opacity:1;}
+
+    /* Promo code */
+    .promo-section{margin:16px 0;padding:16px 0;border-top:1px solid #f0eef8;border-bottom:1px solid #f0eef8;}
+    .promo-label{font-size:13px;font-weight:800;color:#333;margin-bottom:10px;}
+    .promo-row{display:flex;gap:10px;}
+    .promo-input{flex:1;padding:12px 16px;border:2px solid #f0eef8;border-radius:12px;font-size:13px;font-family:'Nunito',sans-serif;outline:none;font-weight:600;color:#555;transition:border-color .2s;}
+    .promo-input:focus{border-color:var(--purple-light);}
+    .btn-promo{padding:12px 18px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#e89a1a);color:#fff;border:none;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap;transition:transform .2s;}
+    .btn-promo:hover{transform:scale(1.03);}
+
+    /* Payment method */
+    .pay-section-title{font-size:15px;font-weight:900;color:#333;margin-bottom:14px;}
+    .pay-methods{display:flex;gap:12px;margin-bottom:18px;}
+    .pay-method{display:flex;align-items:center;gap:8px;padding:12px 16px;border:2px solid #f0eef8;border-radius:12px;cursor:pointer;transition:all .2s;flex:1;font-size:13px;font-weight:700;color:#555;}
+    .pay-method:hover{border-color:var(--purple-light);}
+    .pay-method input[type=radio]{accent-color:var(--purple);}
+    .pay-method.selected{border-color:var(--purple-light);background:var(--purple-bg);}
+    .pay-method img{width:28px;height:18px;object-fit:contain;}
+
+    /* Card fields */
+    .card-fields{display:flex;flex-direction:column;gap:12px;}
+    .field-group{display:flex;flex-direction:column;gap:5px;}
+    .field-group label{font-size:12px;font-weight:800;color:#888;text-transform:uppercase;letter-spacing:.4px;}
+    .field-group input{padding:13px 16px;border:2px solid #f0eef8;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;outline:none;font-weight:600;color:#333;transition:border-color .2s;}
+    .field-group input:focus{border-color:var(--purple-light);box-shadow:0 0 0 4px rgba(155,142,196,.1);}
+    .field-group input::placeholder{color:#ccc;}
+    .card-row-3{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:12px;}
+
+    /* Pay button */
+    .btn-paye{width:100%;padding:17px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:#fff;border:none;font-size:16px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:20px;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(155,142,196,.4);position:relative;overflow:hidden;}
+    .btn-paye::before{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:rgba(255,255,255,.15);transform:skewX(-20deg);transition:left .5s;}
+    .btn-paye:hover::before{left:120%;}
+    .btn-paye:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(155,142,196,.55);}
+
+    /* Success overlay */
+    .success-overlay{position:fixed;inset:0;background:rgba(155,142,196,.96);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .5s;}
+    .success-overlay.show{opacity:1;pointer-events:all;}
+    .success-icon{font-size:80px;animation:popIn .5s cubic-bezier(.34,1.56,.64,1);}
+    @keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+    .success-text{color:#fff;font-size:26px;font-weight:900;text-align:center;}
+    .success-sub{color:rgba(255,255,255,.8);font-size:15px;}
+    .success-ref{color:#fff;font-size:18px;font-weight:900;background:rgba(255,255,255,.2);padding:10px 24px;border-radius:10px;}
+    .btn-success-home{padding:14px 32px;border-radius:12px;background:#fff;color:var(--purple);font-size:14px;font-weight:900;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:transform .2s;margin-top:8px;}
+    .btn-success-home:hover{transform:scale(1.05);}
+
+    /* Spinner on pay btn */
+    .spinner{display:none;width:20px;height:20px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .btn-paye.loading .pay-text{display:none;}
+    .btn-paye.loading .spinner{display:inline-block;}
+
+    #kc-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;}
+    #kc-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+    #kc-toast.err{background:#e04040;}
+
+    @media(max-width:900px){.checkout-layout{grid-template-columns:1fr;}.topnav{padding:0 16px;}.card-row-3{grid-template-columns:1fr 1fr;}}
+  </style>
 </head>
 <body>
 
 <header class="topnav">
-  <img class="logo" src="images/Kidcycle.png" />
-  <div class="nav-links">
+  <a href="page acceuil.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
+  <nav class="nav-links">
     <a href="page acceuil.html">Acheter maintenant</a>
-
     <a href="Nouveautes.html">Nouveautés</a>
-
     <a href="Vente.html">Vente</a>
-
-    <a href="produits.html">Mes produits</a>
-  </div>
+    <a href="produits profile.html">Mes produits</a>
+  </nav>
   <div class="nav-right">
-    <a href="panier.html" class="btn-cart active">
-      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
+    <a href="panier.html" class="btn-cart">
+      <img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier">
+      Mon Panier <span class="nav-badge" id="cart-count">0</span>
     </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
-
-    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
-    <div class="search-wrap">
-      <input type="text" placeholder="Search" />
-      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
-    </div>
+    <a href="Favoris.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+    <div class="swaps-badge">S</div>
   </div>
 </header>
 
-<div class="page-wrap">
-
+<div class="checkout-bg">
+  <!-- STEPPER -->
   <div class="stepper">
-    <a href="livraison.html" class="step done">
-      <span class="step-num">1</span> Livraison
-    </a>
-    <span class="step active">
-      <span class="step-num">2</span> Payement
-    </span>
+    <a href="livraison.html" class="step done"><span class="step-num">1</span> Livraison</a>
+    <div class="step-line"></div>
+    <div class="step active"><span class="step-num">2</span> Payement</div>
   </div>
 
   <div class="checkout-layout">
-
-    <div class="left-col">
+    <!-- LEFT - Products -->
+    <div class="left-panel">
       <div class="recap-header">
         <span>Total article(s)</span>
-        <span>9</span>
+        <span id="recap-count">0</span>
       </div>
-
-      <div class="recap-removed" id="rr1">Retiré &nbsp;<a href="#rc1" class="undo">↩</a></div>
-      <div class="recap-item" id="rc1">
-        <div class="recap-img"><img src="cl1.png" alt="produit"></div>
-        <div class="recap-info">
-          <div class="recap-name">Combinaison Velours Bébé</div>
-          <div class="recap-sub">Taille : 12 mois · Qté : 1</div>
-          <a href="#rr1" class="recap-remove">✕ Supprimer</a>
-        </div>
-        <div class="recap-price">200.00 <span class="coin">ii</span></div>
-      </div>
-
-      <div class="recap-removed" id="rr2">Retiré &nbsp;<a href="#rc2" class="undo">↩</a></div>
-      <div class="recap-item" id="rc2">
-        <div class="recap-img"><img src="cl2.png" alt="produit"></div>
-        <div class="recap-info">
-          <div class="recap-name">Robe Fleurie Fille</div>
-          <div class="recap-sub">Taille : 4 ans · Qté : 2</div>
-          <a href="#rr2" class="recap-remove">✕ Supprimer</a>
-        </div>
-        <div class="recap-price">200.00 <span class="coin">ii</span></div>
-      </div>
-
-      <div class="recap-removed" id="rr3">Retiré &nbsp;<a href="#rc3" class="undo">↩</a></div>
-      <div class="recap-item" id="rc3">
-        <div class="recap-img"><img src="cl3.png" alt="produit"></div>
-        <div class="recap-info">
-          <div class="recap-name">Veste Matelassée Garçon</div>
-          <div class="recap-sub">Taille : 6 ans · Qté : 1</div>
-          <a href="#rr3" class="recap-remove">✕ Supprimer</a>
-        </div>
-        <div class="recap-price">200.00 <span class="coin">ii</span></div>
-      </div>
-
-      <div class="recap-removed" id="rr4">Retiré &nbsp;<a href="#rc4" class="undo">↩</a></div>
-      <div class="recap-item" id="rc4">
-        <div class="recap-img"><img src="cl4.png" alt="produit"></div>
-        <div class="recap-info">
-          <div class="recap-name">Pyjama 2 Pièces Étoiles</div>
-          <div class="recap-sub">Taille : 18 mois · Qté : 3</div>
-          <a href="#rr4" class="recap-remove">✕ Supprimer</a>
-        </div>
-        <div class="recap-price">200.00 <span class="coin">ii</span></div>
-      </div>
-
-      <div class="recap-removed" id="rr5">Retiré &nbsp;<a href="#rc5" class="undo">↩</a></div>
-      <div class="recap-item" id="rc5">
-        <div class="recap-img"><img src="cl5.png" alt="produit"></div>
-        <div class="recap-info">
-          <div class="recap-name">Ensemble Jogger Enfant</div>
-          <div class="recap-sub">Taille : 8 ans · Qté : 1</div>
-          <a href="#rr5" class="recap-remove">✕ Supprimer</a>
-        </div>
-        <div class="recap-price">200.00 <span class="coin">ii</span></div>
-      </div>
+      <div id="recap-items"></div>
     </div>
 
-    <div class="right-col">
+    <!-- RIGHT - Payment -->
+    <div class="right-panel">
+      <!-- Summary -->
+      <div class="summary-row total-row">
+        <span>Total <span class="swaps-lbl">SWAPS</span></span>
+        <span id="total-swaps" style="display:flex;align-items:center;gap:6px">0.00 <span class="gold-coin">S</span></span>
+      </div>
+      <div class="summary-row">
+        <span><span class="swaps-lbl">SWAPS</span> achetés</span>
+        <span id="euros-val">0.00€</span>
+      </div>
+      <div class="summary-row">
+        <span>Frais de protection <span class="info-ico">i<span class="tooltip">Paiement sécurisé + support 48h</span></span></span>
+        <span>1.50€</span>
+      </div>
+      <div class="summary-row">
+        <span>Commission <span class="swaps-lbl">SWAPS</span> <span class="info-ico">i<span class="tooltip">5% de commission de service</span></span></span>
+        <span id="commission-val">0.00€</span>
+      </div>
+      <div class="summary-row">
+        <span>Frais de Livraison à domicile <span class="info-ico">i<span class="tooltip">Chrono Relais 2-4 jours</span></span></span>
+        <span>5.90€</span>
+      </div>
 
-      <div class="summary-card">
-        <div class="summary-row total">
-          <span>Total <span class="swaps-lbl">SWAPS</span></span>
-          <span>1200.00 <span class="coin">ii</span></span>
-        </div>
-        <div class="summary-row">
-          <span><span class="swaps-lbl">SWAPS</span> achetés</span>
-          <span>40.00€</span>
-        </div>
-        <div class="summary-row">
-          <span>Frais de protection <span class="info-ico">i</span></span>
-          <span>1.50€</span>
-        </div>
-        <div class="summary-row">
-          <span>Commission <span class="swaps-lbl">SWAPS</span> <span class="info-ico">i</span></span>
-          <span>1.90€</span>
-        </div>
-        <div class="summary-row">
-          <span>Frais de Livraison à domicile <span class="info-ico">i</span></span>
-          <span>5.9€</span>
+      <!-- Promo code -->
+      <div class="promo-section">
+        <div class="promo-label">Code ou lien de parrainage</div>
+        <div class="promo-row">
+          <input type="text" class="promo-input" id="promo-input" placeholder="••••••••••••">
+          <button class="btn-promo" onclick="applyPromo()">Appliquer le code</button>
         </div>
       </div>
 
-      <div class="parrainage-card">
-        <div class="parrainage-label">Code ou lien de parrainage</div>
-        <div class="parrainage-row">
-          <input type="text" class="parrainage-input" placeholder="············">
-          <button class="btn-appliquer">Appliquer la code</button>
+      <!-- Payment methods -->
+      <div class="pay-section-title">Méthode de paiement</div>
+      <div class="pay-methods">
+        <label class="pay-method selected" id="pm-paypal" onclick="selectMethod('paypal')">
+          <input type="radio" name="paymethod" value="paypal" checked>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal"> Paypal
+        </label>
+        <label class="pay-method" id="pm-master" onclick="selectMethod('master')">
+          <input type="radio" name="paymethod" value="master">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard"> Mastercard
+        </label>
+        <label class="pay-method" id="pm-visa" onclick="selectMethod('visa')">
+          <input type="radio" name="paymethod" value="visa">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa"> Visacard
+        </label>
+      </div>
+
+      <!-- Card fields -->
+      <div class="card-fields" id="card-fields">
+        <div class="field-group">
+          <label>Numéro de la carte</label>
+          <input type="text" id="card-num" placeholder="Ex. 23 456 687 9997 445 43" maxlength="19" oninput="formatCard(this)">
+        </div>
+        <div class="card-row-3">
+          <div class="field-group">
+            <label>Date d'expiration</label>
+            <input type="text" id="card-exp" placeholder="MM/AA" maxlength="5" oninput="formatExp(this)">
+          </div>
+          <div class="field-group">
+            <label>CVV</label>
+            <input type="password" id="card-cvv" placeholder="•••" maxlength="3">
+          </div>
+          <div class="field-group">
+            <label>Nom sur la carte</label>
+            <input type="text" id="card-name" placeholder="Ex. Charlie Juit">
+          </div>
         </div>
       </div>
 
-      <div class="paiement-card">
-        <div class="paiement-title">Méthode de paiement</div>
-
-        <div class="methode-row">
-          <input type="radio" name="methode" id="paypal" class="methode-opt" checked>
-          <label for="paypal" class="methode-label">
-            <div class="methode-radio"></div>
-            <svg class="pay-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 28"><text y="22" font-size="22" font-family="Arial,sans-serif" font-weight="bold"><tspan fill="#003087">Pay</tspan><tspan fill="#009cde">Pal</tspan></text></svg> PayPal
-          </label>
-
-          <input type="radio" name="methode" id="mastercard" class="methode-opt">
-          <label for="mastercard" class="methode-label">
-            <div class="methode-radio"></div>
-            <svg class="pay-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 32"><circle cx="19" cy="16" r="14" fill="#EB001B"/><circle cx="31" cy="16" r="14" fill="#F79E1B"/><path d="M25 5.4a14 14 0 0 1 0 21.2A14 14 0 0 1 25 5.4z" fill="#FF5F00"/></svg> Mastercard
-          </label>
-
-          <input type="radio" name="methode" id="visa" class="methode-opt">
-          <label for="visa" class="methode-label">
-            <div class="methode-radio"></div>
-            <svg class="pay-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 26"><text y="22" font-size="24" font-family="Arial,sans-serif" font-weight="900" fill="#1A1F71" letter-spacing="-1">VISA</text></svg> Visa
-          </label>
-        </div>
-
-        <div class="card-label">Numéro de la carte</div>
-        <input type="text" class="card-input" placeholder="Ex: 23 456 687 9997 445 43">
-
-        <div class="card-row">
-          <div class="card-group">
-            <div class="card-label">Date d'expiration</div>
-            <input type="text" class="card-input" placeholder="MM/AA">
-          </div>
-          <div class="card-group">
-            <div class="card-label">CVV</div>
-            <input type="text" class="card-input" placeholder="···">
-          </div>
-          <div class="card-group">
-            <div class="card-label">Nom sur la carte</div>
-            <input type="text" class="card-input" placeholder="Ex: charlie Juil">
-          </div>
-        </div>
-
-        <a href="page acceuil.html" class="btn-paye">Payé</a>
-      </div>
-
+      <!-- Pay button -->
+      <button class="btn-paye" id="btn-paye" onclick="doPay(this)">
+        <div class="spinner"></div>
+        <span class="pay-text">Payé →</span>
+      </button>
     </div>
   </div>
 </div>
 
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="success-overlay">
+  <div class="success-icon">🎉</div>
+  <div class="success-text">Commande confirmée !</div>
+  <div class="success-sub">Merci pour votre achat</div>
+  <div class="success-ref" id="success-ref">#P-000000</div>
+  <button class="btn-success-home" onclick="location.href='Commandes.html'">Voir mes commandes</button>
+  <button class="btn-success-home" style="background:transparent;border:2px solid #fff;color:#fff" onclick="location.href='page acceuil.html'">Continuer mes achats</button>
+</div>
+
+<div id="kc-toast"></div>
+
+<script>
+'use strict';
+var S={SESSION:'kc_session',CART:'kc_cart',ORDERS:'kc_orders'};
+function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getCart(){return get(S.CART)||[];}
+function getSession(){return get(S.SESSION);}
+
+function toast(msg,err){var t=document.getElementById('kc-toast');t.textContent=msg;t.className='show'+(err?' err':'');clearTimeout(t._t);t._t=setTimeout(function(){t.className='';},2800);}
+
+function renderLeft(){
+  var cart=getCart();
+  var container=document.getElementById('recap-items');
+  document.getElementById('recap-count').textContent=cart.length;
+  var total=cart.reduce(function(a,c){return a+c.prix*(c.qty||1);},0);
+  container.innerHTML=cart.map(function(item,i){
+    return '<div class="recap-item">'+
+      '<div class="recap-img"><img src="'+item.img+'" alt="'+item.nom+'"></div>'+
+      '<div class="recap-info">'+
+        '<div class="recap-name">'+item.nom+'</div>'+
+        '<div class="recap-sub">'+(item.taille?'Taille: '+item.taille:'Qté: '+(item.qty||1))+'</div>'+
+        '<button class="recap-remove" onclick="removeItem('+i+')">✕ Supprimer</button>'+
+      '</div>'+
+      '<div class="recap-price">'+((item.prix*(item.qty||1)).toFixed(2))+' <span class="gold-coin">S</span></div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('total-swaps').innerHTML=total.toFixed(2)+' <span class="gold-coin">S</span>';
+  document.getElementById('euros-val').textContent=(total*0.20).toFixed(2)+'€';
+  document.getElementById('commission-val').textContent=(total*0.05).toFixed(2)+'€';
+  var cc=document.getElementById('cart-count'); if(cc)cc.textContent=cart.length;
+}
+function removeItem(idx){var cart=getCart();cart.splice(idx,1);set(S.CART,cart);renderLeft();}
+
+/* Payment method select */
+function selectMethod(m){
+  ['paypal','master','visa'].forEach(function(id){
+    document.getElementById('pm-'+id).classList.toggle('selected',id===m);
+  });
+  var show=m!=='paypal';
+  document.getElementById('card-fields').style.display=show?'flex':'none';
+}
+
+/* Card formatting */
+function formatCard(inp){
+  var v=inp.value.replace(/\D/g,'').substring(0,16);
+  inp.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+function formatExp(inp){
+  var v=inp.value.replace(/\D/g,'');
+  if(v.length>=2)v=v.substring(0,2)+'/'+v.substring(2,4);
+  inp.value=v;
+}
+
+/* Promo code */
+function applyPromo(){
+  var code=document.getElementById('promo-input').value.trim().toUpperCase();
+  if(code==='KIDCYCLE10'){toast('✅ Code appliqué ! -10% sur votre commande');}
+  else if(code==='WELCOME5'){toast('✅ Code appliqué ! -5€ sur votre commande');}
+  else{toast('Code invalide ou expiré.',true);}
+}
+
+/* PAY */
+function doPay(btn){
+  var method=document.querySelector('input[name=paymethod]:checked');
+  if(!method){toast('Choisissez une méthode de paiement.',true);return;}
+  if(method.value!=='paypal'){
+    var num=document.getElementById('card-num').value.replace(/\s/g,'');
+    var exp=document.getElementById('card-exp').value;
+    var cvv=document.getElementById('card-cvv').value;
+    var name=document.getElementById('card-name').value.trim();
+    if(!num||num.length<16){toast('Numéro de carte invalide.',true);return;}
+    if(!exp||exp.length<5){toast('Date d\'expiration invalide.',true);return;}
+    if(!cvv||cvv.length<3){toast('CVV invalide.',true);return;}
+    if(!name){toast('Nom sur la carte requis.',true);return;}
+  }
+
+  btn.classList.add('loading');
+  setTimeout(function(){
+    /* Save order */
+    var cart=getCart();
+    var ref='#P-'+String(Math.floor(Math.random()*9000000+1000000));
+    var orders=get(S.ORDERS)||[];
+    orders.push({ref:ref,items:cart,date:new Date().toISOString(),statut:'en_attente',total:cart.reduce(function(a,c){return a+c.prix*(c.qty||1);},0)});
+    set(S.ORDERS,orders);
+    /* Clear cart */
+    set(S.CART,[]);
+    btn.classList.remove('loading');
+    /* Show success */
+    document.getElementById('success-ref').textContent=ref;
+    document.getElementById('success-overlay').classList.add('show');
+  },1800);
+}
+
+renderLeft();
+/* Hide card fields by default (Paypal selected) */
+document.getElementById('card-fields').style.display='none';
+</script>
 </body>
 </html>

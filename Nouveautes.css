@@ -103,12 +103,12 @@ body {
   font-family: "Nunito", sans-serif;
 }
 
-.search-wrap {
+.search-wrap {position: relative;
   display: flex;
   align-items: center;
   border: 1.5px solid #e0e0e0;
   border-radius: 20px;
-  overflow: hidden;
+  overflow: visible;
   padding: 4px 4px 4px 14px;
   background: #fff;
 }
@@ -346,7 +346,7 @@ body {
 
 .product-img {
   width: 100%;
-  height: 185px;
+  height: 180px;
   object-fit: contain;
   display: block;
   background: #f5f4fb;
@@ -496,3 +496,18 @@ body {
 .page-btn:hover { border-color: #b8a9d4; color: #b8a9d4; }
 .page-btn.active { background: #b8a9d4; color: #fff; border-color: #b8a9d4; }
 .page-btn.arrow { font-size: 13px; color: #888; width: auto; padding: 0 14px; white-space: nowrap; }
+
+.kc-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #aaa;
+  font-size: 14px;
+  line-height: 2;
+}
+.btn-clear {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.kc-vide { grid-column:1/-1; text-align:center; padding:60px 20px; color:#aaa; font-size:14px; line-height:2; }
