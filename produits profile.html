@@ -82,13 +82,13 @@
 
     @media(max-width:900px){.products-grid{grid-template-columns:repeat(2,1fr);}.page-wrap{grid-template-columns:1fr;}.topnav{padding:0 16px;}}
   </style>
-</head>
+<script src="auth.js"></script><script src="app.js"></script></head>
 <body>
 
 <header class="topnav">
-  <a href="page acceuil.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
   <nav class="nav-links">
-    <a href="page acceuil.html">Acheter maintenant</a>
+    <a href="index.html">Acheter maintenant</a>
     <a href="Nouveautes.html">Nouveautés</a>
     <a href="Vente.html">Vente</a>
     <a href="produits profile.html" class="active">Mes produits</a>
@@ -129,7 +129,7 @@
 
 <script>
 'use strict';
-var S={SESSION:'kc_session',CART:'kc_cart',FAVS:'kc_favs',MY_PRODS:'kc_my_products'};
+var S={SESSION:'kc_user',CART:'kc_cart',FAVS:'kc_favs',MY_PRODS:'kc_my_products'};
 function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
 function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function getSession(){return get(S.SESSION);}

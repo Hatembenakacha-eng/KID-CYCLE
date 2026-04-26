@@ -110,73 +110,61 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column}
   </div>
 </div>
 
-<script src="app.js"></script>
+<script src="auth.js"></script>
 <script>
-// Auto redirect si déjà connecté
-(function(){
-  try{var u=JSON.parse(localStorage.getItem('kc_user'));if(u&&localStorage.getItem('kc_tok'))location.href='index.html';}catch(e){}
-})();
-
-function toggleEye(id,btn){
-  var inp=document.getElementById(id);
-  inp.type=inp.type==='password'?'text':'password';
-  btn.textContent=inp.type==='password'?'👁':'🙈';
+/* Rediriger vers accueil si déjà connecté */
+if (estConnecte()) {
+  location.href = 'index.html';
 }
 
-function showErr(msg){
-  var e=document.getElementById('err-msg');
-  e.textContent=msg;e.style.display='block';
-  setTimeout(function(){e.style.display='none';},5000);
+/* Afficher/Cacher le mot de passe */
+function toggleEye(id, btn) {
+  var inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  btn.textContent = inp.type === 'password' ? '👁' : '🙈';
 }
 
-function forgotPwd(e){
-  e.preventDefault();
-  var em=document.getElementById('email').value.trim();
-  if(!em||!em.includes('@')){showErr('Entrez votre email ci-dessus pour réinitialiser.');return;}
-  KC.toast('Lien de réinitialisation envoyé à '+em+' 📧','ok');
+/* Afficher un message d'erreur */
+function showErr(msg) {
+  var e = document.getElementById('err-msg');
+  e.textContent = msg;
+  e.style.display = 'block';
+  /* setTimeout — attend X millisecondes puis exécute la fonction */
+  setTimeout(function() { e.style.display = 'none'; }, 5000);
 }
 
-function doLogin(){
-  var em=document.getElementById('email').value.trim();
-  var pw=document.getElementById('pwd').value;
-  var btn=document.getElementById('btn-login');
-  if(!em){showErr('L\'email est obligatoire.');return;}
-  if(!em.includes('@')){showErr('Adresse email invalide.');return;}
-  if(!pw){showErr('Le mot de passe est obligatoire.');return;}
+/* Connexion avec email + mot de passe (stockés dans le navigateur) */
+function doLogin() {
+  var email = document.getElementById('email').value.trim();
+  var motDePasse = document.getElementById('pwd').value;
+  var btn = document.getElementById('btn-login');
 
-  btn.innerHTML='<span class="spinner"></span> Connexion...';
-  btn.disabled=true;
+  if (!email) { showErr('L\'email est obligatoire.'); return; }
+  if (!email.includes('@')) { showErr('Adresse email invalide.'); return; }
+  if (!motDePasse) { showErr('Le mot de passe est obligatoire.'); return; }
 
-  fetch('api/auth.php?action=login',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({email:em,password:pw})
-  })
-  .then(function(r){return r.json();})
-  .then(function(r){
-    btn.innerHTML='Connecter →'; btn.disabled=false;
-    if(!r.ok){showErr(r.err||'Identifiants incorrects.');return;}
-    // Se souvenir
-    if(document.getElementById('remember').checked){
-      localStorage.setItem('kc_remember','1');
-    }
-    KC.setSession(r.user, r.token);
-    KC.toast('Bienvenue '+r.user.prenom+' ! 🎉','ok');
-    // Effet visuel avant redirect
-    setTimeout(function(){
-      var rd=sessionStorage.getItem('kc_redirect')||'index.html';
-      sessionStorage.removeItem('kc_redirect');
-      location.href=rd;
-    },700);
-  })
-  .catch(function(){
-    btn.innerHTML='Connecter →'; btn.disabled=false;
-    showErr('Erreur réseau. Vérifiez votre connexion.');
-  });
+  btn.textContent = 'Connexion...';
+  btn.disabled = true;
+
+  /* Appeler la fonction connecter() de auth.js */
+  var resultat = connecter(email, motDePasse);
+
+  btn.textContent = 'Connecter →';
+  btn.disabled = false;
+
+  if (!resultat.ok) {
+    showErr(resultat.err);
+    return;
+  }
+
+  /* Connexion réussie : aller à l'accueil */
+  alert('Bienvenue ' + resultat.user.prenom + ' ! 🎉');
+  location.href = 'index.html';
 }
 
-document.addEventListener('keydown',function(e){
-  if(e.key==='Enter') doLogin();
+/* Permettre de se connecter avec la touche Entrée */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
 });
 </script>
 </body>

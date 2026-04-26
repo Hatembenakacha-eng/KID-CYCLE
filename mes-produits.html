@@ -102,9 +102,9 @@
         <a href="#" class="sidebar-link"><img src="images/icon-avatar.svg" alt="">Mes Chats</a>
       </nav>
       <div class="sidebar-swaps">
-        <span class="swaps-coin">ii</span>
+        <span class="swaps-coin"><img src="images/logo.png" alt="ii" style="width:100%;height:100%;object-fit:contain;border-radius:50%;"></span>
         <span><strong>SWAPS</strong> disponible:&nbsp;<span id="swaps-val">500.00</span></span>
-        <span class="swaps-coin">ii</span>
+        <span class="swaps-coin"><img src="images/logo.png" alt="ii" style="width:100%;height:100%;object-fit:contain;border-radius:50%;"></span>
       </div>
     </aside>
 
@@ -221,7 +221,7 @@
   <div class="site-footer-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
 </footer>
 <div id="kc-toast"></div>
-<script src="app.js"></script>
+<script src="auth.js"></script><script src="app.js"></script>
 <script>
 var mesProduits = [];
 
@@ -280,7 +280,7 @@ function renderCard(p, i){
     +'<div class="vp-body">'
       +'<div class="vp-name">'+p.nom+'</div>'
       +'<div class="vp-sub">'+(p.categorie_nom||'5 types de set disponibles')+'</div>'
-      +'<div class="vp-price"><span class="swaps-coin">ii</span> '+prix+'</div>'
+      +'<div class="vp-price"><span class="swaps-coin"><img src="images/logo.png" alt="ii" style="width:100%;height:100%;object-fit:contain;border-radius:50%;"></span> '+prix+'</div>'
       +'<div class="vp-actions">'+btns+'</div>'
     +'</div>'
     +'</div>';

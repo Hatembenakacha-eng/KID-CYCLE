@@ -173,7 +173,7 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column}
   </div>
 </div>
 
-<script src="app.js"></script>
+<script src="auth.js"></script>
 <script>
 function toggleEye(id,btn){
   var i=document.getElementById(id);
@@ -209,46 +209,37 @@ function showErr(msg){
 
 function g(id){return document.getElementById(id).value.trim();}
 
+/* Créer un nouveau compte (stocké dans le navigateur, pas de serveur nécessaire) */
 function doRegister(){
-  var nom=g('nom'),prenom=g('prenom'),email=g('email');
-  var pwd=g('pwd'),pwd2=g('pwd2');
-  var genre=g('genre'),tel=g('tel'),pays=g('pays');
-  var adresse=g('adresse'),cp=g('cp'),ville=g('ville');
-  var cc=document.getElementById('country-code').value;
-  var nl=document.getElementById('newsletter').checked;
+  var nom=g('nom'), prenom=g('prenom'), email=g('email');
+  var pwd=g('pwd'), pwd2=g('pwd2');
   var btn=document.getElementById('btn-reg');
 
-  if(!nom)return showErr('Le nom est obligatoire.');
-  if(!prenom)return showErr('Le prénom est obligatoire.');
-  if(!email||!email.includes('@'))return showErr('Email invalide.');
-  if(!pwd)return showErr('Choisissez un mot de passe.');
-  if(pwd.length<6)return showErr('Mot de passe : minimum 6 caractères.');
-  if(pwd!==pwd2)return showErr('Les mots de passe ne correspondent pas.');
+  /* Vérifications de base */
+  if(!nom) return showErr('Le nom est obligatoire.');
+  if(!prenom) return showErr('Le prénom est obligatoire.');
+  if(!email||!email.includes('@')) return showErr('Email invalide.');
+  if(!pwd) return showErr('Choisissez un mot de passe.');
+  if(pwd.length<6) return showErr('Mot de passe : minimum 6 caractères.');
+  if(pwd!==pwd2) return showErr('Les mots de passe ne correspondent pas.');
 
-  btn.innerHTML='<span class="spinner"></span> Création...';
+  btn.textContent='Création...';
   btn.disabled=true;
 
-  fetch('api/auth.php?action=register',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      nom:nom,prenom:prenom,email:email,password:pwd,
-      genre:genre,tel:cc+' '+tel,pays:pays,
-      adresse:adresse,code_postal:cp,ville:ville,newsletter:nl
-    })
-  })
-  .then(function(r){return r.json();})
-  .then(function(r){
-    btn.innerHTML='S\'inscrire →'; btn.disabled=false;
-    if(!r.ok){showErr(r.err||'Erreur lors de la création.');return;}
-    KC.setSession(r.user, r.token);
-    KC.toast('Compte créé ! Bienvenue '+r.user.prenom+' 🎉','ok');
-    setTimeout(function(){location.href='index.html';},800);
-  })
-  .catch(function(){
-    btn.innerHTML='S\'inscrire →'; btn.disabled=false;
-    showErr('Erreur réseau. Réessayez.');
-  });
+  /* inscrire() vient de auth.js — sauvegarde le compte dans le navigateur */
+  var resultat = inscrire(nom, prenom, email, pwd);
+
+  btn.textContent='S\'inscrire →';
+  btn.disabled=false;
+
+  if(!resultat.ok){
+    showErr(resultat.err);
+    return;
+  }
+
+  /* Inscription réussie : aller à l'accueil */
+  alert('Compte créé ! Bienvenue ' + resultat.user.prenom + ' 🎉');
+  location.href='index.html';
 }
 </script>
 </body>

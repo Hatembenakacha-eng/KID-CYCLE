@@ -325,7 +325,7 @@
     <a href="profil.html" class="nav-icon-btn" title="Mon profil">
       <img src="images/icon-user.svg" alt="profil" id="nav-avatar-img">
     </a>
-    <div class="nav-swaps" title="Mes SWAPS" id="nav-swaps">ii</div>
+    <div class="nav-swaps" title="Mes SWAPS" id="nav-swaps"><img src="images/logo.png" alt="SWAPS" style="width:22px;height:22px;border-radius:50%;object-fit:contain;"></div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
       <button class="nav-search-btn" onclick="gotoSearch()">
@@ -333,6 +333,14 @@
       </button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
+    <!-- Bouton déconnexion : visible seulement si l'utilisateur est connecté -->
+    <a href="#" id="nav-logout" onclick="faireDeconnexion(); return false;"
+       title="Se déconnecter"
+       style="display:none; color:#e04040; font-size:13px; font-weight:700;
+              text-decoration:none; padding:6px 12px; border-radius:10px;
+              border:1.5px solid #fca5a5; white-space:nowrap;">
+      🚪 Déconnexion
+    </a>
   </div>
 </nav>
 
@@ -487,6 +495,47 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════
+     VIDÉO — Section vidéo (remplacez src="#" par votre fichier vidéo)
+     ═══════════════════════════════════════════════════════ -->
+<section style="padding:48px 32px; max-width:1280px; margin:0 auto; text-align:center;">
+  <h2 style="font-size:24px; font-weight:800; color:#2d2d4a; margin-bottom:10px;">Découvrez KidCycle en vidéo</h2>
+  <p style="color:#888; margin-bottom:24px; font-size:14px;">Notre collection, nos valeurs, notre histoire.</p>
+  <div style="border-radius:20px; overflow:hidden; box-shadow:0 8px 40px rgba(155,142,196,0.2); background:#f4f2fa; max-width:800px; margin:0 auto;">
+    <video width="100%" controls style="display:block; border-radius:20px;">
+      <!-- Mettez votre fichier vidéo ici : remplacez # par le nom du fichier -->
+      <source src="#" type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo HTML5.
+    </video>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     RÉSEAUX SOCIAUX — Facebook et Instagram
+     ═══════════════════════════════════════════════════════ -->
+<section style="background:#f9f7fd; padding:32px; text-align:center; border-top:1px solid #ede9f7;">
+  <p style="font-size:15px; font-weight:700; color:#2d2d4a; margin-bottom:16px;">Suivez-nous sur les réseaux sociaux</p>
+  <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+    <!-- Lien Facebook -->
+    <a href="https://www.facebook.com" target="_blank" rel="noopener"
+       style="display:inline-flex; align-items:center; gap:8px; padding:11px 22px;
+              background:#1877f2; color:#fff; border-radius:12px; font-weight:700;
+              text-decoration:none; font-size:14px;"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      📘 Facebook
+    </a>
+    <!-- Lien Instagram -->
+    <a href="https://www.instagram.com" target="_blank" rel="noopener"
+       style="display:inline-flex; align-items:center; gap:8px; padding:11px 22px;
+              background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4);
+              color:#fff; border-radius:12px; font-weight:700;
+              text-decoration:none; font-size:14px;"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      📷 Instagram
+    </a>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
@@ -502,8 +551,76 @@
 <!-- TOAST -->
 <div id="kc-toast"></div>
 
-<script src="app.js"></script>
+<script src="auth.js"></script><script src="app.js"></script>
 <script>
+/* ───────────────────────────────────────────────────
+   DÉCONNEXION — fonction simple pour se déconnecter
+   ─────────────────────────────────────────────────── */
+function faireDeconnexion() {
+  /* Supprimer la session du navigateur */
+  localStorage.removeItem('kc_user');
+  localStorage.removeItem('kc_session');
+  localStorage.removeItem('kc_tok');
+  /* Aller à la page de connexion */
+  window.location.href = 'Connexion.html';
+}
+
+/* ───────────────────────────────────────────────────
+   AFFICHER/CACHER le bouton déconnexion selon connexion
+   ─────────────────────────────────────────────────── */
+function mettreAJourBoutonNav() {
+  /* Lire la session dans le navigateur */
+  var session = null;
+  try { session = JSON.parse(localStorage.getItem('kc_user')); } catch(e) {}
+
+  /* Afficher le bouton déconnexion si connecté */
+  var btnLogout = document.getElementById('nav-logout');
+  if (btnLogout) {
+    btnLogout.style.display = session ? 'inline-flex' : 'none';
+  }
+}
+
+/* ───────────────────────────────────────────────────
+   MUSIQUE SIMPLE — mélodie douce jouée au premier clic
+   (Web Audio API intégrée dans le navigateur, pas de fichier externe)
+   ─────────────────────────────────────────────────── */
+function jouerMelodie() {
+  try {
+    /* AudioContext — moteur audio du navigateur */
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+    /* Notes : [fréquence Hz, durée secondes, délai secondes] */
+    var notes = [
+      [392, 0.18, 0.0],
+      [440, 0.18, 0.22],
+      [494, 0.18, 0.44],
+      [523, 0.30, 0.66],
+      [494, 0.18, 1.00],
+      [440, 0.18, 1.22],
+      [392, 0.40, 1.44]
+    ];
+
+    notes.forEach(function(n) {
+      /* createOscillator — génère un son pur */
+      var osc = ctx.createOscillator();
+      /* createGain — contrôle le volume */
+      var vol = ctx.createGain();
+      osc.connect(vol);
+      vol.connect(ctx.destination);
+      osc.type = 'sine';              /* son doux et arrondi */
+      osc.frequency.value = n[0];
+      /* Volume très faible pour ne pas surprendre */
+      vol.gain.setValueAtTime(0.05, ctx.currentTime + n[2]);
+      /* Diminuer le volume progressivement */
+      vol.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + n[2] + n[1]);
+      osc.start(ctx.currentTime + n[2]);
+      osc.stop(ctx.currentTime + n[2] + n[1]);
+    });
+  } catch(e) {
+    /* Si le navigateur ne supporte pas, on ignore */
+  }
+}
+
 /* ── Init ─────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', function(){
   KC.initNav();
@@ -511,12 +628,15 @@ document.addEventListener('DOMContentLoaded', function(){
   KC.initSearch('search-input','search-dd');
   KC.initRipple('.btn-primary, .prod-card-btn, .chip');
 
+  /* Mettre à jour le bouton déconnexion */
+  mettreAJourBoutonNav();
+
   loadNouv('');
   loadBest('');
   loadOffre();
   loadStats();
 
-  // Chips Nouveautés
+  /* Chips Nouveautés */
   document.querySelectorAll('#chips-nouv .chip').forEach(function(c){
     c.addEventListener('click', function(){
       document.querySelectorAll('#chips-nouv .chip').forEach(function(x){x.classList.remove('active')});
@@ -524,7 +644,7 @@ document.addEventListener('DOMContentLoaded', function(){
       loadNouv(c.dataset.cat);
     });
   });
-  // Chips Best
+  /* Chips Best */
   document.querySelectorAll('#chips-best .chip').forEach(function(c){
     c.addEventListener('click', function(){
       document.querySelectorAll('#chips-best .chip').forEach(function(x){x.classList.remove('active')});
@@ -533,13 +653,13 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
-  // Scroll top btn
+  /* Scroll top btn */
   window.addEventListener('scroll', function(){
     var btn = document.getElementById('scroll-top');
     if(btn) btn.classList.toggle('visible', window.scrollY > 400);
   });
 
-  // Cursor sparkles
+  /* Cursor sparkles */
   document.addEventListener('click', function(e){
     var s = document.createElement('div');
     s.className = 'sparkle';
@@ -549,8 +669,15 @@ document.addEventListener('DOMContentLoaded', function(){
     setTimeout(function(){ s.remove(); }, 600);
   });
 
-  // Logo hover parallax
+  /* Logo hover parallax */
   KC.initParallax('.hero-main-img img', 8);
+
+  /* Mélodie au premier clic sur la page (les navigateurs bloquent l'audio automatique) */
+  document.addEventListener('click', function jouerUneFois() {
+    jouerMelodie();
+    /* removeEventListener — supprimer pour ne jouer qu'une seule fois */
+    document.removeEventListener('click', jouerUneFois);
+  }, { once: true });
 });
 
 /* ── Load stats ───────────────────────────────────────────── */
@@ -600,7 +727,7 @@ function renderGrid(id, prods){
     return;
   }
   g.innerHTML = prods.map(function(p){ return KC.prodCard(p); }).join('');
-  // Animate each card
+  /* Animer chaque carte */
   g.querySelectorAll('.prod-card').forEach(function(c,i){
     c.style.opacity='0'; c.style.transform='translateY(20px)';
     setTimeout(function(){
@@ -615,7 +742,7 @@ function showSkeleton(id){
   g.innerHTML = '<div class="skeleton sk"></div>'.repeat(8);
 }
 
-/* ── Fallback products with real images ───────────────────── */
+/* ── Produits de remplacement si pas de connexion serveur ─── */
 function getFallback(){
   return [
     {id:1,nom:'Combinaison Bébé Pois',description:'Velours doux · 0-24 mois',prix:34,image:'images/cl1.png',badge:'Nouveau'},

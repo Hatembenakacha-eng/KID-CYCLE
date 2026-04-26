@@ -253,7 +253,7 @@ $stats = getStats($db);
       <span class="ico">💱</span> SWAPS
     </a>
     <div class="adm-nav-label">Accès rapide</div>
-    <a class="adm-nav-item" href="../page acceuil.html" target="_blank">
+    <a class="adm-nav-item" href="../index.html" target="_blank">
       <span class="ico">🌐</span> Voir le site
     </a>
   </nav>
