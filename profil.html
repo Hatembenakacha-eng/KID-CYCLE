@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mon Profil — KidCycle</title>
+<link rel="stylesheet" href="global.css">
+<style>
+.page-wrap{max-width:1280px;margin:0 auto;padding:32px 24px}
+.profil-layout{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start}
+/* Sidebar */
+.account-sidebar{background:var(--bg);border-radius:var(--radius);padding:26px 18px;border:1.5px solid var(--border);position:sticky;top:82px;box-shadow:var(--shadow-sm)}
+.sidebar-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:20px;padding-bottom:14px;border-bottom:1.5px solid var(--border)}
+.sidebar-nav{display:flex;flex-direction:column;gap:3px}
+.sidebar-link{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--text-mid);transition:all .2s;text-decoration:none;cursor:pointer}
+.sidebar-link:hover{background:#fff;color:var(--purple)}
+.sidebar-link.active{background:var(--purple);color:#fff;font-weight:700}
+.sidebar-link img{width:18px;height:18px;flex-shrink:0;opacity:.6}
+.sidebar-link.active img{filter:brightness(0) invert(1);opacity:1}
+.sidebar-swaps{margin-top:18px;background:#fff;border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text-mid);border:1.5px solid var(--border)}
+/* Contenu */
+.profil-content{}
+/* Header Mes données */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.section-name{font-size:22px;font-weight:800;color:var(--purple)}
+/* Dropdown ··· */
+.dots-menu{position:relative}
+.dots-btn{width:36px;height:36px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-mid);border-radius:8px;transition:background .2s;display:flex;align-items:center;justify-content:center}
+.dots-btn:hover{background:var(--border)}
+.dots-dropdown{position:absolute;top:calc(100%+4px);right:0;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow);min-width:200px;z-index:200;display:none;overflow:hidden;animation:dropIn .18s ease}
+.dots-dropdown.open{display:block}
+@keyframes dropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.dots-item{display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;transition:background .15s;border:none;background:none;width:100%;font-family:'Nunito',sans-serif;text-align:left}
+.dots-item:hover{background:var(--bg)}
+.dots-item.danger{color:var(--red)}
+/* Carte profil */
+.profil-card{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:28px;box-shadow:var(--shadow-sm);margin-bottom:24px;display:flex;align-items:flex-start;gap:24px}
+.profil-avatar-wrap{position:relative;flex-shrink:0}
+.profil-avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--purple-pale);background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.profil-avatar img{width:100%;height:100%;object-fit:cover}
+.profil-verified{position:absolute;bottom:2px;right:2px;width:22px;height:22px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #fff}
+.profil-infos{flex:1}
+.profil-name{font-size:20px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.profil-email{font-size:13px;color:var(--text-mid);margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.profil-tel{font-size:13px;color:var(--text-mid);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.profil-label{font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.4px}
+.profil-extra{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+.profil-field{font-size:13px;color:var(--text-mid)}
+.profil-field span{color:var(--text);font-weight:700}
+/* Abonnement card */
+.abo-card{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:28px;box-shadow:var(--shadow-sm)}
+.abo-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.abo-section-name{font-size:22px;font-weight:800;color:var(--purple)}
+.abo-inner{background:var(--bg);border-radius:var(--radius-sm);padding:24px;text-align:center;border:1.5px solid var(--border)}
+.abo-plan-name{font-size:18px;font-weight:800;color:var(--text);margin-bottom:12px}
+.abo-price{font-size:36px;font-weight:900;color:var(--purple);margin-bottom:4px}
+.abo-price span{font-size:15px;color:var(--text-light);font-weight:600}
+.abo-dates{font-size:13px;color:var(--text-mid);margin-bottom:8px;display:flex;flex-direction:column;gap:4px}
+.abo-dates strong{color:var(--text)}
+.abo-details-title{font-size:14px;font-weight:700;color:var(--text);margin:16px 0 8px}
+.abo-details-list{font-size:13px;color:var(--text-mid);line-height:1.9}
+.abo-btns{display:flex;gap:12px;justify-content:center;margin-top:20px}
+.btn-modifier{padding:11px 28px;background:#fff;color:var(--purple);border:1.5px solid var(--purple);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif}
+.btn-modifier:hover{background:var(--purple-pale)}
+.btn-resilier{padding:11px 28px;background:var(--purple);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif}
+.btn-resilier:hover{background:var(--purple-d)}
+/* Modal supprimer compte — comme Figma supprimer compte.png */
+.modal-del .modal-box{max-width:460px;text-align:center}
+.modal-del-illus{font-size:64px;margin-bottom:16px}
+.modal-del-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:10px;line-height:1.4}
+.modal-del-sub{font-size:13px;color:var(--text-mid);margin-bottom:16px;line-height:1.6}
+.modal-del-check{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--text-mid);margin-bottom:20px;cursor:pointer}
+.modal-del-check input{width:15px;height:15px;accent-color:var(--purple)}
+.modal-del-check a{color:var(--purple);font-weight:700}
+</style>
+</head>
+<body>
+<div class="top-promo">
+  <div class="top-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="top-promo-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Acheter maintenant</a>
+    <a href="nouveautes.html" class="nav-link">Nouveautés</a>
+    <a href="vente.html" class="nav-link">Vente</a>
+    <a href="mes-produits.html" class="nav-link">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn" style="background:var(--purple-pale);border-color:var(--purple)"><img src="images/icon-user.svg" alt=""></a>
+    <div class="nav-swaps">ii</div>
+    <div class="nav-search-wrap" style="position:relative">
+      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <div class="search-dropdown" id="search-dd"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="profil-layout">
+
+    <!-- Sidebar -->
+    <aside class="account-sidebar">
+      <div class="sidebar-title">Mon compte</div>
+      <nav class="sidebar-nav">
+        <a href="profil.html" class="sidebar-link active">
+          <img src="images/icon-user.svg" alt="">Mon profil
+        </a>
+        <a href="favoris.html" class="sidebar-link">
+          <img src="images/icon-heart.svg" alt="">Mes favoris
+        </a>
+        <a href="panier.html" class="sidebar-link">
+          <img src="images/icon-cart.svg" alt="">Mon panier
+        </a>
+        <a href="mes-produits.html" class="sidebar-link">
+          <img src="images/icon-avatar.svg" alt="">Mon dressing
+        </a>
+        <a href="mes-commandes.html" class="sidebar-link">
+          <img src="images/icon-avatar.svg" alt="">Mes commandes
+        </a>
+        <a href="#" class="sidebar-link">
+          <img src="images/icon-avatar.svg" alt="">Mes Chats
+        </a>
+      </nav>
+      <div class="sidebar-swaps">
+        <span class="swaps-coin">ii</span>
+        <span>Mes <strong>SWAPS</strong> disponible:&nbsp;<span id="swaps-val">500.00</span></span>
+        <span class="swaps-coin">ii</span>
+      </div>
+    </aside>
+
+    <!-- Contenu -->
+    <div class="profil-content">
+
+      <!-- Mes données -->
+      <div class="section-head">
+        <h1 class="section-name">Mes données</h1>
+        <div class="dots-menu">
+          <button class="dots-btn" onclick="toggleDots()" id="dots-btn">···</button>
+          <div class="dots-dropdown" id="dots-dd">
+            <button class="dots-item" onclick="location.href='modifier-profil.html'">
+              ✏️ Modifier Mon Profile
+            </button>
+            <button class="dots-item danger" onclick="openModal('modal-delete')">
+              🗑️ Supprimer Mon Profile
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="profil-card fade-up">
+        <!-- Avatar -->
+        <div class="profil-avatar-wrap">
+          <div class="profil-avatar">
+            <img id="avatar-img" src="images/icon-avatar.svg" alt="Avatar">
+          </div>
+          <div class="profil-verified" title="Compte vérifié">✓</div>
+        </div>
+        <!-- Infos -->
+        <div class="profil-infos">
+          <div class="profil-name">
+            <span id="profil-name">Karina Clark</span>
+            <span style="font-size:14px;background:var(--purple-pale);color:var(--purple);padding:2px 10px;border-radius:6px;font-weight:700" id="profil-abo-badge">Premium</span>
+          </div>
+          <div class="profil-email">
+            <img src="images/icon-avatar.svg" alt="" style="width:14px;height:14px;opacity:.4">
+            <span id="profil-email">email@exemple.com</span>
+          </div>
+          <div class="profil-tel">
+            <img src="images/icon-pin.svg" alt="" style="width:14px;height:14px;opacity:.4">
+            <span id="profil-tel">(+33) 123 45 67 89</span>
+          </div>
+          <div class="profil-extra">
+            <div class="profil-field">
+              <div class="profil-label">Location</div>
+              <span id="profil-loc">12 Rue de la République</span>
+            </div>
+            <div class="profil-field">
+              <div class="profil-label">Membre depuis</div>
+              <span id="profil-since">août 2022</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mon abonnement -->
+      <div class="abo-card fade-up">
+        <div class="abo-title-row">
+          <h2 class="abo-section-name">Mon abonnement</h2>
+        </div>
+        <div class="abo-inner">
+          <div class="abo-plan-name">Abonnement <span id="abo-nom">"Premium"</span></div>
+          <div class="abo-price" id="abo-prix">49 €<span>/an</span></div>
+          <div class="abo-dates">
+            <span>Date d'activation : <strong id="abo-debut">28-09-2024</strong></span>
+            <span>Date de renouvellement prochain : <strong id="abo-fin">28-09-2025</strong></span>
+          </div>
+          <div class="abo-details-title">Les détails de l'abonnement :</div>
+          <div class="abo-details-list">
+            <div>- Compte vérifié et badge Premium</div>
+            <div>- Expédition prioritaire sous 24h</div>
+            <div>- Retours gratuits sous 14 jours</div>
+            <div>- Support client dédié 7j/7</div>
+            <div>- Accès aux ventes privées en avant-première</div>
+          </div>
+          <div class="abo-btns">
+            <button class="btn-modifier" onclick="KC.toast('Modification d\'abonnement bientôt disponible','info')">Modifier</button>
+            <button class="btn-resilier" onclick="KC.confirm('Voulez-vous résilier votre abonnement Premium ?',function(){KC.toast('Résiliation envoyée. Votre abonnement reste actif jusqu\'à la fin de période.','ok');})">Résilier</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SUPPRIMER COMPTE — fidèle Figma supprimer compte.png -->
+<div class="modal-overlay modal-del" id="modal-delete">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-delete')">✕</button>
+    <div class="modal-del-illus">🗑️</div>
+    <h2 class="modal-del-title">Vous souhaitez supprimer<br>votre compte KidCycle ?</h2>
+    <p class="modal-del-sub">Avant de continuer, veuillez noter que cette action est définitive. Certaines conditions s'appliquent pour la suppression de votre compte</p>
+    <label class="modal-del-check">
+      <input type="checkbox" id="del-accept">
+      Accepter <a href="#">les conditions de suppression</a>
+    </label>
+    <div class="modal-actions">
+      <button class="modal-btn-cancel" onclick="closeModal('modal-delete')">Annuler</button>
+      <button class="modal-btn-submit" style="background:var(--red)" onclick="doDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="site-footer-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</footer>
+<div id="kc-toast"></div>
+<script src="app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  KC.initNav(); KC.initSearch('search-input','search-dd'); KC.initAnimations();
+  if(!KC.isLogged()){location.href='connexion.html';return;}
+  loadProfil();
+  // Close dots on outside click
+  document.addEventListener('click',function(e){
+    if(!document.getElementById('dots-btn').contains(e.target))
+      document.getElementById('dots-dd').classList.remove('open');
+  });
+  // Modal close
+  document.querySelectorAll('.modal-overlay').forEach(function(m){
+    m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});
+  });
+});
+
+function loadProfil(){
+  KC.GET('/auth.php?action=me')
+    .then(function(r){if(r.ok)fillProfil(r.user);else fillProfil(KC.user());})
+    .catch(function(){fillProfil(KC.user());});
+}
+
+function fillProfil(u){
+  if(!u)return;
+  KC.store.set('kc_user',u);
+  document.getElementById('profil-name').textContent=(u.prenom||'')+' '+(u.nom||'');
+  document.getElementById('profil-email').textContent=u.email||'';
+  document.getElementById('profil-tel').textContent=u.tel||'Non renseigné';
+  document.getElementById('profil-loc').textContent=u.adresse||'Non renseignée';
+  document.getElementById('swaps-val').textContent=parseFloat(u.swaps||500).toFixed(2);
+  if(u.avatar){
+    var img=document.getElementById('avatar-img');img.src=u.avatar;
+    img.style.width='100%';img.style.height='100%';img.style.objectFit='cover';
+  }
+  // Date membre
+  if(u.created_at){
+    var d=new Date(u.created_at);
+    var months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    document.getElementById('profil-since').textContent=months[d.getMonth()]+' '+d.getFullYear();
+  }
+  // Abonnement
+  var abo=u.abonnement||'Gratuit';
+  document.getElementById('abo-nom').textContent='"'+abo+'"';
+  document.getElementById('profil-abo-badge').textContent=abo;
+  if(abo==='Gratuit'){
+    document.getElementById('abo-prix').innerHTML='0 €<span>/an</span>';
+  } else if(abo==='Pro'){
+    document.getElementById('abo-prix').innerHTML='99 €<span>/an</span>';
+  }
+}
+
+function toggleDots(){document.getElementById('dots-dd').classList.toggle('open');}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function doDelete(){
+  if(!document.getElementById('del-accept').checked){KC.toast('Acceptez les conditions de suppression','warn');return;}
+  KC.confirm('Cette action est irréversible.\nÊtes-vous vraiment sûr(e) ?',function(){
+    KC.DEL('/auth.php?action=delete')
+      .then(function(r){
+        KC.logout();KC.toast('Compte supprimé définitivement.','ok');
+        setTimeout(function(){location.href='index.html';},1200);
+      })
+      .catch(function(){KC.logout();location.href='index.html';});
+  });
+}
+
+function gotoSearch(){var q=document.getElementById('search-input').value.trim();if(q)location.href='nouveautes.html?q='+encodeURIComponent(q);}
+document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')gotoSearch();});
+</script>
+</body>
+</html>

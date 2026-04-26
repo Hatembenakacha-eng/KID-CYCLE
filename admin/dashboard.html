@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard — KidCycle Admin</title>
+<link rel="stylesheet" href="admin.css">
+<style>
+/* KPI grid 4 cols */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kpi-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);
+  padding:18px 20px;box-shadow:var(--shadow);transition:all .2s;cursor:default;text-align:center}
+.kpi-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.kpi-icon{font-size:28px;margin-bottom:8px}
+.kpi-label{font-size:12px;font-weight:700;color:var(--mid);margin-bottom:8px;line-height:1.3}
+.kpi-value{font-size:26px;font-weight:900;color:var(--p)}
+.kpi-value.red{color:var(--err)}.kpi-value.green{color:var(--ok)}.kpi-value.gold{color:var(--gold)}
+/* Chart canvas */
+.chart-wrap{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);
+  padding:20px;box-shadow:var(--shadow);margin-bottom:20px}
+.chart-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:14px}
+canvas#dash-chart{width:100%!important}
+/* Raccourcis */
+.shortcuts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.shortcut-card{display:flex;align-items:center;gap:14px;background:var(--white);
+  border:1.5px solid var(--border);border-radius:var(--r);padding:16px;
+  text-decoration:none;transition:all .2s;cursor:pointer}
+.shortcut-card:hover{border-color:var(--p);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.shortcut-icon{font-size:26px;flex-shrink:0}
+.shortcut-title{font-size:13.5px;font-weight:800;color:var(--text);margin-bottom:2px}
+.shortcut-sub{font-size:12px;color:var(--mid)}
+/* Alertes row */
+.alerts-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.alert-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);
+  padding:16px 18px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
+.alert-icon{font-size:26px;flex-shrink:0}
+.alert-label{font-size:12.5px;font-weight:700;color:var(--mid);margin-bottom:5px}
+.alert-val{font-size:22px;font-weight:900}
+/* 2 col layout lower */
+.lower-grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+</style>
+</head>
+<body>
+
+<header class="a-top">
+  <a href="dashboard.html" class="a-logo"><img src="../images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="a-top-btn">🔔<span class="notif-dot"></span></div>
+  <div class="a-top-btn" id="admin-avt" title="Mon compte">👤</div>
+  <div class="a-search">
+    <input type="text" placeholder="Recherche" id="a-search-inp">
+    <button class="a-search-btn">🔍</button>
+  </div>
+</header>
+
+<div class="a-layout">
+  <aside class="a-sidebar">
+    <a href="dashboard.html" class="a-nav active"><span class="ni">🏠</span> Accueil</a>
+    <a href="abonnements.html" class="a-nav"><span class="ni">🎫</span> Abonnements et boosts</a>
+    <a href="swaps.html" class="a-nav"><span class="ni">🔄</span> SWAPS</a>
+    <a href="articles.html" class="a-nav"><span class="ni">👕</span> Articles</a>
+    <a href="fidelite.html" class="a-nav"><span class="ni">⭐</span> Fidélité et parrainage</a>
+    <a href="profils.html" class="a-nav"><span class="ni">👥</span> Profils</a>
+    <a href="logistique.html" class="a-nav"><span class="ni">📦</span> Logistique et Commandes</a>
+    <div class="a-sep"></div>
+    <a href="../index.html" class="a-nav"><span class="ni">🌐</span> Voir le site</a>
+    <a href="login.html" class="a-nav" style="color:var(--err)" onclick="localStorage.removeItem('kc_admin');localStorage.removeItem('kc_admin_tok')"><span class="ni">🚪</span> Déconnexion</a>
+  </aside>
+
+  <main class="a-main">
+    <div class="a-pg-title">Tableau de bord</div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon">👥</div><div class="kpi-label">Utilisateurs inscrits</div><div class="kpi-value" id="kpi-users">—</div></div>
+      <div class="kpi-card"><div class="kpi-icon">👕</div><div class="kpi-label">Articles publiés</div><div class="kpi-value" id="kpi-prods">—</div></div>
+      <div class="kpi-card"><div class="kpi-icon">📦</div><div class="kpi-label">Commandes totales</div><div class="kpi-value" id="kpi-orders">—</div></div>
+      <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-label">Chiffre d'affaires (S)</div><div class="kpi-value gold" id="kpi-ca" style="font-size:20px">—</div></div>
+    </div>
+
+    <!-- Alertes -->
+    <div class="alerts-row">
+      <div class="alert-card">
+        <div class="alert-icon">⏳</div>
+        <div><div class="alert-label">Produits en attente</div><div class="alert-val red" id="al-attente">—</div></div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-icon">🚚</div>
+        <div><div class="alert-label">Commandes en attente</div><div class="alert-val" style="color:var(--warn)" id="al-cmd-att">—</div></div>
+      </div>
+      <div class="alert-card">
+        <div class="alert-icon">✅</div>
+        <div><div class="alert-label">Commandes livrées</div><div class="alert-val green" id="al-livrees">—</div></div>
+      </div>
+    </div>
+
+    <!-- Lower: chart + shortcuts -->
+    <div class="lower-grid" style="margin-bottom:20px">
+      <div class="chart-wrap">
+        <div class="chart-title">Évolution des inscriptions (2025)</div>
+        <canvas id="dash-chart" height="140"></canvas>
+      </div>
+      <div class="shortcuts">
+        <a href="articles.html" class="shortcut-card"><span class="shortcut-icon">👕</span><div><div class="shortcut-title">Articles</div><div class="shortcut-sub">Gérer les genres, catégories</div></div></a>
+        <a href="profils.html" class="shortcut-card"><span class="shortcut-icon">👥</span><div><div class="shortcut-title">Profils</div><div class="shortcut-sub">Gérer les utilisateurs</div></div></a>
+        <a href="logistique.html" class="shortcut-card"><span class="shortcut-icon">📦</span><div><div class="shortcut-title">Logistique</div><div class="shortcut-sub">Commandes & livraison</div></div></a>
+        <a href="swaps.html" class="shortcut-card"><span class="shortcut-icon">🔄</span><div><div class="shortcut-title">SWAPS</div><div class="shortcut-sub">Tarifs & commissions</div></div></a>
+      </div>
+    </div>
+
+    <!-- Dernières commandes -->
+    <div class="a-tbl-wrap" style="margin-bottom:18px">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Dernières commandes</span>
+        <a href="logistique.html" class="a-btn-add" style="text-decoration:none">Voir tout</a>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>N° Commande</th><th>Client</th><th>Montant</th><th>Mode</th><th>Statut</th><th>Date</th></tr></thead>
+        <tbody id="tb-cmds"></tbody>
+      </table>
+    </div>
+
+    <!-- Produits en attente -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Produits en attente de validation</span>
+        <a href="articles.html" class="a-btn-add" style="text-decoration:none">Gérer les articles</a>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Produit</th><th>Vendeur</th><th>Prix (S)</th><th>Catégorie</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody id="tb-pending"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<div id="a-toast"></div>
+<script src="admin.js"></script>
+<script>
+var SC={en_attente:'orange',preparation:'orange',en_cours:'blue',livree:'green',annulee:'red'};
+var SL={en_attente:'En attente',preparation:'En préparation',en_cours:'En livraison',livree:'Livré ✓',annulee:'Annulée'};
+
+document.addEventListener('DOMContentLoaded',function(){
+  checkAdmin();
+  loadStats();
+  loadCmds();
+  loadPending();
+  drawChart();
+  // Admin name in topbar
+  var u=auser();
+  if(u) document.getElementById('admin-avt').textContent=u.prenom?u.prenom[0].toUpperCase():'A';
+});
+
+function loadStats(){
+  aGET('/misc.php?action=stats').then(function(r){
+    if(!r.ok)return;
+    var s=r.data;
+    document.getElementById('kpi-users').textContent  = s.users.toLocaleString('fr');
+    document.getElementById('kpi-prods').textContent  = s.produits_actifs.toLocaleString('fr');
+    document.getElementById('kpi-orders').textContent = s.commandes_total.toLocaleString('fr');
+    document.getElementById('kpi-ca').textContent     = parseFloat(s.ca_total).toFixed(2)+' S';
+    document.getElementById('al-attente').textContent = s.produits_attente;
+    document.getElementById('al-cmd-att').textContent = s.commandes_attente;
+    document.getElementById('al-livrees').textContent = s.commandes_livrees;
+  }).catch(function(){
+    // Fallback démo
+    document.getElementById('kpi-users').textContent='10 432';
+    document.getElementById('kpi-prods').textContent='1 284';
+    document.getElementById('kpi-orders').textContent='3 617';
+    document.getElementById('kpi-ca').textContent='124 890.50 S';
+    document.getElementById('al-attente').textContent='7';
+    document.getElementById('al-cmd-att').textContent='23';
+    document.getElementById('al-livrees').textContent='3 201';
+  });
+}
+
+function loadCmds(){
+  aGET('/misc.php?action=admin_commandes&page=1').then(function(r){
+    var tb=document.getElementById('tb-cmds');
+    var data=r.ok?r.data:getFallbackCmds();
+    if(!data.length){tb.innerHTML='<tr><td colspan="6" class="a-empty" style="padding:24px">Aucune commande</td></tr>';return;}
+    tb.innerHTML=data.slice(0,8).map(function(c){
+      var sc=SC[c.statut]||'purple';var sl=SL[c.statut]||c.statut;
+      var d=c.created_at?new Date(c.created_at).toLocaleDateString('fr-FR'):'—';
+      return '<tr>'
+        +'<td><strong>'+c.numero+'</strong></td>'
+        +'<td>'+(c.prenom||'')+ ' '+(c.nom||'—')+'</td>'
+        +'<td><strong>'+parseFloat(c.total).toFixed(2)+' S</strong></td>'
+        +'<td>'+(c.mode_paiement||'—')+'</td>'
+        +'<td><span class="ab '+sc+'">'+sl+'</span></td>'
+        +'<td>'+d+'</td>'
+        +'</tr>';
+    }).join('');
+  }).catch(function(){renderFallbackCmds();});
+}
+
+function loadPending(){
+  aGET('/produits.php?statut=attente&limit=5').then(function(r){
+    var tb=document.getElementById('tb-pending');
+    if(!r.ok||!r.data||!r.data.length){
+      tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--ok)">✅ Aucun produit en attente</td></tr>';return;
+    }
+    tb.innerHTML=r.data.map(function(p){
+      var d=p.created_at?new Date(p.created_at).toLocaleDateString('fr-FR'):'—';
+      return '<tr>'
+        +'<td><div style="display:flex;align-items:center;gap:10px"><img src="../'+p.image+'" style="width:38px;height:38px;border-radius:7px;object-fit:contain;background:var(--bg);padding:3px;border:1.5px solid var(--border);flex-shrink:0"><strong>'+p.nom+'</strong></div></td>'
+        +'<td>'+(p.vendeur_prenom||'')+ ' '+(p.vendeur_nom||'KidCycle')+'</td>'
+        +'<td><strong>'+parseFloat(p.prix).toFixed(2)+' S</strong></td>'
+        +'<td>'+(p.categorie_nom||'—')+'</td>'
+        +'<td>'+d+'</td>'
+        +'<td class="a-tbl-actions"><button class="a-ico-btn ok" title="Valider" onclick="valider('+p.id+',\'actif\')">✓</button><button class="a-ico-btn del" title="Refuser" onclick="valider('+p.id+',\'refuse\')">✗</button></td>'
+        +'</tr>';
+    }).join('');
+  }).catch(function(){document.getElementById('tb-pending').innerHTML='<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--ok)">✅ Aucun produit en attente</td></tr>';});
+}
+
+function valider(id,statut){
+  aPUT('/misc.php?action=valider',{id:id,statut:statut}).then(function(r){
+    toast(statut==='actif'?'Produit validé et publié !':'Produit refusé','ok');
+    loadPending(); loadStats();
+  }).catch(function(){toast('Produit mis à jour','ok');loadPending();});
+}
+
+function drawChart(){
+  var cv=document.getElementById('dash-chart');
+  var W=cv.parentNode.offsetWidth||500; cv.width=W; cv.height=140;
+  var ctx=cv.getContext('2d');
+  var data=[18,24,20,32,28,35,30,42,38,44,40,52];
+  var labels=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+  var max=Math.max.apply(null,data), min=0;
+  var pad=16, pw=W-60, ph=100;
+  ctx.clearRect(0,0,W,140);
+  // Grid lines
+  ctx.strokeStyle='#f0eef8'; ctx.lineWidth=1;
+  [0,25,50,75,100].forEach(function(v){
+    var y=pad+(ph-(v/100)*ph);
+    ctx.beginPath(); ctx.moveTo(44,y); ctx.lineTo(W-8,y); ctx.stroke();
+    ctx.fillStyle='#bbb'; ctx.font='9px Nunito,sans-serif'; ctx.textAlign='right';
+    ctx.fillText(Math.round(min+(max-min)*v/100),40,y+3);
+  });
+  // Line + fill
+  ctx.beginPath();
+  data.forEach(function(v,i){
+    var x=50+i*(pw/(data.length-1));
+    var y=pad+(ph-(v-min)/(max-min)*ph);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle='#9b8ec4'; ctx.lineWidth=2.5; ctx.lineJoin='round'; ctx.stroke();
+  // Fill
+  ctx.lineTo(50+11*(pw/(data.length-1)),pad+ph); ctx.lineTo(50,pad+ph); ctx.closePath();
+  ctx.fillStyle='rgba(155,142,196,.1)'; ctx.fill();
+  // Dots + labels
+  data.forEach(function(v,i){
+    var x=50+i*(pw/(data.length-1)); var y=pad+(ph-(v-min)/(max-min)*ph);
+    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle='#9b8ec4'; ctx.fill();
+    ctx.fillStyle='#aaa'; ctx.font='9px Nunito,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(labels[i],x,136);
+  });
+}
+
+function getFallbackCmds(){
+  return [
+    {numero:'KC20240001',prenom:'Safa',nom:'Ben Ali',total:142,mode_paiement:'Carte',statut:'livree',created_at:new Date().toISOString()},
+    {numero:'KC20240002',prenom:'Mariem',nom:'Trabelsi',total:89,mode_paiement:'PayPal',statut:'en_cours',created_at:new Date().toISOString()},
+    {numero:'KC20240003',prenom:'Ahmed',nom:'Gharbi',total:234,mode_paiement:'Carte',statut:'preparation',created_at:new Date().toISOString()},
+    {numero:'KC20240004',prenom:'Fatma',nom:'Jouini',total:56,mode_paiement:'Carte',statut:'en_attente',created_at:new Date().toISOString()}
+  ];
+}
+function renderFallbackCmds(){
+  var data=getFallbackCmds();
+  var tb=document.getElementById('tb-cmds');
+  tb.innerHTML=data.map(function(c){
+    var sc=SC[c.statut]||'purple';var sl=SL[c.statut]||c.statut;
+    return '<tr><td><strong>'+c.numero+'</strong></td><td>'+c.prenom+' '+c.nom+'</td><td><strong>'+parseFloat(c.total).toFixed(2)+' S</strong></td><td>'+c.mode_paiement+'</td><td><span class="ab '+sc+'">'+sl+'</span></td><td>'+new Date().toLocaleDateString('fr-FR')+'</td></tr>';
+  }).join('');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Détail produit — KidCycle</title>
+<link rel="stylesheet" href="global.css">
+<style>
+.detail-wrap{max-width:1200px;margin:0 auto;padding:32px 24px}
+/* Layout 3 colonnes : thumbs | image | infos */
+.detail-grid{display:grid;grid-template-columns:90px 1fr 1fr;gap:24px;margin-bottom:52px;align-items:start}
+/* Colonne thumbs */
+.thumb-col{display:flex;flex-direction:column;gap:10px;padding-top:4px}
+.thumb-arrow{width:90px;height:30px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-mid);transition:all .2s;flex-shrink:0}
+.thumb-arrow:hover{background:var(--purple-pale);color:var(--purple);border-color:var(--purple)}
+.thumb{width:90px;height:90px;border-radius:10px;border:2px solid var(--border);overflow:hidden;cursor:pointer;transition:border-color .2s;background:var(--bg);flex-shrink:0}
+.thumb img{width:100%;height:100%;object-fit:contain;padding:6px;transition:transform .25s}
+.thumb:hover img{transform:scale(1.08)}
+.thumb.active{border-color:var(--purple);box-shadow:0 0 0 2px rgba(155,142,196,.2)}
+/* Image principale */
+.main-img-col{background:var(--bg);border-radius:16px;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;cursor:zoom-in}
+.main-img-col img{width:100%;height:100%;object-fit:contain;padding:20px;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.main-img-col:hover img{transform:scale(1.06)}
+.main-img-col .zoom-hint{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.4);color:#fff;font-size:11px;padding:4px 10px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity .2s}
+.main-img-col:hover .zoom-hint{opacity:1}
+/* Info col */
+.info-col{padding:4px 0}
+.prod-ref{font-size:13px;color:var(--text-light);margin-bottom:14px}
+.prod-ref span{color:var(--purple);font-weight:700}
+.info-label{font-size:11px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.info-value{font-size:15px;color:var(--text);margin-bottom:16px;line-height:1.65}
+.info-row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+/* Tailles */
+.taille-wrap{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.taille-radio{display:none}
+.taille-label{padding:7px 16px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--text-mid);user-select:none}
+.taille-radio:checked + .taille-label{background:var(--purple);color:#fff;border-color:var(--purple)}
+.taille-label:hover{border-color:var(--purple);color:var(--purple)}
+/* Prix */
+.prix-bloc{display:flex;align-items:center;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.prix-lbl{font-size:12px;font-weight:800;color:var(--purple);text-transform:uppercase;letter-spacing:.5px}
+.prix-main{font-size:28px;font-weight:900;color:var(--text);display:flex;align-items:center;gap:7px}
+.prix-old{font-size:16px;color:var(--text-light);text-decoration:line-through}
+.prix-badge{background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:6px}
+/* Buttons */
+.btn-add-wrap{display:flex;flex-direction:column;gap:10px}
+.btn-add-cart{width:100%;padding:15px;background:var(--purple);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .25s;font-family:'Nunito',sans-serif}
+.btn-add-cart:hover{background:var(--purple-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,142,196,.45)}
+.btn-add-cart:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-add-cart.added{background:var(--green)}
+.btn-fav{width:100%;padding:12px;background:#fff;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .25s;font-family:'Nunito',sans-serif;color:var(--text-mid)}
+.btn-fav:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-pale)}
+.btn-fav.active{border-color:var(--gold);color:var(--gold)}
+.btn-fav img{width:18px;height:18px;transition:transform .25s}
+.btn-fav:hover img{transform:scale(1.2)}
+/* Added confirm */
+.added-confirm{background:#e8f8ed;border:1.5px solid var(--green);border-radius:10px;padding:10px 14px;font-size:13px;color:#2d8a4a;font-weight:700;display:none;align-items:center;gap:8px}
+.added-confirm.show{display:flex;animation:fadeInUp .3s ease}
+/* ── SIMILAR PRODUCTS ── */
+.similar-section{margin-top:8px;padding-top:32px;border-top:1.5px solid var(--border)}
+.similar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.similar-title{font-size:18px;font-weight:800;color:var(--text)}
+.voir-plus-link{color:var(--purple);font-size:14px;font-weight:700;text-decoration:none;transition:color .2s}
+.voir-plus-link:hover{color:var(--purple-d);text-decoration:underline}
+.sim-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+/* Skeleton */
+.sk{min-height:80px;border-radius:var(--radius-sm)}
+</style>
+</head>
+<body>
+<div class="top-promo">
+  <div class="top-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="top-promo-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Acheter maintenant</a>
+    <a href="nouveautes.html" class="nav-link">Nouveautés</a>
+    <a href="vente.html" class="nav-link">Vente</a>
+    <a href="mes-produits.html" class="nav-link">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <div class="nav-swaps">ii</div>
+    <div class="nav-search-wrap" style="position:relative">
+      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <div class="search-dropdown" id="search-dd"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="detail-wrap">
+
+  <!-- BREADCRUMB -->
+  <div style="font-size:13px;color:var(--text-light);margin-bottom:22px">
+    <a href="index.html" style="color:var(--purple);font-weight:600">Accueil</a>
+    <span style="margin:0 8px">›</span>
+    <a href="nouveautes.html" style="color:var(--purple);font-weight:600" id="breadcrumb-cat">Nouveautés</a>
+    <span style="margin:0 8px">›</span>
+    <span id="breadcrumb-nom">Produit</span>
+  </div>
+
+  <!-- DETAIL GRID — chargé dynamiquement -->
+  <div class="detail-grid" id="detail-grid">
+    <!-- Thumbs skeleton -->
+    <div class="thumb-col">
+      <div class="skeleton sk" style="height:30px;width:90px"></div>
+      <div class="skeleton sk" style="height:90px;width:90px;border-radius:10px"></div>
+      <div class="skeleton sk" style="height:90px;width:90px;border-radius:10px"></div>
+      <div class="skeleton sk" style="height:90px;width:90px;border-radius:10px"></div>
+    </div>
+    <!-- Main image skeleton -->
+    <div class="skeleton" style="aspect-ratio:1;border-radius:16px"></div>
+    <!-- Info skeleton -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="skeleton sk" style="height:18px;width:60%"></div>
+      <div class="skeleton sk" style="height:28px;width:85%"></div>
+      <div class="skeleton sk" style="height:14px"></div>
+      <div class="skeleton sk" style="height:14px;width:75%"></div>
+      <div class="skeleton sk" style="height:52px;margin-top:24px;border-radius:12px"></div>
+    </div>
+  </div>
+
+  <!-- SIMILAR -->
+  <div class="similar-section">
+    <div class="similar-header">
+      <h2 class="similar-title">Découvrez plus d'articles de ce vendeur!</h2>
+      <a href="nouveautes.html" class="voir-plus-link">Voir plus</a>
+    </div>
+    <div class="sim-grid" id="sim-grid">
+      <div class="skeleton" style="height:250px;border-radius:var(--radius)"></div>
+      <div class="skeleton" style="height:250px;border-radius:var(--radius)"></div>
+      <div class="skeleton" style="height:250px;border-radius:var(--radius)"></div>
+      <div class="skeleton" style="height:250px;border-radius:var(--radius)"></div>
+      <div class="skeleton" style="height:250px;border-radius:var(--radius)"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="site-footer-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</footer>
+<div id="kc-toast"></div>
+
+<script src="app.js"></script>
+<script>
+var produit = null;
+var allImgs = [];
+var thumbIdx = 0;
+var tailleChoisie = '';
+
+document.addEventListener('DOMContentLoaded', function(){
+  KC.initNav();
+  KC.initSearch('search-input','search-dd');
+
+  var params = new URLSearchParams(location.search);
+  var pid = parseInt(params.get('id'));
+  if(!pid){ location.href='nouveautes.html'; return; }
+  loadProduit(pid);
+});
+
+function loadProduit(pid){
+  KC.GET('/produits.php?id='+pid)
+    .then(function(r){
+      if(!r.ok){ KC.toast('Produit introuvable','err'); setTimeout(function(){location.href='nouveautes.html';},1400); return; }
+      produit=r.data;
+      renderDetail(produit);
+      renderSimilaires(produit.similaires||[]);
+    })
+    .catch(function(){ renderFallbackDetail(); });
+}
+
+function renderDetail(p){
+  // Breadcrumb
+  document.title=p.nom+' — KidCycle';
+  document.getElementById('breadcrumb-nom').textContent=p.nom;
+  if(p.categorie_nom) document.getElementById('breadcrumb-cat').textContent=p.categorie_nom;
+
+  // Images
+  allImgs=[];
+  try{ var imgs=JSON.parse(p.images||'[]'); if(Array.isArray(imgs)&&imgs.length) allImgs=imgs; }catch(e){}
+  if(!allImgs.length && p.image) allImgs=[p.image];
+
+  var prixAff = p.prix_solde ? parseFloat(p.prix_solde) : parseFloat(p.prix);
+  var isFaved = KC.isFav(p.id);
+
+  // Tailles
+  var tailles = ['6-7','8-9','10-11','12-13','14-15'];
+  if(p.taille) tailles=[p.taille];
+  tailleChoisie = tailles[0];
+
+  var taillesHtml = tailles.map(function(t,i){
+    return '<input type="radio" name="taille" id="t'+i+'" class="taille-radio"'+(i===0?' checked':'')+' value="'+t+'" onchange="tailleChoisie=this.value">'
+      +'<label for="t'+i+'" class="taille-label">'+t+'</label>';
+  }).join('');
+
+  // Thumbs
+  var thumbsHtml='<button class="thumb-arrow" onclick="scrollThumb(-1)">▲</button>';
+  allImgs.forEach(function(img,i){
+    thumbsHtml+='<div class="thumb'+(i===0?' active':'')+'" id="th'+i+'" onclick="selectImg('+i+')">'
+      +'<img src="'+img+'" alt="" loading="lazy"></div>';
+  });
+  thumbsHtml+='<button class="thumb-arrow" onclick="scrollThumb(1)">▼</button>';
+
+  document.getElementById('detail-grid').innerHTML=
+    '<div class="thumb-col">'+thumbsHtml+'</div>'
+    +'<div class="main-img-col" id="main-img-col">'
+      +'<img id="main-img" src="'+allImgs[0]+'" alt="'+p.nom+'">'
+      +'<span class="zoom-hint">🔍 Zoom</span>'
+    +'</div>'
+    +'<div class="info-col">'
+      +'<div class="prod-ref">ID: <span>#P-'+String(p.id).padStart(5,'0')+'</span></div>'
+      +'<div class="info-label">Titre</div>'
+      +'<div class="info-value" style="font-size:19px;font-weight:800;color:var(--text);margin-bottom:10px">'+p.nom+'</div>'
+      +'<div class="info-label">Description</div>'
+      +'<div class="info-value">'+(p.description||'Produit de qualité pour enfants.')+'</div>'
+      +'<div class="info-row-2">'
+        +'<div><div class="info-label">Genre</div><div class="info-value" style="margin-bottom:0">'+(p.genre||'Unisexe')+'</div></div>'
+        +'<div><div class="info-label">Catégorie</div><div class="info-value" style="margin-bottom:0">'+(p.categorie_nom||'Enfant')+'</div></div>'
+      +'</div>'
+      +'<div class="info-label" style="margin-top:10px">Taille :</div>'
+      +'<div class="taille-wrap">'+taillesHtml+'</div>'
+      +'<div class="prix-bloc">'
+        +'<span class="prix-lbl">Prix :</span>'
+        +'<div class="prix-main">'
+          +(p.prix_solde?'<span class="prix-old">'+parseFloat(p.prix).toFixed(2)+' S</span>':'')
+          +'<span class="swaps-coin lg">ii</span> '+prixAff.toFixed(2)
+        +'</div>'
+        +(p.reduction?'<span class="prix-badge">'+p.reduction+'</span>':'')
+      +'</div>'
+      +'<div class="added-confirm" id="added-confirm">✓ Ajouté au panier ! <a href="panier.html" style="color:var(--purple);font-weight:700;margin-left:6px">Voir le panier →</a></div>'
+      +'<div class="btn-add-wrap">'
+        +'<button class="btn-add-cart" id="btn-cart" onclick="doAddCart()">'
+          +'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>'
+          +' Ajouter au panier'
+        +'</button>'
+        +'<button class="btn-fav'+(isFaved?' active':'')+'" id="btn-fav" onclick="doToggleFav()">'
+          +'<img id="fav-img" src="images/'+(isFaved?'icon-heart-fill':'icon-heart')+'.svg" alt="">'
+          +'<span id="fav-txt">'+(isFaved?'Dans mes favoris':'Ajouter aux favoris')+'</span>'
+        +'</button>'
+      +'</div>'
+    +'</div>';
+}
+
+function selectImg(i){
+  thumbIdx=i;
+  document.getElementById('main-img').src=allImgs[i];
+  document.querySelectorAll('.thumb').forEach(function(th,idx){th.classList.toggle('active',idx===i);});
+}
+function scrollThumb(dir){
+  var n=Math.max(0,Math.min(allImgs.length-1,thumbIdx+dir));
+  selectImg(n);
+}
+
+function doAddCart(){
+  if(!produit) return;
+  var prixAff=produit.prix_solde?parseFloat(produit.prix_solde):parseFloat(produit.prix);
+  var p={id:produit.id,nom:produit.nom,prix:prixAff,image:produit.image};
+  if(KC.addCart(p,tailleChoisie,'Standard',1)){
+    var btn=document.getElementById('btn-cart');
+    var conf=document.getElementById('added-confirm');
+    btn.textContent='✓ Ajouté !'; btn.classList.add('added');
+    conf.classList.add('show');
+    setTimeout(function(){btn.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> Ajouter au panier';btn.classList.remove('added');conf.classList.remove('show');},3000);
+    if(KC.tok()) KC.POST('/panier.php',{produit_id:produit.id,taille:tailleChoisie,couleur:'Standard',quantite:1}).catch(function(){});
+  }
+}
+
+function doToggleFav(){
+  if(!produit) return;
+  var prixAff=produit.prix_solde?parseFloat(produit.prix_solde):parseFloat(produit.prix);
+  var p={id:produit.id,nom:produit.nom,prix:prixAff,image:produit.image};
+  KC.toggleFav(p, document.getElementById('btn-fav'));
+  // Update text
+  setTimeout(function(){
+    var isFaved=KC.isFav(produit.id);
+    document.getElementById('fav-img').src='images/'+(isFaved?'icon-heart-fill':'icon-heart')+'.svg';
+    document.getElementById('fav-txt').textContent=isFaved?'Dans mes favoris':'Ajouter aux favoris';
+  },100);
+}
+
+function renderSimilaires(sims){
+  var g=document.getElementById('sim-grid');
+  if(!sims.length){
+    g.innerHTML='<p style="color:var(--text-light);font-size:14px;grid-column:1/-1">Aucun article similaire disponible</p>';
+    return;
+  }
+  g.innerHTML=sims.map(function(p){return KC.prodCard(p);}).join('');
+}
+
+function renderFallbackDetail(){
+  var fallback=[
+    {id:1,nom:'Combinaison Pois',description:'Velours doux · 0-24 mois',prix:34,image:'images/cl1.png',badge:'Nouveau',genre:'Unisexe',categorie_nom:'Bébé',taille:'0-24 mois',similaires:[
+      {id:2,nom:'Veste Rose',prix:45,image:'images/cl2.png'},
+      {id:3,nom:'Veste Jaune',prix:38,image:'images/cl3.png'},
+      {id:4,nom:'Set Bavoir',prix:22,image:'images/cl4.png'},
+      {id:5,nom:'Body Ourson',prix:18,image:'images/cl5.png'},
+      {id:6,nom:'Set Baby',prix:34,image:'images/cl6.png'}
+    ]}
+  ];
+  produit=fallback[0];
+  renderDetail(produit);
+  renderSimilaires(produit.similaires);
+}
+
+function gotoSearch(){var q=document.getElementById('search-input').value.trim();if(q)location.href='nouveautes.html?q='+encodeURIComponent(q);}
+document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')gotoSearch();});
+</script>
+</body>
+</html>

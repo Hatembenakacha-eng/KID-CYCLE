@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Profils — KidCycle Admin</title>
+<link rel="stylesheet" href="admin.css">
+<style>
+.search-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.search-bar input{flex:1;min-width:200px;padding:10px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:9px;font-size:13.5px;font-family:'Nunito',sans-serif;outline:none;transition:border-color .2s}
+.search-bar input:focus{border-color:var(--p)}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{padding:6px 14px;border-radius:18px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .18s;border:1.5px solid var(--border);background:var(--white);color:var(--mid);font-family:'Nunito',sans-serif}
+.fchip:hover,.fchip.active{background:var(--p);color:#fff;border-color:var(--p)}
+</style>
+</head>
+<body>
+<header class="a-top">
+  <a href="dashboard.html" class="a-logo"><img src="../images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="a-top-btn">🔔<span class="notif-dot"></span></div>
+  <div class="a-top-btn">👤</div>
+  <div class="a-search">
+    <input type="text" placeholder="Recherche" id="a-search-inp" oninput="doSearch(this.value)">
+    <button class="a-search-btn">🔍</button>
+  </div>
+</header>
+
+<div class="a-layout">
+  <aside class="a-sidebar">
+    <a href="dashboard.html" class="a-nav"><span class="ni">🏠</span> Accueil</a>
+    <a href="abonnements.html" class="a-nav"><span class="ni">🎫</span> Abonnements et boosts</a>
+    <a href="swaps.html" class="a-nav"><span class="ni">🔄</span> SWAPS</a>
+    <a href="articles.html" class="a-nav"><span class="ni">👕</span> Articles</a>
+    <a href="fidelite.html" class="a-nav"><span class="ni">⭐</span> Fidélité et parrainage</a>
+    <a href="profils.html" class="a-nav active"><span class="ni">👥</span> Profils</a>
+    <a href="logistique.html" class="a-nav"><span class="ni">📦</span> Logistique et Commandes</a>
+    <div class="a-sep"></div>
+    <a href="../index.html" class="a-nav"><span class="ni">🌐</span> Voir le site</a>
+    <a href="login.html" class="a-nav" style="color:var(--err)" onclick="localStorage.removeItem('kc_admin');localStorage.removeItem('kc_admin_tok')"><span class="ni">🚪</span> Déconnexion</a>
+  </aside>
+
+  <main class="a-main">
+    <div class="a-pg-title">Profils</div>
+
+    <!-- Stats -->
+    <div class="a-stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:18px">
+      <div class="a-stat"><div class="a-stat-lbl">Nombre total de profils</div><div class="a-stat-val" id="st-total">—</div></div>
+      <div class="a-stat"><div class="a-stat-lbl">Profils actifs</div><div class="a-stat-val" style="color:var(--ok)" id="st-actifs">—</div></div>
+      <div class="a-stat"><div class="a-stat-lbl">Taux d'engagement</div><div class="a-stat-val" id="st-engage">49%</div></div>
+    </div>
+
+    <!-- Barre recherche + filtres -->
+    <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;box-shadow:var(--shadow)">
+      <div class="search-bar">
+        <input type="text" placeholder="Rechercher par nom, email..." id="search-profil" oninput="filterProfiles(this.value)">
+        <button class="a-btn-add" onclick="openM('modal-email')">📧 Email groupé</button>
+      </div>
+      <div class="filter-chips">
+        <button class="fchip active" onclick="filterRole(this,'')">Tous</button>
+        <button class="fchip" onclick="filterRole(this,'client')">Clients</button>
+        <button class="fchip" onclick="filterRole(this,'vendeur')">Vendeurs</button>
+        <button class="fchip" onclick="filterRole(this,'admin')">Admins</button>
+      </div>
+    </div>
+
+    <!-- Table profils -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Liste des derniers profils compatibles</span>
+        <span style="font-size:12.5px;color:var(--mid)" id="profil-count">0 résultat(s)</span>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Nom / Prénom</th><th>Email</th><th>Localisation</th><th>Rôle</th><th>SWAPS</th><th>Abonnement</th><th>Inscrit le</th><th>Statut</th><th>Actions</th></tr></thead>
+        <tbody id="tb-profils"></tbody>
+      </table>
+      <div class="a-pagination" id="profils-pag"></div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL VOIR PROFIL -->
+<div class="a-modal" id="modal-profil">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-profil')">✕</button>
+    <h2 class="a-modal-title" id="modal-profil-title">Détail du profil</h2>
+    <div id="modal-profil-body"></div>
+    <div class="a-modal-actions" style="margin-top:18px">
+      <button class="a-btn-cancel" onclick="closeM('modal-profil')">Fermer</button>
+      <button class="a-btn-submit danger" id="modal-suspend-btn" onclick="suspendCurrent()">Suspendre</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EMAIL GROUPÉ -->
+<div class="a-modal" id="modal-email">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-email')">✕</button>
+    <h2 class="a-modal-title">📧 Envoyer un email groupé</h2>
+    <div style="font-size:12.5px;color:var(--p);font-weight:700;margin-bottom:14px">
+      Destinataires : <strong id="email-dest-count">—</strong> profil(s)
+    </div>
+    <div class="a-fg">
+      <label class="a-lbl">Sujet <span class="req">*</span></label>
+      <input class="a-inp" id="email-sujet" placeholder="Sujet de l'email">
+    </div>
+    <div class="a-fg">
+      <label class="a-lbl">Message <span class="req">*</span></label>
+      <textarea class="a-ta" id="email-msg" style="min-height:120px" placeholder="Votre message..."></textarea>
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-email')">Annuler</button>
+      <button class="a-btn-submit" onclick="sendEmail()">Envoyer</button>
+    </div>
+  </div>
+</div>
+
+<div id="a-toast"></div>
+<script src="admin.js"></script>
+<script>
+var allProfiles=[], filtered=[], currentProfil=null;
+var roleFilter='', pg=1, PPG=12;
+
+document.addEventListener('DOMContentLoaded',function(){
+  checkAdmin(); loadProfiles();
+});
+
+function loadProfiles(){
+  aGET('/misc.php?action=users').then(function(r){
+    if(r.ok&&r.data){ allProfiles=r.data; }
+    else { allProfiles=getFallbackProfiles(); }
+    applyFilters(); updateStats();
+    document.getElementById('email-dest-count').textContent=allProfiles.length;
+  }).catch(function(){ allProfiles=getFallbackProfiles(); applyFilters(); updateStats(); });
+}
+
+function getFallbackProfiles(){
+  return [
+    {id:1,nom:'Ben Ali',prenom:'Safa',email:'safa@gmail.com',adresse:'Tunis, Tunisie',role:'client',swaps:'500.00',abonnement:'Gratuit',actif:1,created_at:new Date().toISOString()},
+    {id:2,nom:'Trabelsi',prenom:'Mariem',email:'mariem@gmail.com',adresse:'Sousse, Tunisie',role:'vendeur',swaps:'1250.00',abonnement:'Premium',actif:1,created_at:new Date().toISOString()},
+    {id:3,nom:'Gharbi',prenom:'Ahmed',email:'ahmed@gmail.com',adresse:'Sfax, Tunisie',role:'client',swaps:'320.00',abonnement:'Gratuit',actif:1,created_at:new Date().toISOString()},
+    {id:4,nom:'Jouini',prenom:'Fatma',email:'fatma@gmail.com',adresse:'Nabeul, Tunisie',role:'vendeur',swaps:'890.00',abonnement:'Premium',actif:0,created_at:new Date().toISOString()},
+    {id:5,nom:'Admin',prenom:'KidCycle',email:'admin@kidcycle.com',adresse:'Tunis, Tunisie',role:'admin',swaps:'9999.00',abonnement:'Pro',actif:1,created_at:new Date().toISOString()}
+  ];
+}
+
+function updateStats(){
+  document.getElementById('st-total').textContent=allProfiles.length;
+  document.getElementById('st-actifs').textContent=allProfiles.filter(function(u){return u.actif;}).length;
+}
+
+function applyFilters(){
+  var q=document.getElementById('search-profil').value.toLowerCase();
+  filtered=allProfiles.filter(function(u){
+    if(roleFilter&&u.role!==roleFilter) return false;
+    if(q&&!(u.nom+u.prenom+u.email).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.getElementById('profil-count').textContent=filtered.length+' résultat(s)';
+  pg=1; render();
+}
+
+function filterProfiles(q){ applyFilters(); }
+function filterRole(btn,role){
+  document.querySelectorAll('.fchip').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  roleFilter=role; applyFilters();
+}
+function doSearch(q){ applyFilters(); }
+
+function render(){
+  var tb=document.getElementById('tb-profils');
+  var page=filtered.slice((pg-1)*PPG, pg*PPG);
+  var tot=Math.ceil(filtered.length/PPG);
+
+  if(!page.length){
+    tb.innerHTML='<tr><td colspan="9" class="a-empty" style="padding:30px"><div class="ei">👥</div><h3>Aucun profil trouvé</h3></td></tr>';
+    document.getElementById('profils-pag').innerHTML=''; return;
+  }
+
+  tb.innerHTML=page.map(function(u,i){
+    var idx=(pg-1)*PPG+i;
+    var rc=u.role==='admin'?'red':u.role==='vendeur'?'purple':'blue';
+    var d=u.created_at?new Date(u.created_at).toLocaleDateString('fr-FR'):'—';
+    return '<tr>'
+      +'<td><strong>'+u.prenom+' '+u.nom+'</strong></td>'
+      +'<td style="font-size:12.5px">'+u.email+'</td>'
+      +'<td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px">'+(u.adresse||'—')+'</td>'
+      +'<td><span class="ab '+rc+'">'+u.role+'</span></td>'
+      +'<td>'+parseFloat(u.swaps||0).toFixed(2)+' S</td>'
+      +'<td>'+(u.abonnement||'Gratuit')+'</td>'
+      +'<td style="font-size:12.5px">'+d+'</td>'
+      +'<td><span class="ab '+(u.actif?'green':'red')+'">'+(u.actif?'Actif':'Suspendu')+'</span></td>'
+      +'<td class="a-tbl-actions">'
+        +'<button class="a-ico-btn edit" onclick="viewProfil('+idx+')" title="Voir">👁</button>'
+        +'<button class="a-ico-btn '+(u.actif?'del':'ok')+'" onclick="toggleSuspend('+idx+')" title="'+(u.actif?'Suspendre':'Réactiver')+'">'+(u.actif?'🚫':'✓')+'</button>'
+      +'</td>'
+      +'</tr>';
+  }).join('');
+
+  // Pagination
+  var p=document.getElementById('profils-pag'); var h='';
+  if(pg>1) h+='<button class="a-pg-btn" onclick="goPage('+(pg-1)+')">‹</button>';
+  for(var i=Math.max(1,pg-2);i<=Math.min(tot,pg+2);i++)
+    h+='<button class="a-pg-btn'+(i===pg?' active':'')+'" onclick="goPage('+i+')">'+i+'</button>';
+  if(pg<tot) h+='<button class="a-pg-btn" onclick="goPage('+(pg+1)+')">›</button>';
+  p.innerHTML=h;
+}
+
+function goPage(n){pg=n;render();}
+
+function viewProfil(idx){
+  var u=filtered[idx]; if(!u)return;
+  currentProfil=u;
+  document.getElementById('modal-profil-title').textContent=u.prenom+' '+u.nom;
+  document.getElementById('modal-suspend-btn').textContent=u.actif?'Suspendre':'Réactiver';
+  document.getElementById('modal-suspend-btn').className='a-btn-submit '+(u.actif?'danger':'');
+  document.getElementById('modal-profil-body').innerHTML=
+    '<div style="display:grid;gap:12px;font-size:13.5px">'
+    +'<div style="display:flex;gap:10px"><span style="font-weight:700;color:var(--p);min-width:120px">Email :</span><span>'+u.email+'</span></div>'
+    +'<div style="display:flex;gap:10px"><span style="font-weight:700;color:var(--p);min-width:120px">Téléphone :</span><span>'+(u.tel||'Non renseigné')+'</span></div>'
+    +'<div style="display:flex;gap:10px"><span style="font-weight:700;color:var(--p);min-width:120px">Adresse :</span><span>'+(u.adresse||'Non renseignée')+'</span></div>'
+    +'<div style="display:flex;gap:10px"><span style="font-weight:700;color:var(--p);min-width:120px">Rôle :</span><span class="ab '+(u.role==='admin'?'red':u.role==='vendeur'?'purple':'blue')+'">'+u.role+'</span></div>'
+    +'<div style="display:flex;gap:10px"><span style="font-weight:700;color:var(--p);min-width:120px">SWAPS :</span><span>'+parseFloat(u.swaps||0).toFixed(2)+' S</span></div>'
+    +'<div style="display:flex;gap:10px"><span style="font-weight:700;color:var(--p);min-width:120px">Abonnement :</span><span>'+(u.abonnement||'Gratuit')+'</span></div>'
+    +'<div style="display:flex;gap:10px"><span style="font-weight:700;color:var(--p);min-width:120px">Statut :</span><span class="ab '+(u.actif?'green':'red')+'">'+(u.actif?'Actif':'Suspendu')+'</span></div>'
+    +'<div style="display:flex;gap:10px"><span style="font-weight:700;color:var(--p);min-width:120px">Inscrit le :</span><span>'+(u.created_at?new Date(u.created_at).toLocaleDateString('fr-FR'):'—')+'</span></div>'
+    +'</div>';
+  openM('modal-profil');
+}
+
+function suspendCurrent(){
+  if(!currentProfil)return;
+  toggleSuspendById(currentProfil.id, currentProfil.actif?0:1);
+  closeM('modal-profil');
+}
+
+function toggleSuspend(idx){
+  var u=filtered[idx]; if(!u)return;
+  toggleSuspendById(u.id, u.actif?0:1);
+}
+
+function toggleSuspendById(id,actif){
+  aPUT('/misc.php?action=suspend',{id:id,actif:actif})
+    .then(function(r){
+      toast(actif?'Compte réactivé':'Compte suspendu','ok');
+      loadProfiles();
+    })
+    .catch(function(){
+      // Fallback local
+      var u=allProfiles.find(function(u){return u.id===id;});
+      if(u) u.actif=actif;
+      toast(actif?'Compte réactivé':'Compte suspendu','ok');
+      applyFilters();
+    });
+}
+
+function sendEmail(){
+  var s=document.getElementById('email-sujet').value.trim();
+  var m=document.getElementById('email-msg').value.trim();
+  if(!s||!m){toast('Remplissez le sujet et le message','err');return;}
+  closeM('modal-email');
+  document.getElementById('email-sujet').value='';
+  document.getElementById('email-msg').value='';
+  toast('Email envoyé à '+filtered.length+' profil(s) !','ok');
+}
+</script>
+</body>
+</html>

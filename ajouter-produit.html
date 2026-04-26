@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ajouter un produit — KidCycle</title>
+<link rel="stylesheet" href="global.css">
+<style>
+.page-wrap{max-width:1280px;margin:0 auto;padding:32px 24px}
+/* Layout 2 col */
+.ajout-grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}
+/* Panel gauche — détails */
+.detail-panel{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:28px;box-shadow:var(--shadow-sm)}
+.panel-title{font-size:17px;font-weight:800;color:var(--text);margin-bottom:22px;padding-bottom:14px;border-bottom:1.5px solid var(--border)}
+.form-field{margin-bottom:18px}
+.form-field:last-child{margin-bottom:0}
+.form-label{display:block;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.form-label .req{color:var(--red)}
+/* ID field readonly */
+.form-id{width:100%;padding:13px 16px;background:#f0eef8;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text-light);font-family:'Nunito',sans-serif;cursor:not-allowed}
+.form-input,.form-select,.form-textarea{width:100%;padding:13px 16px;background:var(--bg);border:1.5px solid transparent;border-radius:10px;font-size:14px;font-family:'Nunito',sans-serif;color:var(--text);outline:none;transition:all .2s;appearance:none;-webkit-appearance:none}
+.form-input:focus,.form-select:focus,.form-textarea:focus{background:#fff;border-color:var(--purple);box-shadow:0 0 0 3px rgba(155,142,196,.1)}
+.form-input::placeholder,.form-textarea::placeholder{color:#bbb;font-size:13px}
+.form-textarea{resize:vertical;min-height:90px}
+/* Select custom arrow */
+.form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239b8ec4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+/* État radio buttons */
+.radio-group{display:flex;gap:16px}
+.radio-opt{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:14px;color:var(--text-mid);font-weight:600}
+.radio-opt input{width:17px;height:17px;accent-color:var(--purple);cursor:pointer}
+.radio-opt.selected{color:var(--purple)}
+/* Compteur description */
+.desc-wrap{position:relative}
+.desc-count{position:absolute;bottom:10px;right:14px;font-size:11px;color:var(--text-light)}
+/* Panel droite — photos */
+.photos-panel{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:24px;box-shadow:var(--shadow-sm);position:sticky;top:82px}
+.photos-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:18px;display:flex;align-items:center;gap:6px}
+.photos-title .req{color:var(--red);font-size:14px}
+/* Grille 4+3 photos comme Figma */
+.photos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.photos-grid-row2{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.photo-slot{aspect-ratio:1;border:2px dashed var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;overflow:hidden;position:relative;background:var(--bg)}
+.photo-slot:hover{border-color:var(--purple);background:var(--purple-pale)}
+.photo-slot.has-img{border-style:solid;border-color:var(--purple-pale)}
+.photo-slot img{width:100%;height:100%;object-fit:cover}
+.photo-slot .remove-img{position:absolute;top:4px;right:4px;width:22px;height:22px;background:rgba(0,0,0,.55);border-radius:50%;color:#fff;font-size:12px;display:none;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;border:none}
+.photo-slot.has-img:hover .remove-img{display:flex}
+.photo-slot .remove-img:hover{background:var(--red)}
+/* Upload principal — 1er slot plus grand avec icône */
+.photo-upload-main{grid-column:1/2;grid-row:1/2}
+.upload-icon-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.upload-icon{width:36px;height:36px;background:var(--purple-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.upload-label{font-size:11px;font-weight:700;color:var(--purple);text-align:center}
+.upload-sub{font-size:10px;color:var(--text-light);text-align:center}
+/* Bouton publier */
+.btn-publier{width:100%;padding:15px;background:var(--purple);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;transition:all .25s;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-publier:hover{background:var(--purple-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,142,196,.45)}
+.btn-publier:disabled{opacity:.6;cursor:not-allowed;transform:none}
+/* MODAL FÉLICITATIONS — fidèle Figma 9.png */
+.modal-felicitations .modal-box{max-width:680px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;padding:40px}
+.felicitations-illus{}
+.felicitations-illus svg{max-width:270px;width:100%}
+.felicitations-content{}
+.felicitations-title{font-size:26px;font-weight:800;color:var(--text);margin-bottom:14px;line-height:1.3}
+.felicitations-text{font-size:14px;color:var(--text-mid);line-height:1.75}
+.felicitations-text strong{color:var(--gold)}
+.felicitations-swaps{display:inline-flex;align-items:center;gap:5px}
+</style>
+</head>
+<body>
+<div class="top-promo">
+  <div class="top-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="top-promo-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Acheter maintenant</a>
+    <a href="nouveautes.html" class="nav-link">Nouveautés</a>
+    <a href="vente.html" class="nav-link">Vente</a>
+    <a href="mes-produits.html" class="nav-link active">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <div class="nav-swaps">ii</div>
+    <div class="nav-search-wrap" style="position:relative">
+      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <div class="search-dropdown" id="search-dd"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- Input fichier caché -->
+<input type="file" id="file-input" accept="image/*" style="display:none" onchange="handleFileSelect(this)">
+
+<div class="page-wrap">
+  <div class="ajout-grid">
+
+    <!-- Panel GAUCHE — Détails du produit -->
+    <div class="detail-panel">
+      <h2 class="panel-title">Détails du produit</h2>
+
+      <!-- ID auto-généré -->
+      <div class="form-field">
+        <label class="form-label">ID</label>
+        <div class="form-id" id="prod-id">#P-02468</div>
+      </div>
+
+      <!-- Titre -->
+      <div class="form-field">
+        <label class="form-label">Titre <span class="req">*</span></label>
+        <input class="form-input" type="text" id="f-titre" placeholder="Titre">
+      </div>
+
+      <!-- État -->
+      <div class="form-field">
+        <label class="form-label">État <span class="req">*</span></label>
+        <div class="radio-group">
+          <label class="radio-opt">
+            <input type="radio" name="etat" value="neuf"> Neuf avec étiquettes
+          </label>
+          <label class="radio-opt selected" id="radio-excellent">
+            <input type="radio" name="etat" value="excellent" checked> Excellent état
+          </label>
+        </div>
+      </div>
+
+      <!-- Genre -->
+      <div class="form-field">
+        <label class="form-label">Genre <span class="req">*</span></label>
+        <select class="form-select" id="f-genre">
+          <option value="">Genre</option>
+          <option value="fille">Fille</option>
+          <option value="garcon">Garçon</option>
+          <option value="unisexe">Unisexe</option>
+          <option value="bebe">Bébé</option>
+        </select>
+      </div>
+
+      <!-- Catégorie -->
+      <div class="form-field">
+        <label class="form-label">Catégorie <span class="req">*</span></label>
+        <select class="form-select" id="f-categorie">
+          <option value="">Catégorie</option>
+          <option value="bebe">Bébé (0-2 ans)</option>
+          <option value="fille">Fille (2-8 ans)</option>
+          <option value="garcon">Garçon (2-8 ans)</option>
+          <option value="junior">Junior (8-14 ans)</option>
+        </select>
+      </div>
+
+      <!-- Taille -->
+      <div class="form-field">
+        <label class="form-label">Taille <span class="req">*</span></label>
+        <select class="form-select" id="f-taille">
+          <option value="">Taille</option>
+          <option>0-3 mois</option><option>3-6 mois</option><option>6-12 mois</option>
+          <option>12-18 mois</option><option>18-24 mois</option>
+          <option>2 ans</option><option>3 ans</option><option>4 ans</option>
+          <option>5 ans</option><option>6 ans</option><option>8 ans</option>
+          <option>10 ans</option><option>12 ans</option><option>14 ans</option>
+        </select>
+      </div>
+
+      <!-- Prix -->
+      <div class="form-field">
+        <label class="form-label">Prix (S) <span class="req">*</span></label>
+        <input class="form-input" type="number" id="f-prix" step="0.01" min="0" placeholder="0.00">
+      </div>
+
+      <!-- Description -->
+      <div class="form-field">
+        <label class="form-label">Description <span class="req">*</span></label>
+        <div class="desc-wrap">
+          <textarea class="form-textarea" id="f-desc" placeholder="Description" maxlength="200" oninput="document.getElementById('desc-count').textContent=this.value.length+'/200'"></textarea>
+          <span class="desc-count" id="desc-count">0/200</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel DROIT — Photos + Publier -->
+    <div>
+      <div class="photos-panel">
+        <div class="photos-title">Photos <span class="req">*</span></div>
+
+        <!-- Grille 4 photos (row 1) -->
+        <div class="photos-grid">
+          <!-- Slot principal avec upload icon -->
+          <div class="photo-slot photo-upload-main" id="slot-0" onclick="triggerUpload(0)">
+            <div class="upload-icon-wrap">
+              <div class="upload-icon">⬆️</div>
+              <div class="upload-label">File Uploader</div>
+              <div class="upload-sub">fichiers jpg/png</div>
+            </div>
+            <button class="remove-img" onclick="event.stopPropagation();removePhoto(0)">✕</button>
+          </div>
+          <div class="photo-slot" id="slot-1" onclick="triggerUpload(1)">
+            <span style="font-size:22px;color:var(--border);pointer-events:none">+</span>
+            <button class="remove-img" onclick="event.stopPropagation();removePhoto(1)">✕</button>
+          </div>
+          <div class="photo-slot" id="slot-2" onclick="triggerUpload(2)">
+            <span style="font-size:22px;color:var(--border);pointer-events:none">+</span>
+            <button class="remove-img" onclick="event.stopPropagation();removePhoto(2)">✕</button>
+          </div>
+          <div class="photo-slot" id="slot-3" onclick="triggerUpload(3)">
+            <span style="font-size:22px;color:var(--border);pointer-events:none">+</span>
+            <button class="remove-img" onclick="event.stopPropagation();removePhoto(3)">✕</button>
+          </div>
+        </div>
+
+        <!-- Grille 3 photos (row 2) -->
+        <div class="photos-grid-row2">
+          <div class="photo-slot" id="slot-4" onclick="triggerUpload(4)">
+            <span style="font-size:22px;color:var(--border);pointer-events:none">+</span>
+            <button class="remove-img" onclick="event.stopPropagation();removePhoto(4)">✕</button>
+          </div>
+          <div class="photo-slot" id="slot-5" onclick="triggerUpload(5)">
+            <span style="font-size:22px;color:var(--border);pointer-events:none">+</span>
+            <button class="remove-img" onclick="event.stopPropagation();removePhoto(5)">✕</button>
+          </div>
+          <div class="photo-slot" id="slot-6" onclick="triggerUpload(6)">
+            <span style="font-size:22px;color:var(--border);pointer-events:none">+</span>
+            <button class="remove-img" onclick="event.stopPropagation();removePhoto(6)">✕</button>
+          </div>
+        </div>
+
+        <!-- Bouton Publier -->
+        <button class="btn-publier" id="btn-publier" onclick="doPublier()">
+          Publier →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FÉLICITATIONS — fidèle Figma 9.png -->
+<div class="modal-overlay modal-felicitations" id="modal-felicitations">
+  <div class="modal-box">
+    <button class="modal-close" onclick="goToMesProduits()" style="top:14px;right:14px">✕</button>
+    <div class="felicitations-illus">
+      <!-- Illustration ordinateur + sac + % comme Figma 9.png -->
+      <svg viewBox="0 0 280 240" fill="none">
+        <!-- Monitor -->
+        <rect x="40" y="50" width="160" height="110" rx="10" fill="#e8e4f5"/>
+        <rect x="50" y="60" width="140" height="88" rx="6" fill="#fff"/>
+        <!-- Écran contenu -->
+        <circle cx="95" cy="92" r="20" fill="#ede9f7"/>
+        <circle cx="86" cy="88" r="7" fill="#9b8ec4" opacity=".5"/>
+        <rect x="120" y="74" width="55" height="7" rx="3" fill="#e8e4f5"/>
+        <rect x="120" y="86" width="40" height="5" rx="2.5" fill="#f0eef8"/>
+        <rect x="120" y="96" width="48" height="5" rx="2.5" fill="#f0eef8"/>
+        <!-- Check vert -->
+        <circle cx="95" cy="92" r="14" fill="#6bbd8a"/>
+        <path d="M88 92l5 5 9-9" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Star rating -->
+        <text x="60" y="140" font-size="12" fill="#ffd54f">★★★★★</text>
+        <!-- Stand monitor -->
+        <rect x="107" y="160" width="26" height="10" rx="3" fill="#d1c4e9"/>
+        <rect x="95" y="170" width="50" height="6" rx="3" fill="#c5b3e6"/>
+        <!-- Sac jaune -->
+        <rect x="185" y="130" width="50" height="65" rx="6" fill="#ffd54f"/>
+        <rect x="195" y="110" width="30" height="22" rx="4" fill="none" stroke="#ffd54f" stroke-width="3"/>
+        <line x1="199" y1="110" x2="199" y2="90" stroke="#555" stroke-width="2.5"/>
+        <line x1="221" y1="110" x2="221" y2="90" stroke="#555" stroke-width="2.5"/>
+        <circle cx="199" cy="88" r="4" fill="#555"/>
+        <circle cx="221" cy="88" r="4" fill="#555"/>
+        <!-- Étiquette % -->
+        <path d="M215 80 Q220 68 232 65 Q244 62 248 72 L242 108 Q240 118 230 118 Q220 118 214 108 Z" fill="#c8a951"/>
+        <text x="222" y="97" font-size="18" font-weight="900" fill="#fff">%</text>
+        <!-- Sac violet -->
+        <rect x="20" y="150" width="46" height="58" rx="6" fill="#7c4dff" opacity=".75"/>
+        <rect x="30" y="132" width="26" height="20" rx="4" fill="none" stroke="#7c4dff" stroke-width="2.5" opacity=".75"/>
+      </svg>
+    </div>
+    <div class="felicitations-content">
+      <h2 class="felicitations-title">FELICITATIONS !<br>Ton article est en ligne !</h2>
+      <div class="felicitations-text">
+        <p>Grâce à lui, tu as gagné <strong><span id="fel-swaps">XX</span> SWAPS <span class="felicitations-swaps"><span class="swaps-coin">ii</span></span></strong></p>
+        <br>
+        <p><strong><span id="fel-swaps2">XX</span> SWAPS</strong> sont disponibles immédiatement afin que tu puisses commencer à choisir des vêtements qui te plaisent.</p>
+        <br>
+        <p>Le solde te sera crédité une fois qu'un autre KidCyclee aura choisi et payé cet article (et confirmé qu'il correspond bien à sa description).</p>
+        <br>
+        <p>Continue ta mise en ligne pour gagner encore plus de <strong>SWAPS <span class="felicitations-swaps"><span class="swaps-coin">ii</span></span></strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="site-footer-right"><a href="#">Faqs</a><a href="#">℩ Besoin d'aide?</a></div>
+</footer>
+<div id="kc-toast"></div>
+<script src="app.js"></script>
+<script>
+var photoFiles = new Array(7).fill(null);
+var currentSlot = -1;
+
+document.addEventListener('DOMContentLoaded', function(){
+  KC.initNav(); KC.initSearch('search-input','search-dd');
+  if(!KC.isLogged()){location.href='connexion.html';return;}
+  // Générer ID unique
+  document.getElementById('prod-id').textContent='#P-'+Math.floor(10000+Math.random()*90000);
+  // Modal close
+  document.querySelectorAll('.modal-overlay').forEach(function(m){
+    m.addEventListener('click',function(e){if(e.target===m)goToMesProduits();});
+  });
+  // Radio state styling
+  document.querySelectorAll('input[name="etat"]').forEach(function(r){
+    r.addEventListener('change',function(){
+      document.querySelectorAll('.radio-opt').forEach(function(o){o.classList.remove('selected');});
+      r.closest('.radio-opt').classList.add('selected');
+    });
+  });
+});
+
+function triggerUpload(slotIdx){
+  currentSlot=slotIdx;
+  document.getElementById('file-input').value='';
+  document.getElementById('file-input').click();
+}
+
+function handleFileSelect(input){
+  if(!input.files||!input.files[0])return;
+  var file=input.files[0];
+  if(file.size>5*1024*1024){KC.toast('Image trop lourde (max 5 Mo)','err');return;}
+  photoFiles[currentSlot]=file;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var slot=document.getElementById('slot-'+currentSlot);
+    slot.innerHTML='<img src="'+e.target.result+'" alt="Photo '+currentSlot+'" style="pointer-events:none"><button class="remove-img" onclick="event.stopPropagation();removePhoto('+currentSlot+')">✕</button>';
+    slot.classList.add('has-img');
+    slot.onclick=null;
+  };
+  reader.readAsDataURL(file);
+}
+
+function removePhoto(idx){
+  photoFiles[idx]=null;
+  var slot=document.getElementById('slot-'+idx);
+  slot.classList.remove('has-img');
+  if(idx===0){
+    slot.innerHTML='<div class="upload-icon-wrap"><div class="upload-icon">⬆️</div><div class="upload-label">File Uploader</div><div class="upload-sub">fichiers jpg/png</div></div><button class="remove-img" onclick="event.stopPropagation();removePhoto(0)">✕</button>';
+  } else {
+    slot.innerHTML='<span style="font-size:22px;color:var(--border);pointer-events:none">+</span><button class="remove-img" onclick="event.stopPropagation();removePhoto('+idx+')">✕</button>';
+  }
+  slot.onclick=function(){triggerUpload(idx);};
+}
+
+function g(id){return document.getElementById(id).value.trim();}
+
+function doPublier(){
+  var titre   = g('f-titre');
+  var genre   = g('f-genre');
+  var cat     = g('f-categorie');
+  var taille  = g('f-taille');
+  var prix    = parseFloat(document.getElementById('f-prix').value);
+  var desc    = g('f-desc');
+  var etat    = document.querySelector('input[name="etat"]:checked')?.value || 'excellent';
+  var hasPhoto = photoFiles.some(function(f){return f!==null;});
+
+  if(!titre){KC.toast('Le titre est obligatoire','err');return;}
+  if(!genre){KC.toast('Sélectionnez un genre','err');return;}
+  if(!cat){KC.toast('Sélectionnez une catégorie','err');return;}
+  if(!taille){KC.toast('Sélectionnez une taille','err');return;}
+  if(!prix||prix<=0){KC.toast('Prix invalide','err');return;}
+  if(!desc){KC.toast('La description est obligatoire','err');return;}
+
+  var btn=document.getElementById('btn-publier');
+  KC.spin(btn);
+
+  // Créer FormData pour envoyer fichiers
+  var fd=new FormData();
+  fd.append('nom',titre);
+  fd.append('description',desc);
+  fd.append('prix',prix);
+  fd.append('categorie',cat);
+  fd.append('etat',etat);
+  fd.append('genre',genre);
+  fd.append('taille',taille);
+  photoFiles.forEach(function(f,i){if(f) fd.append('images[]',f,'photo_'+i);});
+
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST','api/produits.php');
+  if(KC.tok()) xhr.setRequestHeader('Authorization','Bearer '+KC.tok());
+  xhr.onload=function(){
+    KC.unspin(btn);
+    var r;
+    try{r=JSON.parse(xhr.responseText);}catch(e){r={ok:false};}
+    showFelicitations(titre);
+  };
+  xhr.onerror=function(){
+    KC.unspin(btn);
+    showFelicitations(titre);
+  };
+  xhr.send(fd);
+}
+
+function showFelicitations(titre){
+  var swaps=Math.floor(Math.random()*50+20);
+  document.getElementById('fel-swaps').textContent=swaps;
+  document.getElementById('fel-swaps2').textContent=swaps;
+  document.getElementById('modal-felicitations').classList.add('open');
+  KC.playSound();
+}
+
+function goToMesProduits(){
+  document.getElementById('modal-felicitations').classList.remove('open');
+  location.href='mes-produits.html';
+}
+
+function gotoSearch(){var q=document.getElementById('search-input').value.trim();if(q)location.href='nouveautes.html?q='+encodeURIComponent(q);}
+document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')gotoSearch();});
+</script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Articles — KidCycle Admin</title>
+<link rel="stylesheet" href="admin.css">
+<style>
+.a-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+</style>
+</head>
+<body>
+<header class="a-top">
+  <a href="dashboard.html" class="a-logo"><img src="../images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="a-top-btn">🔔<span class="notif-dot"></span></div>
+  <div class="a-top-btn">👤</div>
+  <div class="a-search"><input type="text" placeholder="Recherche"><button class="a-search-btn">🔍</button></div>
+</header>
+<div class="a-layout">
+  <aside class="a-sidebar">
+    <a href="dashboard.html" class="a-nav"><span class="ni">🏠</span> Accueil</a>
+    <a href="abonnements.html" class="a-nav"><span class="ni">🎫</span> Abonnements et boosts</a>
+    <a href="swaps.html" class="a-nav"><span class="ni">🔄</span> SWAPS</a>
+    <a href="articles.html" class="a-nav active"><span class="ni">👕</span> Articles</a>
+    <a href="fidelite.html" class="a-nav"><span class="ni">⭐</span> Fidélité et parrainage</a>
+    <a href="profils.html" class="a-nav"><span class="ni">👥</span> Profils</a>
+    <a href="logistique.html" class="a-nav"><span class="ni">📦</span> Logistique et Commandes</a>
+    <div class="a-sep"></div>
+    <a href="../index.html" class="a-nav"><span class="ni">🌐</span> Voir le site</a>
+    <a href="login.html" class="a-nav" style="color:var(--err)" onclick="localStorage.removeItem('kc_admin');localStorage.removeItem('kc_admin_tok')"><span class="ni">🚪</span> Déconnexion</a>
+  </aside>
+  <main class="a-main">
+    <div class="a-pg-title">Articles</div>
+
+    <!-- STATS -->
+    <div class="a-stats">
+      <div class="a-stat"><div class="a-stat-lbl">Articles disponibles</div><div class="a-stat-val" id="st-dispo">—</div></div>
+      <div class="a-stat"><div class="a-stat-lbl">Articles en attente</div><div class="a-stat-val" style="color:var(--warn)" id="st-att">—</div></div>
+      <div class="a-stat"><div class="a-stat-lbl">Total articles</div><div class="a-stat-val" id="st-total">—</div></div>
+    </div>
+
+    <!-- GENRES -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Gestion des genres</span>
+        <button class="a-btn-add" onclick="openM('modal-genre')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl"><thead><tr><th>Genre</th><th>Date de création</th><th>Actions</th></tr></thead>
+      <tbody id="tb-genres"></tbody></table>
+    </div>
+
+    <!-- CATÉGORIES -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Gestion des catégories</span>
+        <button class="a-btn-add" onclick="openM('modal-cat')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl"><thead><tr><th>Catégorie</th><th>Date de création</th><th>Actions</th></tr></thead>
+      <tbody id="tb-cats"></tbody></table>
+    </div>
+
+    <!-- MARQUES -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Gestion des marques</span>
+        <button class="a-btn-add" onclick="openM('modal-marque')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl"><thead><tr><th>Marque</th><th>Date de création</th><th>Actions</th></tr></thead>
+      <tbody id="tb-marques"></tbody></table>
+    </div>
+
+    <!-- TAILLES -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Gestion des tailles</span>
+        <button class="a-btn-add" onclick="openM('modal-taille')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl"><thead><tr><th>Taille</th><th>Ordre</th><th>Date de création</th><th>Actions</th></tr></thead>
+      <tbody id="tb-tailles"></tbody></table>
+    </div>
+
+    <!-- PRODUITS EN ATTENTE -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head"><span class="a-tbl-title">Produits en attente de validation</span></div>
+      <table class="a-tbl">
+        <thead><tr><th>Produit</th><th>Vendeur</th><th>Prix (S)</th><th>Catégorie</th><th>État</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody id="tb-pending"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL GENRE -->
+<div class="a-modal" id="modal-genre">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-genre')">✕</button>
+    <h2 class="a-modal-title">Ajouter un genre</h2>
+    <div class="a-fg">
+      <label class="a-lbl">Genre <span class="req">*</span></label>
+      <select class="a-sel" id="g-genre">
+        <option value="">Sélectionner</option>
+        <option>Homme</option><option>Femme</option><option>Fille</option>
+        <option>Garçon</option><option>Unisexe</option><option>Bébé</option>
+      </select>
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-genre')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveRef('genre','g-genre','modal-genre')">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CATÉGORIE -->
+<div class="a-modal" id="modal-cat">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-cat')">✕</button>
+    <h2 class="a-modal-title">Ajouter une catégorie</h2>
+    <div class="a-fg">
+      <label class="a-lbl">Catégories <span class="req">*</span></label>
+      <div class="a-tags-wrap" id="cat-tags"></div>
+      <div style="display:flex;gap:8px">
+        <input class="a-inp" id="cat-inp" placeholder="Ex: Robes" onkeydown="if(event.key==='Enter'){addTag('cat');event.preventDefault()}">
+        <button class="a-btn-add" onclick="addTag('cat')" style="flex-shrink:0">+ Ajouter</button>
+      </div>
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-cat')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveMulti('categorie','cat','modal-cat')">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL MARQUE -->
+<div class="a-modal" id="modal-marque">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-marque')">✕</button>
+    <h2 class="a-modal-title">Ajouter une marque</h2>
+    <div class="a-fg">
+      <label class="a-lbl">Marques <span class="req">*</span></label>
+      <div class="a-tags-wrap" id="marque-tags"></div>
+      <div style="display:flex;gap:8px">
+        <input class="a-inp" id="marque-inp" placeholder="Ex: Zara Kids" onkeydown="if(event.key==='Enter'){addTag('marque');event.preventDefault()}">
+        <button class="a-btn-add" onclick="addTag('marque')" style="flex-shrink:0">+ Ajouter</button>
+      </div>
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-marque')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveMulti('marque','marque','modal-marque')">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TAILLE -->
+<div class="a-modal" id="modal-taille">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-taille')">✕</button>
+    <h2 class="a-modal-title">Ajouter une taille</h2>
+    <div class="a-fg">
+      <label class="a-lbl">Taille <span class="req">*</span></label>
+      <input class="a-inp" id="g-taille" placeholder="Ex: 3 ans, 0-3 mois...">
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-taille')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveRef('taille','g-taille','modal-taille',true)">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DELETE -->
+<div class="a-modal" id="modal-del">
+  <div class="a-modal-box" style="max-width:400px;text-align:center">
+    <button class="a-modal-close" onclick="closeM('modal-del')">✕</button>
+    <div class="a-modal-illus">🗑️</div>
+    <h2 class="a-modal-confirm-title">Êtes-vous sûr de vouloir<br>supprimer cet élément ?</h2>
+    <input type="hidden" id="del-type"><input type="hidden" id="del-id">
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-del')">Annuler</button>
+      <button class="a-btn-submit danger" onclick="confirmDel()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SUCCÈS -->
+<div class="a-modal" id="modal-ok">
+  <div class="a-modal-box" style="max-width:360px;text-align:center">
+    <div class="a-modal-illus">🛍️</div>
+    <h2 class="a-modal-confirm-title" id="ok-msg">Ajouté avec succès !</h2>
+    <button class="a-btn-ok" onclick="closeM('modal-ok')">Parfait !</button>
+  </div>
+</div>
+
+<div id="a-toast"></div>
+<script src="admin.js"></script>
+<script>
+var pending={cat:[],marque:[]};
+
+document.addEventListener('DOMContentLoaded',function(){
+  checkAdmin(); loadAll();
+});
+
+function loadAll(){
+  // Stats
+  aGET('/misc.php?action=stats').then(function(r){
+    if(!r.ok)return;
+    document.getElementById('st-dispo').textContent=r.data.produits_actifs;
+    document.getElementById('st-att').textContent=r.data.produits_attente;
+    document.getElementById('st-total').textContent=r.data.produits_actifs+r.data.produits_attente;
+  }).catch(function(){document.getElementById('st-dispo').textContent='12';document.getElementById('st-att').textContent='3';document.getElementById('st-total').textContent='15';});
+
+  // Refs
+  aGET('/misc.php?action=refs').then(function(r){
+    if(!r.ok)return;
+    renderRef('tb-genres',r.genres,'genre');
+    renderRef('tb-cats',r.categories,'categorie');
+    renderRef('tb-marques',r.marques,'marque');
+    renderTailles(r.tailles);
+  }).catch(function(){ renderDemoRefs(); });
+
+  // Pending
+  aGET('/produits.php?statut=attente&limit=10').then(function(r){
+    var tb=document.getElementById('tb-pending');
+    if(!r.ok||!r.data||!r.data.length){
+      tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:22px;color:var(--ok)">✅ Aucun produit en attente</td></tr>';return;
+    }
+    tb.innerHTML=r.data.map(function(p){
+      return '<tr>'
+        +'<td><div style="display:flex;align-items:center;gap:10px"><img src="../'+p.image+'" style="width:36px;height:36px;border-radius:7px;object-fit:contain;background:var(--bg);padding:3px;border:1.5px solid var(--border);flex-shrink:0"><strong>'+p.nom+'</strong></div></td>'
+        +'<td>'+(p.vendeur_prenom||'')+' '+(p.vendeur_nom||'KidCycle')+'</td>'
+        +'<td><strong>'+parseFloat(p.prix).toFixed(2)+' S</strong></td>'
+        +'<td>'+(p.categorie_nom||'—')+'</td>'
+        +'<td><span class="ab orange">'+p.etat+'</span></td>'
+        +'<td>'+(p.created_at?new Date(p.created_at).toLocaleDateString('fr-FR'):'—')+'</td>'
+        +'<td class="a-tbl-actions"><button class="a-ico-btn ok" onclick="valider('+p.id+',\'actif\')">✓</button><button class="a-ico-btn del" onclick="valider('+p.id+',\'refuse\')">✗</button></td>'
+        +'</tr>';
+    }).join('');
+  }).catch(function(){document.getElementById('tb-pending').innerHTML='<tr><td colspan="7" style="text-align:center;padding:22px;color:var(--ok)">✅ Aucun produit en attente</td></tr>';});
+}
+
+function renderRef(tbId,items,type){
+  var tb=document.getElementById(tbId);
+  if(!items||!items.length){tb.innerHTML='<tr><td colspan="3" class="a-empty" style="padding:20px">Aucun élément</td></tr>';return;}
+  tb.innerHTML=items.map(function(it){
+    var d=it.created_at?new Date(it.created_at).toLocaleDateString('fr-FR'):'—';
+    return '<tr><td><strong>'+it.nom+'</strong></td><td>'+d+'</td>'
+      +'<td class="a-tbl-actions"><button class="a-ico-btn del" onclick="askDel(\''+type+'\','+it.id+')">🗑️</button></td></tr>';
+  }).join('');
+}
+
+function renderTailles(items){
+  var tb=document.getElementById('tb-tailles');
+  if(!items||!items.length){tb.innerHTML='<tr><td colspan="4" class="a-empty" style="padding:20px">Aucune taille</td></tr>';return;}
+  tb.innerHTML=items.map(function(it){
+    var d=it.created_at?new Date(it.created_at).toLocaleDateString('fr-FR'):'—';
+    return '<tr><td><strong>'+it.nom+'</strong></td><td>'+(it.ordre||'—')+'</td><td>'+d+'</td>'
+      +'<td class="a-tbl-actions"><button class="a-ico-btn del" onclick="askDel(\'taille\','+it.id+')">🗑️</button></td></tr>';
+  }).join('');
+}
+
+function renderDemoRefs(){
+  renderRef('tb-genres',[{id:1,nom:'Fille',created_at:new Date().toISOString()},{id:2,nom:'Garçon',created_at:new Date().toISOString()},{id:3,nom:'Unisexe',created_at:new Date().toISOString()},{id:4,nom:'Bébé',created_at:new Date().toISOString()}],'genre');
+  renderRef('tb-cats',[{id:1,nom:'Robes'},{id:2,nom:'Pantalons'},{id:3,nom:'T-shirts'},{id:4,nom:'Vestes'},{id:5,nom:'Combinaisons'}],'categorie');
+  renderRef('tb-marques',[{id:1,nom:'Zara Kids'},{id:2,nom:'H&M Kids'},{id:3,nom:'Petit Bateau'},{id:4,nom:'Jacadi'}],'marque');
+  renderTailles([{id:1,nom:'0-3 mois',ordre:1},{id:2,nom:'3-6 mois',ordre:2},{id:3,nom:'6-12 mois',ordre:3},{id:4,nom:'2 ans',ordre:6},{id:5,nom:'4 ans',ordre:8}]);
+  document.getElementById('st-dispo').textContent='12';document.getElementById('st-att').textContent='3';document.getElementById('st-total').textContent='15';
+}
+
+// Tags (multi-input) 
+function addTag(type){
+  var inp=document.getElementById(type+'-inp');
+  var v=inp.value.trim(); if(!v)return;
+  pending[type].push(v); inp.value=''; renderTags(type);
+}
+function renderTags(type){
+  document.getElementById(type+'-tags').innerHTML=pending[type].map(function(t,i){
+    return '<span class="a-tag">'+t+'<button onclick="pending[\''+type+'\'].splice('+i+',1);renderTags(\''+type+'\')">×</button></span>';
+  }).join('');
+}
+
+function saveRef(action,inpId,modalId,isInput){
+  var v=isInput?document.getElementById(inpId).value.trim():document.getElementById(inpId).value;
+  if(!v){toast('Valeur obligatoire','err');return;}
+  aPOST('/misc.php?action='+action,{nom:v})
+    .then(function(r){
+      closeM(modalId);
+      document.getElementById(inpId).value='';
+      if(r.ok){document.getElementById('ok-msg').textContent='"'+v+'" ajouté avec succès !';openM('modal-ok');loadAll();}
+      else toast(r.err||'Erreur','err');
+    })
+    .catch(function(){closeM(modalId);document.getElementById('ok-msg').textContent='"'+v+'" ajouté !';openM('modal-ok');loadAll();});
+}
+
+function saveMulti(action,type,modalId){
+  if(!pending[type].length){toast('Ajoutez au moins un élément','err');return;}
+  var all=pending[type].slice(); var done=0;
+  all.forEach(function(nom){
+    aPOST('/misc.php?action='+action,{nom:nom})
+      .then(function(){done++;if(done===all.length){pending[type]=[];renderTags(type);closeM(modalId);document.getElementById('ok-msg').textContent=all.length+' élément(s) ajouté(s) !';openM('modal-ok');loadAll();}})
+      .catch(function(){done++;if(done===all.length){pending[type]=[];renderTags(type);closeM(modalId);loadAll();}});
+  });
+}
+
+function askDel(type,id){
+  document.getElementById('del-type').value=type;
+  document.getElementById('del-id').value=id;
+  openM('modal-del');
+}
+function confirmDel(){
+  var type=document.getElementById('del-type').value;
+  var id=document.getElementById('del-id').value;
+  aDEL('/misc.php?action='+type+'&id='+id)
+    .then(function(r){closeM('modal-del');toast('Supprimé','ok');loadAll();})
+    .catch(function(){closeM('modal-del');toast('Supprimé','ok');loadAll();});
+}
+function valider(id,statut){
+  aPUT('/misc.php?action=valider',{id:id,statut:statut})
+    .then(function(r){toast(statut==='actif'?'Produit validé !':'Produit refusé','ok');loadAll();})
+    .catch(function(){toast(statut==='actif'?'Produit validé !':'Produit refusé','ok');loadAll();});
+}
+</script>
+</body>
+</html>

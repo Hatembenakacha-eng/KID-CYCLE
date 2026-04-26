@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Fidélité — KidCycle Admin</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="a-top">
+  <a href="dashboard.html" class="a-logo"><img src="../images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="a-top-btn">🔔<span class="notif-dot"></span></div>
+  <div class="a-top-btn">👤</div>
+  <div class="a-search"><input type="text" placeholder="Recherche"><button class="a-search-btn">🔍</button></div>
+</header>
+<div class="a-layout">
+  <aside class="a-sidebar">
+    <a href="dashboard.html" class="a-nav"><span class="ni">🏠</span> Accueil</a>
+    <a href="abonnements.html" class="a-nav"><span class="ni">🎫</span> Abonnements et boosts</a>
+    <a href="swaps.html" class="a-nav"><span class="ni">🔄</span> SWAPS</a>
+    <a href="articles.html" class="a-nav"><span class="ni">👕</span> Articles</a>
+    <a href="fidelite.html" class="a-nav active"><span class="ni">⭐</span> Fidélité et parrainage</a>
+    <a href="profils.html" class="a-nav"><span class="ni">👥</span> Profils</a>
+    <a href="logistique.html" class="a-nav"><span class="ni">📦</span> Logistique et Commandes</a>
+    <div class="a-sep"></div>
+    <a href="../index.html" class="a-nav"><span class="ni">🌐</span> Voir le site</a>
+    <a href="login.html" class="a-nav" style="color:var(--err)" onclick="localStorage.removeItem('kc_admin');localStorage.removeItem('kc_admin_tok')"><span class="ni">🚪</span> Déconnexion</a>
+  </aside>
+  <main class="a-main">
+    <div class="a-pg-title">Fidélité et parrainage</div>
+
+    <!-- Stats -->
+    <div class="a-stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+      <div class="a-stat"><div class="a-stat-lbl">Codes de réduction actifs</div><div class="a-stat-val" id="st-codes">0</div></div>
+      <div class="a-stat"><div class="a-stat-lbl">Utilisations totales</div><div class="a-stat-val" id="st-util">0</div></div>
+      <div class="a-stat"><div class="a-stat-lbl">Économies générées (S)</div><div class="a-stat-val gold" id="st-eco">0</div></div>
+    </div>
+
+    <!-- CODES PROMO -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Codes de réduction</span>
+        <button class="a-btn-add" onclick="openM('modal-code')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Code</th><th>Réduction</th><th>Type</th><th>Utilisations</th><th>Expire le</th><th>Statut</th><th>Actions</th></tr></thead>
+        <tbody id="tb-codes"></tbody>
+      </table>
+    </div>
+
+    <!-- PARRAINAGE -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Programme de parrainage</span>
+        <button class="a-btn-add" onclick="openM('modal-parrain')">⚙️ Configurer</button>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Récompense parrain</th><th>Récompense filleul</th><th>Parrainages réalisés</th><th>Statut</th><th>Actions</th></tr></thead>
+        <tbody id="tb-parrain"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL CODE PROMO -->
+<div class="a-modal" id="modal-code">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-code')">✕</button>
+    <h2 class="a-modal-title">Ajouter un code de réduction</h2>
+    <div class="a-fg">
+      <label class="a-lbl">Code <span class="req">*</span></label>
+      <input class="a-inp" id="c-code" placeholder="KIDCYCLE20" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+    </div>
+    <div class="a-grid-2">
+      <div class="a-fg">
+        <label class="a-lbl">Valeur <span class="req">*</span></label>
+        <input class="a-inp" id="c-valeur" placeholder="20 ou 10">
+      </div>
+      <div class="a-fg">
+        <label class="a-lbl">Type <span class="req">*</span></label>
+        <select class="a-sel" id="c-type">
+          <option value="pourcentage">Pourcentage (%)</option>
+          <option value="montant">Montant fixe (S)</option>
+          <option value="livraison">Livraison gratuite</option>
+        </select>
+      </div>
+    </div>
+    <div class="a-fg">
+      <label class="a-lbl">Date d'expiration</label>
+      <input class="a-inp" type="date" id="c-exp">
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-code')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveCode()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PARRAINAGE -->
+<div class="a-modal" id="modal-parrain">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-parrain')">✕</button>
+    <h2 class="a-modal-title">⚙️ Configurer le parrainage</h2>
+    <div class="a-fg">
+      <label class="a-lbl">Récompense du parrain <span class="req">*</span></label>
+      <input class="a-inp" id="p-parrain" placeholder="Ex: 500 SWAPS">
+    </div>
+    <div class="a-fg">
+      <label class="a-lbl">Récompense du filleul <span class="req">*</span></label>
+      <input class="a-inp" id="p-filleul" placeholder="Ex: 250 SWAPS">
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-parrain')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveParrain()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DELETE -->
+<div class="a-modal" id="modal-del">
+  <div class="a-modal-box" style="max-width:400px;text-align:center">
+    <button class="a-modal-close" onclick="closeM('modal-del')">✕</button>
+    <div class="a-modal-illus">🗑️</div>
+    <h2 class="a-modal-confirm-title">Supprimer ce code ?</h2>
+    <input type="hidden" id="del-idx">
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-del')">Annuler</button>
+      <button class="a-btn-submit danger" onclick="confirmDel()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div id="a-toast"></div>
+<script src="admin.js"></script>
+<script>
+var DB={g:function(k){try{return JSON.parse(localStorage.getItem('kc_adm_'+k))||null}catch(e){return null}},s:function(k,v){localStorage.setItem('kc_adm_'+k,JSON.stringify(v))}};
+var nd=function(){return new Date().toLocaleDateString('fr-FR');};
+
+var codes=DB.g('promo_codes')||[
+  {code:'KIDCYCLE20',valeur:'20',type:'pourcentage',util:142,expire:'31/12/2025',actif:true},
+  {code:'WELCOME10',valeur:'10',type:'montant',util:87,expire:'30/06/2025',actif:true},
+  {code:'FREESHIP',valeur:'0',type:'livraison',util:340,expire:'31/03/2025',actif:false}
+];
+var parrain=DB.g('parrainage')||[{parrain:'500 SWAPS',filleul:'250 SWAPS',nb:1204,actif:true}];
+
+function save(){DB.s('promo_codes',codes);DB.s('parrainage',parrain);}
+
+function renderAll(){
+  var actifs=codes.filter(function(c){return c.actif;}).length;
+  var utils=codes.reduce(function(s,c){return s+(parseInt(c.util)||0);},0);
+  document.getElementById('st-codes').textContent=actifs;
+  document.getElementById('st-util').textContent=utils.toLocaleString('fr');
+  document.getElementById('st-eco').textContent=(utils*5).toFixed(0)+' S';
+
+  var typeLabels={pourcentage:'Pourcentage',montant:'Montant fixe',livraison:'Livraison gratuite'};
+  document.getElementById('tb-codes').innerHTML=codes.length
+    ?codes.map(function(c,i){
+      var typeLabel=typeLabels[c.type]||c.type;
+      var valLabel=c.type==='pourcentage'?c.valeur+'%':c.type==='montant'?c.valeur+' S':'Gratuite';
+      return '<tr>'
+        +'<td><code class="kc">'+c.code+'</code></td>'
+        +'<td><strong>'+valLabel+'</strong></td>'
+        +'<td>'+typeLabel+'</td>'
+        +'<td>'+c.util+'</td>'
+        +'<td>'+c.expire+'</td>'
+        +'<td><span class="ab '+(c.actif?'green':'red')+'">'+(c.actif?'Actif':'Expiré')+'</span></td>'
+        +'<td class="a-tbl-actions">'
+          +'<button class="a-ico-btn '+(c.actif?'del':'ok')+'" onclick="toggleCode('+i+')">'+(c.actif?'⏸':'▶')+'</button>'
+          +'<button class="a-ico-btn del" onclick="askDel('+i+')">🗑️</button>'
+        +'</td>'
+        +'</tr>';
+    }).join('')
+    :'<tr><td colspan="7" class="a-empty" style="padding:20px">Aucun code</td></tr>';
+
+  document.getElementById('tb-parrain').innerHTML=parrain.length
+    ?parrain.map(function(p,i){
+      return '<tr>'
+        +'<td><strong>'+p.parrain+'</strong></td>'
+        +'<td><strong>'+p.filleul+'</strong></td>'
+        +'<td>'+p.nb.toLocaleString('fr')+'</td>'
+        +'<td><span class="ab '+(p.actif?'green':'red')+'">'+(p.actif?'Actif':'Inactif')+'</span></td>'
+        +'<td class="a-tbl-actions"><button class="a-ico-btn edit" onclick="editParrain('+i+')">✏️</button></td>'
+        +'</tr>';
+    }).join('')
+    :'<tr><td colspan="5" class="a-empty" style="padding:20px">Non configuré</td></tr>';
+}
+
+function saveCode(){
+  var code=document.getElementById('c-code').value.trim().toUpperCase();
+  var valeur=document.getElementById('c-valeur').value.trim();
+  var type=document.getElementById('c-type').value;
+  var exp=document.getElementById('c-exp').value;
+  if(!code||!valeur){toast('Code et valeur obligatoires','err');return;}
+  var expStr=exp?new Date(exp).toLocaleDateString('fr-FR'):'—';
+  codes.push({code:code,valeur:valeur,type:type,util:0,expire:expStr,actif:true});
+  save();renderAll();closeM('modal-code');
+  document.getElementById('c-code').value='';document.getElementById('c-valeur').value='';document.getElementById('c-exp').value='';
+  toast('Code "'+code+'" créé !','ok');
+}
+
+function toggleCode(i){codes[i].actif=!codes[i].actif;save();renderAll();toast(codes[i].actif?'Code activé':'Code désactivé','ok');}
+function askDel(i){document.getElementById('del-idx').value=i;openM('modal-del');}
+function confirmDel(){var i=parseInt(document.getElementById('del-idx').value);codes.splice(i,1);save();renderAll();closeM('modal-del');toast('Code supprimé','ok');}
+
+function saveParrain(){
+  var p=document.getElementById('p-parrain').value.trim();
+  var f=document.getElementById('p-filleul').value.trim();
+  if(!p||!f){toast('Remplissez les deux champs','err');return;}
+  if(parrain.length) parrain[0]={parrain:p,filleul:f,nb:parrain[0].nb,actif:true};
+  else parrain.push({parrain:p,filleul:f,nb:0,actif:true});
+  save();renderAll();closeM('modal-parrain');toast('Programme de parrainage mis à jour !','ok');
+}
+
+function editParrain(i){
+  document.getElementById('p-parrain').value=parrain[i].parrain;
+  document.getElementById('p-filleul').value=parrain[i].filleul;
+  openM('modal-parrain');
+}
+
+document.addEventListener('DOMContentLoaded',function(){checkAdmin();renderAll();});
+</script>
+</body>
+</html>

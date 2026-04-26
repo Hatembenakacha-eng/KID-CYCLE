@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Abonnements — KidCycle Admin</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="a-top">
+  <a href="dashboard.html" class="a-logo"><img src="../images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="a-top-btn">🔔<span class="notif-dot"></span></div>
+  <div class="a-top-btn">👤</div>
+  <div class="a-search"><input type="text" placeholder="Recherche"><button class="a-search-btn">🔍</button></div>
+</header>
+<div class="a-layout">
+  <aside class="a-sidebar">
+    <a href="dashboard.html" class="a-nav"><span class="ni">🏠</span> Accueil</a>
+    <a href="abonnements.html" class="a-nav active"><span class="ni">🎫</span> Abonnements et boosts</a>
+    <a href="swaps.html" class="a-nav"><span class="ni">🔄</span> SWAPS</a>
+    <a href="articles.html" class="a-nav"><span class="ni">👕</span> Articles</a>
+    <a href="fidelite.html" class="a-nav"><span class="ni">⭐</span> Fidélité et parrainage</a>
+    <a href="profils.html" class="a-nav"><span class="ni">👥</span> Profils</a>
+    <a href="logistique.html" class="a-nav"><span class="ni">📦</span> Logistique et Commandes</a>
+    <div class="a-sep"></div>
+    <a href="../index.html" class="a-nav"><span class="ni">🌐</span> Voir le site</a>
+    <a href="login.html" class="a-nav" style="color:var(--err)" onclick="localStorage.removeItem('kc_admin');localStorage.removeItem('kc_admin_tok')"><span class="ni">🚪</span> Déconnexion</a>
+  </aside>
+  <main class="a-main">
+    <div class="a-pg-title">Abonnements et boosts</div>
+
+    <!-- Stats -->
+    <div class="a-stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+      <div class="a-stat"><div class="a-stat-lbl">Abonnements actifs</div><div class="a-stat-val" id="st-abos">1 247</div></div>
+      <div class="a-stat"><div class="a-stat-lbl">Revenus abonnements</div><div class="a-stat-val gold" style="font-size:20px" id="st-rev">61 103 €</div></div>
+      <div class="a-stat"><div class="a-stat-lbl">Taux de renouvellement</div><div class="a-stat-val green" id="st-renew">87%</div></div>
+    </div>
+
+    <!-- PLANS -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Plans d'abonnement</span>
+        <button class="a-btn-add" onclick="openM('modal-plan')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Nom</th><th>Prix</th><th>Durée</th><th>Avantages</th><th>Abonnés actifs</th><th>Actions</th></tr></thead>
+        <tbody id="tb-plans"></tbody>
+      </table>
+    </div>
+
+    <!-- BOOSTS -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Boosts de visibilité</span>
+        <button class="a-btn-add" onclick="openM('modal-boost')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Nom</th><th>Prix</th><th>Durée</th><th>Description</th><th>Actions</th></tr></thead>
+        <tbody id="tb-boosts"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL PLAN -->
+<div class="a-modal" id="modal-plan">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-plan')">✕</button>
+    <h2 class="a-modal-title" id="plan-modal-title">Ajouter un plan d'abonnement</h2>
+    <input type="hidden" id="plan-idx" value="-1">
+    <div class="a-fg">
+      <label class="a-lbl">Nom du plan <span class="req">*</span></label>
+      <input class="a-inp" id="pl-nom" placeholder="Ex: Premium">
+    </div>
+    <div class="a-grid-2">
+      <div class="a-fg">
+        <label class="a-lbl">Prix <span class="req">*</span></label>
+        <input class="a-inp" id="pl-prix" placeholder="49">
+      </div>
+      <div class="a-fg">
+        <label class="a-lbl">Durée</label>
+        <select class="a-sel" id="pl-duree">
+          <option value="Mensuel">Mensuel</option>
+          <option value="Annuel" selected>Annuel</option>
+          <option value="Illimité">Illimité</option>
+        </select>
+      </div>
+    </div>
+    <div class="a-fg">
+      <label class="a-lbl">Avantages (un par ligne)</label>
+      <textarea class="a-ta" id="pl-avantages" placeholder="Compte vérifié&#10;Expédition 24h&#10;Retours gratuits 14j"></textarea>
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-plan')">Annuler</button>
+      <button class="a-btn-submit" onclick="savePlan()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL BOOST -->
+<div class="a-modal" id="modal-boost">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-boost')">✕</button>
+    <h2 class="a-modal-title" id="boost-modal-title">Ajouter un boost</h2>
+    <input type="hidden" id="boost-idx" value="-1">
+    <div class="a-fg">
+      <label class="a-lbl">Nom du boost <span class="req">*</span></label>
+      <input class="a-inp" id="b-nom" placeholder="Ex: Boost Visibilité 7j">
+    </div>
+    <div class="a-grid-2">
+      <div class="a-fg">
+        <label class="a-lbl">Prix (€) <span class="req">*</span></label>
+        <input class="a-inp" type="number" step="0.01" id="b-prix" placeholder="9.99">
+      </div>
+      <div class="a-fg">
+        <label class="a-lbl">Durée (jours)</label>
+        <input class="a-inp" type="number" id="b-duree" placeholder="7">
+      </div>
+    </div>
+    <div class="a-fg">
+      <label class="a-lbl">Description</label>
+      <textarea class="a-ta" id="b-desc" placeholder="Description du boost..."></textarea>
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-boost')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveBoost()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE -->
+<div class="a-modal" id="modal-del">
+  <div class="a-modal-box" style="max-width:400px;text-align:center">
+    <button class="a-modal-close" onclick="closeM('modal-del')">✕</button>
+    <div class="a-modal-illus">🗑️</div>
+    <h2 class="a-modal-confirm-title">Supprimer cet élément ?</h2>
+    <input type="hidden" id="del-type"><input type="hidden" id="del-idx2">
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-del')">Annuler</button>
+      <button class="a-btn-submit danger" onclick="confirmDel()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div id="a-toast"></div>
+<script src="admin.js"></script>
+<script>
+var DB={g:function(k){try{return JSON.parse(localStorage.getItem('kc_adm_'+k))||null}catch(e){return null}},s:function(k,v){localStorage.setItem('kc_adm_'+k,JSON.stringify(v))}};
+
+var plans=DB.g('plans')||[
+  {nom:'Gratuit',prix:'0 €',duree:'Illimité',avantages:'Accès de base\nVente jusqu\'à 10 articles\nSWAPS de base',abonnes:'8 543'},
+  {nom:'Premium',prix:'49 €',duree:'Annuel',avantages:'Compte vérifié ✓\nExpédition prioritaire 24h\nRetours gratuits 14j\nSupport 7j/7\nAccès ventes privées',abonnes:'1 247'},
+  {nom:'Pro',prix:'99 €',duree:'Annuel',avantages:'Tout Premium +\nBoost visibilité mensuel\nAnalytics avancés\nAPI access\nCommission réduite 3%',abonnes:'312'}
+];
+var boosts=DB.g('boosts')||[
+  {nom:'Boost Visibilité 7j',prix:'9.99',duree:'7',desc:'Article mis en avant dans les résultats de recherche pendant 7 jours'},
+  {nom:'Boost Page d\'accueil 3j',prix:'19.99',duree:'3',desc:'Affichage sur la page d\'accueil pendant 3 jours'},
+  {nom:'Boost Instagram 24h',prix:'4.99',duree:'1',desc:'Partage sur les réseaux sociaux KidCycle'}
+];
+
+function save(){DB.s('plans',plans);DB.s('boosts',boosts);}
+
+function renderAll(){
+  document.getElementById('tb-plans').innerHTML=plans.length
+    ?plans.map(function(p,i){
+      var avs=p.avantages?p.avantages.split('\n').slice(0,3).join(', ')+'...':'—';
+      return '<tr>'
+        +'<td><strong>'+p.nom+'</strong></td>'
+        +'<td><strong>'+p.prix+'/'+p.duree+'</strong></td>'
+        +'<td>'+p.duree+'</td>'
+        +'<td style="max-width:200px;font-size:12px;color:var(--mid)">'+avs+'</td>'
+        +'<td><span class="ab green">'+p.abonnes+'</span></td>'
+        +'<td class="a-tbl-actions">'
+          +'<button class="a-ico-btn edit" onclick="editPlan('+i+')">✏️</button>'
+          +'<button class="a-ico-btn del" onclick="askDel(\'plan\','+i+')">🗑️</button>'
+        +'</td></tr>';
+    }).join('')
+    :'<tr><td colspan="6" class="a-empty" style="padding:20px">Aucun plan</td></tr>';
+
+  document.getElementById('tb-boosts').innerHTML=boosts.length
+    ?boosts.map(function(b,i){
+      return '<tr>'
+        +'<td><strong>'+b.nom+'</strong></td>'
+        +'<td><strong>'+b.prix+' €</strong></td>'
+        +'<td>'+b.duree+' jour(s)</td>'
+        +'<td style="max-width:240px;font-size:12px;color:var(--mid)">'+b.desc+'</td>'
+        +'<td class="a-tbl-actions">'
+          +'<button class="a-ico-btn edit" onclick="editBoost('+i+')">✏️</button>'
+          +'<button class="a-ico-btn del" onclick="askDel(\'boost\','+i+')">🗑️</button>'
+        +'</td></tr>';
+    }).join('')
+    :'<tr><td colspan="5" class="a-empty" style="padding:20px">Aucun boost</td></tr>';
+}
+
+function savePlan(){
+  var idx=parseInt(document.getElementById('plan-idx').value);
+  var nom=document.getElementById('pl-nom').value.trim();
+  var prix=document.getElementById('pl-prix').value.trim();
+  var duree=document.getElementById('pl-duree').value;
+  var av=document.getElementById('pl-avantages').value.trim();
+  if(!nom||!prix){toast('Nom et prix obligatoires','err');return;}
+  var obj={nom:nom,prix:prix+' €',duree:duree,avantages:av,abonnes:'0'};
+  if(idx>=0) plans[idx]=obj; else plans.push(obj);
+  save();renderAll();closeM('modal-plan');
+  ['pl-nom','pl-prix','pl-avantages'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('plan-idx').value='-1';
+  toast('Plan "'+nom+'" '+(idx>=0?'modifié':'ajouté')+'!','ok');
+}
+
+function editPlan(i){
+  var p=plans[i];
+  document.getElementById('plan-modal-title').textContent='Modifier le plan';
+  document.getElementById('plan-idx').value=i;
+  document.getElementById('pl-nom').value=p.nom;
+  document.getElementById('pl-prix').value=p.prix.replace(' €','');
+  document.getElementById('pl-duree').value=p.duree;
+  document.getElementById('pl-avantages').value=p.avantages||'';
+  openM('modal-plan');
+}
+
+function saveBoost(){
+  var idx=parseInt(document.getElementById('boost-idx').value);
+  var nom=document.getElementById('b-nom').value.trim();
+  var prix=document.getElementById('b-prix').value;
+  var duree=document.getElementById('b-duree').value||'7';
+  var desc=document.getElementById('b-desc').value.trim();
+  if(!nom||!prix){toast('Nom et prix obligatoires','err');return;}
+  var obj={nom:nom,prix:parseFloat(prix).toFixed(2),duree:duree,desc:desc};
+  if(idx>=0) boosts[idx]=obj; else boosts.push(obj);
+  save();renderAll();closeM('modal-boost');
+  ['b-nom','b-prix','b-duree','b-desc'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('boost-idx').value='-1';
+  toast('Boost "'+nom+'" '+(idx>=0?'modifié':'ajouté')+'!','ok');
+}
+
+function editBoost(i){
+  var b=boosts[i];
+  document.getElementById('boost-modal-title').textContent='Modifier le boost';
+  document.getElementById('boost-idx').value=i;
+  document.getElementById('b-nom').value=b.nom;
+  document.getElementById('b-prix').value=b.prix;
+  document.getElementById('b-duree').value=b.duree;
+  document.getElementById('b-desc').value=b.desc||'';
+  openM('modal-boost');
+}
+
+function askDel(type,i){
+  document.getElementById('del-type').value=type;
+  document.getElementById('del-idx2').value=i;
+  openM('modal-del');
+}
+function confirmDel(){
+  var type=document.getElementById('del-type').value;
+  var i=parseInt(document.getElementById('del-idx2').value);
+  if(type==='plan') plans.splice(i,1);
+  else boosts.splice(i,1);
+  save();renderAll();closeM('modal-del');toast('Supprimé !','ok');
+}
+
+document.addEventListener('DOMContentLoaded',function(){checkAdmin();renderAll();});
+</script>
+</body>
+</html>

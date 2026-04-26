@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>KidCycle — Vêtements enfants de qualité</title>
+<link rel="stylesheet" href="global.css">
+<style>
+/* ── HERO ────────────────────────────────────────────────────── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px 32px 0;
+}
+
+/* LEFT: big hero */
+.hero-main {
+  background: #f9f7f4;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 340px;
+  overflow: hidden;
+  position: relative;
+}
+.hero-main-content {
+  padding: 44px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.hero-main-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+}
+.hero-main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+.hero-main-sub {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 260px;
+}
+.hero-main-img {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.hero-main-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .5s ease;
+}
+.hero-main:hover .hero-main-img img { transform: scale(1.04); }
+
+/* RIGHT: 2 stacked cards */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.hero-card {
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  min-height: 155px;
+  cursor: pointer;
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
+}
+.hero-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--shadow-lg); }
+.hero-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  position: absolute; inset: 0;
+  transition: transform .4s ease;
+}
+.hero-card:hover img { transform: scale(1.06); }
+.hero-card-body {
+  position: relative;
+  z-index: 1;
+  padding: 18px 20px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.45) 100%);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.hero-card-label { font-size: 11px; font-weight: 800; color: rgba(255,255,255,.8); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.hero-card-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+.hero-card-sub { font-size: 12px; color: rgba(255,255,255,.8); margin-bottom: 10px; }
+.hero-card-link { font-size: 12px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 4px; }
+
+/* ── STATS BAR ───────────────────────────────────────────────── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+  max-width: 1280px;
+  margin: 24px auto 0;
+  padding: 0 32px;
+}
+.stat-item {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  padding: 20px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s, box-shadow .25s;
+}
+.stat-item:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.stat-num { font-size: 24px; font-weight: 900; color: var(--purple); margin-bottom: 4px; }
+.stat-label { font-size: 13px; color: var(--text-mid); font-weight: 600; }
+
+/* ── SECTION ─────────────────────────────────────────────────── */
+.section { padding: 48px 32px; max-width: 1280px; margin: 0 auto; }
+.section-header { margin-bottom: 28px; }
+.section-title { font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.section-sub { font-size: 14px; color: var(--text-light); }
+.filter-chips { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.chip {
+  padding: 7px 18px; border-radius: 20px;
+  font-size: 13px; font-weight: 700;
+  border: 1.5px solid var(--border); background: var(--white);
+  color: var(--text-mid); cursor: pointer; transition: var(--transition);
+}
+.chip:hover, .chip.active { background: var(--purple); color: var(--white); border-color: var(--purple); transform: translateY(-1px); }
+
+/* Product grids */
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+.grid-4-scroll { display: grid; grid-template-columns: repeat(8,minmax(200px,1fr)); gap: 16px; overflow-x: auto; padding-bottom: 8px; }
+.grid-4-scroll::-webkit-scrollbar { height: 4px; }
+.grid-4-scroll::-webkit-scrollbar-track { background: var(--border); border-radius: 2px; }
+.grid-4-scroll::-webkit-scrollbar-thumb { background: var(--purple-l); border-radius: 2px; }
+
+/* ── OFFRE SEMAINE ───────────────────────────────────────────── */
+.offre-section {
+  background: linear-gradient(135deg, #f4f2fa 0%, #ede9f7 100%);
+  border-radius: 20px;
+  padding: 36px 44px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 36px;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto 0;
+  position: relative;
+  overflow: hidden;
+}
+.offre-section::before {
+  content: '';
+  position: absolute;
+  right: -60px; top: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(155,142,196,.1);
+}
+.offre-eyebrow { font-size: 11px; font-weight: 800; color: var(--purple); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+.offre-title { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.offre-sub { font-size: 14px; color: var(--text-mid); margin-bottom: 22px; }
+.offre-img-wrap { width: 260px; height: 200px; object-fit: contain; border-radius: 16px; overflow: hidden; background: var(--white); }
+.offre-img-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 16px; transition: transform .4s ease; }
+.offre-section:hover .offre-img-wrap img { transform: scale(1.06) rotate(2deg); }
+
+/* ── LOVEBAYBE ──────────────────────────────────────────────── */
+.lovebaybe-section { text-align: center; padding: 56px 32px; }
+.lovebaybe-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.lovebaybe-sub { font-size: 15px; color: var(--text-mid); margin-bottom: 6px; }
+.lovebaybe-hashtag { font-size: 13px; color: var(--text-light); margin-bottom: 32px; }
+.lovebaybe-divider { width: 40px; height: 3px; background: var(--purple-l); border-radius: 2px; margin: 0 auto 32px; }
+.lovebaybe-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 4px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.lovebaybe-item {
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.lovebaybe-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s ease;
+}
+.lovebaybe-item:hover img { transform: scale(1.08); }
+.lovebaybe-overlay {
+  position: absolute; inset: 0;
+  background: rgba(155,142,196,0);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .3s;
+}
+.lovebaybe-item:hover .lovebaybe-overlay { background: rgba(155,142,196,.35); }
+.lovebaybe-overlay-icon { font-size: 28px; opacity: 0; transform: scale(0.5); transition: all .3s cubic-bezier(.34,1.56,.64,1); }
+.lovebaybe-item:hover .lovebaybe-overlay-icon { opacity: 1; transform: scale(1); }
+
+/* ── NEWSLETTER ─────────────────────────────────────────────── */
+.newsletter-section {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-d) 100%);
+  padding: 64px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.newsletter-section::before, .newsletter-section::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+}
+.newsletter-section::before { width: 300px; height: 300px; top: -100px; left: -80px; }
+.newsletter-section::after  { width: 200px; height: 200px; bottom: -60px; right: -40px; }
+.newsletter-title { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 10px; position: relative; z-index: 1; }
+.newsletter-sub { font-size: 14px; color: rgba(255,255,255,.8); margin-bottom: 28px; position: relative; z-index: 1; }
+.newsletter-form {
+  display: flex; gap: 0;
+  max-width: 460px; margin: 0 auto;
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,.2);
+  position: relative; z-index: 1;
+}
+.newsletter-form input {
+  flex: 1; padding: 15px 20px;
+  border: none; outline: none;
+  font-family: 'Nunito', sans-serif; font-size: 14px;
+  color: var(--text);
+}
+.newsletter-form button {
+  padding: 15px 24px; background: var(--text);
+  color: #fff; border: none;
+  font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
+  transition: background .2s;
+}
+.newsletter-form button:hover { background: #2d2d4e; }
+
+/* ── FLOATING ELEMENTS ──────────────────────────────────────── */
+.floating { animation: float 4s ease-in-out infinite; }
+.floating:nth-child(2) { animation-delay: -.8s; }
+.floating:nth-child(3) { animation-delay: -1.6s; }
+
+/* ── CURSOR SPARKLE ─────────────────────────────────────────── */
+.sparkle {
+  position: fixed; pointer-events: none; z-index: 99998;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--purple-l);
+  animation: sparkleAnim .6s ease forwards;
+}
+@keyframes sparkleAnim {
+  0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+  100% { transform: scale(2) rotate(180deg); opacity: 0; }
+}
+
+/* ── SCROLL TO TOP ──────────────────────────────────────────── */
+.scroll-top {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--purple); color: #fff;
+  border: none; cursor: pointer; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 16px rgba(155,142,196,.4);
+  transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  opacity: 0; transform: translateY(20px) scale(.8);
+}
+.scroll-top.visible { opacity: 1; transform: translateY(0) scale(1); }
+.scroll-top:hover { transform: translateY(-3px) scale(1.1); }
+
+/* Skeleton */
+.sk { min-height: 280px; border-radius: var(--radius); }
+</style>
+</head>
+<body>
+
+<!-- TOP PROMO -->
+<div class="top-promo">
+  <div class="top-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="top-promo-right">
+    <a href="#">Faqs</a>
+    <a href="#">ℹ Besoin d'aide?</a>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo" title="KidCycle — Accueil">
+    <img src="images/Kidcycle.png" alt="KidCycle">
+  </a>
+  <div class="nav-links">
+    <a href="index.html"     class="nav-link active">Acheter maintenant</a>
+    <a href="nouveautes.html" class="nav-link">Nouveautés</a>
+    <a href="vente.html"      class="nav-link">Vente</a>
+    <a href="mes-produits.html" class="nav-link">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="nav-cart">
+      <img src="images/icon-cart.svg" alt="panier">
+      Mon Panier <span class="cart-badge js-cart-count">0</span>
+    </a>
+    <a href="favoris.html" class="nav-icon-btn" title="Mes favoris">
+      <img src="images/icon-heart.svg" alt="favoris">
+    </a>
+    <a href="profil.html" class="nav-icon-btn" title="Mon profil">
+      <img src="images/icon-user.svg" alt="profil" id="nav-avatar-img">
+    </a>
+    <div class="nav-swaps" title="Mes SWAPS" id="nav-swaps">ii</div>
+    <div class="nav-search-wrap" style="position:relative">
+      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
+      <button class="nav-search-btn" onclick="gotoSearch()">
+        <img src="images/search.png" alt="search">
+      </button>
+      <div class="search-dropdown" id="search-dd"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO — image réelle acc.png -->
+<div class="hero">
+  <!-- Main hero card -->
+  <div class="hero-main fade-up">
+    <div class="hero-main-content">
+      <div class="hero-main-label">Nouvelle Collection</div>
+      <h1 class="hero-main-title">Tout ce dont vous avez besoin pour votre bébé.</h1>
+      <p class="hero-main-sub">Découvrez notre collection de vêtements pour bébés, à la fois nouveaux et populaires, conçus avec style et confort à l'esprit.</p>
+      <a href="nouveautes.html" class="btn btn-primary" style="width:fit-content">Acheter maintenant</a>
+    </div>
+    <div class="hero-main-img">
+      <img src="images/acc.png" alt="Collection KidCycle" style="object-position:right center">
+    </div>
+  </div>
+
+  <!-- Right cards -->
+  <div class="hero-right">
+    <div class="hero-card fade-up" style="background:linear-gradient(135deg,#e8f4ff,#d0e8ff)" onclick="location.href='nouveautes.html?cat=bebe'">
+      <img src="images/Rectangle 10.png" alt="Tissu en coton" style="opacity:.9">
+      <div class="hero-card-body">
+        <div class="hero-card-title">Tissu en coton.</div>
+        <div class="hero-card-sub">Sans danger pour la santé des bébés.</div>
+      </div>
+    </div>
+    <div class="hero-card fade-up" style="background:linear-gradient(135deg,#f0f8ee,#ddf0d8)" onclick="location.href='nouveautes.html'">
+      <img src="images/Rectangle 11.png" alt="New Collection Baybe" style="opacity:.9">
+      <div class="hero-card-body">
+        <div class="hero-card-label">New collection</div>
+        <div class="hero-card-title" style="font-size:20px">Baybe</div>
+        <a class="hero-card-link" href="nouveautes.html">Achetez Maintenant ›</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item fade-up"><div class="stat-num" id="st-articles">12+</div><div class="stat-label">Articles disponibles</div></div>
+  <div class="stat-item fade-up"><div class="stat-num">+10K</div><div class="stat-label">Membres actifs</div></div>
+  <div class="stat-item fade-up"><div class="stat-num">+25K</div><div class="stat-label">Commandes livrées</div></div>
+</div>
+
+<!-- NOUVEAUTÉS -->
+<section class="section">
+  <div class="section-header fade-up">
+    <h2 class="section-title">Nouveautés</h2>
+    <p class="section-sub">Découvrez des vêtements de qualité pour enfants, à petits prix.</p>
+  </div>
+  <div class="filter-chips" id="chips-nouv">
+    <span class="chip active" data-cat="">Tout</span>
+    <span class="chip" data-cat="bebe">Bébé</span>
+    <span class="chip" data-cat="fille">Fille</span>
+    <span class="chip" data-cat="garcon">Garçon</span>
+    <span class="chip" data-cat="junior">Junior</span>
+  </div>
+  <div class="grid-4" id="grid-nouv">
+    <div class="skeleton sk"></div><div class="skeleton sk"></div>
+    <div class="skeleton sk"></div><div class="skeleton sk"></div>
+    <div class="skeleton sk"></div><div class="skeleton sk"></div>
+    <div class="skeleton sk"></div><div class="skeleton sk"></div>
+  </div>
+</section>
+
+<!-- OFFRE DE LA SEMAINE -->
+<div style="padding:0 32px;max-width:1280px;margin:0 auto">
+  <div class="offre-section fade-up" id="offre-section" style="display:none">
+    <div>
+      <div class="offre-eyebrow">🔥 Offre de la semaine</div>
+      <h2 class="offre-title" id="offre-title">Découvrez notre sélection</h2>
+      <p class="offre-sub" id="offre-sub">Produits exclusifs à prix réduits</p>
+      <a href="vente.html" class="btn btn-primary">Voir les offres</a>
+    </div>
+    <div class="offre-img-wrap">
+      <img id="offre-img" src="" alt="Offre de la semaine">
+    </div>
+  </div>
+</div>
+
+<!-- MEILLEURES VENTES -->
+<section class="section">
+  <div class="section-header fade-up">
+    <h2 class="section-title">Meilleures ventes</h2>
+    <p class="section-sub">Les articles préférés de nos clients.</p>
+  </div>
+  <div class="filter-chips" id="chips-best">
+    <span class="chip active" data-cat="">Tout</span>
+    <span class="chip" data-cat="bebe">Bébé</span>
+    <span class="chip" data-cat="fille">Fille</span>
+    <span class="chip" data-cat="garcon">Garçon</span>
+    <span class="chip" data-cat="junior">Junior</span>
+  </div>
+  <div class="grid-4" id="grid-best">
+    <div class="skeleton sk"></div><div class="skeleton sk"></div>
+    <div class="skeleton sk"></div><div class="skeleton sk"></div>
+    <div class="skeleton sk"></div><div class="skeleton sk"></div>
+    <div class="skeleton sk"></div><div class="skeleton sk"></div>
+  </div>
+</section>
+
+<!-- LOVEBAYBE — image réelle babies.png -->
+<section class="lovebaybe-section fade-up">
+  <h2 class="lovebaybe-title">Lovebaybe</h2>
+  <p class="lovebaybe-sub">Exprimez-vous avec <strong>#lovebaybe</strong> sur Instagram</p>
+  <div class="lovebaybe-divider"></div>
+  <div class="lovebaybe-grid" id="love-grid">
+    <!-- Les vraies photos du ZIP babies.png est une image composite — on affiche les vêtements réels -->
+    <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=bebe'">
+      <img src="images/cl1.png" alt="bébé 1" style="background:#fdf6f0">
+      <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
+    </div>
+    <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=fille'">
+      <img src="images/cl2.png" alt="fille" style="background:#fdf0f4">
+      <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
+    </div>
+    <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=garcon'">
+      <img src="images/cl3.png" alt="garçon" style="background:#fdf8ee">
+      <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
+    </div>
+    <div class="lovebaybe-item" onclick="location.href='nouveautes.html'">
+      <img src="images/cl4.png" alt="bébé 2" style="background:#f8f8f2">
+      <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
+    </div>
+    <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=bebe'">
+      <img src="images/cl5.png" alt="bébé 3" style="background:#f0f5fc">
+      <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
+    </div>
+    <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=fille'">
+      <img src="images/cl6.png" alt="enfant" style="background:#fdf0f4">
+      <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
+    </div>
+    <div class="lovebaybe-item" onclick="location.href='nouveautes.html'">
+      <img src="images/Rectangle 9.png" alt="veste" style="background:#fdf8ee">
+      <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
+    </div>
+    <div class="lovebaybe-item" onclick="location.href='nouveautes.html'">
+      <img src="images/Rectangle 11.png" alt="ensemble" style="background:#fdf0f4">
+      <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <h2 class="newsletter-title fade-up">Newsletter</h2>
+  <p class="newsletter-sub fade-up">Recevez nos offres exclusives et nouveautés directement dans votre boîte mail.</p>
+  <div class="newsletter-form fade-up">
+    <input type="email" id="nl-email" placeholder="Votre adresse email..." autocomplete="email">
+    <button onclick="doNewsletter()">S'inscrire</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="site-footer-right">
+    <a href="#">Faqs</a>
+    <a href="#">ℹ Besoin d'aide?</a>
+  </div>
+</footer>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Haut de page">↑</button>
+
+<!-- TOAST -->
+<div id="kc-toast"></div>
+
+<script src="app.js"></script>
+<script>
+/* ── Init ─────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function(){
+  KC.initNav();
+  KC.initAnimations();
+  KC.initSearch('search-input','search-dd');
+  KC.initRipple('.btn-primary, .prod-card-btn, .chip');
+
+  loadNouv('');
+  loadBest('');
+  loadOffre();
+  loadStats();
+
+  // Chips Nouveautés
+  document.querySelectorAll('#chips-nouv .chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      document.querySelectorAll('#chips-nouv .chip').forEach(function(x){x.classList.remove('active')});
+      c.classList.add('active');
+      loadNouv(c.dataset.cat);
+    });
+  });
+  // Chips Best
+  document.querySelectorAll('#chips-best .chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      document.querySelectorAll('#chips-best .chip').forEach(function(x){x.classList.remove('active')});
+      c.classList.add('active');
+      loadBest(c.dataset.cat);
+    });
+  });
+
+  // Scroll top btn
+  window.addEventListener('scroll', function(){
+    var btn = document.getElementById('scroll-top');
+    if(btn) btn.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  // Cursor sparkles
+  document.addEventListener('click', function(e){
+    var s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = (e.clientX - 5)+'px';
+    s.style.top  = (e.clientY - 5)+'px';
+    document.body.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 600);
+  });
+
+  // Logo hover parallax
+  KC.initParallax('.hero-main-img img', 8);
+});
+
+/* ── Load stats ───────────────────────────────────────────── */
+function loadStats(){
+  KC.GET('/misc.php?action=stats').then(function(r){
+    if(r.ok && r.data) document.getElementById('st-articles').textContent = (r.data.produits_actifs||12)+'+';
+  }).catch(function(){});
+}
+
+/* ── Load Nouveautés ──────────────────────────────────────── */
+function loadNouv(cat){
+  var url = '/produits.php?limit=8&tri=recent'+(cat?'&categorie='+cat:'');
+  showSkeleton('grid-nouv');
+  KC.GET(url).then(function(r){
+    renderGrid('grid-nouv', r.ok?r.data:getFallback());
+  }).catch(function(){ renderGrid('grid-nouv', getFallback()); });
+}
+
+/* ── Load Best sellers ────────────────────────────────────── */
+function loadBest(cat){
+  var url = '/produits.php?limit=8&tri=popular'+(cat?'&categorie='+cat:'');
+  showSkeleton('grid-best');
+  KC.GET(url).then(function(r){
+    renderGrid('grid-best', r.ok?r.data:getFallback());
+  }).catch(function(){ renderGrid('grid-best', getFallback()); });
+}
+
+/* ── Load offre semaine ───────────────────────────────────── */
+function loadOffre(){
+  KC.GET('/produits.php?action=vente&limit=1').then(function(r){
+    if(r.ok && r.data && r.data.length){
+      var p = r.data[0];
+      var sec = document.getElementById('offre-section');
+      document.getElementById('offre-title').textContent = p.nom;
+      document.getElementById('offre-sub').textContent   = p.description||'Offre limitée en temps';
+      document.getElementById('offre-img').src = p.image;
+      sec.style.display = 'grid';
+    }
+  }).catch(function(){});
+}
+
+/* ── Render grid ──────────────────────────────────────────── */
+function renderGrid(id, prods){
+  var g = document.getElementById(id);
+  if(!prods||!prods.length){
+    g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--text-light)"><div style="font-size:48px;margin-bottom:12px">👕</div><p>Aucun produit pour le moment</p></div>';
+    return;
+  }
+  g.innerHTML = prods.map(function(p){ return KC.prodCard(p); }).join('');
+  // Animate each card
+  g.querySelectorAll('.prod-card').forEach(function(c,i){
+    c.style.opacity='0'; c.style.transform='translateY(20px)';
+    setTimeout(function(){
+      c.style.transition='opacity .4s ease,transform .4s ease';
+      c.style.opacity='1'; c.style.transform='none';
+    }, i*60);
+  });
+}
+
+function showSkeleton(id){
+  var g = document.getElementById(id);
+  g.innerHTML = '<div class="skeleton sk"></div>'.repeat(8);
+}
+
+/* ── Fallback products with real images ───────────────────── */
+function getFallback(){
+  return [
+    {id:1,nom:'Combinaison Bébé Pois',description:'Velours doux · 0-24 mois',prix:34,image:'images/cl1.png',badge:'Nouveau'},
+    {id:2,nom:'Ensemble Veste Rose',description:'Coton bio · 2-8 ans',prix:45,image:'images/cl2.png',badge:'Tendance'},
+    {id:3,nom:'Veste Jaune Pluie',description:'Imperméable · 3-10 ans',prix:38,image:'images/cl3.png'},
+    {id:4,nom:'Set Bavoir & Chaussures',description:'Accessoires · 0-18 mois',prix:22,image:'images/cl4.png'},
+    {id:5,nom:'Body Ourson Bleu',description:'Coton certifié · 0-24 mois',prix:18,image:'images/cl5.png',badge:'Coup de cœur'},
+    {id:6,nom:'Set Bébé Premium',description:'5 types de set disponibles',prix:34,image:'images/cl6.png'},
+    {id:7,nom:'Veste Matelassée',description:'Hiver · 2-8 ans',prix:49,image:'images/Rectangle 9.png'},
+    {id:8,nom:'Ensemble Denim',description:'100% coton · 3-12 ans',prix:42,image:'images/Rectangle 11.png'}
+  ];
+}
+
+/* ── Newsletter ───────────────────────────────────────────── */
+function doNewsletter(){
+  var em = document.getElementById('nl-email').value.trim();
+  if(!em||!em.includes('@')){ KC.toast('Email invalide','err'); return; }
+  KC.POST('/misc.php?action=newsletter', {email:em}).then(function(r){
+    if(r.ok){ document.getElementById('nl-email').value=''; KC.toast('Inscription confirmée ! Merci 🎉','ok'); }
+    else KC.toast(r.err||'Erreur','err');
+  }).catch(function(){ KC.toast('Erreur réseau','err'); });
+}
+
+function gotoSearch(){
+  var q = document.getElementById('search-input').value.trim();
+  if(q) location.href = 'nouveautes.html?q='+encodeURIComponent(q);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mes Commandes — KidCycle</title>
+<link rel="stylesheet" href="global.css">
+<style>
+.page-wrap{max-width:1280px;margin:0 auto;padding:32px 24px}
+.commandes-layout{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start}
+.account-sidebar{background:var(--bg);border-radius:var(--radius);padding:26px 18px;border:1.5px solid var(--border);position:sticky;top:82px;box-shadow:var(--shadow-sm)}
+.sidebar-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:20px;padding-bottom:14px;border-bottom:1.5px solid var(--border)}
+.sidebar-nav{display:flex;flex-direction:column;gap:3px}
+.sidebar-link{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--text-mid);transition:all .2s;text-decoration:none}
+.sidebar-link:hover{background:#fff;color:var(--purple)}
+.sidebar-link.active{background:var(--purple);color:#fff;font-weight:700}
+.sidebar-link img{width:18px;height:18px;flex-shrink:0;opacity:.6}
+.sidebar-link.active img{filter:brightness(0) invert(1);opacity:1}
+.sidebar-swaps{margin-top:18px;background:#fff;border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text-mid);border:1.5px solid var(--border)}
+/* Tabs */
+.cmd-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:22px}
+.cmd-tab{padding:11px 20px;font-size:14px;font-weight:700;color:var(--text-mid);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;font-family:'Nunito',sans-serif}
+.cmd-tab:hover{color:var(--purple)}
+.cmd-tab.active{color:var(--purple);border-bottom-color:var(--purple)}
+/* Commande card */
+.cmd-card{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:14px;transition:box-shadow .2s}
+.cmd-card:hover{box-shadow:var(--shadow)}
+.cmd-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.cmd-numero{font-size:14px;font-weight:800;color:var(--text)}
+.cmd-info-row{display:flex;gap:10px;flex-wrap:wrap}
+.cmd-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;background:var(--bg);color:var(--text-mid);border:1.5px solid var(--border)}
+.cmd-chip.swaps{color:var(--gold);border-color:var(--gold-bg);background:var(--gold-bg)}
+.cmd-status{padding:4px 12px;border-radius:6px;font-size:12px;font-weight:800}
+.cmd-status.attente{background:#fff8e1;color:var(--warn)}
+.cmd-status.prep{background:#e8f4fd;color:#3a9fd6}
+.cmd-status.cours{background:var(--purple-pale);color:var(--purple)}
+.cmd-status.livree{background:#e8f8ed;color:var(--green)}
+.cmd-status.annulee{background:#fff0f0;color:var(--red)}
+.cmd-livraison{font-size:12px;color:var(--text-light);margin-bottom:12px}
+/* Articles dans la commande */
+.cmd-articles{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.cmd-article-img{width:64px;height:64px;border-radius:8px;background:var(--bg);object-fit:contain;padding:5px;border:1.5px solid var(--border);flex-shrink:0}
+/* Actions boutons */
+.cmd-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.btn-reception{padding:9px 18px;background:var(--purple-pale);color:var(--purple);border:1.5px solid var(--purple);border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif}
+.btn-reception:hover{background:var(--purple);color:#fff}
+.btn-etiquette{padding:9px 16px;background:var(--bg);color:var(--text-mid);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:6px}
+.btn-etiquette:hover{border-color:var(--purple);color:var(--purple)}
+.cmd-info-circle{width:22px;height:22px;border-radius:50%;background:var(--purple-pale);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--purple);font-weight:800;cursor:pointer;flex-shrink:0}
+/* Empty */
+.empty-cmds{text-align:center;padding:80px 20px}
+.empty-cmds .icon{font-size:56px;margin-bottom:14px}
+/* MODAL RÉCEPTION — comme Figma Mes commandes livree */
+.modal-recep .modal-box{max-width:700px;padding:36px}
+.recep-header{background:var(--bg);border-radius:10px;padding:16px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.recep-numero{font-size:14px;font-weight:800;color:var(--text)}
+.recep-articles-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;max-height:380px;overflow-y:auto}
+.recep-article{background:var(--bg);border-radius:10px;padding:14px;display:flex;gap:12px;align-items:center}
+.recep-article img{width:64px;height:64px;object-fit:contain;background:#fff;border-radius:8px;padding:5px;flex-shrink:0;border:1.5px solid var(--border)}
+.recep-article-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.recep-article-sub{font-size:12px;color:var(--text-light);margin-bottom:6px}
+.recep-article-price{font-size:14px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:4px}
+.btn-probleme{flex:1;padding:12px;background:#fff;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;color:var(--text-mid);display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-probleme:hover{border-color:var(--red);color:var(--red)}
+.btn-conforme{flex:1;padding:12px;background:var(--purple);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-conforme:hover{background:var(--purple-d)}
+</style>
+</head>
+<body>
+<div class="top-promo">
+  <div class="top-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="top-promo-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Acheter maintenant</a>
+    <a href="nouveautes.html" class="nav-link">Nouveautés</a>
+    <a href="vente.html" class="nav-link">Vente</a>
+    <a href="mes-produits.html" class="nav-link">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <div class="nav-swaps">ii</div>
+    <div class="nav-search-wrap" style="position:relative">
+      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <div class="search-dropdown" id="search-dd"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="commandes-layout">
+
+    <!-- Sidebar -->
+    <aside class="account-sidebar">
+      <div class="sidebar-title">Mon compte</div>
+      <nav class="sidebar-nav">
+        <a href="profil.html" class="sidebar-link"><img src="images/icon-user.svg" alt="">Mon profil</a>
+        <a href="favoris.html" class="sidebar-link"><img src="images/icon-heart.svg" alt="">Mes favoris</a>
+        <a href="panier.html" class="sidebar-link"><img src="images/icon-cart.svg" alt="">Mon panier</a>
+        <a href="mes-produits.html" class="sidebar-link"><img src="images/icon-avatar.svg" alt="">Mon dressing</a>
+        <a href="mes-commandes.html" class="sidebar-link active"><img src="images/icon-avatar.svg" alt="">Mes commandes</a>
+        <a href="#" class="sidebar-link"><img src="images/icon-avatar.svg" alt="">Mes Chats</a>
+      </nav>
+      <div class="sidebar-swaps">
+        <span class="swaps-coin">ii</span>
+        <span><strong>SWAPS</strong> disponible:&nbsp;<span id="swaps-val">500.00</span></span>
+        <span class="swaps-coin">ii</span>
+      </div>
+    </aside>
+
+    <!-- Commandes -->
+    <div>
+      <h1 style="font-size:26px;font-weight:800;color:var(--purple);margin-bottom:22px">Mes commandes</h1>
+
+      <!-- Tabs -->
+      <div class="cmd-tabs">
+        <button class="cmd-tab active" onclick="switchTab(this,'all')">Toutes</button>
+        <button class="cmd-tab" onclick="switchTab(this,'en_cours')">En cours</button>
+        <button class="cmd-tab" onclick="switchTab(this,'livree')">Livrées</button>
+        <button class="cmd-tab" onclick="switchTab(this,'annulee')">Annulées</button>
+      </div>
+
+      <div id="cmds-list">
+        <div style="text-align:center;padding:40px">
+          <div class="swaps-coin" style="width:36px;height:36px;font-size:14px;margin:0 auto;animation:rotate 1s linear infinite">ii</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL RÉCEPTION COLIS — fidèle Figma -->
+<div class="modal-overlay modal-recep" id="modal-recep">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-recep')">✕</button>
+    <h2 class="modal-title">Confirmer la réception de votre colis</h2>
+    <div class="recep-header">
+      <span class="recep-numero" id="recep-num">#P-024688254</span>
+      <span class="cmd-chip" id="recep-nb">5 Articles</span>
+      <span class="cmd-chip" id="recep-type">Lorem</span>
+      <span class="cmd-chip swaps" id="recep-total"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span> 500.00</span>
+      <span style="margin-left:auto;font-size:12px;color:var(--text-light)" id="recep-date">Livrée le 27/05/2024</span>
+      <button style="padding:6px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:5px" onclick="window.print()">🖨️ Imprimer l'étiquette d'envoi</button>
+    </div>
+    <div class="recep-articles-grid" id="recep-articles"></div>
+    <div class="modal-actions">
+      <button class="btn-probleme" onclick="reportProbleme()">✗ Problème avec ma commande</button>
+      <button class="btn-conforme" onclick="confirmerRecep()">✓ Colis reçu et articles conformes</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="site-footer-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</footer>
+<div id="kc-toast"></div>
+<script src="app.js"></script>
+<script>
+var allCmds=[], currentFilter='all', currentCmd=null;
+
+document.addEventListener('DOMContentLoaded',function(){
+  KC.initNav(); KC.initSearch('search-input','search-dd');
+  if(!KC.isLogged()){location.href='connexion.html';return;}
+  var u=KC.user();
+  if(u&&u.swaps) document.getElementById('swaps-val').textContent=parseFloat(u.swaps).toFixed(2);
+  loadCommandes();
+  document.querySelectorAll('.modal-overlay').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
+});
+
+function loadCommandes(){
+  KC.GET('/commandes.php')
+    .then(function(r){
+      if(r.ok&&r.data){ allCmds=r.data; renderCmds(); }
+      else renderFallback();
+    })
+    .catch(function(){ renderFallback(); });
+}
+
+function switchTab(btn, filter){
+  document.querySelectorAll('.cmd-tab').forEach(function(t){t.classList.remove('active');});
+  btn.classList.add('active');
+  currentFilter=filter; renderCmds();
+}
+
+function renderCmds(){
+  var list=currentFilter==='all'?allCmds:allCmds.filter(function(c){
+    if(currentFilter==='en_cours') return ['en_attente','preparation','en_cours'].includes(c.statut);
+    return c.statut===currentFilter;
+  });
+  var cont=document.getElementById('cmds-list');
+  if(!list.length){
+    cont.innerHTML='<div class="empty-cmds"><div class="icon">📦</div><h3 style="font-size:18px;font-weight:800;color:var(--text-mid);margin-bottom:8px">Aucune commande</h3><p style="color:var(--text-light);font-size:14px;margin-bottom:20px">Commencez à explorer notre catalogue</p><a href="nouveautes.html" class="btn btn-primary">Voir les articles</a></div>';
+    return;
+  }
+  cont.innerHTML=list.map(function(cmd,i){ return renderCmd(cmd,i); }).join('');
+}
+
+function statusClass(s){ var m={en_attente:'attente',preparation:'prep',en_cours:'cours',livree:'livree',annulee:'annulee'}; return m[s]||'cours'; }
+function statusLabel(s){ var m={en_attente:'En attente',preparation:'En préparation',en_cours:'En livraison',livree:'Livré ✓',annulee:'Annulée'}; return m[s]||s; }
+
+function renderCmd(cmd,i){
+  var arts=cmd.articles||[];
+  var imgs=arts.slice(0,4).map(function(a){return'<img class="cmd-article-img" src="'+a.image+'" alt="'+a.nom+'" onerror="this.src=\'images/cl1.png\'">';}).join('');
+  var isLivree=cmd.statut==='livree';
+  var isCancellable=['en_attente','preparation'].includes(cmd.statut);
+  var d=cmd.created_at?new Date(cmd.created_at).toLocaleDateString('fr-FR'):'—';
+
+  return '<div class="cmd-card" id="cmd-'+cmd.id+'">'
+    +'<div class="cmd-card-head">'
+      +'<span class="cmd-numero">'+cmd.numero+'</span>'
+      +'<div class="cmd-info-row">'
+        +'<span class="cmd-chip">'+arts.length+' Article'+(arts.length>1?'s':'')+'</span>'
+        +(cmd.mode_livraison?'<span class="cmd-chip">'+cmd.mode_livraison+'</span>':'')
+        +'<span class="cmd-chip swaps"><span class="swaps-coin" style="width:15px;height:15px;font-size:7px">ii</span> '+parseFloat(cmd.total).toFixed(2)+'</span>'
+        +'<span class="cmd-status '+statusClass(cmd.statut)+'">'+statusLabel(cmd.statut)+'</span>'
+      +'</div>'
+    +'</div>'
+    +(isLivree?'<div class="cmd-livraison">Livrée le '+d+' à '+cmd.adresse+'</div>':'<div class="cmd-livraison">Commandé le '+d+'</div>')
+    +'<div class="cmd-articles">'+imgs+'</div>'
+    +'<div class="cmd-actions">'
+      +(isLivree?'<button class="btn-reception" onclick="openRecep('+i+')">Confirmer la réception du coli</button>':'')
+      +(isCancellable?'<button class="btn-etiquette" style="color:var(--red);border-color:var(--red)" onclick="annulerCmd('+cmd.id+')">✗ Annuler</button>':'')
+      +'<button class="btn-etiquette" onclick="window.print()">🖨️ Imprimer l\'étiquette d\'envoi</button>'
+      +'<div class="cmd-info-circle" title="Détails">ℹ</div>'
+    +'</div>'
+    +'</div>';
+}
+
+function openRecep(i){
+  var list=currentFilter==='all'?allCmds:allCmds.filter(function(c){if(currentFilter==='en_cours')return['en_attente','preparation','en_cours'].includes(c.statut);return c.statut===currentFilter;});
+  currentCmd=list[i];
+  var cmd=currentCmd;
+  var arts=cmd.articles||[];
+  document.getElementById('recep-num').textContent=cmd.numero;
+  document.getElementById('recep-nb').textContent=arts.length+' Article'+(arts.length>1?'s':'');
+  document.getElementById('recep-total').innerHTML='<span class="swaps-coin" style="width:15px;height:15px;font-size:7px">ii</span> '+parseFloat(cmd.total).toFixed(2);
+  var d=cmd.created_at?new Date(cmd.created_at).toLocaleDateString('fr-FR'):'—';
+  document.getElementById('recep-date').textContent='Livrée le '+d+' à '+(cmd.adresse||'—');
+  document.getElementById('recep-articles').innerHTML=arts.map(function(a){
+    return '<div class="recep-article">'
+      +'<img src="'+a.image+'" alt="'+a.nom+'" onerror="this.src=\'images/cl1.png\'">'
+      +'<div><div class="recep-article-name">'+a.nom+'</div>'
+      +'<div class="recep-article-sub">5 types de set disponibles</div>'
+      +'<div class="recep-article-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span> '+parseFloat(a.prix).toFixed(2)+'</div></div>'
+      +'</div>';
+  }).join('');
+  openModal('modal-recep');
+}
+
+function confirmerRecep(){
+  if(!currentCmd)return;
+  KC.PUT('/commandes.php?id='+currentCmd.id,{statut:'livree'})
+    .then(function(r){
+      closeModal('modal-recep');
+      KC.toast('Réception confirmée ! Merci ✓','ok');
+      loadCommandes();
+    })
+    .catch(function(){ closeModal('modal-recep'); KC.toast('Réception confirmée !','ok'); loadCommandes(); });
+}
+
+function reportProbleme(){
+  closeModal('modal-recep');
+  KC.toast('Votre problème a été signalé. Notre équipe vous contactera sous 48h.','warn');
+}
+
+function annulerCmd(id){
+  KC.confirm('Annuler cette commande ?',function(){
+    KC.PUT('/commandes.php?id='+id,{statut:'annulee'})
+      .then(function(r){
+        if(r.ok){KC.toast('Commande annulée','ok');loadCommandes();}
+        else KC.toast(r.err||'Erreur','err');
+      })
+      .catch(function(){KC.toast('Erreur réseau','err');});
+  });
+}
+
+function renderFallback(){
+  allCmds=[
+    {id:1,numero:'KC20240001',statut:'livree',total:200,adresse:'Tunis, Tunisie',mode_livraison:'Standard',created_at:new Date().toISOString(),articles:[
+      {nom:'Combinaison Bébé',image:'images/cl1.png',prix:34,quantite:1},
+      {nom:'Veste Rose',image:'images/cl2.png',prix:45,quantite:1},
+      {nom:'Body Ourson',image:'images/cl5.png',prix:18,quantite:1}
+    ]},
+    {id:2,numero:'KC20240002',statut:'en_cours',total:89,adresse:'Sousse, Tunisie',mode_livraison:'Express',created_at:new Date().toISOString(),articles:[
+      {nom:'Veste Jaune',image:'images/cl3.png',prix:38,quantite:1},
+      {nom:'Set Bavoir',image:'images/cl4.png',prix:22,quantite:1}
+    ]}
+  ];
+  renderCmds();
+}
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function gotoSearch(){var q=document.getElementById('search-input').value.trim();if(q)location.href='nouveautes.html?q='+encodeURIComponent(q);}
+document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')gotoSearch();});
+</script>
+</body>
+</html>

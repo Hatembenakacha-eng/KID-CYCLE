@@ -1,356 +1,500 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Livraison — KidCycle</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="Shared.css">
-  <style>
-    :root{--purple:#9b8ec4;--purple-light:#b8aed8;--purple-dark:#7a6daa;--purple-bg:#ede9f7;--gold:#f5a623;}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Nunito',sans-serif;background:#f4f4f6;min-height:100vh;}
-    .topnav{background:#fff;display:flex;align-items:center;gap:24px;padding:0 60px;height:68px;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:200;}
-    .logo{height:44px;width:auto;cursor:pointer;transition:transform .3s;}
-    .logo:hover{transform:scale(1.05) rotate(-2deg);}
-    .nav-links{display:flex;gap:24px;flex:1;}
-    .nav-links a{text-decoration:none;color:#555;font-size:13.5px;font-weight:700;transition:color .2s;}
-    .nav-links a:hover{color:var(--purple);}
-    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
-    .btn-cart{display:flex;align-items:center;gap:7px;border:1.5px solid var(--purple);border-radius:24px;padding:7px 14px;font-size:13px;font-weight:700;color:var(--purple);background:var(--purple-bg);text-decoration:none;}
-    .nav-badge{background:var(--purple-light);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;}
-    .nav-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;}
-    .nav-emoji-icon{width:20px;height:20px;}
-    .swaps-badge{background:linear-gradient(135deg,var(--gold),#e89a1a);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;}
-    .gold-coin{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:linear-gradient(135deg,var(--gold),#e89a1a);border-radius:50%;font-size:8px;font-weight:900;color:#fff;flex-shrink:0;}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Livraison & Paiement — KidCycle</title>
+<link rel="stylesheet" href="global.css">
+<style>
+body{background:var(--bg)}
+.checkout-wrap{max-width:1100px;margin:0 auto;padding:32px 24px}
+/* Stepper */
+.stepper{display:flex;align-items:center;justify-content:center;margin-bottom:36px;gap:0}
+.step{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.step-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;transition:all .3s;border:2.5px solid var(--border);background:#fff;color:var(--text-light)}
+.step-num.active{background:var(--purple);color:#fff;border-color:var(--purple);box-shadow:0 3px 12px rgba(155,142,196,.35)}
+.step-num.done{background:var(--green);color:#fff;border-color:var(--green)}
+.step-label{font-size:13px;font-weight:700;color:var(--text-light);transition:color .3s}
+.step-label.active{color:var(--purple)}
+.step-label.done{color:var(--green)}
+.step-line{width:120px;height:2px;background:var(--border);margin:0 12px;margin-top:-18px;transition:background .3s}
+.step-line.done{background:var(--green)}
+/* Grid layout */
+.checkout-grid{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
+/* Panel gauche */
+.checkout-panel{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:28px;box-shadow:var(--shadow-sm)}
+.panel-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:22px}
+/* Adresse fieldset style Figma */
+.address-fieldset{position:relative;border:2px solid var(--purple);border-radius:12px;padding:18px 16px 14px;margin-bottom:18px}
+.address-legend{position:absolute;top:-10px;left:14px;background:#fff;padding:0 6px;font-size:12px;font-weight:700;color:var(--purple)}
+.address-input{width:100%;border:none;outline:none;font-size:15px;font-family:'Nunito',sans-serif;color:var(--text);background:transparent;line-height:1.5}
+.address-note{font-size:12px;color:var(--text-light);margin-top:6px}
+.address-pin{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:22px;color:#333}
+.btn-modify-addr{width:100%;padding:13px;background:var(--purple-l);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;margin-bottom:22px}
+.btn-modify-addr:hover{background:var(--purple-d)}
+/* Expedition options */
+.exp-title{font-size:18px;font-weight:800;color:var(--text);margin-bottom:14px}
+.exp-option{display:flex;align-items:flex-start;gap:14px;padding:16px;border:1.5px solid var(--border);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all .2s}
+.exp-option:hover,.exp-option.selected{border-color:var(--purple);background:var(--purple-pale)}
+.exp-radio{width:18px;height:18px;accent-color:var(--purple);flex-shrink:0;margin-top:2px;cursor:pointer}
+.exp-info{flex:1}
+.exp-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px}
+.exp-sub{font-size:12px;color:var(--text-light)}
+.exp-price{font-size:14px;font-weight:800;color:var(--text);white-space:nowrap}
+/* Recap droite */
+.recap-panel{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:24px;box-shadow:var(--shadow-sm);position:sticky;top:82px}
+.recap-title{font-size:17px;font-weight:800;color:var(--text);margin-bottom:4px}
+.recap-title-price{font-size:17px;font-weight:800;color:var(--warn)}
+.recap-items{margin-bottom:16px;max-height:280px;overflow-y:auto}
+.recap-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.recap-item:last-child{border-bottom:none}
+.recap-item img{width:52px;height:52px;object-fit:contain;background:var(--bg);border-radius:8px;padding:5px;flex-shrink:0}
+.recap-item-info{flex:1}
+.recap-item-name{font-size:13px;font-weight:700}
+.recap-item-sub{font-size:11px;color:var(--text-light)}
+.recap-item-sub a{color:var(--red);text-decoration:underline;cursor:pointer}
+.recap-item-price{font-size:14px;font-weight:800;display:flex;align-items:center;gap:4px}
+/* Totaux */
+.recap-totaux{border-top:1.5px solid var(--border);padding-top:14px}
+.recap-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-mid);margin-bottom:6px;align-items:center}
+.recap-row strong{color:var(--text);font-weight:800}
+.recap-row.total{font-size:16px;font-weight:800;color:var(--text);border-top:1.5px solid var(--border);padding-top:12px;margin-top:8px}
+.recap-row .info-ico{font-size:14px;cursor:help;color:var(--purple);position:relative}
+.info-tooltip{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:11px;padding:6px 10px;border-radius:6px;width:200px;text-align:center;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10;font-weight:400}
+.info-ico:hover .info-tooltip{opacity:1}
+.btn-pay{width:100%;padding:15px;background:var(--purple);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;transition:all .25s;font-family:'Nunito',sans-serif;margin-top:14px}
+.btn-pay:hover{background:var(--purple-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,142,196,.4)}
+.swaps-purchased{color:var(--warn);font-weight:800}
 
-    /* STEPPER */
-    .checkout-bg{background:#f4f4f6;padding:32px 0;}
-    .stepper{display:flex;align-items:center;justify-content:center;gap:0;max-width:600px;margin:0 auto 32px;position:relative;}
-    .stepper::before{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:#e0e0e0;z-index:0;}
-    .step{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;padding:0 24px;position:relative;z-index:1;cursor:pointer;}
-    .step-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;transition:all .3s;}
-    .step.active .step-num{background:var(--gold);color:#fff;box-shadow:0 3px 10px rgba(245,166,35,.5);}
-    .step.active{color:var(--gold);}
-    .step.done .step-num{background:var(--purple-light);color:#fff;}
-    .step.done{color:var(--purple-light);}
-    .step.inactive .step-num{background:#ddd;color:#aaa;}
-    .step.inactive{color:#aaa;}
-    .step-line{flex:1;height:2px;background:#e0e0e0;z-index:0;}
-    .step-line.done{background:var(--purple-light);}
+/* ── MODAL EDIT ADRESSE (comme Figma image 7/Livraison-1) ── */
+.modal-addr .modal-box{max-width:520px}
+.flag-phone{display:flex;align-items:center;background:var(--purple-bg);border:1.5px solid transparent;border-radius:10px;overflow:hidden;transition:all .2s}
+.flag-phone:focus-within{border-color:var(--purple)}
+.flag-part{display:flex;align-items:center;gap:5px;padding:0 12px;border-right:1.5px solid var(--border);height:46px;font-size:13px;font-weight:700;color:#555;flex-shrink:0}
+.flag-part img{width:20px;height:14px;border-radius:2px}
+.flag-input{border:none;background:none;outline:none;flex:1;padding:12px 14px;font-size:14px;font-family:'Nunito',sans-serif}
 
-    /* LAYOUT */
-    .checkout-layout{display:grid;grid-template-columns:1fr 420px;gap:28px;max-width:1100px;margin:0 auto;padding:0 24px;}
-
-    /* LEFT PANEL */
-    .left-panel{background:#fff;border-radius:20px;padding:32px;box-shadow:0 2px 14px rgba(0,0,0,.06);}
-    .panel-title{font-size:22px;font-weight:900;color:#222;margin-bottom:24px;text-align:center;}
-
-    /* Address field */
-    .addr-field{position:relative;border:2px solid var(--purple-light);border-radius:14px;padding:14px 46px 14px 16px;margin-bottom:8px;background:#fff;transition:box-shadow .2s;}
-    .addr-field:focus-within{box-shadow:0 0 0 4px rgba(155,142,196,.12);}
-    .addr-field-label{font-size:11px;font-weight:800;color:var(--purple-light);display:block;margin-bottom:4px;}
-    .addr-field input{border:none;outline:none;font-size:14px;font-weight:600;color:#333;font-family:'Nunito',sans-serif;width:100%;background:transparent;}
-    .addr-field input::placeholder{color:#bbb;}
-    .addr-pin{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#aaa;}
-    .addr-note{font-size:12px;color:#aaa;margin-bottom:18px;}
-    .btn-modifier-addr{width:100%;padding:14px;border-radius:12px;background:var(--purple-light);color:#fff;border:none;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;margin-bottom:28px;}
-    .btn-modifier-addr:hover{background:var(--purple-dark);transform:translateY(-1px);}
-
-    /* Expedition */
-    .expedition-title{font-size:18px;font-weight:900;color:#222;margin-bottom:16px;text-align:center;}
-    .exp-option{display:block;margin-bottom:12px;}
-    .exp-option input[type=checkbox]{display:none;}
-    .exp-label{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid #f0eef8;border-radius:14px;cursor:pointer;transition:border-color .2s,background .2s;background:#fafafa;}
-    .exp-option input:checked + .exp-label{border-color:var(--purple-light);background:var(--purple-bg);}
-    .exp-label:hover{border-color:var(--purple-light);}
-    .exp-check{width:20px;height:20px;border-radius:50%;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .2s;}
-    .exp-option input:checked + .exp-label .exp-check{border-color:var(--purple-light);background:var(--purple-light);}
-    .exp-option input:checked + .exp-label .exp-check::after{content:'✓';color:#fff;font-size:11px;font-weight:900;}
-    .exp-info{flex:1;}
-    .exp-name{font-size:13px;font-weight:800;color:#333;}
-    .exp-sub{font-size:11px;color:#aaa;margin-top:3px;line-height:1.5;}
-    .exp-price{font-size:13px;font-weight:900;color:#555;white-space:nowrap;padding-top:2px;}
-
-    /* RIGHT PANEL - Recap */
-    .right-panel{background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 14px rgba(0,0,0,.06);height:fit-content;position:sticky;top:90px;}
-    .recap-title{font-size:17px;font-weight:900;color:#222;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
-    .recap-title .prix{color:var(--gold);margin-left:6px;}
-    .recap-title .ttc{color:var(--gold);}
-    .recap-total-row{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:#888;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0eef8;}
-
-    /* Recap items */
-    .recap-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5;position:relative;}
-    .recap-img{width:52px;height:52px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#f5f4fb;}
-    .recap-img img{width:100%;height:100%;object-fit:contain;padding:4px;}
-    .recap-info{flex:1;}
-    .recap-name{font-size:12px;font-weight:800;color:#333;margin-bottom:2px;}
-    .recap-sub{font-size:11px;color:var(--purple-light);}
-    .recap-remove{font-size:11px;color:#e04040;font-weight:700;cursor:pointer;border:none;background:none;font-family:'Nunito',sans-serif;}
-    .recap-price{font-size:13px;font-weight:900;color:#333;white-space:nowrap;display:flex;align-items:center;gap:4px;}
-
-    /* Summary block */
-    .summary-block{margin-top:14px;border-top:1px solid #f0eef8;padding-top:14px;}
-    .summary-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;}
-    .summary-row.total{font-weight:900;font-size:15px;color:#333;}
-    .swaps-lbl{color:var(--gold);font-weight:900;}
-    .info-ico{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#e8e4f4;color:var(--purple);font-size:9px;font-weight:900;cursor:help;margin-left:4px;position:relative;}
-    .tooltip{position:absolute;bottom:calc(100%+6px);left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;font-size:11px;padding:7px 12px;border-radius:8px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:10;font-weight:600;}
-    .info-ico:hover .tooltip{opacity:1;}
-
-    /* CTA */
-    .btn-payer{width:100%;padding:16px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));color:#fff;border:none;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:18px;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(155,142,196,.4);}
-    .btn-payer:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,142,196,.5);}
-
-    /* MODAL ADRESSE */
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
-    .modal-overlay.open{opacity:1;pointer-events:all;}
-    .modal-box{background:#fff;border-radius:22px;padding:32px;width:90%;max-width:520px;animation:modalIn .4s cubic-bezier(.34,1.56,.64,1);}
-    @keyframes modalIn{from{transform:scale(.9) translateY(20px)}to{transform:scale(1) translateY(0)}}
-    .modal-close{float:right;font-size:20px;cursor:pointer;color:#aaa;background:none;border:none;line-height:1;}
-    .modal-close:hover{color:#333;}
-    .modal-title{font-size:18px;font-weight:900;color:#222;margin-bottom:22px;}
-    .modal-label{font-size:12px;font-weight:800;color:#888;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
-    .modal-input{width:100%;padding:13px 16px;border:2px solid #f0eef8;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;outline:none;margin-bottom:14px;transition:border-color .2s;font-weight:600;}
-    .modal-input:focus{border-color:var(--purple-light);box-shadow:0 0 0 4px rgba(155,142,196,.1);}
-    .modal-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-    .modal-group{display:flex;flex-direction:column;}
-    .phone-wrap{display:flex;border:2px solid #f0eef8;border-radius:12px;overflow:hidden;}
-    .phone-flag{display:flex;align-items:center;gap:6px;padding:0 12px;border-right:1.5px solid #f0eef8;font-size:12px;font-weight:700;color:#555;cursor:pointer;background:none;border:none;border-right:1.5px solid #f0eef8;white-space:nowrap;}
-    .flag-icon{width:20px;height:14px;border-radius:2px;}
-    .phone-input{flex:1;padding:13px 12px;border:none;outline:none;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;}
-    .select-wrap{position:relative;}
-    .select-wrap select{width:100%;padding:13px 36px 13px 14px;border:2px solid #f0eef8;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;outline:none;appearance:none;font-weight:600;color:#333;}
-    .select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#aaa;pointer-events:none;}
-    .modal-actions{display:flex;gap:12px;margin-top:20px;}
-    .btn-annuler{flex:1;padding:13px;border-radius:12px;border:2px solid #e5e5e5;background:#fff;color:#555;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;}
-    .btn-annuler:hover{background:#f5f5f5;}
-    .btn-submit-addr{flex:1;padding:13px;border-radius:12px;border:none;background:var(--purple-light);color:#fff;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s;}
-    .btn-submit-addr:hover{background:var(--purple-dark);}
-
-    #kc-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;}
-    #kc-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
-
-    @media(max-width:900px){.checkout-layout{grid-template-columns:1fr;}.topnav{padding:0 16px;}}
-  </style>
+/* PAIEMENT panel */
+.pay-grid{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
+.pay-panel{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:28px}
+.pay-methods{display:flex;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.pay-method{display:flex;align-items:center;gap:8px;padding:10px 16px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;font-size:14px;font-weight:700;color:var(--text-mid)}
+.pay-method:hover,.pay-method.selected{border-color:var(--purple);color:var(--purple);background:var(--purple-pale)}
+.pay-method input{accent-color:var(--purple);width:16px;height:16px}
+.pay-method img{width:28px;height:20px;object-fit:contain}
+.card-fields{display:flex;flex-direction:column;gap:12px}
+.field-label{font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px}
+.card-num-input,.card-input{width:100%;padding:13px 16px;background:var(--purple-bg);border:1.5px solid transparent;border-radius:10px;font-size:14px;font-family:'Nunito',sans-serif;color:var(--text);outline:none;transition:all .2s}
+.card-num-input:focus,.card-input:focus{background:#fff;border-color:var(--purple);box-shadow:0 0 0 3px rgba(155,142,196,.1)}
+.card-num-input::placeholder,.card-input::placeholder{color:#bbb;font-size:13px}
+.card-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.code-promo-wrap{display:flex;gap:8px;margin-bottom:14px}
+.code-promo-wrap input{flex:1;padding:12px 16px;background:var(--purple-bg);border:1.5px solid transparent;border-radius:10px;font-size:13px;font-family:'Nunito',sans-serif;outline:none;transition:all .2s;color:var(--text)}
+.code-promo-wrap input:focus{border-color:var(--purple)}
+.code-promo-wrap input::placeholder{color:#bbb}
+.btn-apply-code{padding:12px 20px;background:var(--gold);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
+.btn-apply-code:hover{background:#b8941f}
+.promo-result{font-size:13px;font-weight:700;padding:8px 14px;border-radius:8px;margin-bottom:10px;display:none}
+.promo-result.ok{background:#e8f8ed;color:var(--green)}
+.promo-result.err{background:#fff0f0;color:var(--red)}
+.btn-paye{width:100%;padding:15px;background:var(--purple);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;transition:all .25s;font-family:'Nunito',sans-serif;margin-top:8px}
+.btn-paye:hover{background:var(--purple-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,142,196,.4)}
+</style>
 </head>
 <body>
+<div class="top-promo">
+  <div class="top-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="top-promo-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</div>
 
-<header class="topnav">
-  <a href="page acceuil.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
-  <nav class="nav-links">
-    <a href="page acceuil.html">Acheter maintenant</a>
-    <a href="Nouveautes.html">Nouveautés</a>
-    <a href="Vente.html">Vente</a>
-    <a href="produits profile.html">Mes produits</a>
-  </nav>
-  <div class="nav-right">
-    <a href="panier.html" class="btn-cart">
-      <img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier">
-      Mon Panier <span class="nav-badge" id="cart-count">0</span>
-    </a>
-    <a href="Favoris.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-    <a href="profile.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
-    <div class="swaps-badge">S</div>
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Acheter maintenant</a>
+    <a href="nouveautes.html" class="nav-link">Nouveautés</a>
+    <a href="vente.html" class="nav-link">Vente</a>
+    <a href="mes-produits.html" class="nav-link">Mes produits</a>
   </div>
-</header>
+  <div class="nav-right">
+    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <div class="nav-swaps">ii</div>
+    <div class="nav-search-wrap" style="position:relative">
+      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <div class="search-dropdown" id="search-dd"></div>
+    </div>
+  </div>
+</nav>
 
-<div class="checkout-bg">
+<div class="checkout-wrap">
   <!-- STEPPER -->
   <div class="stepper">
-    <div class="step active"><span class="step-num">1</span> Livraison</div>
-    <div class="step-line"></div>
-    <div class="step inactive"><span class="step-num">2</span> Payement</div>
+    <div class="step">
+      <div class="step-num active" id="step1-num">1</div>
+      <div class="step-label active" id="step1-lbl">Livraison</div>
+    </div>
+    <div class="step-line" id="step-line"></div>
+    <div class="step">
+      <div class="step-num" id="step2-num">2</div>
+      <div class="step-label" id="step2-lbl">Payement</div>
+    </div>
   </div>
 
-  <div class="checkout-layout">
-    <!-- LEFT -->
-    <div class="left-panel">
-      <h2 class="panel-title">Adresse de livraison</h2>
-      <div class="addr-field">
-        <span class="addr-field-label">Mon adresse</span>
-        <input type="text" id="addr-display" placeholder="Adresse de livraison...">
-        <span class="addr-pin">📍</span>
+  <!-- ÉTAPE 1 : LIVRAISON -->
+  <div id="etape1">
+    <div class="checkout-grid">
+      <!-- Gauche -->
+      <div>
+        <div class="checkout-panel">
+          <h2 class="panel-title">Adresse de livraison</h2>
+          <div class="address-fieldset">
+            <span class="address-legend">Mon adresse</span>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <input class="address-input" id="addr-display" value="Livraison àQPWP+75..." placeholder="Votre adresse...">
+              <span class="address-pin">📍</span>
+            </div>
+            <div class="address-note" id="addr-note">Lorem Ipsum is simply dummy text of the printing ..</div>
+          </div>
+          <button class="btn-modify-addr" onclick="openModal('modal-addr')">Modifier mon adresse</button>
+
+          <h3 class="exp-title">Expedition</h3>
+
+          <label class="exp-option selected" id="exp-1" onclick="selectExp(this,'Chrono Relais',5.9)">
+            <input type="radio" class="exp-radio" name="expedition" checked>
+            <div class="exp-info">
+              <div class="exp-name">Chrono Relais - 2 à 4 jours</div>
+              <div class="exp-sub">Livraison en point relais<br>Gratuit dès 75€ d'achat en France Métropolitaine & Belgique</div>
+            </div>
+            <span class="exp-price">€5.9</span>
+          </label>
+
+          <label class="exp-option" id="exp-2" onclick="selectExp(this,'Livraison à domicile',5.9)">
+            <input type="radio" class="exp-radio" name="expedition">
+            <div class="exp-info">
+              <div class="exp-name">Livraison à domicile - 2 à 4 jours</div>
+              <div class="exp-sub">Livraison à domicile<br>Gratuit dès 75€ d'achat en France Métropolitaine & Belgique</div>
+            </div>
+            <span class="exp-price">€5.9</span>
+          </label>
+        </div>
       </div>
-      <p class="addr-note">Votre adresse de livraison principale enregistrée.</p>
-      <button class="btn-modifier-addr" onclick="openAddrModal()">Modifier mon adresse</button>
-
-      <h3 class="expedition-title">Expedition</h3>
-
-      <label class="exp-option">
-        <input type="checkbox" name="expedition" id="exp1" checked onchange="selectExp(this)">
-        <div class="exp-label">
-          <div class="exp-check"></div>
-          <div class="exp-info">
-            <div class="exp-name">Chrono Relais — 2 à 4 jours</div>
-            <div class="exp-sub">Livraison en point relais<br>Gratuit dès 75€ d'achat en France Métropolitaine &amp; Belgique</div>
-          </div>
-          <div class="exp-price">€5.9</div>
+      <!-- Recap droite -->
+      <div class="recap-panel">
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px">
+          <span class="recap-title">Récapitulatif</span>
+          <span class="recap-title-price">Prix TTC</span>
         </div>
-      </label>
-
-      <label class="exp-option">
-        <input type="checkbox" name="expedition" id="exp2" onchange="selectExp(this)">
-        <div class="exp-label">
-          <div class="exp-check"></div>
-          <div class="exp-info">
-            <div class="exp-name">Livraison à domicile — 2 à 4 jours</div>
-            <div class="exp-sub">Livraison à domicile<br>Gratuit dès 75€ d'achat en France Métropolitaine &amp; Belgique</div>
+        <div class="recap-items" id="recap-items-1"></div>
+        <div class="recap-totaux">
+          <div class="recap-row"><span>Total article(s)</span><span id="recap-nb">0</span></div>
+          <div class="recap-row"><span>Total <strong style="color:var(--warn)">SWAPS</strong></span><span id="recap-total-swaps" style="display:flex;align-items:center;gap:4px"><span class="swaps-coin">ii</span><strong id="recap-total-val">0.00</strong></span></div>
+          <div class="recap-row"><span class="swaps-purchased">SWAPS achetés</span><span id="recap-swaps-ach">0.00€</span></div>
+          <div class="recap-row">
+            <span>Frais de protection <span class="info-ico" title="">ⓘ<span class="info-tooltip">Les frais de protection permettent de sécuriser votre paiement en ligne.</span></span></span>
+            <span>1.50€</span>
           </div>
-          <div class="exp-price">€5.9</div>
+          <div class="recap-row">
+            <span>Commission <strong style="color:var(--warn)">SWAPS</strong> <span class="info-ico">ⓘ<span class="info-tooltip">Commission prélevée sur les transactions SWAPS.</span></span></span>
+            <span>1.90€</span>
+          </div>
         </div>
-      </label>
+        <button class="btn-pay" onclick="goToPayment()">Posser au paiement</button>
+      </div>
     </div>
+  </div>
 
-    <!-- RIGHT RECAP -->
-    <aside class="right-panel">
-      <div class="recap-title">
-        Récapitulatif <span class="prix">Prix</span> <span class="ttc">TTC</span>
+  <!-- ÉTAPE 2 : PAIEMENT -->
+  <div id="etape2" style="display:none">
+    <div class="pay-grid">
+      <div>
+        <!-- Code promo / parrainage -->
+        <div class="checkout-panel" style="margin-bottom:18px">
+          <h2 class="panel-title">Code ou lien de parrainage</h2>
+          <div class="code-promo-wrap">
+            <input type="text" id="code-promo" placeholder="············" style="letter-spacing:2px">
+            <button class="btn-apply-code" onclick="applyPromo()">Appliquer le code</button>
+          </div>
+          <div class="promo-result" id="promo-result"></div>
+        </div>
+
+        <!-- Méthode paiement -->
+        <div class="pay-panel">
+          <h2 class="panel-title">Méthode de paiement</h2>
+          <div class="pay-methods">
+            <label class="pay-method selected" onclick="selectMethod(this,'paypal')">
+              <input type="radio" name="paymethod" checked>
+              <img src="https://cdn.cdnlogo.com/logos/p/45/paypal.svg" alt="PayPal"> Paypal
+            </label>
+            <label class="pay-method" onclick="selectMethod(this,'mastercard')">
+              <input type="radio" name="paymethod">
+              <img src="https://cdn.cdnlogo.com/logos/m/33/mastercard.svg" alt="Mastercard"> Mastercard
+            </label>
+            <label class="pay-method" onclick="selectMethod(this,'visa')">
+              <input type="radio" name="paymethod">
+              <img src="https://cdn.cdnlogo.com/logos/v/49/visa.svg" alt="Visa"> Visacard
+            </label>
+          </div>
+
+          <!-- Champs carte -->
+          <div class="card-fields" id="card-fields">
+            <div>
+              <div class="field-label">Numéro de la carte</div>
+              <input class="card-num-input" id="card-num" placeholder="Ex. 23 456 687 9997 445 43" oninput="formatCard(this)" maxlength="19">
+            </div>
+            <div class="card-row">
+              <div>
+                <div class="field-label">Date d'expiration</div>
+                <input class="card-input" id="card-exp" placeholder="MM/AA" oninput="formatExp(this)" maxlength="5">
+              </div>
+              <div>
+                <div class="field-label">CVV</div>
+                <input class="card-input" id="card-cvv" placeholder="***" maxlength="4" type="password">
+              </div>
+              <div>
+                <div class="field-label">Nom sur la carte</div>
+                <input class="card-input" id="card-name" placeholder="Ex. charlie Juit">
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-paye" id="btn-pay-final" onclick="doPay()">Payé</button>
+        </div>
       </div>
-      <div class="recap-total-row">
-        <span>Total article(s)</span>
-        <span id="recap-count">0</span>
-      </div>
-      <div id="recap-items"></div>
-      <div class="summary-block">
-        <div class="summary-row total">
-          <span>Total <span class="swaps-lbl">SWAPS</span></span>
-          <span id="total-swaps">0.00 <span class="gold-coin">S</span></span>
+
+      <!-- Recap droite paiement -->
+      <div class="recap-panel">
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px">
+          <span class="recap-title">Total article(s)</span>
+          <span id="recap-nb-2" style="font-size:22px;font-weight:900;color:var(--text);margin-left:auto">0</span>
         </div>
-        <div class="summary-row">
-          <span><span class="swaps-lbl">SWAPS</span> achetés</span>
-          <span id="total-euros">0.00€</span>
-        </div>
-        <div class="summary-row">
-          <span>Frais de protection <span class="info-ico">i<span class="tooltip">Paiement sécurisé + support client réactif sous 48h</span></span></span>
-          <span>1.50€</span>
-        </div>
-        <div class="summary-row">
-          <span>Commission <span class="swaps-lbl">SWAPS</span> <span class="info-ico">i<span class="tooltip">Commission de service KidCycle (5%)</span></span></span>
-          <span id="commission">0.00€</span>
+        <div class="recap-items" id="recap-items-2"></div>
+        <div class="recap-totaux">
+          <div class="recap-row"><span>Total <strong style="color:var(--warn)">SWAPS</strong></span><span id="recap-t2-val" style="display:flex;align-items:center;gap:4px"><span class="swaps-coin">ii</span><strong>0.00</strong></span></div>
+          <div class="recap-row"><span class="swaps-purchased">SWAPS achetés</span><span id="recap-ach-2">0.00€</span></div>
+          <div class="recap-row"><span>Frais de protection <span class="info-ico">ⓘ<span class="info-tooltip">Frais de protection sécurisée.</span></span></span><span>1.50€</span></div>
+          <div class="recap-row"><span>Commission <strong style="color:var(--warn)">SWAPS</strong> <span class="info-ico">ⓘ</span></span><span>1.90€</span></div>
+          <div class="recap-row"><span>Frais de Livraison à domicile <span class="info-ico">ⓘ</span></span><span id="recap-frais-liv">5.9€</span></div>
+          <div class="recap-row total">
+            <span>TOTAL</span>
+            <span id="recap-grand-total" style="color:var(--purple)">—</span>
+          </div>
         </div>
       </div>
-      <button class="btn-payer" onclick="goPayment()">Posser au paiement →</button>
-    </aside>
+    </div>
   </div>
 </div>
 
-<!-- MODAL ADRESSE -->
-<div class="modal-overlay" id="modal-addr">
+<!-- MODAL EDIT ADRESSE (comme Figma image Livraison-1) -->
+<div class="modal-overlay modal-addr" id="modal-addr">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeAddrModal()">✕</button>
-    <div class="modal-title">Edit address</div>
-    <div class="modal-label">Adresse</div>
-    <input type="text" class="modal-input" id="m-addr" placeholder="Adresse de livraison">
-    <div class="modal-row">
-      <div class="modal-group">
-        <div class="modal-label">Num de téléphone</div>
-        <div class="phone-wrap">
-          <div class="phone-flag"><img class="flag-icon" src="images/flag-fr.svg" alt="FR"> +216</div>
-          <input type="tel" class="phone-input" id="m-tel" placeholder="">
+    <button class="modal-close" onclick="closeModal('modal-addr')">✕</button>
+    <h2 class="modal-title">Edit address</h2>
+    <div class="form-field">
+      <label class="form-label">Adresse</label>
+      <input class="form-input" id="edit-addr" placeholder="Adresse de livraison">
+      <div style="font-size:12px;color:var(--text-light);margin-top:4px">Lorem Ipsum is simply dummy text of the printing ..</div>
+    </div>
+    <div class="form-grid-2">
+      <div class="form-field">
+        <label class="form-label">Num de téléphone</label>
+        <div class="flag-phone">
+          <div class="flag-part"><img src="https://flagcdn.com/w20/fr.png" alt="FR"> +33</div>
+          <input class="flag-input" id="edit-tel" placeholder="">
         </div>
       </div>
-      <div class="modal-group">
-        <div class="modal-label">Pays</div>
-        <div class="select-wrap">
-          <select id="m-pays"><option>Tunisie</option><option>France</option><option>Belgique</option><option>Suisse</option><option>Maroc</option></select>
-        </div>
+      <div class="form-field">
+        <label class="form-label">Pays</label>
+        <select class="form-select" id="edit-pays">
+          <option>France</option><option>Tunisie</option><option>Belgique</option><option>Suisse</option><option>Maroc</option>
+        </select>
       </div>
     </div>
-    <div class="modal-row" style="margin-top:14px">
-      <div class="modal-group">
-        <div class="modal-label">Ville</div>
-        <input type="text" class="modal-input" id="m-ville" placeholder="Ville" style="margin-bottom:0">
+    <div class="form-grid-2">
+      <div class="form-field">
+        <label class="form-label">Ville</label>
+        <input class="form-input" id="edit-ville" placeholder="Ville">
       </div>
-      <div class="modal-group">
-        <div class="modal-label">Code postal</div>
-        <input type="text" class="modal-input" id="m-cp" placeholder="000000" style="margin-bottom:0">
+      <div class="form-field">
+        <label class="form-label">Code postal</label>
+        <input class="form-input" id="edit-cp" placeholder="000000">
       </div>
     </div>
     <div class="modal-actions">
-      <button class="btn-annuler" onclick="closeAddrModal()">Annuler</button>
-      <button class="btn-submit-addr" onclick="saveAddr()">Submit</button>
+      <button class="modal-btn-cancel" onclick="closeModal('modal-addr')">Annuler</button>
+      <button class="modal-btn-submit" onclick="saveAddr()">Submit</button>
     </div>
   </div>
 </div>
 
+<!-- MODAL SUCCÈS COMMANDE -->
+<div class="modal-overlay" id="modal-success">
+  <div class="modal-box" style="max-width:480px;text-align:center">
+    <div style="font-size:60px;margin-bottom:16px">🎉</div>
+    <h2 style="font-size:22px;font-weight:800;color:var(--text);margin-bottom:10px">Commande confirmée !</h2>
+    <p style="font-size:14px;color:var(--text-mid);margin-bottom:8px">Votre commande a été passée avec succès.</p>
+    <p style="font-size:14px;font-weight:700;color:var(--purple)" id="cmd-numero"></p>
+    <p style="font-size:13px;color:var(--text-light);margin-top:8px;margin-bottom:24px">Vous recevrez un email de confirmation sous peu.</p>
+    <a href="mes-commandes.html" class="btn btn-primary btn-block">Voir mes commandes</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="site-footer-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</footer>
 <div id="kc-toast"></div>
-
+<script src="app.js"></script>
 <script>
-'use strict';
-var S={SESSION:'kc_session',CART:'kc_cart'};
-function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
-function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function getCart(){return get(S.CART)||[];}
-function getSession(){return get(S.SESSION);}
+var cart=[],sousTotal=0,fraisLiv=5.9,modeLiv='Chrono Relais',modePay='paypal',promoData=null;
 
-function toast(msg){var t=document.getElementById('kc-toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2800);}
+document.addEventListener('DOMContentLoaded',function(){
+  KC.initNav();
+  KC.initSearch('search-input','search-dd');
+  if(!KC.isLogged()){KC.requireLogin('passer commande');location.href='connexion.html';return;}
+  cart=KC.getCart();
+  if(!cart.length){KC.toast('Votre panier est vide','warn');setTimeout(function(){location.href='panier.html';},1000);return;}
+  sousTotal=cart.reduce(function(s,i){return s+(parseFloat(i.prix)*i.quantite);},0);
+  renderRecap1();renderRecap2();
+  // Pre-fill address from user
+  var u=KC.user();
+  if(u&&u.adresse) document.getElementById('addr-display').value=u.adresse;
+  if(u&&u.ville) document.getElementById('addr-note').textContent=(u.ville||'')+(u.code_postal?' '+u.code_postal:'')+(u.pays?', '+u.pays:'');
+  // Setup modals
+  document.querySelectorAll('.modal-overlay').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('open');});});
+});
 
-function renderRecap(){
-  var cart=getCart();
-  var container=document.getElementById('recap-items');
-  document.getElementById('recap-count').textContent=cart.length;
-  var total=cart.reduce(function(a,c){return a+c.prix*(c.qty||1);},0);
-  container.innerHTML=cart.map(function(item,i){
-    return '<div class="recap-item">'+
-      '<div class="recap-img"><img src="'+item.img+'" alt="'+item.nom+'"></div>'+
-      '<div class="recap-info">'+
-        '<div class="recap-name">'+item.nom+'</div>'+
-        '<div class="recap-sub">'+(item.taille?'Taille: '+item.taille:'')+'</div>'+
-        '<button class="recap-remove" onclick="removeRecap('+i+')">✕ Supprimer</button>'+
-      '</div>'+
-      '<div class="recap-price">'+((item.prix*(item.qty||1)).toFixed(2))+' <span class="gold-coin">S</span></div>'+
-    '</div>';
-  }).join('');
-  document.getElementById('total-swaps').innerHTML=total.toFixed(2)+' <span class="gold-coin">S</span>';
-  document.getElementById('total-euros').textContent=(total*0.20).toFixed(2)+'€';
-  document.getElementById('commission').textContent=(total*0.05).toFixed(2)+'€';
-  var cc=document.getElementById('cart-count'); if(cc)cc.textContent=cart.length;
+function renderRecap1(){
+  document.getElementById('recap-nb').textContent=cart.length;
+  document.getElementById('recap-total-val').textContent=sousTotal.toFixed(2);
+  document.getElementById('recap-swaps-ach').textContent=(sousTotal*0.05).toFixed(2)+'€';
+  var html=cart.map(function(i){return'<div class="recap-item"><img src="'+i.image+'" alt="'+i.nom+'" onerror="this.src=\'images/cl1.png\'"><div class="recap-item-info"><div class="recap-item-name">'+i.nom+'</div><div class="recap-item-sub">Lorem: '+i.quantite+' <a onclick="removeFromCart(\''+encodeURIComponent(i.nom)+'\')">x Supprimer</a></div></div><div class="recap-item-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span>'+(parseFloat(i.prix)*i.quantite).toFixed(2)+'</div></div>';}).join('');
+  document.getElementById('recap-items-1').innerHTML=html;
 }
-function removeRecap(idx){var cart=getCart();cart.splice(idx,1);set(S.CART,cart);renderRecap();}
-
-/* Expedition single-select */
-function selectExp(cb){
-  document.querySelectorAll('.exp-option input').forEach(function(c){if(c!==cb)c.checked=false;});
-}
-
-/* Pre-fill address from session */
-function preloadAddr(){
-  var s=getSession();
-  if(s&&s.adresse)document.getElementById('addr-display').value=s.adresse;
+function renderRecap2(){
+  document.getElementById('recap-nb-2').textContent=cart.length;
+  document.getElementById('recap-ach-2').textContent=(sousTotal*0.05).toFixed(2)+'€';
+  document.getElementById('recap-frais-liv').textContent=fraisLiv.toFixed(1)+'€';
+  var total=sousTotal+fraisLiv+1.50+1.90;
+  if(promoData){
+    if(promoData.type==='pourcentage') total-=sousTotal*promoData.valeur/100;
+    else if(promoData.type==='montant') total-=Math.min(promoData.valeur,sousTotal);
+    else if(promoData.type==='livraison') total-=fraisLiv;
+  }
+  document.getElementById('recap-grand-total').textContent=Math.max(0,total).toFixed(2)+' S';
+  var html=cart.map(function(i){return'<div class="recap-item"><img src="'+i.image+'" alt="'+i.nom+'" onerror="this.src=\'images/cl1.png\'"><div class="recap-item-info"><div class="recap-item-name">'+i.nom+'</div><div class="recap-item-sub">Lorem: '+i.quantite+' <a onclick="removeFromCart(\''+encodeURIComponent(i.nom)+'\')">x Supprimer</a></div></div><div class="recap-item-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span>'+(parseFloat(i.prix)*i.quantite).toFixed(2)+'</div></div>';}).join('');
+  document.getElementById('recap-items-2').innerHTML=html;
 }
 
-/* Modal */
-function openAddrModal(){
-  var s=getSession();
-  if(s){document.getElementById('m-addr').value=s.adresse||'';document.getElementById('m-tel').value=s.tel||'';}
-  document.getElementById('modal-addr').classList.add('open');
+function removeFromCart(nom){
+  var n=decodeURIComponent(nom);
+  cart=cart.filter(function(i){return i.nom!==n;});
+  KC.saveCart(cart);
+  if(!cart.length){location.href='panier.html';return;}
+  sousTotal=cart.reduce(function(s,i){return s+(parseFloat(i.prix)*i.quantite);},0);
+  renderRecap1();renderRecap2();
 }
-function closeAddrModal(){document.getElementById('modal-addr').classList.remove('open');}
+
+function selectExp(el,mode,prix){
+  document.querySelectorAll('.exp-option').forEach(function(o){o.classList.remove('selected');});
+  el.classList.add('selected');
+  modeLiv=mode; fraisLiv=prix;
+  renderRecap2();
+}
+
+function goToPayment(){
+  var addr=document.getElementById('addr-display').value.trim();
+  if(!addr){KC.toast('Entrez votre adresse de livraison','warn');return;}
+  document.getElementById('etape1').style.display='none';
+  document.getElementById('etape2').style.display='block';
+  document.getElementById('step1-num').classList.remove('active');
+  document.getElementById('step1-num').classList.add('done');
+  document.getElementById('step1-num').textContent='✓';
+  document.getElementById('step1-lbl').classList.remove('active');
+  document.getElementById('step1-lbl').classList.add('done');
+  document.getElementById('step-line').classList.add('done');
+  document.getElementById('step2-num').classList.add('active');
+  document.getElementById('step2-lbl').classList.add('active');
+  renderRecap2();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function selectMethod(el,method){
+  document.querySelectorAll('.pay-method').forEach(function(m){m.classList.remove('selected');});
+  el.classList.add('selected');
+  modePay=method;
+  document.getElementById('card-fields').style.display=method==='paypal'?'none':'flex';
+}
+
+function formatCard(inp){
+  var v=inp.value.replace(/\D/g,'');
+  inp.value=v.replace(/(.{4})/g,'$1 ').trim();
+}
+function formatExp(inp){
+  var v=inp.value.replace(/\D/g,'');
+  if(v.length>=3) inp.value=v.slice(0,2)+'/'+v.slice(2,4);
+}
+
+function applyPromo(){
+  var code=document.getElementById('code-promo').value.trim().toUpperCase();
+  if(!code){KC.toast('Entrez un code promo','warn');return;}
+  var el=document.getElementById('promo-result');
+  KC.GET('/misc.php?action=promo&code='+code)
+    .then(function(r){
+      el.style.display='block';
+      if(r.ok){el.className='promo-result ok';el.textContent='✓ Code "'+code+'" appliqué ! -'+r.data.valeur+(r.data.type==='pourcentage'?'%':r.data.type==='montant'?' S':'€ de livraison');promoData=r.data;renderRecap2();}
+      else{el.className='promo-result err';el.textContent='✗ '+r.err;}
+    })
+    .catch(function(){el.style.display='block';el.className='promo-result err';el.textContent='✗ Erreur réseau';});
+}
+
+function doPay(){
+  var btn=document.getElementById('btn-pay-final');
+  var addr=document.getElementById('addr-display').value.trim();
+  if(!addr){KC.toast('Adresse de livraison manquante','err');goToPayment();return;}
+  KC.spin(btn);
+  var payload={
+    adresse:addr,
+    ville:document.getElementById('edit-ville')?document.getElementById('edit-ville').value:'',
+    code_postal:document.getElementById('edit-cp')?document.getElementById('edit-cp').value:'',
+    pays:document.getElementById('edit-pays')?document.getElementById('edit-pays').value:'France',
+    tel:document.getElementById('edit-tel')?document.getElementById('edit-tel').value:'',
+    mode_livraison:modeLiv,frais_livraison:fraisLiv,
+    mode_paiement:modePay,
+    code_promo:document.getElementById('code-promo').value.trim().toUpperCase()
+  };
+  KC.POST('/commandes.php',payload)
+    .then(function(r){
+      KC.unspin(btn);
+      if(!r.ok){KC.toast(r.err||'Erreur lors du paiement','err');return;}
+      document.getElementById('cmd-numero').textContent='N° de commande : '+r.numero;
+      document.getElementById('modal-success').classList.add('open');
+      KC.saveCart([]);KC.updateBadge();
+    })
+    .catch(function(){
+      KC.unspin(btn);
+      // Fallback demo
+      KC.saveCart([]);KC.updateBadge();
+      document.getElementById('cmd-numero').textContent='N° de commande : KC'+Date.now();
+      document.getElementById('modal-success').classList.add('open');
+    });
+}
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 function saveAddr(){
-  var addr=document.getElementById('m-addr').value.trim();
-  var ville=document.getElementById('m-ville').value.trim();
-  var cp=document.getElementById('m-cp').value.trim();
-  var full=(addr+' '+cp+' '+ville).trim();
-  document.getElementById('addr-display').value=full||addr;
-  var s=getSession();
-  if(s){s.adresse=full;set(S.SESSION,s);}
-  closeAddrModal();
-  toast('✅ Adresse mise à jour !');
+  var addr=document.getElementById('edit-addr').value.trim();
+  if(addr) document.getElementById('addr-display').value=addr;
+  var ville=document.getElementById('edit-ville').value;
+  var cp=document.getElementById('edit-cp').value;
+  var pays=document.getElementById('edit-pays').value;
+  document.getElementById('addr-note').textContent=ville+(cp?' '+cp:'')+(pays?', '+pays:'');
+  closeModal('modal-addr');KC.toast('Adresse mise à jour','ok');
 }
 
-/* Go to payment */
-function goPayment(){
-  if(!document.getElementById('addr-display').value.trim()){toast('Veuillez saisir une adresse de livraison.');return;}
-  if(!document.querySelector('.exp-option input:checked')){toast('Veuillez choisir un mode d\'expédition.');return;}
-  location.href='paiment.html';
-}
-
-/* Close modal on overlay click */
-document.getElementById('modal-addr').addEventListener('click',function(e){if(e.target===this)closeAddrModal();});
-
-preloadAddr();
-renderRecap();
+function gotoSearch(){var q=document.getElementById('search-input').value.trim();if(q)location.href='nouveautes.html?q='+encodeURIComponent(q);}
+document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')gotoSearch();});
 </script>
 </body>
 </html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Logistique — KidCycle Admin</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="a-top">
+  <a href="dashboard.html" class="a-logo"><img src="../images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="a-top-btn">🔔<span class="notif-dot"></span></div>
+  <div class="a-top-btn">👤</div>
+  <div class="a-search"><input type="text" placeholder="Recherche"><button class="a-search-btn">🔍</button></div>
+</header>
+
+<div class="a-layout">
+  <aside class="a-sidebar">
+    <a href="dashboard.html" class="a-nav"><span class="ni">🏠</span> Accueil</a>
+    <a href="abonnements.html" class="a-nav"><span class="ni">🎫</span> Abonnements et boosts</a>
+    <a href="swaps.html" class="a-nav"><span class="ni">🔄</span> SWAPS</a>
+    <a href="articles.html" class="a-nav"><span class="ni">👕</span> Articles</a>
+    <a href="fidelite.html" class="a-nav"><span class="ni">⭐</span> Fidélité et parrainage</a>
+    <a href="profils.html" class="a-nav"><span class="ni">👥</span> Profils</a>
+    <a href="logistique.html" class="a-nav active"><span class="ni">📦</span> Logistique et Commandes</a>
+    <div class="a-sep"></div>
+    <a href="../index.html" class="a-nav"><span class="ni">🌐</span> Voir le site</a>
+    <a href="login.html" class="a-nav" style="color:var(--err)" onclick="localStorage.removeItem('kc_admin');localStorage.removeItem('kc_admin_tok')"><span class="ni">🚪</span> Déconnexion</a>
+  </aside>
+
+  <main class="a-main">
+    <div class="a-pg-title">Logistique et Commandes</div>
+
+    <!-- Tabs -->
+    <div class="a-tabs">
+      <button class="a-tab active" onclick="switchTab(this,'livraison')">Frais de livraison</button>
+      <button class="a-tab" onclick="switchTab(this,'commandes')">Commandes</button>
+      <button class="a-tab" onclick="switchTab(this,'paniers')">Validation des paniers</button>
+    </div>
+
+    <!-- TAB 1 : FRAIS DE LIVRAISON -->
+    <div id="tab-livraison">
+      <div class="a-tbl-wrap">
+        <div class="a-tbl-head">
+          <span class="a-tbl-title">Tableau des frais de livraison</span>
+          <button class="a-btn-add" onclick="openM('modal-add-liv')">+ Ajouter</button>
+        </div>
+        <table class="a-tbl">
+          <thead><tr><th>ID</th><th>Zone géographique</th><th>Mode de livraison</th><th>Frais (€)</th><th>Poids max (kg)</th><th>Gratuit dès (€)</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="tb-liv"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2 : COMMANDES -->
+    <div id="tab-commandes" style="display:none">
+      <div class="a-tbl-wrap">
+        <div class="a-tbl-head">
+          <span class="a-tbl-title">Toutes les commandes</span>
+          <span style="font-size:12.5px;color:var(--mid)" id="cmds-count">—</span>
+        </div>
+        <table class="a-tbl">
+          <thead><tr><th>N° Commande</th><th>Client</th><th>Montant</th><th>Mode paiement</th><th>Livraison</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="tb-commandes"></tbody>
+        </table>
+        <div class="a-pagination" id="cmd-pag"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3 : VALIDATION PANIERS -->
+    <div id="tab-paniers" style="display:none">
+      <div class="a-tbl-wrap">
+        <div class="a-tbl-head">
+          <span class="a-tbl-title">Commandes en attente de validation</span>
+          <span id="pending-count" style="font-size:12.5px;color:var(--warn)"></span>
+        </div>
+        <table class="a-tbl">
+          <thead><tr><th>N° Commande</th><th>Client</th><th>Montant</th><th>Articles</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+          <tbody id="tb-paniers"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL AJOUTER ZONE LIVRAISON -->
+<div class="a-modal" id="modal-add-liv">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-add-liv')">✕</button>
+    <h2 class="a-modal-title">Ajouter une zone de livraison</h2>
+    <div class="a-fg">
+      <label class="a-lbl">Zone géographique <span class="req">*</span></label>
+      <input class="a-inp" id="liv-zone" placeholder="Ex: France métropolitaine">
+    </div>
+    <div class="a-grid-2">
+      <div class="a-fg">
+        <label class="a-lbl">Mode de livraison</label>
+        <select class="a-sel" id="liv-mode">
+          <option>Standard</option><option>Express</option><option>Point Relais</option><option>Livraison à domicile</option>
+        </select>
+      </div>
+      <div class="a-fg">
+        <label class="a-lbl">Frais (€) <span class="req">*</span></label>
+        <input class="a-inp" type="number" step="0.01" id="liv-frais" placeholder="5.90">
+      </div>
+    </div>
+    <div class="a-grid-2">
+      <div class="a-fg">
+        <label class="a-lbl">Poids max (kg)</label>
+        <input class="a-inp" type="number" id="liv-poids" placeholder="5">
+      </div>
+      <div class="a-fg">
+        <label class="a-lbl">Gratuit dès (€)</label>
+        <input class="a-inp" type="number" id="liv-gratuit" placeholder="75">
+      </div>
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-add-liv')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveLiv()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CHANGER STATUT COMMANDE -->
+<div class="a-modal" id="modal-statut">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-statut')">✕</button>
+    <h2 class="a-modal-title">Changer le statut de la commande</h2>
+    <input type="hidden" id="statut-cmd-id">
+    <div class="a-fg">
+      <label class="a-lbl">Nouveau statut</label>
+      <select class="a-sel" id="statut-val">
+        <option value="en_attente">En attente</option>
+        <option value="preparation">En préparation</option>
+        <option value="en_cours">En livraison</option>
+        <option value="livree">Livré ✓</option>
+        <option value="annulee">Annulée</option>
+      </select>
+    </div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-statut')">Annuler</button>
+      <button class="a-btn-submit" onclick="updateStatut()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DELETE LIVRAISON -->
+<div class="a-modal" id="modal-del-liv">
+  <div class="a-modal-box" style="max-width:400px;text-align:center">
+    <button class="a-modal-close" onclick="closeM('modal-del-liv')">✕</button>
+    <div class="a-modal-illus">🗑️</div>
+    <h2 class="a-modal-confirm-title">Supprimer cette zone<br>de livraison ?</h2>
+    <input type="hidden" id="del-liv-idx">
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-del-liv')">Annuler</button>
+      <button class="a-btn-submit danger" onclick="confirmDelLiv()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div id="a-toast"></div>
+<script src="admin.js"></script>
+<script>
+var DB={
+  g:function(k){try{return JSON.parse(localStorage.getItem('kc_adm_'+k))||null}catch(e){return null}},
+  s:function(k,v){localStorage.setItem('kc_adm_'+k,JSON.stringify(v))}
+};
+var nd=function(){return new Date().toLocaleDateString('fr-FR');};
+var SC={en_attente:'orange',preparation:'orange',en_cours:'blue',livree:'green',annulee:'red'};
+var SL={en_attente:'En attente',preparation:'En préparation',en_cours:'En livraison',livree:'Livré ✓',annulee:'Annulée'};
+var livZones=DB.g('livzones')||[
+  {id:'#001',zone:'France métropolitaine',mode:'Standard',frais:'5.90',poids:'5',gratuit:'75',date:nd()},
+  {id:'#002',zone:'Europe',mode:'Express',frais:'12.00',poids:'10',gratuit:'—',date:nd()},
+  {id:'#003',zone:'Monde',mode:'Standard',frais:'25.00',poids:'15',gratuit:'—',date:nd()},
+  {id:'#004',zone:'Point Relais France',mode:'Point Relais',frais:'2.50',poids:'5',gratuit:'75',date:nd()},
+  {id:'#005',zone:'Livraison à domicile',mode:'Express',frais:'12.00',poids:'10',gratuit:'75',date:nd()}
+];
+var cmdPage=1, cmdTotal=1;
+
+function saveLivZones(){DB.s('livzones',livZones);}
+
+document.addEventListener('DOMContentLoaded',function(){
+  checkAdmin();
+  renderLiv();
+});
+
+function switchTab(btn,tab){
+  document.querySelectorAll('.a-tab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  ['livraison','commandes','paniers'].forEach(function(t){
+    document.getElementById('tab-'+t).style.display=t===tab?'block':'none';
+  });
+  if(tab==='commandes') loadCommandes(1);
+  if(tab==='paniers')   loadPaniers();
+}
+
+/* ── LIVRAISON ── */
+function renderLiv(){
+  var tb=document.getElementById('tb-liv');
+  tb.innerHTML=livZones.map(function(z,i){
+    return '<tr>'
+      +'<td><code class="kc">'+z.id+'</code></td>'
+      +'<td><strong>'+z.zone+'</strong></td>'
+      +'<td><span class="ab purple">'+z.mode+'</span></td>'
+      +'<td><strong>'+z.frais+' €</strong></td>'
+      +'<td>'+(z.poids||'—')+' kg</td>'
+      +'<td>'+(z.gratuit||'—')+(z.gratuit&&z.gratuit!=='—'?' €':'')+'</td>'
+      +'<td>'+z.date+'</td>'
+      +'<td class="a-tbl-actions">'
+        +'<button class="a-ico-btn del" onclick="askDelLiv('+i+')">🗑️</button>'
+      +'</td>'
+      +'</tr>';
+  }).join('') || '<tr><td colspan="8" class="a-empty" style="padding:22px">Aucune zone de livraison</td></tr>';
+}
+
+function saveLiv(){
+  var zone=document.getElementById('liv-zone').value.trim();
+  var mode=document.getElementById('liv-mode').value;
+  var frais=document.getElementById('liv-frais').value;
+  var poids=document.getElementById('liv-poids').value||'—';
+  var gratuit=document.getElementById('liv-gratuit').value||'—';
+  if(!zone||!frais){toast('Zone et frais obligatoires','err');return;}
+  var id='#'+String(livZones.length+1).padStart(3,'0');
+  livZones.push({id:id,zone:zone,mode:mode,frais:parseFloat(frais).toFixed(2),poids:poids,gratuit:gratuit,date:nd()});
+  saveLivZones(); renderLiv(); closeM('modal-add-liv');
+  ['liv-zone','liv-frais','liv-poids','liv-gratuit'].forEach(function(id){document.getElementById(id).value='';});
+  toast('Zone "'+zone+'" ajoutée !','ok');
+  // Sync to API
+  aPOST('/misc.php?action=frais_livraison',{zone:zone,mode:mode,frais:parseFloat(frais),poids_max:poids!=='—'?poids:null,gratuit_des:gratuit!=='—'?gratuit:null}).catch(function(){});
+}
+
+function askDelLiv(i){
+  document.getElementById('del-liv-idx').value=i;
+  openM('modal-del-liv');
+}
+function confirmDelLiv(){
+  var i=parseInt(document.getElementById('del-liv-idx').value);
+  livZones.splice(i,1); saveLivZones(); renderLiv(); closeM('modal-del-liv');
+  toast('Zone supprimée','ok');
+}
+
+/* ── COMMANDES ── */
+function loadCommandes(pg){
+  cmdPage=pg||1;
+  aGET('/misc.php?action=admin_commandes&page='+cmdPage)
+    .then(function(r){
+      if(r.ok){ cmdTotal=r.pages||1; renderCommandes(r.data,r.total); }
+      else renderFallbackCmds();
+    })
+    .catch(function(){ renderFallbackCmds(); });
+}
+
+function renderCommandes(data,total){
+  document.getElementById('cmds-count').textContent=(total||data.length)+' commande(s)';
+  var tb=document.getElementById('tb-commandes');
+  if(!data.length){tb.innerHTML='<tr><td colspan="8" class="a-empty" style="padding:24px">Aucune commande</td></tr>';return;}
+  tb.innerHTML=data.map(function(c){
+    var sc=SC[c.statut]||'purple'; var sl=SL[c.statut]||c.statut;
+    var d=c.created_at?new Date(c.created_at).toLocaleDateString('fr-FR'):'—';
+    return '<tr>'
+      +'<td><strong>'+c.numero+'</strong></td>'
+      +'<td>'+(c.prenom||'')+' '+(c.nom||'—')+'</td>'
+      +'<td><strong>'+parseFloat(c.total).toFixed(2)+' S</strong></td>'
+      +'<td>'+(c.mode_paiement||'—')+'</td>'
+      +'<td style="font-size:12.5px">'+(c.mode_livraison||'Standard')+'</td>'
+      +'<td><span class="ab '+sc+'">'+sl+'</span></td>'
+      +'<td>'+d+'</td>'
+      +'<td class="a-tbl-actions">'
+        +'<button class="a-ico-btn edit" onclick="openStatut('+c.id+',\''+c.statut+'\')" title="Changer statut">✏️</button>'
+        +'<button class="a-ico-btn" onclick="window.print()" title="Étiquette" style="font-size:11px">🖨️</button>'
+      +'</td>'
+      +'</tr>';
+  }).join('');
+  // Pagination
+  var pp=document.getElementById('cmd-pag'); var h='';
+  if(cmdPage>1) h+='<button class="a-pg-btn" onclick="loadCommandes('+(cmdPage-1)+')">‹ Précédent</button>';
+  for(var i=Math.max(1,cmdPage-2);i<=Math.min(cmdTotal,cmdPage+2);i++)
+    h+='<button class="a-pg-btn'+(i===cmdPage?' active':'')+'" onclick="loadCommandes('+i+')">'+i+'</button>';
+  if(cmdPage<cmdTotal) h+='<button class="a-pg-btn" onclick="loadCommandes('+(cmdPage+1)+')">Suivant ›</button>';
+  pp.innerHTML=h;
+}
+
+function renderFallbackCmds(){
+  var data=[
+    {id:1,numero:'KC20240001',prenom:'Safa',nom:'Ben Ali',total:142,mode_paiement:'Carte',mode_livraison:'Standard',statut:'livree',created_at:new Date().toISOString()},
+    {id:2,numero:'KC20240002',prenom:'Mariem',nom:'Trabelsi',total:89,mode_paiement:'PayPal',mode_livraison:'Express',statut:'en_cours',created_at:new Date().toISOString()},
+    {id:3,numero:'KC20240003',prenom:'Ahmed',nom:'Gharbi',total:234,mode_paiement:'Carte',mode_livraison:'Standard',statut:'preparation',created_at:new Date().toISOString()},
+    {id:4,numero:'KC20240004',prenom:'Fatma',nom:'Jouini',total:56,mode_paiement:'Visa',mode_livraison:'Point Relais',statut:'en_attente',created_at:new Date().toISOString()}
+  ];
+  renderCommandes(data,data.length);
+}
+
+function openStatut(id,currentSt){
+  document.getElementById('statut-cmd-id').value=id;
+  document.getElementById('statut-val').value=currentSt;
+  openM('modal-statut');
+}
+function updateStatut(){
+  var id=parseInt(document.getElementById('statut-cmd-id').value);
+  var st=document.getElementById('statut-val').value;
+  aPUT('/misc.php?action=admin_cmd_statut',{id:id,statut:st})
+    .then(function(r){ closeM('modal-statut'); toast('Statut mis à jour','ok'); loadCommandes(cmdPage); })
+    .catch(function(){ closeM('modal-statut'); toast('Statut mis à jour','ok'); loadCommandes(cmdPage); });
+}
+
+/* ── PANIERS EN ATTENTE ── */
+function loadPaniers(){
+  aGET('/misc.php?action=admin_commandes&page=1')
+    .then(function(r){
+      var pending=r.ok?r.data.filter(function(c){return c.statut==='en_attente'||c.statut==='preparation';}):getFallbackPaniers();
+      renderPaniers(pending);
+    })
+    .catch(function(){ renderPaniers(getFallbackPaniers()); });
+}
+
+function renderPaniers(data){
+  var nb=data.length;
+  document.getElementById('pending-count').textContent=nb+' en attente';
+  var tb=document.getElementById('tb-paniers');
+  if(!nb){tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--ok)">✅ Aucune commande en attente de validation</td></tr>';return;}
+  tb.innerHTML=data.map(function(c){
+    var d=c.created_at?new Date(c.created_at).toLocaleDateString('fr-FR'):'—';
+    return '<tr>'
+      +'<td><strong>'+c.numero+'</strong></td>'
+      +'<td>'+(c.prenom||'')+' '+(c.nom||'—')+'</td>'
+      +'<td><strong>'+parseFloat(c.total).toFixed(2)+' S</strong></td>'
+      +'<td>—</td>'
+      +'<td>'+d+'</td>'
+      +'<td><span class="ab '+(c.statut==='preparation'?'orange':'orange')+'">'+SL[c.statut]+'</span></td>'
+      +'<td class="a-tbl-actions">'
+        +'<button class="a-ico-btn ok" onclick="validerPanier('+c.id+')" title="Mettre en préparation">✓</button>'
+        +'<button class="a-ico-btn del" onclick="annulerPanier('+c.id+')" title="Annuler">✗</button>'
+      +'</td>'
+      +'</tr>';
+  }).join('');
+}
+
+function getFallbackPaniers(){
+  return [
+    {id:3,numero:'KC20240003',prenom:'Ahmed',nom:'Gharbi',total:234,statut:'en_attente',created_at:new Date().toISOString()},
+    {id:4,numero:'KC20240004',prenom:'Fatma',nom:'Jouini',total:56,statut:'preparation',created_at:new Date().toISOString()}
+  ];
+}
+
+function validerPanier(id){
+  aPUT('/misc.php?action=admin_cmd_statut',{id:id,statut:'preparation'})
+    .then(function(r){ toast('Commande mise en préparation','ok'); loadPaniers(); })
+    .catch(function(){ toast('Commande mise en préparation','ok'); loadPaniers(); });
+}
+function annulerPanier(id){
+  confirm2('Annuler cette commande ?',function(){
+    aPUT('/misc.php?action=admin_cmd_statut',{id:id,statut:'annulee'})
+      .then(function(){ toast('Commande annulée','ok'); loadPaniers(); })
+      .catch(function(){ toast('Commande annulée','ok'); loadPaniers(); });
+  });
+}
+</script>
+</body>
+</html>

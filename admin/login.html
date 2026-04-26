@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Connexion Admin — KidCycle</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="a-login-wrap">
+  <div class="a-login-card">
+    <div class="a-login-logo">
+      <img src="../images/Kidcycle.png" alt="KidCycle">
+    </div>
+    <div class="a-login-sub">Espace d'administration sécurisé</div>
+    <div class="a-login-badge"><span>🔐 Administration</span></div>
+    <div class="a-err-box" id="err"></div>
+    <div style="position:relative;margin-bottom:12px">
+      <input class="a-fi" style="margin-bottom:0" type="email" id="email" placeholder="Email administrateur" autocomplete="email">
+    </div>
+    <div style="position:relative;margin-bottom:16px">
+      <input class="a-fi" style="margin-bottom:0;padding-right:44px" type="password" id="pwd" placeholder="Mot de passe" autocomplete="current-password">
+      <button onclick="var i=document.getElementById('pwd');i.type=i.type==='password'?'text':'password'" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:17px;color:#bbb;cursor:pointer">👁</button>
+    </div>
+    <button class="a-login-btn" id="btn" onclick="doLogin()">Connecter →</button>
+    <div style="text-align:center;font-size:13px;color:#aaa">
+      <a href="../index.html" style="color:var(--p);font-weight:700">← Retour au site</a>
+    </div>
+  </div>
+</div>
+<div id="a-toast"></div>
+<script>
+var AAPI='../api';
+function toast(msg,type){var t=document.getElementById('a-toast');t.style.cssText='position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(0);padding:11px 22px;border-radius:11px;font-size:13.5px;font-weight:700;color:#fff;z-index:99999;opacity:1;white-space:nowrap;box-shadow:0 8px 28px rgba(0,0,0,.2);font-family:Nunito,sans-serif;background:'+(type==='err'?'linear-gradient(135deg,#e04040,#c02020)':'linear-gradient(135deg,#6bbd8a,#4fa876)');t.textContent=(type==='err'?'❌ ':'✅ ')+msg;clearTimeout(t._x);t._x=setTimeout(function(){t.style.opacity='0';},2800);}
+function showErr(m){var e=document.getElementById('err');e.textContent=m;e.style.display='block';setTimeout(function(){e.style.display='none';},5000);}
+function doLogin(){
+  var em=document.getElementById('email').value.trim();
+  var pw=document.getElementById('pwd').value;
+  var btn=document.getElementById('btn');
+  if(!em||!pw){showErr('Email et mot de passe requis.');return;}
+  btn.innerHTML='<span class="spin"></span> Connexion...';btn.disabled=true;
+  fetch(AAPI+'/auth.php?action=login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})})
+  .then(function(r){return r.json();})
+  .then(function(r){
+    btn.innerHTML='Connecter →';btn.disabled=false;
+    if(!r.ok){showErr(r.err||'Identifiants incorrects.');return;}
+    if(r.user.role!=='admin'){showErr('Accès réservé aux administrateurs.');return;}
+    localStorage.setItem('kc_admin',JSON.stringify(r.user));
+    localStorage.setItem('kc_admin_tok',r.token);
+    toast('Bienvenue '+r.user.prenom+' !','ok');
+    setTimeout(function(){location.href='dashboard.html';},700);
+  })
+  .catch(function(){btn.innerHTML='Connecter →';btn.disabled=false;showErr('Erreur réseau.');});
+}
+document.addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+// Auto-redirect si déjà admin
+try{var a=JSON.parse(localStorage.getItem('kc_admin'));if(a&&a.role==='admin'&&localStorage.getItem('kc_admin_tok'))location.href='dashboard.html';}catch(e){}
+</script>
+</body>
+</html>

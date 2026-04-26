@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SWAPS — KidCycle Admin</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="a-top">
+  <a href="dashboard.html" class="a-logo"><img src="../images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="a-top-btn">🔔<span class="notif-dot"></span></div>
+  <div class="a-top-btn">👤</div>
+  <div class="a-search"><input type="text" placeholder="Recherche"><button class="a-search-btn">🔍</button></div>
+</header>
+<div class="a-layout">
+  <aside class="a-sidebar">
+    <a href="dashboard.html" class="a-nav"><span class="ni">🏠</span> Accueil</a>
+    <a href="abonnements.html" class="a-nav"><span class="ni">🎫</span> Abonnements et boosts</a>
+    <a href="swaps.html" class="a-nav active"><span class="ni">🔄</span> SWAPS</a>
+    <a href="articles.html" class="a-nav"><span class="ni">👕</span> Articles</a>
+    <a href="fidelite.html" class="a-nav"><span class="ni">⭐</span> Fidélité et parrainage</a>
+    <a href="profils.html" class="a-nav"><span class="ni">👥</span> Profils</a>
+    <a href="logistique.html" class="a-nav"><span class="ni">📦</span> Logistique et Commandes</a>
+    <div class="a-sep"></div>
+    <a href="../index.html" class="a-nav"><span class="ni">🌐</span> Voir le site</a>
+    <a href="login.html" class="a-nav" style="color:var(--err)" onclick="localStorage.removeItem('kc_admin');localStorage.removeItem('kc_admin_tok')"><span class="ni">🚪</span> Déconnexion</a>
+  </aside>
+  <main class="a-main">
+    <div class="a-pg-title">Gérer les tarifs SWAPS</div>
+
+    <!-- TARIFS SWAPS -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Tarifs SWAPS</span>
+        <button class="a-btn-add" onclick="openM('modal-tarif')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Nom</th><th>Montant (€)</th><th>Points SWAPS</th><th>Description</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody id="tb-tarifs"></tbody>
+      </table>
+    </div>
+
+    <!-- VALEURS SWAPS -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Valeurs des SWAPS</span>
+        <button class="a-btn-add" onclick="openM('modal-valeur')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Nom</th><th>Montant/Pourcentage</th><th>Description</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody id="tb-valeurs"></tbody>
+      </table>
+    </div>
+
+    <!-- FRAIS & COMMISSIONS -->
+    <div class="a-tbl-wrap">
+      <div class="a-tbl-head">
+        <span class="a-tbl-title">Frais et Commissions</span>
+        <button class="a-btn-add" onclick="openM('modal-frais')">+ Ajouter</button>
+      </div>
+      <table class="a-tbl">
+        <thead><tr><th>Type</th><th>Montant / Pourcentage</th><th>Description</th><th>Date</th><th>Actions</th></tr></thead>
+        <tbody id="tb-frais"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL TARIF -->
+<div class="a-modal" id="modal-tarif">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-tarif')">✕</button>
+    <h2 class="a-modal-title">Ajouter un tarif SWAPS</h2>
+    <div class="a-fg"><label class="a-lbl">Nom <span class="req">*</span></label>
+      <input class="a-inp" id="t-nom" placeholder="Ex: Bronze"></div>
+    <div class="a-grid-2">
+      <div class="a-fg"><label class="a-lbl">Montant (€) <span class="req">*</span></label>
+        <input class="a-inp" id="t-montant" type="number" step="0.01" placeholder="5.00"></div>
+      <div class="a-fg"><label class="a-lbl">Points SWAPS <span class="req">*</span></label>
+        <input class="a-inp" id="t-points" type="number" placeholder="500"></div>
+    </div>
+    <div class="a-fg"><label class="a-lbl">Description</label>
+      <textarea class="a-ta" id="t-desc" placeholder="Description du tarif..."></textarea></div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-tarif')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveTarif()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL VALEUR -->
+<div class="a-modal" id="modal-valeur">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-valeur')">✕</button>
+    <h2 class="a-modal-title">Ajouter une valeur SWAPS</h2>
+    <div class="a-fg"><label class="a-lbl">Nom <span class="req">*</span></label>
+      <input class="a-inp" id="v-nom" placeholder="Ex: 1 SWAP = 0.01€"></div>
+    <div class="a-fg"><label class="a-lbl">Montant / Pourcentage <span class="req">*</span></label>
+      <input class="a-inp" id="v-montant" placeholder="Ex: 0.01€ ou 5%"></div>
+    <div class="a-fg"><label class="a-lbl">Description</label>
+      <textarea class="a-ta" id="v-desc" placeholder="Description..."></textarea></div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-valeur')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveValeur()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FRAIS -->
+<div class="a-modal" id="modal-frais">
+  <div class="a-modal-box">
+    <button class="a-modal-close" onclick="closeM('modal-frais')">✕</button>
+    <h2 class="a-modal-title">Ajouter Frais ou commission</h2>
+    <div class="a-fg"><label class="a-lbl">Type <span class="req">*</span></label>
+      <select class="a-sel" id="f-type">
+        <option value="">Sélectionner</option>
+        <option>Protection des articles</option>
+        <option>Commission sur les ventes</option>
+        <option>Frais de livraison</option>
+        <option>Frais d'inscription</option>
+      </select>
+    </div>
+    <div class="a-fg"><label class="a-lbl">Montant / Pourcentage <span class="req">*</span></label>
+      <input class="a-inp" id="f-montant" placeholder="Ex: 1.99€ ou 5%"></div>
+    <div class="a-fg"><label class="a-lbl">Description</label>
+      <textarea class="a-ta" id="f-desc" placeholder="Description..."></textarea></div>
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-frais')">Annuler</button>
+      <button class="a-btn-submit" onclick="saveFrais()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DELETE -->
+<div class="a-modal" id="modal-del">
+  <div class="a-modal-box" style="max-width:400px;text-align:center">
+    <button class="a-modal-close" onclick="closeM('modal-del')">✕</button>
+    <div class="a-modal-illus">🗑️</div>
+    <h2 class="a-modal-confirm-title">Êtes-vous sûr de vouloir<br>supprimer cet élément ?</h2>
+    <input type="hidden" id="del-type"><input type="hidden" id="del-idx">
+    <div class="a-modal-actions">
+      <button class="a-btn-cancel" onclick="closeM('modal-del')">Annuler</button>
+      <button class="a-btn-submit danger" onclick="confirmDel()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div id="a-toast"></div>
+<script src="admin.js"></script>
+<script>
+// Données en localStorage (SWAPS n'a pas d'API dédiée)
+var DB={
+  g:function(k){try{return JSON.parse(localStorage.getItem('kc_adm_'+k))||null}catch(e){return null}},
+  s:function(k,v){localStorage.setItem('kc_adm_'+k,JSON.stringify(v))}
+};
+var nd=function(){return new Date().toLocaleDateString('fr-FR')};
+
+var tarifs = DB.g('tarifs') || [
+  {nom:'Bronze',montant:'5.00',points:'500',desc:'Pack débutant — idéal pour commencer',date:nd()},
+  {nom:'Silver',montant:'10.00',points:'1200',desc:'Pack intermédiaire — meilleur rapport qualité/prix',date:nd()},
+  {nom:'Gold',montant:'20.00',points:'3000',desc:'Pack premium — maximum de SWAPS',date:nd()}
+];
+var valeurs = DB.g('valeurs') || [
+  {nom:'1 SWAP = 0.01€',montant:'0.01€',desc:'Valeur de base des SWAPS',date:nd()},
+  {nom:'Bonus fidélité',montant:'10%',desc:'Bonus pour les membres Premium',date:nd()}
+];
+var fraisList = DB.g('frais') || [
+  {type:'Protection des articles',montant:'0.99€',desc:'Frais de protection sécurisée',date:nd()},
+  {type:'Commission sur les ventes',montant:'5%',desc:'Commission standard KidCycle',date:nd()},
+  {type:'Frais de livraison',montant:'5.90€',desc:'Livraison standard France',date:nd()}
+];
+
+function save(){DB.s('tarifs',tarifs);DB.s('valeurs',valeurs);DB.s('frais',fraisList);}
+
+function renderAll(){
+  // Tarifs
+  document.getElementById('tb-tarifs').innerHTML = tarifs.length
+    ? tarifs.map(function(t,i){
+        return '<tr><td><strong>'+t.nom+'</strong></td><td><strong>'+t.montant+' €</strong></td>'
+          +'<td>'+t.points+' SWAPS</td>'
+          +'<td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+t.desc+'</td>'
+          +'<td>'+t.date+'</td>'
+          +'<td class="a-tbl-actions"><button class="a-ico-btn del" onclick="askDel(\'t\','+i+')">🗑️</button></td></tr>';
+      }).join('')
+    : '<tr><td colspan="6" class="a-empty" style="padding:22px">Aucun tarif</td></tr>';
+
+  // Valeurs
+  document.getElementById('tb-valeurs').innerHTML = valeurs.length
+    ? valeurs.map(function(v,i){
+        return '<tr><td><strong>'+v.nom+'</strong></td><td>'+v.montant+'</td>'
+          +'<td>'+v.desc+'</td><td>'+v.date+'</td>'
+          +'<td class="a-tbl-actions"><button class="a-ico-btn del" onclick="askDel(\'v\','+i+')">🗑️</button></td></tr>';
+      }).join('')
+    : '<tr><td colspan="5" class="a-empty" style="padding:22px">Aucune valeur</td></tr>';
+
+  // Frais
+  document.getElementById('tb-frais').innerHTML = fraisList.length
+    ? fraisList.map(function(f,i){
+        return '<tr><td><strong>'+f.type+'</strong></td><td><strong>'+f.montant+'</strong></td>'
+          +'<td>'+f.desc+'</td><td>'+f.date+'</td>'
+          +'<td class="a-tbl-actions"><button class="a-ico-btn del" onclick="askDel(\'f\','+i+')">🗑️</button></td></tr>';
+      }).join('')
+    : '<tr><td colspan="5" class="a-empty" style="padding:22px">Aucun frais</td></tr>';
+}
+
+function saveTarif(){
+  var n=document.getElementById('t-nom').value.trim();
+  var m=document.getElementById('t-montant').value;
+  var p=document.getElementById('t-points').value;
+  var d=document.getElementById('t-desc').value.trim();
+  if(!n||!m||!p){toast('Remplissez les champs obligatoires','err');return;}
+  tarifs.push({nom:n,montant:parseFloat(m).toFixed(2),points:p,desc:d,date:nd()});
+  save();renderAll();closeM('modal-tarif');
+  ['t-nom','t-montant','t-points','t-desc'].forEach(function(id){document.getElementById(id).value='';});
+  toast('Tarif "'+n+'" ajouté !','ok');
+}
+function saveValeur(){
+  var n=document.getElementById('v-nom').value.trim();
+  var m=document.getElementById('v-montant').value.trim();
+  var d=document.getElementById('v-desc').value.trim();
+  if(!n||!m){toast('Remplissez les champs obligatoires','err');return;}
+  valeurs.push({nom:n,montant:m,desc:d,date:nd()});
+  save();renderAll();closeM('modal-valeur');
+  ['v-nom','v-montant','v-desc'].forEach(function(id){document.getElementById(id).value='';});
+  toast('Valeur SWAPS ajoutée !','ok');
+}
+function saveFrais(){
+  var t=document.getElementById('f-type').value;
+  var m=document.getElementById('f-montant').value.trim();
+  var d=document.getElementById('f-desc').value.trim();
+  if(!t||!m){toast('Remplissez les champs obligatoires','err');return;}
+  fraisList.push({type:t,montant:m,desc:d,date:nd()});
+  save();renderAll();closeM('modal-frais');
+  document.getElementById('f-type').value='';
+  document.getElementById('f-montant').value='';
+  document.getElementById('f-desc').value='';
+  toast('Frais ajouté !','ok');
+}
+
+function askDel(t,i){
+  document.getElementById('del-type').value=t;
+  document.getElementById('del-idx').value=i;
+  openM('modal-del');
+}
+function confirmDel(){
+  var t=document.getElementById('del-type').value;
+  var i=parseInt(document.getElementById('del-idx').value);
+  if(t==='t') tarifs.splice(i,1);
+  else if(t==='v') valeurs.splice(i,1);
+  else fraisList.splice(i,1);
+  save();renderAll();closeM('modal-del');toast('Supprimé !','ok');
+}
+
+document.addEventListener('DOMContentLoaded',function(){ checkAdmin(); renderAll(); });
+</script>
+</body>
+</html>

@@ -1,282 +1,296 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nouveautés - KidCycle</title>
-  <link rel="stylesheet" href="Shared.css">
-  <link rel="stylesheet" href="nouveautes.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Nouveautés — KidCycle</title>
+<link rel="stylesheet" href="global.css">
+<style>
+.catalog-wrap{max-width:1280px;margin:0 auto;padding:28px 32px;display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start}
+/* ── SIDEBAR FILTRES ── */
+.filters{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);padding:22px 18px;position:sticky;top:82px;box-shadow:var(--shadow-sm)}
+.filters-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.filters-title{font-size:16px;font-weight:800;color:var(--text)}
+.filters-clear{font-size:12px;color:var(--purple);font-weight:700;cursor:pointer;background:none;border:none;display:flex;align-items:center;gap:4px;transition:color .2s}
+.filters-clear:hover{color:var(--purple-d)}
+.filter-group{border-top:1px solid var(--border);padding-top:14px;margin-bottom:14px}
+.filter-group-title{font-size:13px;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.filter-group-title .chevron{font-size:10px;transition:transform .2s;color:var(--text-light)}
+.filter-group.collapsed .chevron{transform:rotate(-90deg)}
+.filter-group.collapsed .filter-opts{display:none}
+.filter-opts{display:flex;flex-direction:column;gap:8px}
+.filter-opt{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-mid);cursor:pointer;padding:2px 0}
+.filter-opt input{width:15px;height:15px;accent-color:var(--purple);cursor:pointer;flex-shrink:0}
+.filter-opt:hover{color:var(--purple)}
+.price-range{width:100%;accent-color:var(--purple);margin:8px 0}
+.price-val{font-size:13px;color:var(--purple);font-weight:700;text-align:center}
+/* ── MAIN CATALOG ── */
+.catalog-main{}
+.catalog-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.catalog-count{font-size:14px;color:var(--text-mid);font-weight:600}
+.catalog-count strong{color:var(--text)}
+.sort-wrap{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-mid)}
+.sort-sel{padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:13px;font-family:'Nunito',sans-serif;outline:none;color:var(--text);background:#fff;cursor:pointer;transition:border-color .2s}
+.sort-sel:focus{border-color:var(--purple)}
+.catalog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px}
+/* Pagination */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.pg-btn{min-width:36px;height:36px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:#fff;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 10px;transition:all .2s;color:var(--text-mid);font-family:'Nunito',sans-serif}
+.pg-btn:hover,.pg-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.pg-btn:disabled{opacity:.4;cursor:not-allowed}
+/* Skeleton */
+.sk{min-height:290px;border-radius:var(--radius)}
+/* Empty */
+.empty-state{grid-column:1/-1;text-align:center;padding:80px 20px}
+.empty-state .ei{font-size:56px;margin-bottom:14px}
+.empty-state h3{font-size:18px;font-weight:800;color:var(--text-mid);margin-bottom:6px}
+.empty-state p{color:var(--text-light);font-size:14px;margin-bottom:20px}
+/* Vente badge */
+.vente-top{background:linear-gradient(135deg,var(--purple-pale),var(--purple-bg));border-radius:16px;padding:20px 28px;margin-bottom:24px;display:flex;align-items:center;gap:14px}
+.vente-top-icon{font-size:32px}
+.vente-top-title{font-size:18px;font-weight:800;color:var(--text)}
+.vente-top-sub{font-size:13px;color:var(--text-mid);margin-top:3px}
+</style>
 </head>
 <body>
+<div class="top-promo">
+  <div class="top-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="top-promo-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</div>
 
-<header class="topnav">
-  <img class="logo" src="images/Kidcycle.png" />
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
-    <a href="page acceuil.html">Acheter maintenant</a>
-
-    <a href="Nouveautes.html">Nouveautés</a>
-
-    <a href="Vente.html">Vente</a>
-
-    <a href="produits profile.html">Mes produits</a>
+    <a href="index.html" class="nav-link">Acheter maintenant</a>
+    <a href="nouveautes.html" class="nav-link active" id="nav-nouv">Nouveautés</a>
+    <a href="vente.html" class="nav-link" id="nav-vente">Vente</a>
+    <a href="mes-produits.html" class="nav-link">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="btn-cart active">
-      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
-    </a>
-    <a href="Favoris.html" class="nav-icon" title="Mes favoris" style="position:relative"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"><span class="fav-nav-badge" id="fav-nav-count" style="position:absolute;top:-5px;right:-5px;background:#e04040;color:#fff;font-size:9px;font-weight:800;border-radius:50%;width:16px;height:16px;display:none;align-items:center;justify-content:center;line-height:1">0</span></a>
-    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
-
-    <div class="nav-avatar"><img src="images/logo.png" alt="Avatar" /></div>
-    <div class="search-wrap">
-      <input type="text" placeholder="Search" />
-      <button><img class="search-icon"src="images/search.png" alt="Search icon" /></button>
+    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <div class="nav-swaps">ii</div>
+    <div class="nav-search-wrap" style="position:relative">
+      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
-</header>
+</nav>
 
-<div class="page-body">
-
-  <aside class="filters-panel">
-    <div class="filters-top">
-      <span class="filters-title">Filters</span>
-      <a href="#filters-cleared" class="btn-clear">Tout effacer 🗑</a>
-    </div>
-
-    <div id="filters-cleared">
-      <a href="#filters-active" class="btn-clear" style="margin-bottom:12px;display:inline-flex;color:#6ab0d4;border-color:#6ab0d4;">↩ Rétablir</a>
-
-    <div class="fg">
-      <input type="checkbox" id="ncfg1" class="fg-toggle">
-      <label for="ncfg1" class="fg-head"><span class="fg-label">Catégorie</span><span class="chevron">▲</span></label>
-      <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox" > Bébé (0-2 ans)</label><span class="fg-count">(18)</span></div>
-        <div class="fg-row"><label><input type="checkbox" > Fille (2-8 ans)</label><span class="fg-count">(12)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> Bébé (0-2 ans)</label><span class="fg-count">(23)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> Fille (2-8 ans)</label><span class="fg-count">(67)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> Garçon (2-8 ans)</label><span class="fg-count">(34)</span></div>
-      </div>
-    </div>
-    <div class="fg">
-      <input type="checkbox" id="ncfg2" class="fg-toggle">
-      <label for="ncfg2" class="fg-head"><span class="fg-label">Genre</span><span class="chevron">▲</span></label>
-      <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox"> Junior (8-14 ans)</label></div>
-        <div class="fg-row"><label><input type="checkbox" > Garçon (2-8 ans)</label></div>
-      </div>
-    </div>
-    <div class="fg">
-      <input type="checkbox" id="ncfg3" class="fg-toggle">
-      <label for="ncfg3" class="fg-head"><span class="fg-label">Taille</span><span class="chevron">▲</span></label>
-      <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox" > 0 - 1/2</label><span class="fg-count">(18)</span></div>
-        <div class="fg-row"><label><input type="checkbox" > 1/2 - 1</label><span class="fg-count">(12)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> 1 - 2</label><span class="fg-count">(23)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> 2 - 3</label><span class="fg-count">(67)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> 3 - 4</label><span class="fg-count">(34)</span></div>
-      </div>
-    </div>
-    <div class="fg">
-      <input type="checkbox" id="ncfg4" class="fg-toggle">
-      <label for="ncfg4" class="fg-head"><span class="fg-label">État</span><span class="chevron">▲</span></label>
-      <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox"> Unisexe</label></div>
-        <div class="fg-row"><label><input type="checkbox" > Junior (8-14 ans)</label></div>
-      </div>
-    </div>
+<div class="catalog-wrap">
+  <!-- SIDEBAR -->
+  <aside class="filters" id="filters-panel">
+    <div class="filters-head">
+      <span class="filters-title">Filtres</span>
+      <button class="filters-clear" onclick="clearFilters()">🗑 Tout effacer</button>
     </div>
 
-    <div id="filters-active">
+    <!-- Catégorie -->
+    <div class="filter-group" id="fg-cat">
+      <div class="filter-group-title" onclick="toggleFG('fg-cat')">
+        <span>Catégorie</span><span class="chevron">▲</span>
+      </div>
+      <div class="filter-opts">
+        <label class="filter-opt"><input type="checkbox" value="bebe" class="fc-cat" onchange="applyFilters()"> Bébé (0-2 ans)</label>
+        <label class="filter-opt"><input type="checkbox" value="fille" class="fc-cat" onchange="applyFilters()"> Fille (2-8 ans)</label>
+        <label class="filter-opt"><input type="checkbox" value="garcon" class="fc-cat" onchange="applyFilters()"> Garçon (2-8 ans)</label>
+        <label class="filter-opt"><input type="checkbox" value="junior" class="fc-cat" onchange="applyFilters()"> Junior (8-14 ans)</label>
+      </div>
+    </div>
 
-    <div class="fg">
-      <input type="checkbox" id="nafg1" class="fg-toggle">
-      <label for="nafg1" class="fg-head"><span class="fg-label">Catégorie</span><span class="chevron">▲</span></label>
-      <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox" checked> Bébé (0-2 ans)</label><span class="fg-count">(18)</span></div>
-        <div class="fg-row"><label><input type="checkbox" checked> Fille (2-8 ans)</label><span class="fg-count">(12)</span></div>
-        <div class="fg-row"><span class="fg-count">(23)</span></div>
-        <div class="fg-row"><span class="fg-count">(67)</span></div>
-        <div class="fg-row"><span class="fg-count">(34)</span></div>
+    <!-- État -->
+    <div class="filter-group" id="fg-etat">
+      <div class="filter-group-title" onclick="toggleFG('fg-etat')">
+        <span>État</span><span class="chevron">▲</span>
+      </div>
+      <div class="filter-opts">
+        <label class="filter-opt"><input type="checkbox" value="neuf" class="fc-etat" onchange="applyFilters()"> Neuf avec étiquettes</label>
+        <label class="filter-opt"><input type="checkbox" value="excellent" class="fc-etat" onchange="applyFilters()"> Excellent état</label>
+        <label class="filter-opt"><input type="checkbox" value="bon" class="fc-etat" onchange="applyFilters()"> Bon état</label>
+        <label class="filter-opt"><input type="checkbox" value="correct" class="fc-etat" onchange="applyFilters()"> État correct</label>
       </div>
     </div>
-    <div class="fg">
-      <input type="checkbox" id="nafg2" class="fg-toggle">
-      <label for="nafg2" class="fg-head"><span class="fg-label">Genre</span><span class="chevron">▲</span></label>
-      <div class="fg-opts">
-        <div class="fg-row"></div>
-        <div class="fg-row"><label><input type="checkbox" checked> Garçon (2-8 ans)</label></div>
+
+    <!-- Prix -->
+    <div class="filter-group" id="fg-prix">
+      <div class="filter-group-title" onclick="toggleFG('fg-prix')">
+        <span>Prix maximum</span><span class="chevron">▲</span>
       </div>
-    </div>
-    <div class="fg">
-      <input type="checkbox" id="nafg3" class="fg-toggle">
-      <label for="nafg3" class="fg-head"><span class="fg-label">Taille</span><span class="chevron">▲</span></label>
-      <div class="fg-opts">
-        <div class="fg-row"><label><input type="checkbox" checked> 0 - 1/2</label><span class="fg-count">(18)</span></div>
-        <div class="fg-row"><label><input type="checkbox" checked> 1/2 - 1</label><span class="fg-count">(12)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> 1 - 2</label><span class="fg-count">(23)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> 2 - 3</label><span class="fg-count">(67)</span></div>
-        <div class="fg-row"><label><input type="checkbox"> 3 - 4</label><span class="fg-count">(34)</span></div>
+      <div class="filter-opts">
+        <input type="range" class="price-range" id="prix-range" min="0" max="200" value="200"
+          oninput="document.getElementById('prix-disp').textContent=this.value+' S';applyFilters()">
+        <div class="price-val" id="prix-disp">200 S</div>
       </div>
-    </div>
-    <div class="fg">
-      <input type="checkbox" id="nafg4" class="fg-toggle">
-      <label for="nafg4" class="fg-head"><span class="fg-label">État</span><span class="chevron">▲</span></label>
-      <div class="fg-opts">
-        <div class="fg-row"></div>
-        <div class="fg-row"><label><input type="checkbox" checked> Junior (8-14 ans)</label></div>
-      </div>
-    </div>
     </div>
   </aside>
 
-  <div class="main">
-    <div class="info-bar">
-      <span>Affichage de 12 résultats sur un total de 230</span>
-      <span class="swaps-info"><span class="swaps-lbl">SWAPS</span> disponible : 500.00 <span class="coin">ii</span></span>
+  <!-- MAIN -->
+  <main class="catalog-main">
+    <!-- Bandeau Vente -->
+    <div class="vente-top" id="vente-banner" style="display:none">
+      <span class="vente-top-icon">🏷️</span>
+      <div>
+        <div class="vente-top-title">Articles en promotion</div>
+        <div class="vente-top-sub">Des réductions exceptionnelles sur une sélection de produits</div>
+      </div>
     </div>
-    <div class="products-grid">
 
-        <div class="product-card" data-id="1">
-          <a href="detail produit.html" class="heart-btn" data-coeur="1"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-          <span class="badge ">Nouveau</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl1.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Combinaison Velours Bébé</div>
-            <div class="card-meta">
-              <span class="card-sub">Velours · 0–24 mois</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca1">✓ Ajouté !</div>
-            <a href="#ca1" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
-        <div class="product-card" data-id="2">
-          <a href="detail produit.html" class="heart-btn" data-coeur="2"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-          <span class="badge ">Tendance</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl2.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Robe Fleurie Fille</div>
-            <div class="card-meta">
-              <span class="card-sub">Coton bio · 2–8 ans</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca2">✓ Ajouté !</div>
-            <a href="#ca2" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
-        <div class="product-card" data-id="3">
-          <a href="detail produit.html" class="heart-btn" data-coeur="3"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl3.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Veste Matelassée Garçon</div>
-            <div class="card-meta">
-              <span class="card-sub">Ajusté · 3–10 ans</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca3">✓ Ajouté !</div>
-            <a href="#ca3" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
-        <div class="product-card" data-id="4">
-          <a href="detail produit.html" class="heart-btn" data-coeur="4"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-          <span class="badge ">Populaire</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl4.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Pyjama 2 Pièces Étoiles</div>
-            <div class="card-meta">
-              <span class="card-sub">OEKO-TEX · 6 mois–4 ans</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca4">✓ Ajouté !</div>
-            <a href="#ca4" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
-        <div class="product-card" data-id="5">
-          <a href="detail produit.html" class="heart-btn" data-coeur="5"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-          <span class="badge ">Coup de cœur</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl5.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Ensemble Jogger Enfant</div>
-            <div class="card-meta">
-              <span class="card-sub">Sweat + pantalon · 4–12 ans</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca5">✓ Ajouté !</div>
-            <a href="#ca5" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
-        <div class="product-card" data-id="1">
-          <a href="detail produit.html" class="heart-btn" data-coeur="1"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl1.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Manteau Capuche Enfant</div>
-            <div class="card-meta">
-              <span class="card-sub">Imperméable · 2–10 ans</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca6">✓ Ajouté !</div>
-            <a href="#ca6" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
-        <div class="product-card" data-id="2">
-          <a href="detail produit.html" class="heart-btn" data-coeur="2"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-          <span class="badge ">Exclusif</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl2.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Robe de Soirée Fille</div>
-            <div class="card-meta">
-              <span class="card-sub">Dentelle · 4–12 ans</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca7">✓ Ajouté !</div>
-            <a href="#ca7" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
-        <div class="product-card" data-id="3">
-          <a href="detail produit.html" class="heart-btn" data-coeur="3"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-          <span class="badge ">Top vente</span>
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl3.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Doudoune Légère Enfant</div>
-            <div class="card-meta">
-              <span class="card-sub">Ultralégère · 2–10 ans</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca8">✓ Ajouté !</div>
-            <a href="#ca8" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
-        <div class="product-card" data-id="4">
-          <a href="detail produit.html" class="heart-btn" data-coeur="4"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-
-          <a href="detail produit.html" style="display:block;line-height:0"><img class="product-img" src="cl4.png" alt="produit" / style="width:100%;height:185px;object-fit:contain;display:block;background:#f5f4fb;padding:10px;box-sizing:border-box"></a>
-          <div class="card-body">
-            <div class="card-name">Salopette Denim Enfant</div>
-            <div class="card-meta">
-              <span class="card-sub">100% coton · 3–12 ans</span>
-              <span class="card-price"><span class="coin">ii</span> 34.00</span>
-            </div>
-            <div class="cart-added" id="ca9">✓ Ajouté !</div>
-            <a href="#ca9" class="btn-add">Ajouter au panier</a>
-          </div>
-        </div>
+    <div class="catalog-topbar">
+      <div class="catalog-count"><strong id="result-count">—</strong> résultat(s)</div>
+      <div class="sort-wrap">
+        <span>Trier par :</span>
+        <select class="sort-sel" id="sort-sel" onchange="applyFilters()">
+          <option value="recent">Plus récents</option>
+          <option value="prix_asc">Prix croissant</option>
+          <option value="prix_desc">Prix décroissant</option>
+          <option value="popular">Popularité</option>
+          <option value="nom">Nom A-Z</option>
+        </select>
+      </div>
     </div>
-    <div class="pagination">
-      <a href="#" class="page-btn arrow">‹ Précédent</a>
-      <a href="#" class="page-btn active">1</a>
-      <a href="#" class="page-btn">2</a>
-      <a href="#" class="page-btn">3</a>
-      <a href="#" class="page-btn">4</a>
-      <a href="#" class="page-btn">5</a>
-      <a href="#" class="page-btn">6</a>
-      <a href="#" class="page-btn">7</a>
-      <a href="#" class="page-btn arrow">Suivant ›</a>
-    </div>
-  </div>
 
+    <div class="catalog-grid" id="catalog-grid">
+      <div class="skeleton sk"></div><div class="skeleton sk"></div>
+      <div class="skeleton sk"></div><div class="skeleton sk"></div>
+      <div class="skeleton sk"></div><div class="skeleton sk"></div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </main>
 </div>
-  <script src="kidcycle.js"></script>
+
+<footer class="site-footer">
+  <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="site-footer-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</footer>
+<div id="kc-toast"></div>
+<script src="app.js"></script>
+<script>
+var IS_VENTE = location.pathname.includes('vente');
+var currentPage = 1, totalPages = 1;
+var urlParams = new URLSearchParams(location.search);
+var initQ = urlParams.get('q') || '';
+var initCat = urlParams.get('cat') || '';
+
+document.addEventListener('DOMContentLoaded', function(){
+  KC.initNav();
+  KC.initSearch('search-input','search-dd');
+  KC.initAnimations();
+
+  if(IS_VENTE){
+    document.title='Vente — KidCycle';
+    document.getElementById('nav-vente').classList.add('active');
+    document.getElementById('nav-nouv').classList.remove('active');
+    document.getElementById('vente-banner').style.display='flex';
+  }
+
+  // Pre-check category from URL
+  if(initCat){
+    var cb=document.querySelector('.fc-cat[value="'+initCat+'"]');
+    if(cb) cb.checked=true;
+  }
+
+  applyFilters();
+});
+
+function toggleFG(id){
+  var fg=document.getElementById(id);
+  fg.classList.toggle('collapsed');
+}
+
+function applyFilters(pg){
+  currentPage=pg||1;
+  var cats=[],etats=[];
+  document.querySelectorAll('.fc-cat:checked').forEach(function(c){cats.push(c.value);});
+  document.querySelectorAll('.fc-etat:checked').forEach(function(c){etats.push(c.value);});
+  var pmax=document.getElementById('prix-range').value;
+  var tri=document.getElementById('sort-sel').value;
+
+  var url='/produits.php?page='+currentPage+'&limit=9';
+  if(IS_VENTE) url+='&action=vente';
+  if(cats.length) url+='&categorie='+cats.join(',');
+  if(etats.length) url+='&etat='+etats.join(',');
+  if(parseInt(pmax)<200) url+='&prix_max='+pmax;
+  if(tri) url+='&tri='+tri;
+  if(initQ) url+='&q='+encodeURIComponent(initQ);
+
+  showSkeletons();
+
+  KC.GET(url)
+    .then(function(r){
+      if(!r.ok){renderEmpty();return;}
+      totalPages=r.pages||1;
+      document.getElementById('result-count').textContent=r.total||r.data.length;
+      renderProds(r.data);
+      renderPag();
+    })
+    .catch(function(){renderFallback();});
+}
+
+function renderProds(prods){
+  var g=document.getElementById('catalog-grid');
+  if(!prods||!prods.length){renderEmpty();return;}
+  g.innerHTML=prods.map(function(p){return KC.prodCard(p);}).join('');
+  g.querySelectorAll('.prod-card').forEach(function(c,i){
+    c.style.opacity='0';c.style.transform='translateY(16px)';
+    setTimeout(function(){c.style.transition='opacity .35s,transform .35s';c.style.opacity='1';c.style.transform='none';},i*55);
+  });
+}
+
+function renderEmpty(){
+  document.getElementById('result-count').textContent='0';
+  document.getElementById('catalog-grid').innerHTML='<div class="empty-state"><div class="ei">🔍</div><h3>Aucun résultat</h3><p>Modifiez vos filtres pour trouver des articles</p><button class="btn btn-primary" onclick="clearFilters()">Réinitialiser les filtres</button></div>';
+  document.getElementById('pagination').innerHTML='';
+}
+
+function renderFallback(){
+  var fallback=[
+    {id:1,nom:'Combinaison Bébé Pois',description:'Velours doux · 0-24 mois',prix:34,image:'images/cl1.png',badge:'Nouveau'},
+    {id:2,nom:'Ensemble Veste Rose',description:'Coton bio · 2-8 ans',prix:45,image:'images/cl2.png',badge:'Tendance'},
+    {id:3,nom:'Veste Jaune',description:'Imperméable · 3-10 ans',prix:38,image:'images/cl3.png'},
+    {id:4,nom:'Set Bavoir',description:'Accessoires bébé',prix:22,image:'images/cl4.png'},
+    {id:5,nom:'Body Ourson',description:'Coton · 0-24 mois',prix:18,image:'images/cl5.png'},
+    {id:6,nom:'Set Baby',description:'5 types disponibles',prix:34,image:'images/cl6.png'},
+    {id:7,nom:'Veste Matelassée',description:'Hiver · 2-8 ans',prix:49,image:'images/Rectangle 9.png'},
+    {id:8,nom:'Ensemble Denim',description:'100% coton',prix:42,image:'images/Rectangle 11.png'},
+    {id:9,nom:'Body Bébé',description:'Manches longues',prix:16,image:'images/Rectangle 10.png'}
+  ];
+  document.getElementById('result-count').textContent=fallback.length;
+  renderProds(fallback);
+  document.getElementById('pagination').innerHTML='';
+}
+
+function renderPag(){
+  var p=document.getElementById('pagination');
+  if(totalPages<=1){p.innerHTML='';return;}
+  var h='';
+  if(currentPage>1) h+='<button class="pg-btn" onclick="applyFilters('+(currentPage-1)+')">‹ Précédent</button>';
+  var start=Math.max(1,currentPage-2),end=Math.min(totalPages,currentPage+2);
+  for(var i=start;i<=end;i++) h+='<button class="pg-btn'+(i===currentPage?' active':'')+'" onclick="applyFilters('+i+')">'+i+'</button>';
+  if(currentPage<totalPages) h+='<button class="pg-btn" onclick="applyFilters('+(currentPage+1)+')">Suivant ›</button>';
+  p.innerHTML=h;
+}
+
+function showSkeletons(){
+  document.getElementById('catalog-grid').innerHTML='<div class="skeleton sk"></div>'.repeat(9);
+}
+
+function clearFilters(){
+  document.querySelectorAll('.fc-cat,.fc-etat').forEach(function(cb){cb.checked=false;});
+  document.getElementById('prix-range').value=200;
+  document.getElementById('prix-disp').textContent='200 S';
+  document.getElementById('sort-sel').value='recent';
+  initQ='';
+  applyFilters();
+}
+
+function gotoSearch(){
+  var q=document.getElementById('search-input').value.trim();
+  if(q) location.href='nouveautes.html?q='+encodeURIComponent(q);
+}
+document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')gotoSearch();});
+</script>
 </body>
 </html>
