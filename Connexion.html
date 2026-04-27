@@ -6,63 +6,99 @@
 <title>Connexion — KidCycle</title>
 <link rel="stylesheet" href="global.css">
 <style>
-body{margin:0;min-height:100vh;display:flex;flex-direction:column}
-.top-promo{flex-shrink:0}
-.page-wrap{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:calc(100vh - 42px)}
-/* Photo de fond — enfants sur la plage exactement comme Figma */
-.bg-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
-.bg-overlay{position:absolute;inset:0;background:rgba(0,0,0,.06)}
-/* Carte blanche centrée */
-.card{
-  position:relative;z-index:2;
-  background:#fff;
-  border-radius:20px;
-  padding:48px 52px 44px;
-  width:560px;max-width:94vw;
-  box-shadow:0 24px 80px rgba(0,0,0,.22),0 4px 20px rgba(0,0,0,.1);
+body { margin:0; min-height:100vh; display:flex; flex-direction:column; }
+.top-promo { flex-shrink:0; }
+.page-wrap {
+  flex:1; position:relative; display:flex;
+  align-items:center; justify-content:center;
+  overflow:hidden; min-height:calc(100vh - 42px);
+}
+/* Photo de fond */
+.bg-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%; }
+.bg-overlay { position:absolute; inset:0; background:rgba(0,0,0,.08); }
+
+/* Carte blanche */
+.card {
+  position:relative; z-index:2; background:#fff;
+  border-radius:20px; padding:48px 52px 44px;
+  width:560px; max-width:94vw;
+  box-shadow:0 24px 80px rgba(0,0,0,.22), 0 4px 20px rgba(0,0,0,.1);
   animation:cardIn .4s cubic-bezier(.34,1.3,.64,1);
 }
-@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
-.card-title{text-align:center;font-size:28px;font-weight:800;color:#1a1a2e;margin-bottom:28px;letter-spacing:-.3px}
+@keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(.96)} to{opacity:1;transform:none} }
+.card-logo { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:24px; }
+.card-logo img { height:38px; }
+.card-title { text-align:center; font-size:26px; font-weight:800; color:#1a1a2e; margin-bottom:28px; }
+
 /* Champs */
-.field{position:relative;margin-bottom:14px}
-.field input{
-  width:100%;padding:14px 48px 14px 18px;
-  background:#f4f2fb;border:1.5px solid transparent;
-  border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;
-  color:#1a1a2e;outline:none;transition:all .22s;
+.field { position:relative; margin-bottom:14px; }
+.field input {
+  width:100%; padding:14px 48px 14px 18px;
+  background:#f4f2fb; border:1.5px solid transparent;
+  border-radius:12px; font-size:14px; font-family:'Nunito',sans-serif;
+  color:#1a1a2e; outline:none; transition:all .22s; box-sizing:border-box;
 }
-.field input::placeholder{color:#bbb;font-size:13px}
-.field input:focus{background:#fff;border-color:#9b8ec4;box-shadow:0 0 0 3px rgba(155,142,196,.12)}
-.eye-btn{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#bbb;font-size:19px;padding:4px;transition:color .2s}
-.eye-btn:hover{color:#9b8ec4}
-/* Row middle */
-.row-mid{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;font-size:13px}
-.remember{display:flex;align-items:center;gap:8px;cursor:pointer;color:#555;font-weight:600}
-.remember input{width:16px;height:16px;accent-color:#9b8ec4;cursor:pointer}
-.forgot{color:#9b8ec4;font-weight:700;text-decoration:none;transition:color .2s}
-.forgot:hover{color:#7d6fb0;text-decoration:underline}
-/* Bouton */
-.btn-login{
-  width:100%;padding:15px;
+.field input::placeholder { color:#bbb; }
+.field input:focus { background:#fff; border-color:#9b8ec4; box-shadow:0 0 0 3px rgba(155,142,196,.12); }
+.eye-btn { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#bbb; font-size:19px; }
+.eye-btn:hover { color:#9b8ec4; }
+
+/* Ligne "Se souvenir / Mot de passe oublié" */
+.row-mid { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; font-size:13px; }
+.remember { display:flex; align-items:center; gap:8px; cursor:pointer; color:#555; font-weight:600; }
+.remember input { width:16px; height:16px; accent-color:#9b8ec4; }
+.forgot { color:#9b8ec4; font-weight:700; text-decoration:none; }
+.forgot:hover { text-decoration:underline; }
+
+/* Bouton connexion */
+.btn-login {
+  width:100%; padding:15px;
   background:linear-gradient(135deg,#b8a9d4,#9b8ec4);
-  color:#fff;border:none;border-radius:12px;
-  font-size:15px;font-weight:800;font-family:'Nunito',sans-serif;
-  cursor:pointer;box-shadow:0 4px 16px rgba(155,142,196,.4);
-  transition:all .22s;margin-bottom:18px;
-  display:flex;align-items:center;justify-content:center;gap:10px;
+  color:#fff; border:none; border-radius:12px;
+  font-size:15px; font-weight:800; font-family:'Nunito',sans-serif;
+  cursor:pointer; box-shadow:0 4px 16px rgba(155,142,196,.4);
+  transition:all .22s; margin-bottom:18px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
 }
-.btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,142,196,.5)}
-.btn-login:disabled{opacity:.7;cursor:not-allowed;transform:none}
-.signup{text-align:center;font-size:13px;color:#888}
-.signup a{color:#9b8ec4;font-weight:700;text-decoration:none}
-.signup a:hover{text-decoration:underline}
+.btn-login:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(155,142,196,.5); }
+.btn-login:disabled { opacity:.7; cursor:not-allowed; transform:none; }
+
+.signup { text-align:center; font-size:13px; color:#888; }
+.signup a { color:#9b8ec4; font-weight:700; text-decoration:none; }
+
+/* Message d'erreur */
+.err-msg {
+  background:#fff0f0; border:1.5px solid #f0c0c0;
+  border-radius:10px; padding:10px 14px;
+  font-size:13px; color:#c00; margin-bottom:14px;
+  display:none; font-weight:600;
+  animation:shk .3s ease;
+}
+@keyframes shk { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+/* Message de succès */
+.ok-msg {
+  background:#f0fff4; border:1.5px solid #a0dbb4;
+  border-radius:10px; padding:10px 14px;
+  font-size:13px; color:#1a7a3a; margin-bottom:14px;
+  display:none; font-weight:600;
+}
+
 /* Spinner */
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-/* Error */
-.err-msg{background:#fff0f0;border:1.5px solid #f0c0c0;border-radius:10px;padding:10px 14px;font-size:13px;color:#c00;margin-bottom:14px;display:none;font-weight:600;animation:shk .3s ease}
-@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.spinner {
+  display:inline-block; width:16px; height:16px;
+  border:2px solid rgba(255,255,255,.4); border-top-color:#fff;
+  border-radius:50%; animation:sp .7s linear infinite;
+}
+@keyframes sp { to{transform:rotate(360deg)} }
+
+/* Message "serveur hors ligne" */
+.offline-box {
+  background:#fffbeb; border:1.5px solid #fcd34d;
+  border-radius:10px; padding:12px 14px;
+  font-size:12px; color:#92400e; margin-bottom:16px;
+  display:none; line-height:1.5;
+}
 </style>
 </head>
 <body>
@@ -73,23 +109,42 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column}
 </div>
 
 <div class="page-wrap">
-  <!-- Photo réelle — enfants sur la plage (comme Figma) -->
   <img class="bg-photo"
     src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=1600&q=80"
-    alt=""
-    onerror="this.style.display='none'">
+    alt="" onerror="this.style.display='none'">
   <div class="bg-overlay"></div>
 
   <div class="card">
-    <h1 class="card-title">Connexion</h1>
-    <div class="err-msg" id="err-msg"></div>
-
-    <div class="field">
-      <input type="email" id="email" placeholder="Email" autocomplete="email">
+    <!-- Logo KidCycle -->
+    <div class="card-logo">
+      <img src="images/Kidcycle.png" alt="KidCycle"
+           onerror="this.style.display='none'">
     </div>
 
+    <h1 class="card-title">Connexion</h1>
+
+    <!-- Message quand le serveur n'est pas démarré -->
+    <div class="offline-box" id="offline-box">
+      ⚠️ <strong>XAMPP n'est pas démarré.</strong><br>
+      Ouvre XAMPP et démarre <strong>Apache</strong> + <strong>MySQL</strong>,
+      puis rafraîchis cette page.
+    </div>
+
+    <!-- Message d'erreur -->
+    <div class="err-msg" id="err-msg"></div>
+    <!-- Message de succès -->
+    <div class="ok-msg"  id="ok-msg"></div>
+
+    <!-- Champ email -->
     <div class="field">
-      <input type="password" id="pwd" placeholder="Password" autocomplete="current-password">
+      <input type="email" id="email" placeholder="Adresse email"
+             autocomplete="email" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+
+    <!-- Champ mot de passe -->
+    <div class="field">
+      <input type="password" id="pwd" placeholder="Mot de passe"
+             autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
       <button class="eye-btn" type="button" onclick="toggleEye('pwd',this)">👁</button>
     </div>
 
@@ -97,75 +152,111 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column}
       <label class="remember">
         <input type="checkbox" id="remember"> Se souvenir de moi
       </label>
-      <a href="#" class="forgot" onclick="forgotPwd(event)">Mot de passe oublié</a>
+      <a href="#" class="forgot" onclick="motDePasseOublie(event)">Mot de passe oublié ?</a>
     </div>
 
     <button class="btn-login" id="btn-login" onclick="doLogin()">
-      Connecter →
+      Se connecter →
     </button>
 
     <p class="signup">
-      Vous n'avez pas de compte ?&nbsp;<a href="inscription.html">S'inscrire</a>
+      Pas encore de compte ? <a href="inscription.html">Créer un compte</a>
     </p>
   </div>
 </div>
 
 <script src="auth.js"></script>
 <script>
-/* Rediriger vers accueil si déjà connecté */
+/* =====================================================
+   CONNEXION — connecté au serveur PHP (XAMPP)
+   ===================================================== */
+
+/* Si déjà connecté → aller directement à l'accueil */
 if (estConnecte()) {
   location.href = 'index.html';
 }
 
-/* Afficher/Cacher le mot de passe */
+/* Afficher/cacher le mot de passe */
 function toggleEye(id, btn) {
   var inp = document.getElementById(id);
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+  inp.type = (inp.type === 'password') ? 'text' : 'password';
+  btn.textContent = (inp.type === 'password') ? '👁' : '🙈';
 }
 
 /* Afficher un message d'erreur */
-function showErr(msg) {
-  var e = document.getElementById('err-msg');
-  e.textContent = msg;
-  e.style.display = 'block';
-  /* setTimeout — attend X millisecondes puis exécute la fonction */
-  setTimeout(function() { e.style.display = 'none'; }, 5000);
+function montrerErreur(msg) {
+  var el = document.getElementById('err-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+  document.getElementById('ok-msg').style.display = 'none';
+  setTimeout(function () { el.style.display = 'none'; }, 6000);
 }
 
-/* Connexion avec email + mot de passe (stockés dans le navigateur) */
+/* Afficher un message de succès */
+function montrerSucces(msg) {
+  var el = document.getElementById('ok-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+  document.getElementById('err-msg').style.display = 'none';
+}
+
+/* ── Connexion principale ── */
 function doLogin() {
   var email = document.getElementById('email').value.trim();
-  var motDePasse = document.getElementById('pwd').value;
-  var btn = document.getElementById('btn-login');
+  var pwd   = document.getElementById('pwd').value;
+  var btn   = document.getElementById('btn-login');
 
-  if (!email) { showErr('L\'email est obligatoire.'); return; }
-  if (!email.includes('@')) { showErr('Adresse email invalide.'); return; }
-  if (!motDePasse) { showErr('Le mot de passe est obligatoire.'); return; }
+  /* Vérifications côté navigateur avant d'envoyer au serveur */
+  if (!email)              return montrerErreur('L\'email est obligatoire.');
+  if (!email.includes('@'))return montrerErreur('Adresse email invalide.');
+  if (!pwd)                return montrerErreur('Le mot de passe est obligatoire.');
 
-  btn.textContent = 'Connexion...';
-  btn.disabled = true;
+  /* Afficher le chargement */
+  btn.innerHTML = '<span class="spinner"></span> Connexion...';
+  btn.disabled  = true;
 
-  /* Appeler la fonction connecter() de auth.js */
-  var resultat = connecter(email, motDePasse);
+  /*
+    connecter() est défini dans auth.js.
+    Elle envoie email + mot de passe au serveur PHP,
+    et retourne une "promesse" (.then = quand c'est fini).
+  */
+  connecter(email, pwd)
+    .then(function (resultat) {
+      btn.innerHTML = 'Se connecter →';
+      btn.disabled  = false;
 
-  btn.textContent = 'Connecter →';
-  btn.disabled = false;
+      if (!resultat.ok) {
+        /* Le serveur a refusé (mauvais mot de passe, etc.) */
+        montrerErreur(resultat.err || 'Identifiants incorrects.');
+        return;
+      }
 
-  if (!resultat.ok) {
-    showErr(resultat.err);
-    return;
-  }
+      /* ✅ Connexion réussie */
+      montrerSucces('Bienvenue ' + resultat.user.prenom + ' ! Redirection...');
 
-  /* Connexion réussie : aller à l'accueil */
-  alert('Bienvenue ' + resultat.user.prenom + ' ! 🎉');
-  location.href = 'index.html';
+      /* Aller à la page d'avant, ou à l'accueil */
+      var redirect = sessionStorage.getItem('kc_redirect') || 'index.html';
+      sessionStorage.removeItem('kc_redirect');
+      setTimeout(function () { location.href = redirect; }, 800);
+    })
+    .catch(function () {
+      /* catch = erreur réseau (XAMPP éteint, etc.) */
+      btn.innerHTML = 'Se connecter →';
+      btn.disabled  = false;
+      document.getElementById('offline-box').style.display = 'block';
+      montrerErreur('Impossible de joindre le serveur. Vérifiez que XAMPP est démarré.');
+    });
 }
 
-/* Permettre de se connecter avec la touche Entrée */
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
+function motDePasseOublie(e) {
+  e.preventDefault();
+  var email = document.getElementById('email').value.trim();
+  if (!email) {
+    montrerErreur('Saisissez d\'abord votre email, puis cliquez sur ce lien.');
+    return;
+  }
+  montrerSucces('Un email de réinitialisation vous sera envoyé à ' + email);
+}
 </script>
 </body>
 </html>

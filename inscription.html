@@ -6,72 +6,85 @@
 <title>Créer un compte — KidCycle</title>
 <link rel="stylesheet" href="global.css">
 <style>
-body{margin:0;min-height:100vh;display:flex;flex-direction:column}
-.top-promo{flex-shrink:0}
-.page-wrap{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:24px 16px;min-height:calc(100vh - 42px)}
-.bg-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
-.bg-overlay{position:absolute;inset:0;background:rgba(0,0,0,.18)}
-.card{
-  position:relative;z-index:2;background:#fff;
-  border-radius:20px;padding:40px 48px 36px;
-  width:680px;max-width:95vw;
+body { margin:0; min-height:100vh; display:flex; flex-direction:column; }
+.top-promo { flex-shrink:0; }
+.page-wrap {
+  flex:1; position:relative; display:flex;
+  align-items:center; justify-content:center;
+  overflow:hidden; padding:24px 16px;
+  min-height:calc(100vh - 42px);
+}
+.bg-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; }
+.bg-overlay { position:absolute; inset:0; background:rgba(0,0,0,.18); }
+.card {
+  position:relative; z-index:2; background:#fff;
+  border-radius:20px; padding:40px 48px 36px;
+  width:680px; max-width:95vw;
   box-shadow:0 24px 80px rgba(0,0,0,.25);
   animation:cardIn .4s cubic-bezier(.34,1.3,.64,1);
 }
-@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:none}}
-.card-title{text-align:center;font-size:26px;font-weight:800;color:#1a1a2e;margin-bottom:22px}
-.err-msg{background:#fff0f0;border:1.5px solid #f0c0c0;border-radius:10px;padding:10px 14px;font-size:13px;color:#c00;margin-bottom:12px;display:none;font-weight:600}
-/* Grid 2 colonnes */
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(.96)} to{opacity:1;transform:none} }
+
+.card-logo { display:flex; align-items:center; justify-content:center; margin-bottom:20px; }
+.card-logo img { height:36px; }
+.card-title { text-align:center; font-size:24px; font-weight:800; color:#1a1a2e; margin-bottom:20px; }
+
+/* Messages */
+.err-msg { background:#fff0f0; border:1.5px solid #f0c0c0; border-radius:10px; padding:10px 14px; font-size:13px; color:#c00; margin-bottom:12px; display:none; font-weight:600; }
+.ok-msg  { background:#f0fff4; border:1.5px solid #a0dbb4; border-radius:10px; padding:10px 14px; font-size:13px; color:#1a7a3a; margin-bottom:12px; display:none; font-weight:600; }
+.offline-box { background:#fffbeb; border:1.5px solid #fcd34d; border-radius:10px; padding:12px 14px; font-size:12px; color:#92400e; margin-bottom:14px; display:none; line-height:1.5; }
+
+/* Grille 2 colonnes */
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+
 /* Champs */
-.field{position:relative;margin-bottom:12px}
-.field input,.field select{
-  width:100%;padding:13px 16px;background:#f4f2fb;
-  border:1.5px solid transparent;border-radius:12px;
-  font-size:14px;font-family:'Nunito',sans-serif;color:#1a1a2e;
-  outline:none;transition:all .22s;appearance:none;-webkit-appearance:none;
+.field { position:relative; margin-bottom:12px; }
+.field label { display:block; font-size:11px; font-weight:700; color:#999; text-transform:uppercase; letter-spacing:.4px; margin-bottom:5px; }
+.field input, .field select {
+  width:100%; padding:13px 16px;
+  background:#f4f2fb; border:1.5px solid transparent;
+  border-radius:12px; font-size:14px; font-family:'Nunito',sans-serif;
+  color:#1a1a2e; outline:none; transition:all .22s;
+  appearance:none; -webkit-appearance:none; box-sizing:border-box;
 }
-.field input::placeholder{color:#bbb;font-size:13px}
-.field input:focus,.field select:focus{background:#fff;border-color:#9b8ec4;box-shadow:0 0 0 3px rgba(155,142,196,.12)}
-/* Select arrow */
-.field select{
+.field input::placeholder { color:#bbb; font-size:13px; }
+.field input:focus, .field select:focus {
+  background:#fff; border-color:#9b8ec4;
+  box-shadow:0 0 0 3px rgba(155,142,196,.12);
+}
+.field select {
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239b8ec4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 14px center;
-  padding-right:36px;cursor:pointer;
+  background-repeat:no-repeat; background-position:right 14px center;
+  padding-right:36px; cursor:pointer;
+  background-color:#f4f2fb;
 }
-/* Eye button */
-.eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#bbb;font-size:18px;padding:4px;transition:color .2s}
-.eye-btn:hover{color:#9b8ec4}
-/* Phone with flag */
-.phone-wrap{display:flex;align-items:center;background:#f4f2fb;border:1.5px solid transparent;border-radius:12px;overflow:hidden;transition:all .22s}
-.phone-wrap:focus-within{background:#fff;border-color:#9b8ec4;box-shadow:0 0 0 3px rgba(155,142,196,.12)}
-.phone-flag{display:flex;align-items:center;gap:5px;padding:0 12px;font-size:12px;font-weight:700;color:#555;border-right:1.5px solid #e8e4f5;flex-shrink:0;background:none;cursor:pointer;height:46px}
-.phone-flag img{width:20px;height:14px;object-fit:cover;border-radius:2px}
-.phone-flag select{border:none;background:none;outline:none;font-size:13px;font-weight:700;color:#555;cursor:pointer;padding:0 4px 0 2px;font-family:'Nunito',sans-serif;width:auto}
-.phone-wrap input{border:none;background:none;outline:none;flex:1;padding:13px 14px;font-size:14px;font-family:'Nunito',sans-serif;color:#1a1a2e}
-.phone-wrap input::placeholder{color:#bbb}
-/* Checkbox */
-.check-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;cursor:pointer;font-size:13px;color:#555;line-height:1.5}
-.check-row input{width:16px;height:16px;accent-color:#9b8ec4;cursor:pointer;flex-shrink:0;margin-top:2px}
+.eye-btn { position:absolute; right:12px; bottom:13px; background:none; border:none; cursor:pointer; color:#bbb; font-size:18px; transition:color .2s; }
+.eye-btn:hover { color:#9b8ec4; }
+
+/* Barre de force du mot de passe */
+.pwd-strength { height:3px; border-radius:2px; margin-top:5px; transition:all .3s; }
+.pwd-hint { font-size:11px; color:#bbb; margin-top:3px; }
+
+/* Checkbox newsletter */
+.check-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:16px; cursor:pointer; font-size:13px; color:#555; line-height:1.5; }
+.check-row input { width:16px; height:16px; accent-color:#9b8ec4; cursor:pointer; flex-shrink:0; margin-top:2px; }
+
 /* Bouton */
-.btn-register{
-  width:100%;padding:15px;
+.btn-register {
+  width:100%; padding:15px;
   background:linear-gradient(135deg,#b8a9d4,#9b8ec4);
-  color:#fff;border:none;border-radius:12px;
-  font-size:15px;font-weight:800;font-family:'Nunito',sans-serif;
-  cursor:pointer;box-shadow:0 4px 16px rgba(155,142,196,.4);
-  transition:all .22s;margin-bottom:14px;
-  display:flex;align-items:center;justify-content:center;gap:10px;
+  color:#fff; border:none; border-radius:12px;
+  font-size:15px; font-weight:800; font-family:'Nunito',sans-serif;
+  cursor:pointer; box-shadow:0 4px 16px rgba(155,142,196,.4);
+  transition:all .22s; margin-bottom:14px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
 }
-.btn-register:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(155,142,196,.5)}
-.btn-register:disabled{opacity:.7;cursor:not-allowed;transform:none}
-.login-link{text-align:center;font-size:13px;color:#888}
-.login-link a{color:#9b8ec4;font-weight:700;text-decoration:none}
-.login-link a:hover{text-decoration:underline}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-/* Strength bar */
-.pwd-strength{height:3px;border-radius:2px;margin-top:5px;transition:all .3s}
+.btn-register:hover { transform:translateY(-2px); }
+.btn-register:disabled { opacity:.7; cursor:not-allowed; transform:none; }
+.login-link { text-align:center; font-size:13px; color:#888; }
+.login-link a { color:#9b8ec4; font-weight:700; text-decoration:none; }
+.spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,.4); border-top-color:#fff; border-radius:50%; animation:sp .7s linear infinite; }
+@keyframes sp { to{transform:rotate(360deg)} }
 </style>
 </head>
 <body>
@@ -82,55 +95,64 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column}
 </div>
 
 <div class="page-wrap">
-  <!-- Photo salle de bain — enfant dans la baignoire comme Figma -->
   <img class="bg-photo"
     src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?w=1600&q=80"
-    alt=""
-    onerror="this.style.display='none'">
+    alt="" onerror="this.style.display='none'">
   <div class="bg-overlay"></div>
 
   <div class="card">
-    <h1 class="card-title">Créez votre compte</h1>
-    <div class="err-msg" id="err-msg"></div>
-
-    <div class="row2">
-      <div class="field"><input type="text" id="nom" placeholder="Nom" autocomplete="family-name"></div>
-      <div class="field"><input type="text" id="prenom" placeholder="Prénom" autocomplete="given-name"></div>
+    <div class="card-logo">
+      <img src="images/Kidcycle.png" alt="KidCycle" onerror="this.style.display='none'">
     </div>
+    <h1 class="card-title">Créer votre compte</h1>
 
-    <div class="field"><input type="email" id="email" placeholder="Email" autocomplete="email"></div>
+    <div class="offline-box" id="offline-box">
+      ⚠️ <strong>XAMPP n'est pas démarré.</strong><br>
+      Ouvre XAMPP et démarre <strong>Apache</strong> + <strong>MySQL</strong>.
+    </div>
+    <div class="err-msg" id="err-msg"></div>
+    <div class="ok-msg"  id="ok-msg"></div>
 
+    <!-- Nom + Prénom -->
     <div class="row2">
       <div class="field">
+        <label>Nom *</label>
+        <input type="text" id="nom" placeholder="Votre nom" autocomplete="family-name">
+      </div>
+      <div class="field">
+        <label>Prénom *</label>
+        <input type="text" id="prenom" placeholder="Votre prénom" autocomplete="given-name">
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="field">
+      <label>Email *</label>
+      <input type="email" id="email" placeholder="votre@email.com" autocomplete="email">
+    </div>
+
+    <!-- Genre + Téléphone -->
+    <div class="row2">
+      <div class="field">
+        <label>Genre</label>
         <select id="genre">
-          <option value="">Genre</option>
+          <option value="">— Genre —</option>
           <option value="Homme">Homme</option>
           <option value="Femme">Femme</option>
           <option value="Autre">Autre / Ne pas préciser</option>
         </select>
       </div>
-      <!-- Téléphone avec drapeau -->
-      <div class="phone-wrap">
-        <div class="phone-flag">
-          <img src="https://flagcdn.com/w20/tn.png" alt="TN" id="flag-img">
-          <select id="country-code" onchange="updateFlag(this)">
-            <option value="+216" data-cc="tn">+216</option>
-            <option value="+33"  data-cc="fr">+33</option>
-            <option value="+32"  data-cc="be">+32</option>
-            <option value="+41"  data-cc="ch">+41</option>
-            <option value="+212" data-cc="ma">+212</option>
-            <option value="+213" data-cc="dz">+213</option>
-            <option value="+1"   data-cc="us">+1</option>
-          </select>
-        </div>
-        <input type="tel" id="tel" placeholder="" autocomplete="tel">
+      <div class="field">
+        <label>Téléphone</label>
+        <input type="tel" id="tel" placeholder="+216 XX XXX XXX" autocomplete="tel">
       </div>
     </div>
 
+    <!-- Pays + Ville -->
     <div class="row2">
       <div class="field">
-        <select id="pays" onchange="updatePhoneFlag(this)">
-          <option value="">Pays</option>
+        <label>Pays</label>
+        <select id="pays">
           <option value="Tunisie">Tunisie</option>
           <option value="France">France</option>
           <option value="Belgique">Belgique</option>
@@ -140,107 +162,153 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column}
           <option value="Autre">Autre</option>
         </select>
       </div>
-      <div class="field"><input type="text" id="adresse" placeholder="Adresse de livraison ou expédition" autocomplete="street-address"></div>
+      <div class="field">
+        <label>Ville</label>
+        <input type="text" id="ville" placeholder="Votre ville" autocomplete="address-level2">
+      </div>
     </div>
 
-    <div class="row2">
-      <div class="field"><input type="text" id="cp" placeholder="Code postal" autocomplete="postal-code"></div>
-      <div class="field"><input type="text" id="ville" placeholder="Ville" autocomplete="address-level2"></div>
+    <!-- Adresse -->
+    <div class="field">
+      <label>Adresse de livraison</label>
+      <input type="text" id="adresse" placeholder="Numéro, rue..." autocomplete="street-address">
     </div>
 
+    <!-- Mots de passe -->
     <div class="row2">
-      <div class="field" style="position:relative">
-        <input type="password" id="pwd" placeholder="Mot de passe" autocomplete="new-password" oninput="checkStrength(this.value)">
+      <div class="field" style="position:relative;">
+        <label>Mot de passe * (min. 6 caractères)</label>
+        <input type="password" id="pwd" placeholder="Mot de passe"
+               autocomplete="new-password" oninput="verifierForce(this.value)">
         <button class="eye-btn" type="button" onclick="toggleEye('pwd',this)">👁</button>
         <div class="pwd-strength" id="pwd-strength"></div>
       </div>
-      <div class="field" style="position:relative">
-        <input type="password" id="pwd2" placeholder="Confirmer mot de passe" autocomplete="new-password">
+      <div class="field" style="position:relative;">
+        <label>Confirmer le mot de passe *</label>
+        <input type="password" id="pwd2" placeholder="Répéter le mot de passe"
+               autocomplete="new-password">
         <button class="eye-btn" type="button" onclick="toggleEye('pwd2',this)">👁</button>
       </div>
     </div>
 
-    <label class="check-row" style="margin-top:4px">
+    <!-- Newsletter -->
+    <label class="check-row">
       <input type="checkbox" id="newsletter">
-      Oui, je veux recevoir la newsletter : nouveautés et bons plans garantis.
+      Oui, je veux recevoir la newsletter (nouveautés et bons plans).
     </label>
 
     <button class="btn-register" id="btn-reg" onclick="doRegister()">
-      S'inscrire →
+      Créer mon compte →
     </button>
 
-    <p class="login-link">Vous avez un compte ? <a href="connexion.html">Se connecter</a></p>
+    <p class="login-link">Déjà un compte ? <a href="Connexion.html">Se connecter</a></p>
   </div>
 </div>
 
 <script src="auth.js"></script>
 <script>
-function toggleEye(id,btn){
-  var i=document.getElementById(id);
-  i.type=i.type==='password'?'text':'password';
-  btn.textContent=i.type==='password'?'👁':'🙈';
+/* =====================================================
+   INSCRIPTION — connecté au serveur PHP (XAMPP)
+   ===================================================== */
+
+/* Si déjà connecté → accueil */
+if (estConnecte()) { location.href = 'index.html'; }
+
+function toggleEye(id, btn) {
+  var i = document.getElementById(id);
+  i.type = (i.type === 'password') ? 'text' : 'password';
+  btn.textContent = (i.type === 'password') ? '👁' : '🙈';
 }
 
-function updateFlag(sel){
-  var cc=sel.options[sel.selectedIndex].dataset.cc;
-  document.getElementById('flag-img').src='https://flagcdn.com/w20/'+cc+'.png';
+/* Barre de force du mot de passe */
+function verifierForce(val) {
+  var bar = document.getElementById('pwd-strength');
+  if (!val) { bar.style.width = '0'; return; }
+  var score = 0;
+  if (val.length >= 6)  score++;
+  if (val.length >= 10) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+  var couleurs = ['#e04040','#f5a623','#f5a623','#6bbd8a','#4fa876'];
+  var largeurs  = ['20%','40%','60%','80%','100%'];
+  bar.style.background = couleurs[score - 1] || '#e04040';
+  bar.style.width      = largeurs[score - 1] || '20%';
 }
 
-function checkStrength(val){
-  var bar=document.getElementById('pwd-strength');
-  if(!val){bar.style.width='0';return;}
-  var score=0;
-  if(val.length>=6)score++;
-  if(val.length>=10)score++;
-  if(/[A-Z]/.test(val))score++;
-  if(/[0-9]/.test(val))score++;
-  if(/[^A-Za-z0-9]/.test(val))score++;
-  var colors=['#e04040','#f5a623','#f5a623','#6bbd8a','#4fa876'];
-  var widths=['20%','40%','60%','80%','100%'];
-  bar.style.background=colors[score-1]||'#e04040';
-  bar.style.width=widths[score-1]||'20%';
+function valeur(id) { return document.getElementById(id).value.trim(); }
+
+function montrerErreur(msg) {
+  var el = document.getElementById('err-msg');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('ok-msg').style.display = 'none';
+  setTimeout(function () { el.style.display = 'none'; }, 6000);
+}
+function montrerSucces(msg) {
+  var el = document.getElementById('ok-msg');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('err-msg').style.display = 'none';
 }
 
-function showErr(msg){
-  var e=document.getElementById('err-msg');
-  e.textContent=msg;e.style.display='block';
-  setTimeout(function(){e.style.display='none';},5000);
+/* ── Inscription principale ── */
+function doRegister() {
+  var nom    = valeur('nom');
+  var prenom = valeur('prenom');
+  var email  = valeur('email');
+  var pwd    = document.getElementById('pwd').value;
+  var pwd2   = document.getElementById('pwd2').value;
+  var btn    = document.getElementById('btn-reg');
+
+  /* Validations avant d'envoyer au serveur */
+  if (!nom)                 return montrerErreur('Le nom est obligatoire.');
+  if (!prenom)              return montrerErreur('Le prénom est obligatoire.');
+  if (!email || !email.includes('@')) return montrerErreur('Email invalide.');
+  if (!pwd)                 return montrerErreur('Choisissez un mot de passe.');
+  if (pwd.length < 6)       return montrerErreur('Le mot de passe doit avoir au moins 6 caractères.');
+  if (pwd !== pwd2)         return montrerErreur('Les mots de passe ne correspondent pas.');
+
+  /* Afficher le chargement */
+  btn.innerHTML = '<span class="spinner"></span> Création du compte...';
+  btn.disabled  = true;
+
+  /*
+    inscrire() est défini dans auth.js.
+    Elle envoie toutes les données au serveur PHP,
+    qui crée le compte dans MySQL.
+  */
+  inscrire(nom, prenom, email, pwd, {
+    genre:       valeur('genre'),
+    tel:         valeur('tel'),
+    pays:        valeur('pays'),
+    ville:       valeur('ville'),
+    adresse:     valeur('adresse'),
+    newsletter:  document.getElementById('newsletter').checked
+  })
+  .then(function (resultat) {
+    btn.innerHTML = 'Créer mon compte →';
+    btn.disabled  = false;
+
+    if (!resultat.ok) {
+      montrerErreur(resultat.err || 'Erreur lors de la création du compte.');
+      return;
+    }
+
+    /* ✅ Compte créé avec succès */
+    montrerSucces('Compte créé ! Bienvenue ' + resultat.user.prenom + ' 🎉 Redirection...');
+    setTimeout(function () { location.href = 'index.html'; }, 1200);
+  })
+  .catch(function () {
+    btn.innerHTML = 'Créer mon compte →';
+    btn.disabled  = false;
+    document.getElementById('offline-box').style.display = 'block';
+    montrerErreur('Impossible de joindre le serveur. Vérifiez que XAMPP est démarré.');
+  });
 }
 
-function g(id){return document.getElementById(id).value.trim();}
-
-/* Créer un nouveau compte (stocké dans le navigateur, pas de serveur nécessaire) */
-function doRegister(){
-  var nom=g('nom'), prenom=g('prenom'), email=g('email');
-  var pwd=g('pwd'), pwd2=g('pwd2');
-  var btn=document.getElementById('btn-reg');
-
-  /* Vérifications de base */
-  if(!nom) return showErr('Le nom est obligatoire.');
-  if(!prenom) return showErr('Le prénom est obligatoire.');
-  if(!email||!email.includes('@')) return showErr('Email invalide.');
-  if(!pwd) return showErr('Choisissez un mot de passe.');
-  if(pwd.length<6) return showErr('Mot de passe : minimum 6 caractères.');
-  if(pwd!==pwd2) return showErr('Les mots de passe ne correspondent pas.');
-
-  btn.textContent='Création...';
-  btn.disabled=true;
-
-  /* inscrire() vient de auth.js — sauvegarde le compte dans le navigateur */
-  var resultat = inscrire(nom, prenom, email, pwd);
-
-  btn.textContent='S\'inscrire →';
-  btn.disabled=false;
-
-  if(!resultat.ok){
-    showErr(resultat.err);
-    return;
-  }
-
-  /* Inscription réussie : aller à l'accueil */
-  alert('Compte créé ! Bienvenue ' + resultat.user.prenom + ' 🎉');
-  location.href='index.html';
-}
+/* Envoyer avec Entrée */
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') doRegister();
+});
 </script>
 </body>
 </html>
