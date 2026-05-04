@@ -84,7 +84,7 @@
     <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
     <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
     <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
-    <div class="nav-swaps"><img src="images/logo.png" alt="SWAPS" style="width:22px;height:22px;border-radius:50%;object-fit:contain;"></div>
+    <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
       <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
@@ -108,9 +108,9 @@
         <a href="#" class="sidebar-link"><img src="images/icon-avatar.svg" alt="">Mes Chats</a>
       </nav>
       <div class="sidebar-swaps">
-        <span class="swaps-coin"><img src="images/logo.png" alt="ii" style="width:100%;height:100%;object-fit:contain;border-radius:50%;"></span>
+        <span class="swaps-coin">ii</span>
         <span><strong>SWAPS</strong> disponible:&nbsp;<span id="swaps-val">500.00</span></span>
-        <span class="swaps-coin"><img src="images/logo.png" alt="ii" style="width:100%;height:100%;object-fit:contain;border-radius:50%;"></span>
+        <span class="swaps-coin">ii</span>
       </div>
     </aside>
 
@@ -128,7 +128,7 @@
 
       <div id="cmds-list">
         <div style="text-align:center;padding:40px">
-          <div style="width:36px;height:36px;margin:0 auto;animation:rotate 1s linear infinite"><img src="images/logo.png" style="width:100%;height:100%;border-radius:50%;object-fit:contain;"></div>
+          <div class="swaps-coin" style="width:36px;height:36px;font-size:14px;margin:0 auto;animation:rotate 1s linear infinite">ii</div>
         </div>
       </div>
     </div>
@@ -145,7 +145,7 @@
       <span class="recep-numero" id="recep-num">#P-024688254</span>
       <span class="cmd-chip" id="recep-nb">5 Articles</span>
       <span class="cmd-chip" id="recep-type">Lorem</span>
-      <span class="cmd-chip swaps" id="recep-total"><img src="images/logo.png" alt="SWAPS" style="width:16px;height:16px;border-radius:50%;object-fit:contain;vertical-align:middle;"> 500.00</span>
+      <span class="cmd-chip swaps" id="recep-total"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span> 500.00</span>
       <span style="margin-left:auto;font-size:12px;color:var(--text-light)" id="recep-date">Livrée le 27/05/2024</span>
       <button style="padding:6px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:5px" onclick="window.print()">🖨️ Imprimer l'étiquette d'envoi</button>
     </div>
@@ -162,8 +162,7 @@
   <div class="site-footer-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
 </footer>
 <div id="kc-toast"></div>
-<script src="auth.js"></script><script src="app.js"></script>
-  <script src="nav.js"></script>
+<script src="app.js"></script>
 <script>
 var allCmds=[], currentFilter='all', currentCmd=null;
 
@@ -220,7 +219,7 @@ function renderCmd(cmd,i){
       +'<div class="cmd-info-row">'
         +'<span class="cmd-chip">'+arts.length+' Article'+(arts.length>1?'s':'')+'</span>'
         +(cmd.mode_livraison?'<span class="cmd-chip">'+cmd.mode_livraison+'</span>':'')
-        +'<span class="cmd-chip swaps"><img src="images/logo.png" alt="SWAPS" style="width:15px;height:15px;border-radius:50%;object-fit:contain;vertical-align:middle;"> '+parseFloat(cmd.total).toFixed(2)+'</span>'
+        +'<span class="cmd-chip swaps"><span class="swaps-coin" style="width:15px;height:15px;font-size:7px">ii</span> '+parseFloat(cmd.total).toFixed(2)+'</span>'
         +'<span class="cmd-status '+statusClass(cmd.statut)+'">'+statusLabel(cmd.statut)+'</span>'
       +'</div>'
     +'</div>'
@@ -242,7 +241,7 @@ function openRecep(i){
   var arts=cmd.articles||[];
   document.getElementById('recep-num').textContent=cmd.numero;
   document.getElementById('recep-nb').textContent=arts.length+' Article'+(arts.length>1?'s':'');
-  document.getElementById('recep-total').innerHTML='<img src="images/logo.png" alt="SWAPS" style="width:15px;height:15px;border-radius:50%;object-fit:contain;vertical-align:middle;"> '+parseFloat(cmd.total).toFixed(2);
+  document.getElementById('recep-total').innerHTML='<span class="swaps-coin" style="width:15px;height:15px;font-size:7px">ii</span> '+parseFloat(cmd.total).toFixed(2);
   var d=cmd.created_at?new Date(cmd.created_at).toLocaleDateString('fr-FR'):'—';
   document.getElementById('recep-date').textContent='Livrée le '+d+' à '+(cmd.adresse||'—');
   document.getElementById('recep-articles').innerHTML=arts.map(function(a){
@@ -250,7 +249,7 @@ function openRecep(i){
       +'<img src="'+a.image+'" alt="'+a.nom+'" onerror="this.src=\'images/cl1.png\'">'
       +'<div><div class="recep-article-name">'+a.nom+'</div>'
       +'<div class="recep-article-sub">5 types de set disponibles</div>'
-      +'<div class="recep-article-price"><img src="images/logo.png" alt="SWAPS" style="width:16px;height:16px;border-radius:50%;object-fit:contain;vertical-align:middle;"> '+parseFloat(a.prix).toFixed(2)+'</div></div>'
+      +'<div class="recep-article-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span> '+parseFloat(a.prix).toFixed(2)+'</div></div>'
       +'</div>';
   }).join('');
   openModal('modal-recep');

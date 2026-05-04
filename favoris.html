@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mes Favoris — KidCycle</title>
+<link rel="stylesheet" href="global.css">
+<style>
+.page-wrap{max-width:1280px;margin:0 auto;padding:32px 24px}
+.favoris-layout{display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:start}
+/* Sidebar */
+.account-sidebar{background:var(--bg);border-radius:var(--radius);padding:26px 18px;border:1.5px solid var(--border);position:sticky;top:82px}
+.sidebar-title{font-size:20px;font-weight:800;color:var(--text);margin-bottom:20px;padding-bottom:14px;border-bottom:1.5px solid var(--border)}
+.sidebar-nav{display:flex;flex-direction:column;gap:3px}
+.sidebar-link{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;color:var(--text-mid);transition:all .2s;text-decoration:none}
+.sidebar-link:hover{background:#fff;color:var(--purple)}
+.sidebar-link.active{background:var(--purple);color:#fff;font-weight:700}
+.sidebar-link img{width:18px;height:18px;flex-shrink:0;opacity:.6}
+.sidebar-link.active img{filter:brightness(0) invert(1);opacity:1}
+.sidebar-swaps{margin-top:18px;background:#fff;border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text-mid);border:1.5px solid var(--border)}
+/* Grid favoris */
+.favs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+/* Carte favoris — exactement comme Figma */
+.fav-card{background:#fff;border-radius:var(--radius);border:1.5px solid var(--border);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;position:relative}
+.fav-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.fav-card-img{background:var(--bg);aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;cursor:pointer}
+.fav-card-img img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .35s}
+.fav-card:hover .fav-card-img img{transform:scale(1.07)}
+/* Cœur actif en haut à droite */
+.fav-heart{position:absolute;top:10px;right:10px;width:34px;height:34px;background:rgba(255,255,255,.92);border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:transform .25s cubic-bezier(.34,1.56,.64,1);z-index:2}
+.fav-heart:hover{transform:scale(1.2)}
+.fav-heart img{width:17px;height:17px}
+.fav-card-body{padding:14px 16px}
+.fav-card-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.fav-card-sub{font-size:12px;color:var(--text-light);margin-bottom:12px}
+.fav-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fav-card-price{display:flex;align-items:center;gap:5px;font-size:15px;font-weight:800;color:var(--text)}
+/* Bouton Ajouter au panier / Dans mon panier */
+.btn-add{background:var(--purple);color:#fff;border:none;border-radius:var(--radius-sm);padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif;white-space:nowrap}
+.btn-add:hover{background:var(--purple-d);transform:translateY(-1px)}
+.btn-add.in-cart{background:var(--green)}
+/* Empty */
+.empty-favs{text-align:center;padding:80px 20px;grid-column:1/-1}
+.empty-favs .icon{font-size:64px;margin-bottom:16px}
+.empty-favs h3{font-size:20px;font-weight:800;color:var(--text-mid);margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="top-promo">
+  <div class="top-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="top-promo-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-link">Acheter maintenant</a>
+    <a href="nouveautes.html" class="nav-link">Nouveautés</a>
+    <a href="vente.html" class="nav-link">Vente</a>
+    <a href="mes-produits.html" class="nav-link">Mes produits</a>
+  </div>
+  <div class="nav-right">
+    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn" style="background:var(--purple-pale);border-color:var(--purple)"><img src="images/icon-heart-fill.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <div class="nav-swaps">ii</div>
+    <div class="nav-search-wrap" style="position:relative">
+      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <div class="search-dropdown" id="search-dd"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <h1 class="page-title">Mes favoris</h1>
+  <div class="favoris-layout">
+
+    <!-- Sidebar Mon compte -->
+    <aside class="account-sidebar">
+      <div class="sidebar-title">Mon compte</div>
+      <nav class="sidebar-nav">
+        <a href="favoris.html" class="sidebar-link active">
+          <img src="images/icon-heart.svg" alt="">
+          <span id="fav-label">Mes favoris</span>
+        </a>
+        <a href="panier.html" class="sidebar-link">
+          <img src="images/icon-cart.svg" alt="">
+          Mon panier
+        </a>
+        <a href="mes-produits.html" class="sidebar-link">
+          <img src="images/icon-avatar.svg" alt="">
+          Mes produits
+        </a>
+        <a href="mes-commandes.html" class="sidebar-link">
+          <img src="images/icon-avatar.svg" alt="">
+          Mes commandes
+        </a>
+      </nav>
+      <div class="sidebar-swaps">
+        <span class="swaps-coin">ii</span>
+        <span><strong>SWAPS</strong> disponible: &nbsp;<span id="swaps-val">500.00</span></span>
+        <span class="swaps-coin">ii</span>
+      </div>
+    </aside>
+
+    <!-- Grille favoris -->
+    <div class="favs-grid" id="favs-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:40px">
+        <div class="swaps-coin" style="width:36px;height:36px;font-size:14px;margin:0 auto;animation:rotate 1s linear infinite">ii</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="site-footer-right"><a href="#">Faqs</a><a href="#">ℹ Besoin d'aide?</a></div>
+</footer>
+<div id="kc-toast"></div>
+<script src="app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  KC.initNav();
+  KC.initSearch('search-input','search-dd');
+  loadFavs();
+  var u=KC.user();
+  if(u&&u.swaps) document.getElementById('swaps-val').textContent=parseFloat(u.swaps).toFixed(2);
+});
+
+function loadFavs(){
+  if(KC.isLogged()){
+    KC.GET('/favoris.php')
+      .then(function(r){
+        if(r.ok&&r.data) KC.saveFavs(r.data);
+        renderFavs(KC.getFavs());
+      })
+      .catch(function(){ renderFavs(KC.getFavs()); });
+  } else {
+    renderFavs(KC.getFavs());
+  }
+}
+
+function renderFavs(favs){
+  var g=document.getElementById('favs-grid');
+  document.getElementById('fav-label').textContent='Mes favoris'+(favs.length?' ('+favs.length+')':'');
+
+  if(!favs.length){
+    g.innerHTML='<div class="empty-favs"><div class="icon">❤️</div><h3>Aucun favori pour le moment</h3><p style="color:var(--text-light);font-size:14px;margin-bottom:20px">Explorez nos articles et ajoutez-en à vos favoris</p><a href="nouveautes.html" class="btn btn-primary">Découvrir les articles</a></div>';
+    return;
+  }
+
+  g.innerHTML=favs.map(function(item,i){
+    var pid=item.produit_id||item.id;
+    var prix=parseFloat(item.prix_solde||item.prix||0);
+    var inCart=KC.getCart().some(function(c){return c.produit_id==pid;});
+    return '<div class="fav-card">'
+      +'<div class="fav-card-img" onclick="location.href=\'detail.html?id='+pid+'\'">'
+        +'<img src="'+item.image+'" alt="'+item.nom+'" onerror="this.src=\'images/cl1.png\'">'
+        +'<button class="fav-heart" onclick="event.stopPropagation();removeFav('+i+')" title="Retirer des favoris">'
+          +'<img src="images/icon-heart-fill.svg" alt="" style="filter:none">'
+        +'</button>'
+      +'</div>'
+      +'<div class="fav-card-body">'
+        +'<div class="fav-card-name">'+item.nom+'</div>'
+        +'<div class="fav-card-sub">5 types de set disponibles</div>'
+        +'<div class="fav-card-bottom">'
+          +'<div class="fav-card-price"><span class="swaps-coin">ii</span> '+prix.toFixed(2)+'</div>'
+          +'<button class="btn-add'+(inCart?' in-cart':'')+'" id="btn-add-'+i+'" onclick="addToCart('+i+')">'
+            +(inCart?'Dans mon panier':'Ajouter au panier')
+          +'</button>'
+        +'</div>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+
+  // Animate
+  g.querySelectorAll('.fav-card').forEach(function(c,i){
+    c.style.opacity='0';c.style.transform='translateY(14px)';
+    setTimeout(function(){c.style.transition='opacity .35s,transform .35s';c.style.opacity='1';c.style.transform='none';},i*60);
+  });
+}
+
+function addToCart(idx){
+  var favs=KC.getFavs();
+  var item=favs[idx];
+  var pid=item.produit_id||item.id;
+  var prix=parseFloat(item.prix_solde||item.prix||0);
+  var prod={id:pid,nom:item.nom,prix:prix,image:item.image};
+  if(KC.addToCart(prod,'M','Standard',1)){
+    var btn=document.getElementById('btn-add-'+idx);
+    if(btn){btn.textContent='Dans mon panier';btn.classList.add('in-cart');}
+  }
+}
+
+function removeFav(idx){
+  var favs=KC.getFavs();
+  var item=favs[idx];
+  var pid=item.produit_id||item.id;
+  favs.splice(idx,1);
+  KC.saveFavs(favs);
+  KC.toast(item.nom+' retiré des favoris','info');
+  renderFavs(favs);
+  if(KC.tok()) KC.DEL('/favoris.php?produit_id='+pid).catch(function(){});
+}
+
+function gotoSearch(){var q=document.getElementById('search-input').value.trim();if(q)location.href='nouveautes.html?q='+encodeURIComponent(q);}
+document.getElementById('search-input').addEventListener('keydown',function(e){if(e.key==='Enter')gotoSearch();});
+</script>
+</body>
+</html>
