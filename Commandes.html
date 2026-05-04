@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Commandes — KidCycle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Shared.css">
+  <style>
+    :root{--purple:#9b8ec4;--purple-light:#b8aed8;--purple-dark:#7a6daa;--purple-bg:#ede9f7;--gold:#f5a623;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Nunito',sans-serif;background:#f4f4f6;min-height:100vh;}
+
+    .topbar-promo{background:linear-gradient(90deg,#f8f6ff,#ede9f7,#f8f6ff);display:flex;align-items:center;justify-content:space-between;padding:9px 40px;font-size:12px;color:#777;font-weight:600;border-bottom:1px solid #f0eef8;}
+    .topbar-promo-left::before{content:'✓ ';color:var(--purple);font-weight:900;}
+    .topbar-promo-right{display:flex;gap:18px;}
+    .topbar-promo-right a{color:#888;text-decoration:none;}
+    .topnav{background:#fff;display:flex;align-items:center;gap:24px;padding:0 60px;height:68px;box-shadow:0 1px 8px rgba(0,0,0,.06);position:sticky;top:0;z-index:200;}
+    .logo{height:44px;width:auto;cursor:pointer;transition:transform .3s;}
+    .logo:hover{transform:scale(1.05) rotate(-2deg);}
+    .nav-links{display:flex;gap:24px;flex:1;}
+    .nav-links a{text-decoration:none;color:#555;font-size:13.5px;font-weight:700;transition:color .2s;}
+    .nav-links a:hover{color:var(--purple);}
+    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+    .btn-cart{display:flex;align-items:center;gap:7px;border:1.5px solid #e8e4f4;border-radius:24px;padding:7px 14px;font-size:13px;font-weight:700;color:#666;text-decoration:none;transition:all .2s;}
+    .btn-cart:hover{border-color:var(--purple);color:var(--purple);}
+    .nav-badge{background:var(--purple-light);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;}
+    .nav-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s;}
+    .nav-icon:hover{background:var(--purple-bg);}
+    .nav-emoji-icon{width:20px;height:20px;}
+    .swaps-badge{background:linear-gradient(135deg,var(--gold),#e89a1a);color:#fff;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;cursor:pointer;box-shadow:0 2px 8px rgba(245,166,35,.4);}
+    .gold-coin{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:linear-gradient(135deg,var(--gold),#e89a1a);border-radius:50%;font-size:7px;font-weight:900;color:#fff;flex-shrink:0;}
+
+    /* PAGE */
+    .page-wrap{max-width:1100px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:start;}
+    .page-title{font-size:28px;font-weight:900;color:var(--purple);margin-bottom:22px;}
+
+    /* SIDEBAR */
+    .sidebar{background:#fff;border-radius:20px;padding:28px 20px;box-shadow:0 2px 14px rgba(0,0,0,.06);position:sticky;top:90px;}
+    .sidebar-title{font-size:20px;font-weight:900;color:#222;text-align:center;margin-bottom:22px;}
+    .sidebar-menu{list-style:none;}
+    .sidebar-menu li a{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;text-decoration:none;font-size:14px;font-weight:700;color:#777;transition:all .2s;margin-bottom:4px;}
+    .sidebar-menu li a:hover{background:var(--purple-bg);color:var(--purple);}
+    .sidebar-menu li a.active{background:var(--purple);color:#fff;}
+    .sidebar-menu li a .ico{font-size:17px;width:20px;text-align:center;}
+    .sidebar-swaps{margin-top:24px;padding:14px 16px;background:linear-gradient(135deg,#fdf8ee,#fef3d0);border-radius:14px;border-left:4px solid var(--gold);}
+    .sidebar-swaps .sw-label{font-size:11px;font-weight:800;color:#c77a00;text-transform:uppercase;letter-spacing:.5px;}
+    .sidebar-swaps .sw-val{font-size:18px;font-weight:900;color:#333;margin-top:4px;display:flex;align-items:center;gap:8px;}
+
+    /* TABS */
+    .order-tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+    .order-tab{padding:10px 20px;border-radius:22px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid #f0eef8;background:#fff;color:#888;transition:all .2s;}
+    .order-tab:hover{border-color:var(--purple-light);color:var(--purple);}
+    .order-tab.active{background:var(--purple);color:#fff;border-color:var(--purple);}
+
+    /* ORDER CARD */
+    .order-card{background:#fff;border-radius:18px;padding:22px 24px;box-shadow:0 2px 14px rgba(0,0,0,.06);margin-bottom:16px;position:relative;transition:box-shadow .2s;}
+    .order-card:hover{box-shadow:0 6px 24px rgba(155,142,196,.15);}
+    .order-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+    .order-id{font-size:15px;font-weight:900;color:#333;}
+    .info-btn{width:28px;height:28px;border-radius:50%;background:var(--purple-bg);border:none;cursor:pointer;font-size:14px;color:var(--purple);display:flex;align-items:center;justify-content:center;transition:background .2s;}
+    .info-btn:hover{background:var(--purple);color:#fff;}
+    .order-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+    .tag{padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid #e8e4f4;color:#555;background:#fafafa;}
+    .tag-price{display:flex;align-items:center;gap:5px;border-color:#fde68a;color:#a16207;background:#fefce8;}
+    .tag-status-pending{border-color:#fed7aa;color:#c2410c;background:#fff7ed;}
+    .tag-status-shipped{border-color:#a5f3fc;color:#0369a1;background:#ecfeff;}
+    .tag-status-delivered{border-color:#bbf7d0;color:#15803d;background:#f0fdf4;}
+    .tag-status-cancelled{border-color:#fecaca;color:#dc2626;background:#fef2f2;}
+    .order-address{font-size:12px;color:#aaa;display:flex;align-items:center;gap:6px;margin-bottom:14px;}
+    .order-actions{display:flex;gap:10px;flex-wrap:wrap;}
+    .btn-confirm{padding:10px 20px;border-radius:10px;background:var(--purple-light);color:#fff;border:none;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;}
+    .btn-confirm:hover{background:var(--purple-dark);transform:translateY(-1px);}
+    .btn-print{padding:10px 18px;border-radius:10px;border:2px solid #e8e4f4;background:#fff;color:#666;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:8px;transition:all .2s;}
+    .btn-print:hover{border-color:var(--purple-light);color:var(--purple);}
+
+    /* Empty */
+    .empty-orders{text-align:center;padding:60px;color:#aaa;}
+    .empty-orders .ico{font-size:60px;margin-bottom:14px;}
+    .empty-orders p{font-size:15px;font-weight:700;color:#ccc;margin-bottom:20px;}
+    .btn-shop{display:inline-block;padding:13px 28px;border-radius:12px;background:var(--purple);color:#fff;font-size:14px;font-weight:800;text-decoration:none;transition:all .2s;}
+    .btn-shop:hover{background:var(--purple-dark);transform:translateY(-2px);}
+
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+    .modal-overlay.open{opacity:1;pointer-events:all;}
+    .modal-box{background:#fff;border-radius:24px;padding:32px;width:90%;max-width:660px;max-height:90vh;overflow-y:auto;animation:modalIn .4s cubic-bezier(.34,1.56,.64,1);}
+    @keyframes modalIn{from{transform:scale(.9) translateY(20px)}to{transform:scale(1) translateY(0)}}
+    .modal-close-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+    .modal-title{font-size:18px;font-weight:900;color:#222;text-align:center;flex:1;}
+    .modal-close{width:32px;height:32px;border-radius:50%;border:none;background:#f5f5f5;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
+    .modal-close:hover{background:#e5e5e5;}
+    .modal-order-info{background:#f9f8ff;border-radius:14px;padding:18px 20px;margin-bottom:20px;}
+    .modal-order-ref{font-size:16px;font-weight:900;color:#333;margin-bottom:10px;}
+    .modal-order-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+    .modal-order-date{font-size:12px;color:#888;}
+    .modal-items-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+    .modal-item{display:flex;align-items:center;gap:12px;background:#f9f8ff;border-radius:12px;padding:12px;}
+    .modal-item-img{width:52px;height:52px;border-radius:10px;background:#f0eef8;flex-shrink:0;overflow:hidden;}
+    .modal-item-img img{width:100%;height:100%;object-fit:contain;padding:4px;}
+    .modal-item-name{font-size:13px;font-weight:800;color:#333;margin-bottom:3px;}
+    .modal-item-sub{font-size:11px;color:var(--purple-light);}
+    .modal-item-price{font-size:13px;font-weight:900;color:var(--gold);margin-top:5px;display:flex;align-items:center;gap:4px;}
+    .modal-btns{display:flex;gap:12px;}
+    .btn-problem{flex:1;padding:13px;border-radius:12px;border:2px solid #fecaca;background:#fff;color:#dc2626;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s;}
+    .btn-problem:hover{background:#fef2f2;}
+    .btn-ok{flex:1;padding:13px;border-radius:12px;border:none;background:var(--purple-light);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s;}
+    .btn-ok:hover{background:var(--purple-dark);}
+
+    /* Toast */
+    #kc-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;color:#fff;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
+    #kc-toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+    @media(max-width:768px){.page-wrap{grid-template-columns:1fr;}.topnav{padding:0 16px;}}
+  </style>
+</head>
+<body>
+
+<div class="topbar-promo">
+  <div class="topbar-promo-left">Livraison gratuite pour toutes les commandes de plus de 50 €</div>
+  <div class="topbar-promo-right"><a href="#">Faqs</a><a href="#">ⓘ Besoin d'aide?</a></div>
+</div>
+
+<header class="topnav">
+  <a href="page acceuil.html"><img class="logo" src="photos/Kidcycle.png" alt="KidCycle"></a>
+  <nav class="nav-links">
+    <a href="page acceuil.html">Acheter maintenant</a>
+    <a href="Nouveautes.html">Nouveautés</a>
+    <a href="Vente.html">Vente</a>
+    <a href="produits profile.html">Mes produits</a>
+  </nav>
+  <div class="nav-right">
+    <a href="panier.html" class="btn-cart">
+      <img class="nav-emoji-icon" src="photos/icon-cart.svg" alt="panier">
+      Mon Panier <span class="nav-badge" id="cart-count">0</span>
+    </a>
+    <a href="Favoris.html" class="nav-icon" style="position:relative">
+      <img class="nav-emoji-icon" src="photos/icon-heart.svg" alt="favoris">
+      <span id="fav-badge" style="position:absolute;top:-4px;right:-4px;background:#e04040;color:#fff;font-size:9px;font-weight:900;border-radius:50%;width:16px;height:16px;display:none;align-items:center;justify-content:center;">0</span>
+    </a>
+    <a href="profile.html" class="nav-icon"><img class="nav-emoji-icon" src="photos/icon-user.svg" alt="profil"></a>
+    <div class="swaps-badge">S</div>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Mon compte</div>
+    <ul class="sidebar-menu">
+      <li><a href="profile.html"><span class="ico">👤</span> Mon profil</a></li>
+      <li><a href="Favoris.html"><span class="ico">🤍</span> Mes favoris (<span id="fav-count">0</span>)</a></li>
+      <li><a href="panier.html"><span class="ico">🛒</span> Mon panier</a></li>
+      <li><a href="produits profile.html"><span class="ico">👕</span> Mon dressing</a></li>
+      <li><a href="Commandes.html" class="active"><span class="ico">📦</span> Mes commandes</a></li>
+    </ul>
+    <div class="sidebar-swaps">
+      <div class="sw-label">SWAPS disponible</div>
+      <div class="sw-val">
+        <span class="gold-coin">S</span>
+        <span id="swaps-num">500.00</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-col">
+    <div class="page-title">Mes commandes</div>
+
+    <!-- TABS -->
+    <div class="order-tabs">
+      <button class="order-tab" onclick="filterOrders('all',this)">Toutes</button>
+      <button class="order-tab active" onclick="filterOrders('livree',this)">Commandes livrées</button>
+      <button class="order-tab" onclick="filterOrders('en_attente',this)">Commandes en cours</button>
+      <button class="order-tab" onclick="filterOrders('annulee',this)">Commandes annulées</button>
+    </div>
+
+    <div id="orders-list"></div>
+  </div>
+</div>
+
+<!-- MODAL DETAIL -->
+<div class="modal-overlay" id="modal-detail">
+  <div class="modal-box">
+    <div class="modal-close-row">
+      <div style="width:32px"></div>
+      <div class="modal-title">Confirmer la réception de votre colis</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-order-info" id="modal-info"></div>
+    <div class="modal-items-grid" id="modal-items"></div>
+    <div class="modal-btns">
+      <button class="btn-problem" onclick="toast('📞 Support contacté. Nous revenons vers vous sous 48h.');closeModal();">✕ Problème avec ma commande</button>
+      <button class="btn-ok" onclick="confirmReception()">✓ Colis reçu et articles conformes</button>
+    </div>
+  </div>
+</div>
+
+<div id="kc-toast"></div>
+
+<script>
+'use strict';
+var S={SESSION:'kc_session',FAVS:'kc_favs',CART:'kc_cart',ORDERS:'kc_orders'};
+function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
+function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getSession(){return get(S.SESSION);}
+function getFavs(){return get(S.FAVS)||[];}
+function getCart(){return get(S.CART)||[];}
+function getOrders(){return get(S.ORDERS)||[];}
+
+function toast(msg){var t=document.getElementById('kc-toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2800);}
+
+function updateNav(){
+  var f=getFavs().length; var c=getCart().length;
+  var fb=document.getElementById('fav-badge');
+  if(fb){fb.textContent=f;fb.style.display=f>0?'flex':'none';}
+  var fc=document.getElementById('fav-count');if(fc)fc.textContent=f;
+  var cc=document.getElementById('cart-count');if(cc)cc.textContent=c;
+  var s=getSession();
+  var sn=document.getElementById('swaps-num');if(sn)sn.textContent=Number(s?s.swaps||50:50).toFixed(2);
+}
+
+/* Status labels */
+var STATUS_LABELS={
+  'en_attente':'En attente','confirmee':'Confirmée','expediee':'En livraison',
+  'livree':'Livrée','annulee':'Annulée'
+};
+var STATUS_CLASSES={
+  'en_attente':'tag-status-pending','confirmee':'tag-status-shipped',
+  'expediee':'tag-status-shipped','livree':'tag-status-delivered','annulee':'tag-status-cancelled'
+};
+
+/* Sample demo orders if none exist */
+function ensureDemoOrders(){
+  var orders=getOrders();
+  if(!orders.length){
+    orders=[
+      {ref:'#P-024688254',items:[{id:1,nom:'Combinaison Velours Bébé',img:'photos/cl1.png',prix:34,qty:1},{id:2,nom:'Robe Fleurie Fille',img:'photos/cl2.png',prix:28,qty:1},{id:3,nom:'Veste Matelassée',img:'photos/cl3.png',prix:45,qty:1}],date:new Date(Date.now()-2*86400000).toISOString(),statut:'livree',total:107,adresse:'QPWP+754, Sousse, Tunisie'},
+      {ref:'#P-024688255',items:[{id:4,nom:'Pyjama 2 Pièces',img:'photos/cl4.png',prix:22,qty:2}],date:new Date(Date.now()-5*86400000).toISOString(),statut:'expediee',total:44,adresse:'QPWP+754, Sousse, Tunisie'},
+      {ref:'#P-024688256',items:[{id:5,nom:'Ensemble Jogger',img:'photos/cl5.png',prix:38,qty:1}],date:new Date(Date.now()-10*86400000).toISOString(),statut:'annulee',total:38,adresse:'QPWP+754, Sousse, Tunisie'}
+    ];
+    set(S.ORDERS,orders);
+  }
+}
+
+var currentFilter='livree';
+var currentOrderIdx=null;
+
+function filterOrders(filter,btn){
+  currentFilter=filter;
+  document.querySelectorAll('.order-tab').forEach(function(t){t.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  renderOrders();
+}
+
+function renderOrders(){
+  var orders=getOrders();
+  var filtered=currentFilter==='all'?orders:orders.filter(function(o){
+    if(currentFilter==='livree')return o.statut==='livree';
+    if(currentFilter==='en_attente')return ['en_attente','confirmee','expediee'].includes(o.statut);
+    if(currentFilter==='annulee')return o.statut==='annulee';
+    return true;
+  });
+  var container=document.getElementById('orders-list');
+  if(!filtered.length){
+    container.innerHTML='<div class="empty-orders"><div class="ico">📦</div><p>Aucune commande dans cette catégorie.</p><a href="page acceuil.html" class="btn-shop">Acheter maintenant →</a></div>';
+    return;
+  }
+  container.innerHTML=filtered.map(function(order,i){
+    var realIdx=orders.indexOf(order);
+    var date=new Date(order.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
+    var isDelivered=order.statut==='livree';
+    return '<div class="order-card">'+
+      '<div class="order-header">'+
+        '<div class="order-id">'+order.ref+'</div>'+
+        '<button class="info-btn" onclick="openModal('+realIdx+')" title="Voir détails">ⓘ</button>'+
+      '</div>'+
+      '<div class="order-tags">'+
+        '<span class="tag">'+order.items.length+' Article'+(order.items.length>1?'s':'')+'</span>'+
+        '<span class="tag '+STATUS_CLASSES[order.statut]+'">'+STATUS_LABELS[order.statut]+'</span>'+
+        '<span class="tag tag-price"><span class="gold-coin">S</span> '+Number(order.total||0).toFixed(2)+'</span>'+
+      '</div>'+
+      '<div class="order-address">📍 '+(order.adresse||'Adresse non renseignée')+'<span style="margin-left:8px;font-size:11px">'+date+'</span></div>'+
+      '<div class="order-actions">'+
+        (isDelivered?'<button class="btn-confirm" onclick="openModal('+realIdx+')">Confirmer la réception du colis</button>':'')+
+        '<button class="btn-print" onclick="printLabel(\''+order.ref+'\')">🖨 Imprimer l\'étiquette d\'envoi</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function openModal(idx){
+  var order=getOrders()[idx];
+  if(!order)return;
+  currentOrderIdx=idx;
+  var date=new Date(order.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  document.getElementById('modal-info').innerHTML=
+    '<div class="modal-order-ref">'+order.ref+'</div>'+
+    '<div class="modal-order-tags">'+
+      '<span class="tag">'+order.items.length+' Articles</span>'+
+      '<span class="tag '+STATUS_CLASSES[order.statut]+'">'+STATUS_LABELS[order.statut]+'</span>'+
+      '<span class="tag tag-price"><span class="gold-coin">S</span> '+Number(order.total||0).toFixed(2)+'</span>'+
+    '</div>'+
+    '<div class="modal-order-date">'+
+      (order.statut==='livree'?'Livrée':'Date de commande')+' le '+date+'  à '+(order.adresse||'—')+
+      '<button class="btn-print" style="margin-left:16px;padding:7px 14px;font-size:11px" onclick="printLabel(\''+order.ref+'\')">🖨 Imprimer l\'étiquette d\'envoi</button>'+
+    '</div>';
+  document.getElementById('modal-items').innerHTML=order.items.map(function(item){
+    return '<div class="modal-item">'+
+      '<div class="modal-item-img"><img src="'+item.img+'" alt="'+item.nom+'"></div>'+
+      '<div>'+
+        '<div class="modal-item-name">'+item.nom+'</div>'+
+        '<div class="modal-item-sub">5 types de set disponibles</div>'+
+        '<div class="modal-item-price"><span class="gold-coin">S</span> '+Number(item.prix).toFixed(2)+'</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('modal-detail').classList.add('open');
+}
+
+function closeModal(){document.getElementById('modal-detail').classList.remove('open');}
+
+function confirmReception(){
+  if(currentOrderIdx===null)return;
+  var orders=getOrders();
+  orders[currentOrderIdx].statut='livree';
+  set(S.ORDERS,orders);
+  closeModal();
+  toast('✅ Réception confirmée ! Merci pour votre achat.');
+  renderOrders();
+}
+
+function printLabel(ref){
+  toast('🖨 Impression de l\'étiquette '+ref+'...');
+  setTimeout(function(){window.print();},500);
+}
+
+/* Close on overlay */
+document.getElementById('modal-detail').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+ensureDemoOrders();
+renderOrders();
+updateNav();
+</script>
+</body>
+</html>

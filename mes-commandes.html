@@ -73,7 +73,7 @@
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html" class="nav-logo"><img src="photos/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Acheter maintenant</a>
     <a href="nouveautes.html" class="nav-link">Nouveautés</a>
@@ -81,13 +81,13 @@
     <a href="mes-produits.html" class="nav-link">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
-    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
-    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <a href="panier.html" class="nav-cart"><img src="photos/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="photos/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="photos/icon-user.svg" alt=""></a>
     <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="photos/search.png" alt=""></button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
@@ -100,12 +100,12 @@
     <aside class="account-sidebar">
       <div class="sidebar-title">Mon compte</div>
       <nav class="sidebar-nav">
-        <a href="profil.html" class="sidebar-link"><img src="images/icon-user.svg" alt="">Mon profil</a>
-        <a href="favoris.html" class="sidebar-link"><img src="images/icon-heart.svg" alt="">Mes favoris</a>
-        <a href="panier.html" class="sidebar-link"><img src="images/icon-cart.svg" alt="">Mon panier</a>
-        <a href="mes-produits.html" class="sidebar-link"><img src="images/icon-avatar.svg" alt="">Mon dressing</a>
-        <a href="mes-commandes.html" class="sidebar-link active"><img src="images/icon-avatar.svg" alt="">Mes commandes</a>
-        <a href="#" class="sidebar-link"><img src="images/icon-avatar.svg" alt="">Mes Chats</a>
+        <a href="profil.html" class="sidebar-link"><img src="photos/icon-user.svg" alt="">Mon profil</a>
+        <a href="favoris.html" class="sidebar-link"><img src="photos/icon-heart.svg" alt="">Mes favoris</a>
+        <a href="panier.html" class="sidebar-link"><img src="photos/icon-cart.svg" alt="">Mon panier</a>
+        <a href="mes-produits.html" class="sidebar-link"><img src="photos/icon-avatar.svg" alt="">Mon dressing</a>
+        <a href="mes-commandes.html" class="sidebar-link active"><img src="photos/icon-avatar.svg" alt="">Mes commandes</a>
+        <a href="#" class="sidebar-link"><img src="photos/icon-avatar.svg" alt="">Mes Chats</a>
       </nav>
       <div class="sidebar-swaps">
         <span class="swaps-coin">ii</span>
@@ -208,7 +208,7 @@ function statusLabel(s){ var m={en_attente:'En attente',preparation:'En prépara
 
 function renderCmd(cmd,i){
   var arts=cmd.articles||[];
-  var imgs=arts.slice(0,4).map(function(a){return'<img class="cmd-article-img" src="'+a.image+'" alt="'+a.nom+'" onerror="this.src=\'images/cl1.png\'">';}).join('');
+  var imgs=arts.slice(0,4).map(function(a){return'<img class="cmd-article-img" src="'+a.image+'" alt="'+a.nom+'" onerror="this.src=\'photos/cl1.png\'">';}).join('');
   var isLivree=cmd.statut==='livree';
   var isCancellable=['en_attente','preparation'].includes(cmd.statut);
   var d=cmd.created_at?new Date(cmd.created_at).toLocaleDateString('fr-FR'):'—';
@@ -246,7 +246,7 @@ function openRecep(i){
   document.getElementById('recep-date').textContent='Livrée le '+d+' à '+(cmd.adresse||'—');
   document.getElementById('recep-articles').innerHTML=arts.map(function(a){
     return '<div class="recep-article">'
-      +'<img src="'+a.image+'" alt="'+a.nom+'" onerror="this.src=\'images/cl1.png\'">'
+      +'<img src="'+a.image+'" alt="'+a.nom+'" onerror="this.src=\'photos/cl1.png\'">'
       +'<div><div class="recep-article-name">'+a.nom+'</div>'
       +'<div class="recep-article-sub">5 types de set disponibles</div>'
       +'<div class="recep-article-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span> '+parseFloat(a.prix).toFixed(2)+'</div></div>'
@@ -285,13 +285,13 @@ function annulerCmd(id){
 function renderFallback(){
   allCmds=[
     {id:1,numero:'KC20240001',statut:'livree',total:200,adresse:'Tunis, Tunisie',mode_livraison:'Standard',created_at:new Date().toISOString(),articles:[
-      {nom:'Combinaison Bébé',image:'images/cl1.png',prix:34,quantite:1},
-      {nom:'Veste Rose',image:'images/cl2.png',prix:45,quantite:1},
-      {nom:'Body Ourson',image:'images/cl5.png',prix:18,quantite:1}
+      {nom:'Combinaison Bébé',image:'photos/cl1.png',prix:34,quantite:1},
+      {nom:'Veste Rose',image:'photos/cl2.png',prix:45,quantite:1},
+      {nom:'Body Ourson',image:'photos/cl5.png',prix:18,quantite:1}
     ]},
     {id:2,numero:'KC20240002',statut:'en_cours',total:89,adresse:'Sousse, Tunisie',mode_livraison:'Express',created_at:new Date().toISOString(),articles:[
-      {nom:'Veste Jaune',image:'images/cl3.png',prix:38,quantite:1},
-      {nom:'Set Bavoir',image:'images/cl4.png',prix:22,quantite:1}
+      {nom:'Veste Jaune',image:'photos/cl3.png',prix:38,quantite:1},
+      {nom:'Set Bavoir',image:'photos/cl4.png',prix:22,quantite:1}
     ]}
   ];
   renderCmds();

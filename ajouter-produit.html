@@ -74,7 +74,7 @@
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html" class="nav-logo"><img src="photos/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Acheter maintenant</a>
     <a href="nouveautes.html" class="nav-link">Nouveautés</a>
@@ -82,13 +82,13 @@
     <a href="mes-produits.html" class="nav-link active">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
-    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
-    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <a href="panier.html" class="nav-cart"><img src="photos/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="photos/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="photos/icon-user.svg" alt=""></a>
     <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="photos/search.png" alt=""></button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
@@ -383,7 +383,8 @@ function doPublier(){
   fd.append('etat',etat);
   fd.append('genre',genre);
   fd.append('taille',taille);
-  photoFiles.forEach(function(f,i){if(f) fd.append('images[]',f,'photo_'+i);});
+  if(KC.tok()) fd.append('token', KC.tok());
+  photoFiles.forEach(function(f,i){if(f) fd.append('images[]',f,f.name||('photo_'+i+'.jpg'));});
 
   var xhr=new XMLHttpRequest();
   xhr.open('POST','api/produits.php');
@@ -391,12 +392,27 @@ function doPublier(){
   xhr.onload=function(){
     KC.unspin(btn);
     var r;
-    try{r=JSON.parse(xhr.responseText);}catch(e){r={ok:false};}
-    showFelicitations(titre);
+    var raw=(xhr.responseText||'').replace(/^\uFEFF/,'').trim();
+    try{
+      r=JSON.parse(raw);
+    }catch(e){
+      var first=raw.indexOf('{');
+      var last=raw.lastIndexOf('}');
+      if(first>=0 && last>first){
+        try{r=JSON.parse(raw.slice(first,last+1));}catch(_){r={ok:false,err:'Réponse serveur invalide. ('+xhr.status+')'};}
+      } else {
+        r={ok:false,err:'Réponse serveur invalide. ('+xhr.status+')'};
+      }
+    }
+    if(xhr.status>=200 && xhr.status<300 && r && r.ok){
+      showFelicitations(titre);
+      return;
+    }
+    KC.toast((r&&r.err)?r.err:'Échec de publication du produit. ('+xhr.status+')','err');
   };
   xhr.onerror=function(){
     KC.unspin(btn);
-    showFelicitations(titre);
+    KC.toast('Erreur réseau ou serveur. Vérifiez la connexion à la base de données.','err');
   };
   xhr.send(fd);
 }

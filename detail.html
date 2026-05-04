@@ -74,7 +74,7 @@
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html" class="nav-logo"><img src="photos/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Acheter maintenant</a>
     <a href="nouveautes.html" class="nav-link">Nouveautés</a>
@@ -82,13 +82,13 @@
     <a href="mes-produits.html" class="nav-link">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
-    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
-    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <a href="panier.html" class="nav-cart"><img src="photos/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="photos/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="photos/icon-user.svg" alt=""></a>
     <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="photos/search.png" alt=""></button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
@@ -186,6 +186,7 @@ function renderDetail(p){
   allImgs=[];
   try{ var imgs=JSON.parse(p.images||'[]'); if(Array.isArray(imgs)&&imgs.length) allImgs=imgs; }catch(e){}
   if(!allImgs.length && p.image) allImgs=[p.image];
+  allImgs = allImgs.map(function(img){ return KC.img(img); });
 
   var prixAff = p.prix_solde ? parseFloat(p.prix_solde) : parseFloat(p.prix);
   var isFaved = KC.isFav(p.id);
@@ -204,14 +205,14 @@ function renderDetail(p){
   var thumbsHtml='<button class="thumb-arrow" onclick="scrollThumb(-1)">▲</button>';
   allImgs.forEach(function(img,i){
     thumbsHtml+='<div class="thumb'+(i===0?' active':'')+'" id="th'+i+'" onclick="selectImg('+i+')">'
-      +'<img src="'+img+'" alt="" loading="lazy"></div>';
+      +'<img src="'+img+'" alt="" loading="lazy" onerror="this.src=\'photos/cl1.png\';this.onerror=null;"></div>';
   });
   thumbsHtml+='<button class="thumb-arrow" onclick="scrollThumb(1)">▼</button>';
 
   document.getElementById('detail-grid').innerHTML=
     '<div class="thumb-col">'+thumbsHtml+'</div>'
     +'<div class="main-img-col" id="main-img-col">'
-      +'<img id="main-img" src="'+allImgs[0]+'" alt="'+p.nom+'">'
+      +'<img id="main-img" src="'+allImgs[0]+'" alt="'+p.nom+'" onerror="this.src=\'photos/cl1.png\';this.onerror=null;">'
       +'<span class="zoom-hint">🔍 Zoom</span>'
     +'</div>'
     +'<div class="info-col">'
@@ -241,7 +242,7 @@ function renderDetail(p){
           +' Ajouter au panier'
         +'</button>'
         +'<button class="btn-fav'+(isFaved?' active':'')+'" id="btn-fav" onclick="doToggleFav()">'
-          +'<img id="fav-img" src="images/'+(isFaved?'icon-heart-fill':'icon-heart')+'.svg" alt="">'
+          +'<img id="fav-img" src="photos/'+(isFaved?'icon-heart-fill':'icon-heart')+'.svg" alt="">'
           +'<span id="fav-txt">'+(isFaved?'Dans mes favoris':'Ajouter aux favoris')+'</span>'
         +'</button>'
       +'</div>'
@@ -261,7 +262,7 @@ function scrollThumb(dir){
 function doAddCart(){
   if(!produit) return;
   var prixAff=produit.prix_solde?parseFloat(produit.prix_solde):parseFloat(produit.prix);
-  var p={id:produit.id,nom:produit.nom,prix:prixAff,image:produit.image};
+  var p={id:produit.id,nom:produit.nom,prix:prixAff,image:KC.img(produit.image)};
   if(KC.addCart(p,tailleChoisie,'Standard',1)){
     var btn=document.getElementById('btn-cart');
     var conf=document.getElementById('added-confirm');
@@ -275,12 +276,12 @@ function doAddCart(){
 function doToggleFav(){
   if(!produit) return;
   var prixAff=produit.prix_solde?parseFloat(produit.prix_solde):parseFloat(produit.prix);
-  var p={id:produit.id,nom:produit.nom,prix:prixAff,image:produit.image};
+  var p={id:produit.id,nom:produit.nom,prix:prixAff,image:KC.img(produit.image)};
   KC.toggleFav(p, document.getElementById('btn-fav'));
   // Update text
   setTimeout(function(){
     var isFaved=KC.isFav(produit.id);
-    document.getElementById('fav-img').src='images/'+(isFaved?'icon-heart-fill':'icon-heart')+'.svg';
+    document.getElementById('fav-img').src='photos/'+(isFaved?'icon-heart-fill':'icon-heart')+'.svg';
     document.getElementById('fav-txt').textContent=isFaved?'Dans mes favoris':'Ajouter aux favoris';
   },100);
 }
@@ -296,12 +297,12 @@ function renderSimilaires(sims){
 
 function renderFallbackDetail(){
   var fallback=[
-    {id:1,nom:'Combinaison Pois',description:'Velours doux · 0-24 mois',prix:34,image:'images/cl1.png',badge:'Nouveau',genre:'Unisexe',categorie_nom:'Bébé',taille:'0-24 mois',similaires:[
-      {id:2,nom:'Veste Rose',prix:45,image:'images/cl2.png'},
-      {id:3,nom:'Veste Jaune',prix:38,image:'images/cl3.png'},
-      {id:4,nom:'Set Bavoir',prix:22,image:'images/cl4.png'},
-      {id:5,nom:'Body Ourson',prix:18,image:'images/cl5.png'},
-      {id:6,nom:'Set Baby',prix:34,image:'images/cl6.png'}
+    {id:1,nom:'Combinaison Pois',description:'Velours doux · 0-24 mois',prix:34,image:'photos/cl1.png',badge:'Nouveau',genre:'Unisexe',categorie_nom:'Bébé',taille:'0-24 mois',similaires:[
+      {id:2,nom:'Veste Rose',prix:45,image:'photos/cl2.png'},
+      {id:3,nom:'Veste Jaune',prix:38,image:'photos/cl3.png'},
+      {id:4,nom:'Set Bavoir',prix:22,image:'photos/cl4.png'},
+      {id:5,nom:'Body Ourson',prix:18,image:'photos/cl5.png'},
+      {id:6,nom:'Set Baby',prix:34,image:'photos/cl6.png'}
     ]}
   ];
   produit=fallback[0];

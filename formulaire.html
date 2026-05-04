@@ -25,7 +25,7 @@
 
     .bg {
       position:fixed; inset:0; z-index:0;
-      background:url('Jardin.png') center center / cover no-repeat;
+      background:url('photos/Jardin.png') center center / cover no-repeat;
       filter:brightness(0.68) saturate(1.05);
       transform:scale(1.06);
       animation:bgZoom 22s ease-in-out infinite alternate;
@@ -197,7 +197,7 @@
     .field .valid-tick { position:absolute; right:15px; top:50%; transform:translateY(-50%); color:#22c55e; font-size:16px; display:none; }
     .field input.valid ~ .valid-tick { display:block; }
   </style>
-<script src="auth.js"></script><script src="app.js"></script></head>
+</head>
 <body>
 
 <div class="topbar">
@@ -214,8 +214,8 @@
 <div class="page">
   <div class="card">
 
-    <a class="card-logo" href="index.html">
-      <img src="images/Kidcycle.png" alt="KidCycle">
+    <a class="card-logo" href="page acceuil.html">
+      <img src="photos/Kidcycle.png" alt="KidCycle">
     </a>
 
     <div class="card-title">Créez votre compte</div>
@@ -256,7 +256,7 @@
       <div class="field">
         <div class="phone-row">
           <button class="phone-flag" type="button" id="flag-btn" onclick="cyclePays()">
-            <img id="flag-img" src="images/flag-fr.svg" alt="FR"> +216
+            <img id="flag-img" src="photos/flag-fr.svg" alt="FR"> +216
           </button>
           <input type="tel" id="tel" placeholder="Téléphone" autocomplete="tel">
         </div>
@@ -346,11 +346,11 @@
 
 /* ── Flag cycle ── */
 var pays_list=[
-  {code:'TN',prefix:'+216',flag:'images/flag-fr.svg',label:'TN'},
-  {code:'FR',prefix:'+33', flag:'images/flag-fr.svg',label:'FR'},
-  {code:'BE',prefix:'+32', flag:'images/flag-fr.svg',label:'BE'},
-  {code:'DZ',prefix:'+213',flag:'images/flag-fr.svg',label:'DZ'},
-  {code:'MA',prefix:'+212',flag:'images/flag-fr.svg',label:'MA'}
+  {code:'TN',prefix:'+216',flag:'photos/flag-fr.svg',label:'TN'},
+  {code:'FR',prefix:'+33', flag:'photos/flag-fr.svg',label:'FR'},
+  {code:'BE',prefix:'+32', flag:'photos/flag-fr.svg',label:'BE'},
+  {code:'DZ',prefix:'+213',flag:'photos/flag-fr.svg',label:'DZ'},
+  {code:'MA',prefix:'+212',flag:'photos/flag-fr.svg',label:'MA'}
 ];
 var payIdx=0;
 function cyclePays(){
@@ -380,7 +380,7 @@ function checkStrength(v){
 }
 
 /* ── Storage ── */
-var S={USERS:'kc_comptes',SESSION:'kc_user'};
+var S={USERS:'kc_users',SESSION:'kc_session'};
 function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
 function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function getUsers(){return get(S.USERS)||[];}
@@ -438,7 +438,7 @@ function doRegister(btn,e){
     var ov=document.getElementById('success-overlay');
     document.getElementById('success-text').textContent='Bienvenue '+prenom+' ! 🎊';
     ov.classList.add('show');
-    setTimeout(function(){location.href='index.html';},1400);
+    setTimeout(function(){location.href='page acceuil.html';},1400);
   },950);
 }
 

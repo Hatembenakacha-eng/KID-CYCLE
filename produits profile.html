@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mes Produits — KidCycle</title>
+  <meta http-equiv="refresh" content="0;url=mes-produits.html">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Shared.css">
   <style>
@@ -82,22 +83,22 @@
 
     @media(max-width:900px){.products-grid{grid-template-columns:repeat(2,1fr);}.page-wrap{grid-template-columns:1fr;}.topnav{padding:0 16px;}}
   </style>
-<script src="auth.js"></script><script src="app.js"></script>
-  <script src="nav.js"></script></head>
+</head>
 <body>
+<script>location.replace('mes-produits.html');</script>
 
 <header class="topnav">
-  <a href="index.html"><img class="logo" src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="page acceuil.html"><img class="logo" src="photos/Kidcycle.png" alt="KidCycle"></a>
   <nav class="nav-links">
-    <a href="index.html">Acheter maintenant</a>
+    <a href="page acceuil.html">Acheter maintenant</a>
     <a href="Nouveautes.html">Nouveautés</a>
     <a href="Vente.html">Vente</a>
     <a href="produits profile.html" class="active">Mes produits</a>
   </nav>
   <div class="nav-right">
-    <a href="panier.html" class="btn-cart"><img class="nav-emoji-icon" src="images/icon-cart.svg" alt="panier"> Mon Panier <span class="nav-badge" id="cart-count">0</span></a>
-    <a href="Favoris.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-heart.svg" alt="favoris"></a>
-    <a href="profile.html" class="nav-icon"><img class="nav-emoji-icon" src="images/icon-user.svg" alt="profil"></a>
+    <a href="panier.html" class="btn-cart"><img class="nav-emoji-icon" src="photos/icon-cart.svg" alt="panier"> Mon Panier <span class="nav-badge" id="cart-count">0</span></a>
+    <a href="Favoris.html" class="nav-icon"><img class="nav-emoji-icon" src="photos/icon-heart.svg" alt="favoris"></a>
+    <a href="profile.html" class="nav-icon"><img class="nav-emoji-icon" src="photos/icon-user.svg" alt="profil"></a>
     <div class="swaps-badge">S</div>
   </div>
 </header>
@@ -130,7 +131,7 @@
 
 <script>
 'use strict';
-var S={SESSION:'kc_user',CART:'kc_cart',FAVS:'kc_favs',MY_PRODS:'kc_my_products'};
+var S={SESSION:'kc_session',CART:'kc_cart',FAVS:'kc_favs',MY_PRODS:'kc_my_products'};
 function get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
 function set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function getSession(){return get(S.SESSION);}
@@ -138,12 +139,12 @@ function getSession(){return get(S.SESSION);}
 function toast(msg,isErr){var t=document.getElementById('kc-toast');t.textContent=msg;t.className='show'+(isErr?' err':'');clearTimeout(t._t);t._t=setTimeout(function(){t.className='';},2800);}
 
 var DEMO_PRODS=[
-  {id:101,titre:'Set Baby Rose',sub:'5 types de set disponibles',img:'cl2.png',prix:34,statut:'en_attente',date:'2024-05-20'},
-  {id:102,titre:'Veste Denim Enfant',sub:'5 types de set disponibles',img:'cl3.png',prix:34,statut:'actif',date:'2024-05-18'},
-  {id:103,titre:'Ensemble Été Bébé',sub:'5 types de set disponibles',img:'cl6.png',prix:34,statut:'en_attente',date:'2024-05-15'},
-  {id:104,titre:'Combinaison Hiver',sub:'5 types de set disponibles',img:'cl1.png',prix:34,statut:'actif',date:'2024-05-10'},
-  {id:105,titre:'Robe Été Fille',sub:'5 types de set disponibles',img:'cl4.png',prix:34,statut:'en_attente',date:'2024-05-08'},
-  {id:106,titre:'Pantalon Jogger',sub:'5 types de set disponibles',img:'cl5.png',prix:34,statut:'actif',date:'2024-05-05'}
+  {id:101,titre:'Set Baby Rose',sub:'5 types de set disponibles',img:'photos/cl2.png',prix:34,statut:'en_attente',date:'2024-05-20'},
+  {id:102,titre:'Veste Denim Enfant',sub:'5 types de set disponibles',img:'photos/cl3.png',prix:34,statut:'actif',date:'2024-05-18'},
+  {id:103,titre:'Ensemble Été Bébé',sub:'5 types de set disponibles',img:'photos/cl6.png',prix:34,statut:'en_attente',date:'2024-05-15'},
+  {id:104,titre:'Combinaison Hiver',sub:'5 types de set disponibles',img:'photos/cl1.png',prix:34,statut:'actif',date:'2024-05-10'},
+  {id:105,titre:'Robe Été Fille',sub:'5 types de set disponibles',img:'photos/cl4.png',prix:34,statut:'en_attente',date:'2024-05-08'},
+  {id:106,titre:'Pantalon Jogger',sub:'5 types de set disponibles',img:'photos/cl5.png',prix:34,statut:'actif',date:'2024-05-05'}
 ];
 
 function ensureProds(){

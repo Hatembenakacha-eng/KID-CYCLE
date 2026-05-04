@@ -108,7 +108,7 @@ body{background:var(--bg)}
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html" class="nav-logo"><img src="photos/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Acheter maintenant</a>
     <a href="nouveautes.html" class="nav-link">Nouveautés</a>
@@ -116,13 +116,13 @@ body{background:var(--bg)}
     <a href="mes-produits.html" class="nav-link">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
-    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
-    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <a href="panier.html" class="nav-cart"><img src="photos/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="photos/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="photos/icon-user.svg" alt=""></a>
     <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="photos/search.png" alt=""></button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
@@ -369,7 +369,7 @@ function renderRecap1(){
   document.getElementById('recap-nb').textContent=cart.length;
   document.getElementById('recap-total-val').textContent=sousTotal.toFixed(2);
   document.getElementById('recap-swaps-ach').textContent=(sousTotal*0.05).toFixed(2)+'€';
-  var html=cart.map(function(i){return'<div class="recap-item"><img src="'+i.image+'" alt="'+i.nom+'" onerror="this.src=\'images/cl1.png\'"><div class="recap-item-info"><div class="recap-item-name">'+i.nom+'</div><div class="recap-item-sub">Lorem: '+i.quantite+' <a onclick="removeFromCart(\''+encodeURIComponent(i.nom)+'\')">x Supprimer</a></div></div><div class="recap-item-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span>'+(parseFloat(i.prix)*i.quantite).toFixed(2)+'</div></div>';}).join('');
+  var html=cart.map(function(i){return'<div class="recap-item"><img src="'+i.image+'" alt="'+i.nom+'" onerror="this.src=\'photos/cl1.png\'"><div class="recap-item-info"><div class="recap-item-name">'+i.nom+'</div><div class="recap-item-sub">Lorem: '+i.quantite+' <a onclick="removeFromCart(\''+encodeURIComponent(i.nom)+'\')">x Supprimer</a></div></div><div class="recap-item-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span>'+(parseFloat(i.prix)*i.quantite).toFixed(2)+'</div></div>';}).join('');
   document.getElementById('recap-items-1').innerHTML=html;
 }
 function renderRecap2(){
@@ -383,7 +383,7 @@ function renderRecap2(){
     else if(promoData.type==='livraison') total-=fraisLiv;
   }
   document.getElementById('recap-grand-total').textContent=Math.max(0,total).toFixed(2)+' S';
-  var html=cart.map(function(i){return'<div class="recap-item"><img src="'+i.image+'" alt="'+i.nom+'" onerror="this.src=\'images/cl1.png\'"><div class="recap-item-info"><div class="recap-item-name">'+i.nom+'</div><div class="recap-item-sub">Lorem: '+i.quantite+' <a onclick="removeFromCart(\''+encodeURIComponent(i.nom)+'\')">x Supprimer</a></div></div><div class="recap-item-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span>'+(parseFloat(i.prix)*i.quantite).toFixed(2)+'</div></div>';}).join('');
+  var html=cart.map(function(i){return'<div class="recap-item"><img src="'+i.image+'" alt="'+i.nom+'" onerror="this.src=\'photos/cl1.png\'"><div class="recap-item-info"><div class="recap-item-name">'+i.nom+'</div><div class="recap-item-sub">Lorem: '+i.quantite+' <a onclick="removeFromCart(\''+encodeURIComponent(i.nom)+'\')">x Supprimer</a></div></div><div class="recap-item-price"><span class="swaps-coin" style="width:16px;height:16px;font-size:8px">ii</span>'+(parseFloat(i.prix)*i.quantite).toFixed(2)+'</div></div>';}).join('');
   document.getElementById('recap-items-2').innerHTML=html;
 }
 

@@ -3,445 +3,118 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KidCycle — Filtres & Produits</title>
-  <link rel="stylesheet" href="global.css" />
+  <title>KidCycle – Filtres</title>
+  <link rel="stylesheet" href="Shared.css" />
   <link rel="stylesheet" href="Filtres.css" />
-  <script src="auth.js"></script>
-  <script src="app.js"></script>
-  <script src="nav.js"></script>
 </head>
 <body>
 
-<!-- ===================== BARRE DE NAVIGATION ===================== -->
-<nav class="navbar" id="navbar">
-  <a href="index.html" class="nav-logo" title="KidCycle — Accueil">
-    <img src="images/Kidcycle.png" alt="KidCycle">
-  </a>
+<header class="topnav">
+  <img class="logo" src="photos/Kidcycle.png" />
   <div class="nav-links">
-    <a href="index.html"           class="nav-link">Acheter maintenant</a>
-    <a href="Nouveautes.html"      class="nav-link">Nouveautés</a>
-    <a href="Vente.html"           class="nav-link">Vente</a>
-    <a href="mes-produits.html"    class="nav-link">Mes produits</a>
+    <a href="page acceuil.html">Acheter maintenant</a>
+
+    <a href="Nouveautes.html">Nouveautés</a>
+
+    <a href="Vente.html">Vente</a>
+
+    <a href="produits profile.html">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart">
-      <img src="images/icon-cart.svg" alt="panier">
-      Mon Panier <span class="cart-badge js-cart-count">0</span>
+    <a href="panier.html" class="btn-cart active">
+      <span class="nav-icon-wrap"><img class="nav-emoji-icon" src="photos/icon-cart.svg" alt="panier"></span> Mon Panier <span class="nav-badge">2</span>
     </a>
-    <a href="favoris profile.html" class="nav-icon-btn" title="Mes favoris">
-      <img src="images/icon-heart.svg" alt="favoris">
-    </a>
-    <a href="profil.html" class="nav-icon-btn" title="Mon profil">
-      <img src="images/icon-user.svg" alt="profil">
-    </a>
-    <!-- Icône SWAPS avec vrai logo -->
-    <div class="nav-swaps" title="Mes SWAPS" id="nav-swaps">
-      <img src="images/logo.png" alt="SWAPS" style="width:22px;height:22px;border-radius:50%;object-fit:contain;">
+    <a href="Favoris.html" class="nav-icon" title="Mes favoris" style="position:relative"><img class="nav-emoji-icon" src="photos/icon-heart.svg" alt="favoris"><span class="fav-nav-badge" id="fav-nav-count" style="position:absolute;top:-5px;right:-5px;background:#e04040;color:#fff;font-size:9px;font-weight:800;border-radius:50%;width:16px;height:16px;display:none;align-items:center;justify-content:center;line-height:1">0</span></a>
+    <a href="profile.html" class="nav-icon" title="Mon compte"><img class="nav-emoji-icon" src="photos/icon-user.svg" alt="profil"></a>
+
+    <div class="nav-avatar"><img src="photos/logo.png" alt="Avatar" /></div>
+    <div class="search-wrap">
+      <input type="text" placeholder="Search" />
+      <button><img class="search-icon"src="photos/search.png" alt="Search icon" /></button>
     </div>
-    <div class="nav-search-wrap" style="position:relative">
-      <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()">
-        <img src="images/search.png" alt="search">
-      </button>
-      <div class="search-dropdown" id="search-dd"></div>
-    </div>
-    <a href="#" id="nav-logout" onclick="faireDeconnexion(); return false;"
-       title="Se déconnecter"
-       style="display:none; color:#e04040; font-size:13px; font-weight:700;
-              text-decoration:none; padding:6px 12px; border-radius:10px;
-              border:1.5px solid #fca5a5; white-space:nowrap;">
-      🚪 Déconnexion
-    </a>
   </div>
-</nav>
+</header>
 
-<!-- ===================== CONTENU PRINCIPAL ===================== -->
-<div class="page-wrap" style="padding: 24px 32px; max-width: 1280px; margin: 0 auto;">
+<div class="page-wrap">
 
-  <!-- Barre supérieure : titre + bouton effacer + résultats -->
   <div class="filters-topbar">
-    <span class="filters-label">Filtres</span>
-    <span id="nb-resultats" style="font-size:13px; color:#888; font-weight:600;"></span>
-    <button class="btn-clear" onclick="toutEffacer()">Tout effacer 🗑</button>
+    <span class="filters-label">Filters</span>
+
+    <a href="filters.html" class="btn-clear">Tout effacer 🗑</a>
   </div>
 
   <div class="filters-layout">
 
-    <!-- =========== PANNEAU FILTRES GAUCHE =========== -->
     <aside class="filter-panel">
 
-      <!-- Filtre : Catégorie -->
       <div class="filter-section">
         <input type="checkbox" id="toggle-cat" class="section-toggle" checked />
         <label for="toggle-cat" class="section-header">
           Catégorie <span class="chevron">▲</span>
         </label>
         <div class="section-body">
-          <label class="filter-row">
-            <input type="checkbox" class="filtre-categorie" value="bebe"> Bébé (0-2 ans)
-          </label>
-          <label class="filter-row">
-            <input type="checkbox" class="filtre-categorie" value="fille"> Fille (2-8 ans)
-          </label>
-          <label class="filter-row">
-            <input type="checkbox" class="filtre-categorie" value="garcon"> Garçon (2-8 ans)
-          </label>
-          <label class="filter-row">
-            <input type="checkbox" class="filtre-categorie" value="junior"> Junior (8-14 ans)
-          </label>
+          <label class="filter-row"><input type="checkbox" checked /> Bébé (0-2 ans) <span class="count">(18)</span></label>
+          <label class="filter-row"><input type="checkbox" checked /> Fille (2-8 ans) <span class="count">(12)</span></label>
+          <label class="filter-row"><input type="checkbox" /> Garçon (2-8 ans) <span class="count">(23)</span></label>
+          <label class="filter-row"><input type="checkbox" /> Junior (8-14 ans) <span class="count">(67)</span></label>
+          <label class="filter-row"><input type="checkbox" /> Unisexe <span class="count">(34)</span></label>
         </div>
       </div>
 
-      <!-- Filtre : État -->
       <div class="filter-section">
+        <input type="checkbox" id="toggle-genre" class="section-toggle" checked />
+        <label for="toggle-genre" class="section-header">
+          Genre <span class="chevron">▲</span>
+        </label>
+        <div class="section-body">
+          <label class="filter-row"><input type="checkbox" /> Fille</label>
+          <label class="filter-row"><input type="checkbox" checked /> Garçon</label>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <input type="checkbox" id="toggle-taille" class="section-toggle" checked />
+        <label for="toggle-taille" class="section-header">
+          Taille <span class="chevron">▲</span>
+        </label>
+        <div class="section-body">
+          <label class="filter-row"><input type="checkbox" checked /> 0 - 1/2 <span class="count">(18)</span></label>
+          <label class="filter-row"><input type="checkbox" checked /> 1/2 - 1 <span class="count">(12)</span></label>
+          <label class="filter-row"><input type="checkbox" /> 1 - 2 <span class="count">(23)</span></label>
+          <label class="filter-row"><input type="checkbox" /> 2 - 3 <span class="count">(67)</span></label>
+          <label class="filter-row"><input type="checkbox" /> 3 - 4 <span class="count">(34)</span></label>
+        </div>
+      </div>
+
+      <div class="filter-section no-border">
         <input type="checkbox" id="toggle-etat" class="section-toggle" checked />
         <label for="toggle-etat" class="section-header">
           État <span class="chevron">▲</span>
         </label>
         <div class="section-body">
-          <label class="filter-row">
-            <input type="checkbox" class="filtre-etat" value="neuf"> Neuf
-          </label>
-          <label class="filter-row">
-            <input type="checkbox" class="filtre-etat" value="excellent"> Excellent état
-          </label>
-          <label class="filter-row">
-            <input type="checkbox" class="filtre-etat" value="bon"> Bon état
-          </label>
-          <label class="filter-row">
-            <input type="checkbox" class="filtre-etat" value="correct"> Correct
-          </label>
+          <label class="filter-row"><input type="checkbox" /> Fille</label>
+          <label class="filter-row"><input type="checkbox" checked /> Garçon</label>
         </div>
-      </div>
-
-      <!-- Filtre : Prix maximum -->
-      <div class="filter-section">
-        <input type="checkbox" id="toggle-prix" class="section-toggle" checked />
-        <label for="toggle-prix" class="section-header">
-          Prix maximum <span class="chevron">▲</span>
-        </label>
-        <div class="section-body">
-          <div style="display:flex; align-items:center; gap:10px; margin-top:4px;">
-            <input type="range" id="filtre-prix"
-              min="0" max="200" value="200" step="5"
-              style="flex:1; accent-color: var(--purple);"
-              oninput="document.getElementById('prix-val').textContent = this.value + ' DT';">
-            <span id="prix-val" style="font-size:13px; font-weight:700; color:var(--purple); min-width:60px;">200 DT</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filtre : Tri -->
-      <div class="filter-section no-border">
-        <input type="checkbox" id="toggle-tri" class="section-toggle" checked />
-        <label for="toggle-tri" class="section-header">
-          Trier par <span class="chevron">▲</span>
-        </label>
-        <div class="section-body">
-          <label class="filter-row">
-            <input type="radio" name="tri" value="recent" checked> Plus récent
-          </label>
-          <label class="filter-row">
-            <input type="radio" name="tri" value="prix_asc"> Prix croissant
-          </label>
-          <label class="filter-row">
-            <input type="radio" name="tri" value="prix_desc"> Prix décroissant
-          </label>
-          <label class="filter-row">
-            <input type="radio" name="tri" value="popular"> Plus populaire
-          </label>
-        </div>
-      </div>
-
-      <!-- Bouton Appliquer -->
-      <div style="padding: 16px 20px;">
-        <button onclick="appliquerFiltres()"
-          style="width:100%; padding:12px; background:var(--purple-btn,#9b8ec4);
-                 color:#fff; border:none; border-radius:10px; font-family:Nunito,sans-serif;
-                 font-size:14px; font-weight:700; cursor:pointer; transition:background .2s;">
-          🔍 Appliquer les filtres
-        </button>
       </div>
 
     </aside>
 
-    <!-- =========== ZONE PRODUITS DROITE =========== -->
-    <div style="flex:1; min-width:0;">
-
-      <!-- Message de chargement -->
-      <div id="loading-msg" style="text-align:center; padding:60px; display:none;">
-        <div style="font-size:32px; margin-bottom:12px;">⏳</div>
-        <p style="color:#888; font-weight:600;">Chargement des produits...</p>
-      </div>
-
-      <!-- Grille des produits -->
-      <div id="produits-grid" style="
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 20px;
-      "></div>
-
-      <!-- État vide : aucun produit trouvé -->
-      <div id="empty-state" style="display:none;">
-        <div class="empty-state">
-          <svg width="120" height="140" viewBox="0 0 120 140" fill="none">
-            <path d="M30 50 Q20 50 18 65 L10 120 Q8 135 25 135 L95 135 Q112 135 110 120 L102 65 Q100 50 90 50 Z"
-                  stroke="#c4bede" stroke-width="3" fill="none"/>
-            <path d="M42 50 Q42 20 60 20 Q78 20 78 50"
-                  stroke="#c4bede" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <circle cx="48" cy="90" r="3.5" fill="#c4bede"/>
-            <circle cx="72" cy="90" r="3.5" fill="#c4bede"/>
-            <line x1="52" y1="107" x2="68" y2="107" stroke="#c4bede" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          <p class="empty-text">Aucun produit trouvé avec ces filtres.</p>
-          <button onclick="toutEffacer()"
-            style="margin-top:12px; padding:10px 24px; background:var(--purple-btn,#9b8ec4);
-                   color:#fff; border:none; border-radius:10px; font-family:Nunito,sans-serif;
-                   font-size:14px; font-weight:700; cursor:pointer;">
-            Réinitialiser les filtres
-          </button>
-        </div>
-      </div>
-
-      <!-- Pagination -->
-      <div id="pagination" style="display:flex; justify-content:center; gap:8px; margin-top:32px; flex-wrap:wrap;"></div>
-
+    <div class="empty-state">
+      <svg width="120" height="140" viewBox="0 0 120 140" fill="none">
+        <path d="M30 50 Q20 50 18 65 L10 120 Q8 135 25 135 L95 135 Q112 135 110 120 L102 65 Q100 50 90 50 Z"
+              stroke="#c4bede" stroke-width="3" fill="none"/>
+        <path d="M42 50 Q42 20 60 20 Q78 20 78 50"
+              stroke="#c4bede" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <circle cx="48" cy="90" r="3.5" fill="#c4bede"/>
+        <circle cx="72" cy="90" r="3.5" fill="#c4bede"/>
+        <line x1="52" y1="107" x2="68" y2="107" stroke="#c4bede" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <p class="empty-text">Il n'y a actuellement aucun produit disponible ici.</p>
     </div>
+
   </div>
 </div>
 
-<!-- ===================== TOAST ===================== -->
-<div id="kc-toast"></div>
-
-<!-- ===================== JAVASCRIPT ===================== -->
-<script>
-/* =====================================================
-   Filtres.html — JavaScript pour filtrer les produits
-   Toutes les données viennent du serveur XAMPP (PHP + MySQL)
-   ===================================================== */
-
-/* Page courante pour la pagination */
-var pageCourante = 1;
-
-/* =====================================================
-   FONCTION PRINCIPALE : charger les produits depuis le serveur
-   ===================================================== */
-function chargerProduits(page) {
-  page = page || 1;
-  pageCourante = page;
-
-  /* 1. Récupérer les valeurs des filtres cochés */
-  var categories = [];
-  document.querySelectorAll('.filtre-categorie:checked').forEach(function(cb) {
-    categories.push(cb.value);
-  });
-
-  var etats = [];
-  document.querySelectorAll('.filtre-etat:checked').forEach(function(cb) {
-    etats.push(cb.value);
-  });
-
-  var prixMax = document.getElementById('filtre-prix').value;
-
-  /* Radio bouton tri : lequel est coché ? */
-  var triElement = document.querySelector('input[name="tri"]:checked');
-  var tri = triElement ? triElement.value : 'recent';
-
-  /* 2. Construire l'URL de l'API avec les filtres */
-  /* L'URL ressemble à : api/produits.php?categorie=bebe,fille&etat=neuf&prix_max=100&tri=recent&page=1 */
-  var params = [];
-  if (categories.length > 0) params.push('categorie=' + categories.join(','));
-  if (etats.length > 0)      params.push('etat='      + etats.join(','));
-  if (prixMax < 200)         params.push('prix_max='  + prixMax);
-  params.push('tri='  + tri);
-  params.push('page=' + page);
-  params.push('limit=9');
-
-  var url = 'api/produits.php?' + params.join('&');
-
-  /* 3. Afficher l'indicateur de chargement */
-  document.getElementById('loading-msg').style.display = 'block';
-  document.getElementById('produits-grid').innerHTML = '';
-  document.getElementById('empty-state').style.display = 'none';
-  document.getElementById('pagination').innerHTML = '';
-
-  /* 4. Envoyer la requête au serveur PHP */
-  /* fetch() — envoie une requête HTTP au serveur et attend la réponse */
-  fetch(url)
-    .then(function(reponse) {
-      /* reponse.json() — convertit la réponse texte en objet JavaScript */
-      return reponse.json();
-    })
-    .then(function(data) {
-      /* Cacher le chargement */
-      document.getElementById('loading-msg').style.display = 'none';
-
-      /* Vérifier si le serveur a répondu avec succès */
-      if (!data.ok) {
-        afficherErreur('Erreur serveur : ' + (data.err || 'inconnue'));
-        return;
-      }
-
-      /* Afficher le nombre de résultats */
-      document.getElementById('nb-resultats').textContent =
-        data.total + ' produit' + (data.total > 1 ? 's' : '') + ' trouvé' + (data.total > 1 ? 's' : '');
-
-      /* Vérifier si des produits ont été trouvés */
-      if (!data.data || data.data.length === 0) {
-        document.getElementById('empty-state').style.display = 'block';
-        return;
-      }
-
-      /* 5. Afficher les produits dans la grille */
-      /* data.data contient le tableau de produits renvoyé par PHP */
-      var grille = document.getElementById('produits-grid');
-      grille.innerHTML = data.data.map(function(produit) {
-        /* KC.prodCard() crée le HTML d'une carte produit (défini dans app.js) */
-        return KC.prodCard(produit);
-      }).join('');
-
-      /* 6. Afficher la pagination si plusieurs pages */
-      if (data.pages > 1) {
-        afficherPagination(data.page, data.pages);
-      }
-    })
-    .catch(function(erreur) {
-      /* catch() — gère les erreurs réseau (serveur éteint, etc.) */
-      document.getElementById('loading-msg').style.display = 'none';
-      afficherErreur('Impossible de contacter le serveur. Vérifiez que XAMPP est démarré.');
-    });
-}
-
-/* =====================================================
-   Afficher un message d'erreur dans la zone produits
-   ===================================================== */
-function afficherErreur(message) {
-  document.getElementById('produits-grid').innerHTML =
-    '<div style="grid-column:1/-1; text-align:center; padding:60px; color:#e04040;">' +
-    '<div style="font-size:40px; margin-bottom:16px;">⚠️</div>' +
-    '<p style="font-weight:700; font-size:15px;">' + message + '</p>' +
-    '<p style="color:#888; margin-top:8px; font-size:13px;">Vérifiez que XAMPP (Apache + MySQL) est démarré.</p>' +
-    '</div>';
-}
-
-/* =====================================================
-   Afficher les boutons de pagination
-   ===================================================== */
-function afficherPagination(pageCourante, totalPages) {
-  var conteneur = document.getElementById('pagination');
-  var html = '';
-
-  /* Bouton Précédent */
-  if (pageCourante > 1) {
-    html += '<button onclick="chargerProduits(' + (pageCourante - 1) + ')" ' +
-      'style="padding:8px 16px; border:1.5px solid #e8e4f5; border-radius:8px; ' +
-      'background:#fff; cursor:pointer; font-family:Nunito,sans-serif; font-weight:600;">← Précédent</button>';
-  }
-
-  /* Numéros de pages */
-  for (var i = 1; i <= totalPages; i++) {
-    var actif = (i === pageCourante);
-    html += '<button onclick="chargerProduits(' + i + ')" ' +
-      'style="padding:8px 14px; border:1.5px solid ' + (actif ? 'var(--purple-btn,#9b8ec4)' : '#e8e4f5') + '; ' +
-      'border-radius:8px; background:' + (actif ? 'var(--purple-btn,#9b8ec4)' : '#fff') + '; ' +
-      'color:' + (actif ? '#fff' : '#555') + '; cursor:pointer; font-family:Nunito,sans-serif; font-weight:700;">' +
-      i + '</button>';
-  }
-
-  /* Bouton Suivant */
-  if (pageCourante < totalPages) {
-    html += '<button onclick="chargerProduits(' + (pageCourante + 1) + ')" ' +
-      'style="padding:8px 16px; border:1.5px solid #e8e4f5; border-radius:8px; ' +
-      'background:#fff; cursor:pointer; font-family:Nunito,sans-serif; font-weight:600;">Suivant →</button>';
-  }
-
-  conteneur.innerHTML = html;
-}
-
-/* =====================================================
-   Appliquer les filtres : recharger depuis la page 1
-   ===================================================== */
-function appliquerFiltres() {
-  chargerProduits(1);
-}
-
-/* =====================================================
-   Tout effacer : décocher tout et recharger
-   ===================================================== */
-function toutEffacer() {
-  /* Décocher toutes les cases */
-  document.querySelectorAll('.filtre-categorie, .filtre-etat').forEach(function(cb) {
-    cb.checked = false;
-  });
-
-  /* Remettre le prix à 200 */
-  document.getElementById('filtre-prix').value = 200;
-  document.getElementById('prix-val').textContent = '200 DT';
-
-  /* Remettre le tri à "récent" */
-  var triRecent = document.querySelector('input[name="tri"][value="recent"]');
-  if (triRecent) triRecent.checked = true;
-
-  /* Recharger */
-  chargerProduits(1);
-}
-
-/* =====================================================
-   Déconnexion
-   ===================================================== */
-function faireDeconnexion() {
-  localStorage.removeItem('kc_user');
-  localStorage.removeItem('kc_tok');
-  window.location.href = 'index.html';
-}
-
-function gotoSearch() {
-  var q = document.getElementById('search-input').value.trim();
-  if (q) location.href = 'Nouveautes.html?q=' + encodeURIComponent(q);
-}
-
-/* =====================================================
-   Initialisation quand la page est chargée
-   ===================================================== */
-document.addEventListener('DOMContentLoaded', function() {
-  /* Initialiser la barre de navigation (panier, favoris...) */
-  KC.initNav();
-  KC.initSearch('search-input', 'search-dd');
-
-  /* Lire l'URL pour voir si un filtre est pré-sélectionné */
-  /* Exemple : Filtres.html?categorie=bebe */
-  var urlParams = new URLSearchParams(window.location.search);
-  var categorieURL = urlParams.get('categorie');
-  if (categorieURL) {
-    /* Cocher la case correspondante si la catégorie est dans l'URL */
-    var checkbox = document.querySelector('.filtre-categorie[value="' + categorieURL + '"]');
-    if (checkbox) checkbox.checked = true;
-  }
-
-  /* Charger les produits au premier affichage */
-  chargerProduits(1);
-
-  /* Recharger automatiquement quand on change un filtre */
-  document.querySelectorAll('.filtre-categorie, .filtre-etat').forEach(function(cb) {
-    cb.addEventListener('change', function() { chargerProduits(1); });
-  });
-
-  document.querySelectorAll('input[name="tri"]').forEach(function(rb) {
-    rb.addEventListener('change', function() { chargerProduits(1); });
-  });
-
-  /* Pour le slider de prix : recharger seulement quand on lâche */
-  document.getElementById('filtre-prix').addEventListener('change', function() {
-    chargerProduits(1);
-  });
-
-  /* Bouton déconnexion dans la nav */
-  var user = null;
-  try { user = JSON.parse(localStorage.getItem('kc_user')); } catch(e) {}
-  var btnLogout = document.getElementById('nav-logout');
-  if (btnLogout) btnLogout.style.display = user ? 'inline-flex' : 'none';
-});
-</script>
-
+  <script src="kidcycle.js"></script>
 </body>
 </html>

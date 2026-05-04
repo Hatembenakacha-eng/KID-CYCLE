@@ -59,7 +59,7 @@
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html" class="nav-logo"><img src="photos/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Acheter maintenant</a>
     <a href="nouveautes.html" class="nav-link active" id="nav-nouv">Nouveautés</a>
@@ -67,13 +67,13 @@
     <a href="mes-produits.html" class="nav-link">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
-    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
-    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <a href="panier.html" class="nav-cart"><img src="photos/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="photos/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="photos/icon-user.svg" alt=""></a>
     <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="photos/search.png" alt=""></button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
@@ -246,19 +246,8 @@ function renderEmpty(){
 }
 
 function renderFallback(){
-  var fallback=[
-    {id:1,nom:'Combinaison Bébé Pois',description:'Velours doux · 0-24 mois',prix:34,image:'images/cl1.png',badge:'Nouveau'},
-    {id:2,nom:'Ensemble Veste Rose',description:'Coton bio · 2-8 ans',prix:45,image:'images/cl2.png',badge:'Tendance'},
-    {id:3,nom:'Veste Jaune',description:'Imperméable · 3-10 ans',prix:38,image:'images/cl3.png'},
-    {id:4,nom:'Set Bavoir',description:'Accessoires bébé',prix:22,image:'images/cl4.png'},
-    {id:5,nom:'Body Ourson',description:'Coton · 0-24 mois',prix:18,image:'images/cl5.png'},
-    {id:6,nom:'Set Baby',description:'5 types disponibles',prix:34,image:'images/cl6.png'},
-    {id:7,nom:'Veste Matelassée',description:'Hiver · 2-8 ans',prix:49,image:'images/Rectangle 9.png'},
-    {id:8,nom:'Ensemble Denim',description:'100% coton',prix:42,image:'images/Rectangle 11.png'},
-    {id:9,nom:'Body Bébé',description:'Manches longues',prix:16,image:'images/Rectangle 10.png'}
-  ];
-  document.getElementById('result-count').textContent=fallback.length;
-  renderProds(fallback);
+  document.getElementById('result-count').textContent='0';
+  renderEmpty();
   document.getElementById('pagination').innerHTML='';
 }
 

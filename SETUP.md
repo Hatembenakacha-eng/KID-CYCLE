@@ -76,7 +76,7 @@ OR
 4. Ensure form has correct IDs (login-form, email, pwd, remember)
 
 **"Erreur réseau" error:**
-1. Verify PHP files are accessible at http://localhost/KID-CYCLE-master/php/api/auth.php
+1. Verify PHP files are accessible at http://localhost/KID-CYCLE-master/api/auth.php
 2. Check XAMPP Apache is running
 3. Verify database connection in config.php
 

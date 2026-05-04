@@ -291,36 +291,25 @@ if($step >= 3) {
     }
     $success[] = "✅ Frais de livraison insérés";
 
-    // Produits démo avec vraies images ZIP
-    $produits = [
-        ['Combinaison Bébé à Pois','Douce combinaison en tricot certifié OEKO-TEX avec motifs pois colorés. Fermeture boutons-pression pour les changes faciles.',34.00,'images/cl1.png','neuf','Nouveau','actif',1,'Unisexe','0-24 mois'],
-        ['Ensemble Veste & Pantalon Rose','Veste en velours côtelé rose avec jean blanc. Boutons dorés, doublure confortable.',45.00,'images/cl2.png','neuf','Tendance','actif',2,'Fille','2-8 ans'],
-        ['Veste Imperméable Jaune','Coupe-vent imperméable jaune soleil avec col montant tricoté. Légère et résistante.',38.00,'images/cl3.png','excellent',null,'actif',3,'Unisexe','3-10 ans'],
-        ['Set Bavoir & Chaussures Bébé','Set complet : 2 bavoirs en gaze de coton + sandales en cuir végétalien. Cadeau idéal.',22.00,'images/cl4.png','neuf',null,'actif',1,'Unisexe','0-18 mois'],
-        ['Body Manches Longues Ourson','Body bébé en coton doux avec adorable motif ourson. Col snap-button pour faciliter habillage.',18.00,'images/cl5.png','neuf','Coup de cœur','actif',1,'Unisexe','0-24 mois'],
-        ['Set Baby Collection Premium','Set 5 pièces : body, pantalon, gilet, bonnet et chaussettes. Coton bio certifié.',34.00,'images/cl6.png','neuf','Populaire','actif',1,'Unisexe','0-6 mois'],
-        ['Veste Matelassée Légère','Veste matelassée ultra-légère pour demi-saisons. Coupe ajustée, fermeture éclair.',36.00,'images/Rectangle 9.png','excellent',null,'actif',3,'Garçon','2-8 ans'],
-        ['Ensemble 3 Pièces Denim','Veste jean rose + body gris + pantalon blanc. Boutons dorés, 100% coton.',42.00,'images/Rectangle 11.png','neuf','Top vente','actif',2,'Fille','2-8 ans'],
-        ['Body Bébé Blanc Ourson','Body manches longues en coton velours, motif ourson brodé.',16.00,'images/Rectangle 10.png','neuf',null,'actif',1,'Unisexe','0-18 mois'],
-        ['Combinaison Rayée Colorée','Combinaison entière en coton rayé multicolore. Bretelles réglables.',28.00,'images/Rectangle 959.png','excellent','Nouveauté','actif',1,'Unisexe','0-12 mois'],
-        ['Ensemble Hiver Junior','Sweat molleton et pantalon assortis. Coton gratté intérieur, capuche zippée.',54.00,'images/Rectangle 10 (1).png','neuf','Hiver','actif',4,'Unisexe','8-14 ans'],
-        ['Salopette Bébé Étoiles','Salopette en velours côtelé beige avec étoiles brodées.',32.00,'images/Rectangle 10 (2).png','neuf',null,'actif',1,'Unisexe','6-18 mois']
-    ];
-    $inserted = 0;
-    foreach($produits as $p) {
-        try {
-            $pdo->prepare("INSERT IGNORE INTO produits (nom,description,prix,image,etat,badge,statut,categorie_id,genre,taille) VALUES (?,?,?,?,?,?,?,?,?,?)")->execute($p);
-            $inserted++;
-        } catch(PDOException $e){}
+    // Base vide au démarrage: supprimer toute donnée produit préexistante
+    try {
+        $pdo->exec("SET FOREIGN_KEY_CHECKS=0");
+        $pdo->exec("DELETE FROM commande_articles");
+        $pdo->exec("DELETE FROM panier");
+        $pdo->exec("DELETE FROM favoris");
+        $pdo->exec("DELETE FROM ventes");
+        $pdo->exec("DELETE FROM produits");
+        $pdo->exec("ALTER TABLE commande_articles AUTO_INCREMENT=1");
+        $pdo->exec("ALTER TABLE panier AUTO_INCREMENT=1");
+        $pdo->exec("ALTER TABLE favoris AUTO_INCREMENT=1");
+        $pdo->exec("ALTER TABLE ventes AUTO_INCREMENT=1");
+        $pdo->exec("ALTER TABLE produits AUTO_INCREMENT=1");
+        $pdo->exec("SET FOREIGN_KEY_CHECKS=1");
+        $success[] = "✅ Produits démo supprimés automatiquement";
+    } catch(PDOException $e) {
+        $errors[] = "⚠️ Nettoyage produits : ".$e->getMessage();
+        try { $pdo->exec("SET FOREIGN_KEY_CHECKS=1"); } catch(PDOException $ignore) {}
     }
-    $success[] = "✅ $inserted produits démo insérés avec les vraies images";
-
-    // Soldes sur certains produits
-    $soldes = [[3,22.00,'-42%'],[4,14.00,'-36%'],[7,24.00,'-33%'],[8,28.00,'-33%'],[9,10.00,'-37%'],[11,34.00,'-37%']];
-    foreach($soldes as $s) {
-        try { $pdo->prepare("INSERT IGNORE INTO ventes (produit_id,prix_solde,reduction,actif) VALUES (?,?,?,1)")->execute($s); } catch(PDOException $e){}
-    }
-    $success[] = "✅ Produits en solde configurés";
 
     // Dossier uploads
     $uploadsDir = __DIR__.'/uploads/';

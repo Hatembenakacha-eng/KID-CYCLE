@@ -18,6 +18,8 @@
 .sidebar-link img{width:18px;height:18px;flex-shrink:0;opacity:.6}
 .sidebar-link.active img{filter:brightness(0) invert(1);opacity:1}
 .sidebar-swaps{margin-top:18px;background:#fff;border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text-mid);border:1.5px solid var(--border)}
+.sidebar-logout{width:100%;margin-top:12px;padding:11px 14px;border-radius:10px;border:1.5px solid #ffd9d9;background:#fff0f0;color:#e04040;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;font-family:'Nunito',sans-serif}
+.sidebar-logout:hover{background:#ffdede}
 /* Contenu */
 .profil-content{}
 /* Header Mes données */
@@ -81,7 +83,7 @@
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html" class="nav-logo"><img src="photos/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Acheter maintenant</a>
     <a href="nouveautes.html" class="nav-link">Nouveautés</a>
@@ -89,13 +91,13 @@
     <a href="mes-produits.html" class="nav-link">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
-    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
-    <a href="profil.html" class="nav-icon-btn" style="background:var(--purple-pale);border-color:var(--purple)"><img src="images/icon-user.svg" alt=""></a>
+    <a href="panier.html" class="nav-cart"><img src="photos/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="photos/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn" style="background:var(--purple-pale);border-color:var(--purple)"><img src="photos/icon-user.svg" alt=""></a>
     <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="photos/search.png" alt=""></button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
@@ -109,22 +111,22 @@
       <div class="sidebar-title">Mon compte</div>
       <nav class="sidebar-nav">
         <a href="profil.html" class="sidebar-link active">
-          <img src="images/icon-user.svg" alt="">Mon profil
+          <img src="photos/icon-user.svg" alt="">Mon profil
         </a>
         <a href="favoris.html" class="sidebar-link">
-          <img src="images/icon-heart.svg" alt="">Mes favoris
+          <img src="photos/icon-heart.svg" alt="">Mes favoris
         </a>
         <a href="panier.html" class="sidebar-link">
-          <img src="images/icon-cart.svg" alt="">Mon panier
+          <img src="photos/icon-cart.svg" alt="">Mon panier
         </a>
         <a href="mes-produits.html" class="sidebar-link">
-          <img src="images/icon-avatar.svg" alt="">Mon dressing
+          <img src="photos/icon-avatar.svg" alt="">Mon dressing
         </a>
         <a href="mes-commandes.html" class="sidebar-link">
-          <img src="images/icon-avatar.svg" alt="">Mes commandes
+          <img src="photos/icon-avatar.svg" alt="">Mes commandes
         </a>
         <a href="#" class="sidebar-link">
-          <img src="images/icon-avatar.svg" alt="">Mes Chats
+          <img src="photos/icon-avatar.svg" alt="">Mes Chats
         </a>
       </nav>
       <div class="sidebar-swaps">
@@ -132,6 +134,7 @@
         <span>Mes <strong>SWAPS</strong> disponible:&nbsp;<span id="swaps-val">500.00</span></span>
         <span class="swaps-coin">ii</span>
       </div>
+      <button class="sidebar-logout" onclick="doLogout()">🚪 Déconnexion</button>
     </aside>
 
     <!-- Contenu -->
@@ -157,7 +160,7 @@
         <!-- Avatar -->
         <div class="profil-avatar-wrap">
           <div class="profil-avatar">
-            <img id="avatar-img" src="images/icon-avatar.svg" alt="Avatar">
+            <img id="avatar-img" src="photos/icon-avatar.svg" alt="Avatar">
           </div>
           <div class="profil-verified" title="Compte vérifié">✓</div>
         </div>
@@ -168,11 +171,11 @@
             <span style="font-size:14px;background:var(--purple-pale);color:var(--purple);padding:2px 10px;border-radius:6px;font-weight:700" id="profil-abo-badge">Premium</span>
           </div>
           <div class="profil-email">
-            <img src="images/icon-avatar.svg" alt="" style="width:14px;height:14px;opacity:.4">
+            <img src="photos/icon-avatar.svg" alt="" style="width:14px;height:14px;opacity:.4">
             <span id="profil-email">email@exemple.com</span>
           </div>
           <div class="profil-tel">
-            <img src="images/icon-pin.svg" alt="" style="width:14px;height:14px;opacity:.4">
+            <img src="photos/icon-pin.svg" alt="" style="width:14px;height:14px;opacity:.4">
             <span id="profil-tel">(+33) 123 45 67 89</span>
           </div>
           <div class="profil-extra">
@@ -297,6 +300,13 @@ function fillProfil(u){
 function toggleDots(){document.getElementById('dots-dd').classList.toggle('open');}
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function doLogout(){
+  if(!confirm('Se déconnecter ?')) return;
+  KC.logout();
+  KC.toast('Déconnecté avec succès','ok');
+  setTimeout(function(){ location.href='page acceuil.html'; },500);
+}
 
 function doDelete(){
   if(!document.getElementById('del-accept').checked){KC.toast('Acceptez les conditions de suppression','warn');return;}

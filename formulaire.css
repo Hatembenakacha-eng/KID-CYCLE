@@ -8,7 +8,7 @@ body, html {
     height: 100%;
 }
 .background {
-    background: url('enfants.jpg') no-repeat center center/cover;
+    background: url('photos/enfants.jpg') no-repeat center center/cover;
     height: 100vh;
     display: flex;
     justify-content: center;

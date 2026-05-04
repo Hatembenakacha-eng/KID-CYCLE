@@ -216,45 +216,55 @@
 .lovebaybe-overlay-icon { font-size: 28px; opacity: 0; transform: scale(0.5); transition: all .3s cubic-bezier(.34,1.56,.64,1); }
 .lovebaybe-item:hover .lovebaybe-overlay-icon { opacity: 1; transform: scale(1); }
 
-/* ── NEWSLETTER ─────────────────────────────────────────────── */
-.newsletter-section {
+/* ── VIDEO ─────────────────────────────────────────────────── */
+.video-section {
   background: linear-gradient(135deg, var(--purple) 0%, var(--purple-d) 100%);
   padding: 64px 32px;
   text-align: center;
   position: relative;
   overflow: hidden;
 }
-.newsletter-section::before, .newsletter-section::after {
+.video-section::before, .video-section::after {
   content: '';
   position: absolute;
   border-radius: 50%;
   background: rgba(255,255,255,.06);
 }
-.newsletter-section::before { width: 300px; height: 300px; top: -100px; left: -80px; }
-.newsletter-section::after  { width: 200px; height: 200px; bottom: -60px; right: -40px; }
-.newsletter-title { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 10px; position: relative; z-index: 1; }
-.newsletter-sub { font-size: 14px; color: rgba(255,255,255,.8); margin-bottom: 28px; position: relative; z-index: 1; }
-.newsletter-form {
-  display: flex; gap: 0;
-  max-width: 460px; margin: 0 auto;
-  border-radius: 14px; overflow: hidden;
+.video-section::before { width: 300px; height: 300px; top: -100px; left: -80px; }
+.video-section::after  { width: 200px; height: 200px; bottom: -60px; right: -40px; }
+.video-title { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 10px; position: relative; z-index: 1; }
+.video-sub { font-size: 14px; color: rgba(255,255,255,.8); margin-bottom: 28px; position: relative; z-index: 1; }
+.video-shell {
+  max-width: 760px; margin: 0 auto;
+  border-radius: 18px; overflow: hidden;
   box-shadow: 0 8px 32px rgba(0,0,0,.2);
+  background: #111;
   position: relative; z-index: 1;
 }
-.newsletter-form input {
-  flex: 1; padding: 15px 20px;
-  border: none; outline: none;
-  font-family: 'Nunito', sans-serif; font-size: 14px;
-  color: var(--text);
+.video-shell video {
+  width: 100%; display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
-.newsletter-form button {
-  padding: 15px 24px; background: var(--text);
-  color: #fff; border: none;
-  font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700;
-  cursor: pointer; white-space: nowrap;
-  transition: background .2s;
+.video-caption {
+  padding: 16px 20px 20px;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  text-align: left;
 }
-.newsletter-form button:hover { background: #2d2d4e; }
+.video-caption .video-badge {
+  display: inline-block;
+  background: rgba(255,255,255,.16);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.video-caption .video-caption-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+.video-caption .video-caption-sub { font-size: 13px; color: rgba(255,255,255,.8); }
 
 /* ── FLOATING ELEMENTS ──────────────────────────────────────── */
 .floating { animation: float 4s ease-in-out infinite; }
@@ -306,7 +316,7 @@
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <a href="index.html" class="nav-logo" title="KidCycle — Accueil">
-    <img src="images/Kidcycle.png" alt="KidCycle">
+    <img src="photos/Kidcycle.png" alt="KidCycle">
   </a>
   <div class="nav-links">
     <a href="index.html"     class="nav-link active">Acheter maintenant</a>
@@ -316,20 +326,20 @@
   </div>
   <div class="nav-right">
     <a href="panier.html" class="nav-cart">
-      <img src="images/icon-cart.svg" alt="panier">
+      <img src="photos/icon-cart.svg" alt="panier">
       Mon Panier <span class="cart-badge js-cart-count">0</span>
     </a>
     <a href="favoris.html" class="nav-icon-btn" title="Mes favoris">
-      <img src="images/icon-heart.svg" alt="favoris">
+      <img src="photos/icon-heart.svg" alt="favoris">
     </a>
     <a href="profil.html" class="nav-icon-btn" title="Mon profil">
-      <img src="images/icon-user.svg" alt="profil" id="nav-avatar-img">
+      <img src="photos/icon-user.svg" alt="profil" id="nav-avatar-img">
     </a>
     <div class="nav-swaps" title="Mes SWAPS" id="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
       <button class="nav-search-btn" onclick="gotoSearch()">
-        <img src="images/search.png" alt="search">
+        <img src="photos/search.png" alt="search">
       </button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
@@ -347,21 +357,21 @@
       <a href="nouveautes.html" class="btn btn-primary" style="width:fit-content">Acheter maintenant</a>
     </div>
     <div class="hero-main-img">
-      <img src="images/acc.png" alt="Collection KidCycle" style="object-position:right center">
+      <img src="photos/acc.png" alt="Collection KidCycle" style="object-position:right center">
     </div>
   </div>
 
   <!-- Right cards -->
   <div class="hero-right">
     <div class="hero-card fade-up" style="background:linear-gradient(135deg,#e8f4ff,#d0e8ff)" onclick="location.href='nouveautes.html?cat=bebe'">
-      <img src="images/Rectangle 10.png" alt="Tissu en coton" style="opacity:.9">
+      <img src="photos/Rectangle 10.png" alt="Tissu en coton" style="opacity:.9">
       <div class="hero-card-body">
         <div class="hero-card-title">Tissu en coton.</div>
         <div class="hero-card-sub">Sans danger pour la santé des bébés.</div>
       </div>
     </div>
     <div class="hero-card fade-up" style="background:linear-gradient(135deg,#f0f8ee,#ddf0d8)" onclick="location.href='nouveautes.html'">
-      <img src="images/Rectangle 11.png" alt="New Collection Baybe" style="opacity:.9">
+      <img src="photos/Rectangle 11.png" alt="New Collection Baybe" style="opacity:.9">
       <div class="hero-card-body">
         <div class="hero-card-label">New collection</div>
         <div class="hero-card-title" style="font-size:20px">Baybe</div>
@@ -443,47 +453,54 @@
   <div class="lovebaybe-grid" id="love-grid">
     <!-- Les vraies photos du ZIP babies.png est une image composite — on affiche les vêtements réels -->
     <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=bebe'">
-      <img src="images/cl1.png" alt="bébé 1" style="background:#fdf6f0">
+      <img src="photos/cl1.png" alt="bébé 1" style="background:#fdf6f0">
       <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
     </div>
     <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=fille'">
-      <img src="images/cl2.png" alt="fille" style="background:#fdf0f4">
+      <img src="photos/cl2.png" alt="fille" style="background:#fdf0f4">
       <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
     </div>
     <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=garcon'">
-      <img src="images/cl3.png" alt="garçon" style="background:#fdf8ee">
+      <img src="photos/cl3.png" alt="garçon" style="background:#fdf8ee">
       <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
     </div>
     <div class="lovebaybe-item" onclick="location.href='nouveautes.html'">
-      <img src="images/cl4.png" alt="bébé 2" style="background:#f8f8f2">
+      <img src="photos/cl4.png" alt="bébé 2" style="background:#f8f8f2">
       <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
     </div>
     <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=bebe'">
-      <img src="images/cl5.png" alt="bébé 3" style="background:#f0f5fc">
+      <img src="photos/cl5.png" alt="bébé 3" style="background:#f0f5fc">
       <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
     </div>
     <div class="lovebaybe-item" onclick="location.href='nouveautes.html?cat=fille'">
-      <img src="images/cl6.png" alt="enfant" style="background:#fdf0f4">
+      <img src="photos/cl6.png" alt="enfant" style="background:#fdf0f4">
       <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
     </div>
     <div class="lovebaybe-item" onclick="location.href='nouveautes.html'">
-      <img src="images/Rectangle 9.png" alt="veste" style="background:#fdf8ee">
+      <img src="photos/Rectangle 9.png" alt="veste" style="background:#fdf8ee">
       <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
     </div>
     <div class="lovebaybe-item" onclick="location.href='nouveautes.html'">
-      <img src="images/Rectangle 11.png" alt="ensemble" style="background:#fdf0f4">
+      <img src="photos/Rectangle 11.png" alt="ensemble" style="background:#fdf0f4">
       <div class="lovebaybe-overlay"><span class="lovebaybe-overlay-icon">❤️</span></div>
     </div>
   </div>
 </section>
 
-<!-- NEWSLETTER -->
-<section class="newsletter-section">
-  <h2 class="newsletter-title fade-up">Newsletter</h2>
-  <p class="newsletter-sub fade-up">Recevez nos offres exclusives et nouveautés directement dans votre boîte mail.</p>
-  <div class="newsletter-form fade-up">
-    <input type="email" id="nl-email" placeholder="Votre adresse email..." autocomplete="email">
-    <button onclick="doNewsletter()">S'inscrire</button>
+<!-- VIDEO -->3
+<section class="video-section">
+  <h2 class="video-title fade-up">Notre vidéo</h2>
+  <p class="video-sub fade-up">Regardez la présentation rapide de KidCycle.</p>
+  <div class="video-shell fade-up">
+    <video id="vid" controls playsinline muted preload="metadata" poster="photos/Rectangle 34.png">
+      <source src="photos/vid.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la balise vidéo.
+    </video>
+    <div class="video-caption">
+      <div class="video-badge">Vidéo</div>
+      <div class="video-caption-title">Présentation KidCycle</div>
+      <div class="video-caption-sub">Fichier local : photos/vid.mp4</div>
+    </div>
   </div>
 </section>
 
@@ -586,7 +603,9 @@ function loadOffre(){
       var sec = document.getElementById('offre-section');
       document.getElementById('offre-title').textContent = p.nom;
       document.getElementById('offre-sub').textContent   = p.description||'Offre limitée en temps';
-      document.getElementById('offre-img').src = p.image;
+      var offreImg = document.getElementById('offre-img');
+      offreImg.src = KC.img(p.image);
+      offreImg.onerror = function(){ this.src='photos/cl1.png'; this.onerror=null; };
       sec.style.display = 'grid';
     }
   }).catch(function(){});
@@ -618,25 +637,15 @@ function showSkeleton(id){
 /* ── Fallback products with real images ───────────────────── */
 function getFallback(){
   return [
-    {id:1,nom:'Combinaison Bébé Pois',description:'Velours doux · 0-24 mois',prix:34,image:'images/cl1.png',badge:'Nouveau'},
-    {id:2,nom:'Ensemble Veste Rose',description:'Coton bio · 2-8 ans',prix:45,image:'images/cl2.png',badge:'Tendance'},
-    {id:3,nom:'Veste Jaune Pluie',description:'Imperméable · 3-10 ans',prix:38,image:'images/cl3.png'},
-    {id:4,nom:'Set Bavoir & Chaussures',description:'Accessoires · 0-18 mois',prix:22,image:'images/cl4.png'},
-    {id:5,nom:'Body Ourson Bleu',description:'Coton certifié · 0-24 mois',prix:18,image:'images/cl5.png',badge:'Coup de cœur'},
-    {id:6,nom:'Set Bébé Premium',description:'5 types de set disponibles',prix:34,image:'images/cl6.png'},
-    {id:7,nom:'Veste Matelassée',description:'Hiver · 2-8 ans',prix:49,image:'images/Rectangle 9.png'},
-    {id:8,nom:'Ensemble Denim',description:'100% coton · 3-12 ans',prix:42,image:'images/Rectangle 11.png'}
+    {id:1,nom:'Combinaison Bébé Pois',description:'Velours doux · 0-24 mois',prix:34,image:'photos/cl1.png',badge:'Nouveau'},
+    {id:2,nom:'Ensemble Veste Rose',description:'Coton bio · 2-8 ans',prix:45,image:'photos/cl2.png',badge:'Tendance'},
+    {id:3,nom:'Veste Jaune Pluie',description:'Imperméable · 3-10 ans',prix:38,image:'photos/cl3.png'},
+    {id:4,nom:'Set Bavoir & Chaussures',description:'Accessoires · 0-18 mois',prix:22,image:'photos/cl4.png'},
+    {id:5,nom:'Body Ourson Bleu',description:'Coton certifié · 0-24 mois',prix:18,image:'photos/cl5.png',badge:'Coup de cœur'},
+    {id:6,nom:'Set Bébé Premium',description:'5 types de set disponibles',prix:34,image:'photos/cl6.png'},
+    {id:7,nom:'Veste Matelassée',description:'Hiver · 2-8 ans',prix:49,image:'photos/Rectangle 9.png'},
+    {id:8,nom:'Ensemble Denim',description:'100% coton · 3-12 ans',prix:42,image:'photos/Rectangle 11.png'}
   ];
-}
-
-/* ── Newsletter ───────────────────────────────────────────── */
-function doNewsletter(){
-  var em = document.getElementById('nl-email').value.trim();
-  if(!em||!em.includes('@')){ KC.toast('Email invalide','err'); return; }
-  KC.POST('/misc.php?action=newsletter', {email:em}).then(function(r){
-    if(r.ok){ document.getElementById('nl-email').value=''; KC.toast('Inscription confirmée ! Merci 🎉','ok'); }
-    else KC.toast(r.err||'Erreur','err');
-  }).catch(function(){ KC.toast('Erreur réseau','err'); });
 }
 
 function gotoSearch(){

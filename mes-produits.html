@@ -67,7 +67,7 @@
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html" class="nav-logo"><img src="photos/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Acheter maintenant</a>
     <a href="nouveautes.html" class="nav-link">Nouveautés</a>
@@ -75,13 +75,13 @@
     <a href="mes-produits.html" class="nav-link active">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
-    <a href="favoris.html" class="nav-icon-btn"><img src="images/icon-heart.svg" alt=""></a>
-    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <a href="panier.html" class="nav-cart"><img src="photos/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn"><img src="photos/icon-heart.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="photos/icon-user.svg" alt=""></a>
     <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="photos/search.png" alt=""></button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
@@ -94,12 +94,12 @@
     <aside class="account-sidebar">
       <div class="sidebar-title">Mon compte</div>
       <nav class="sidebar-nav">
-        <a href="profil.html" class="sidebar-link"><img src="images/icon-user.svg" alt="">Mon profil</a>
-        <a href="favoris.html" class="sidebar-link"><img src="images/icon-heart.svg" alt="">Mes favoris</a>
-        <a href="panier.html" class="sidebar-link"><img src="images/icon-cart.svg" alt="">Mon panier</a>
-        <a href="mes-produits.html" class="sidebar-link active"><img src="images/icon-avatar.svg" alt="">Mon dressing</a>
-        <a href="mes-commandes.html" class="sidebar-link"><img src="images/icon-avatar.svg" alt="">Mes commandes</a>
-        <a href="#" class="sidebar-link"><img src="images/icon-avatar.svg" alt="">Mes Chats</a>
+        <a href="profil.html" class="sidebar-link"><img src="photos/icon-user.svg" alt="">Mon profil</a>
+        <a href="favoris.html" class="sidebar-link"><img src="photos/icon-heart.svg" alt="">Mes favoris</a>
+        <a href="panier.html" class="sidebar-link"><img src="photos/icon-cart.svg" alt="">Mon panier</a>
+        <a href="mes-produits.html" class="sidebar-link active"><img src="photos/icon-avatar.svg" alt="">Mon dressing</a>
+        <a href="mes-commandes.html" class="sidebar-link"><img src="photos/icon-avatar.svg" alt="">Mes commandes</a>
+        <a href="#" class="sidebar-link"><img src="photos/icon-avatar.svg" alt="">Mes Chats</a>
       </nav>
       <div class="sidebar-swaps">
         <span class="swaps-coin">ii</span>
@@ -240,9 +240,9 @@ function loadMesProduits(){
   KC.GET('/produits.php?action=vendeur')
     .then(function(r){
       if(r.ok){ mesProduits=r.data; renderProduits(); }
-      else renderFallback();
+      else renderApiError(r.err||'Impossible de charger vos produits.');
     })
-    .catch(function(){ renderFallback(); });
+    .catch(function(){ renderApiError('Erreur serveur ou base de données indisponible.'); });
 }
 
 function renderProduits(){
@@ -275,7 +275,7 @@ function renderCard(p, i){
   return '<div class="vp-card">'
     +(isAttente?'<div class="vp-badge-attente">En attente de validation</div>':'')
     +'<div class="vp-img" onclick="location.href=\'detail.html?id='+p.id+'\'">'
-      +'<img src="'+p.image+'" alt="'+p.nom+'" onerror="this.src=\'images/cl1.png\'">'
+      +'<img src="'+p.image+'" alt="'+p.nom+'" onerror="this.src=\'photos/cl1.png\'">'
     +'</div>'
     +'<div class="vp-body">'
       +'<div class="vp-name">'+p.nom+'</div>'
@@ -286,16 +286,10 @@ function renderCard(p, i){
     +'</div>';
 }
 
-function renderFallback(){
-  mesProduits=[
-    {id:1,nom:'Combinaison Bébé',description:'Velours doux',prix:34,image:'images/cl1.png',statut:'attente',categorie_nom:'Bébé'},
-    {id:2,nom:'Veste Rose',description:'Coton bio',prix:45,image:'images/cl2.png',statut:'actif',categorie_nom:'Fille'},
-    {id:3,nom:'Veste Jaune',description:'Imperméable',prix:38,image:'images/cl3.png',statut:'attente',categorie_nom:'Garçon'},
-    {id:4,nom:'Set Bavoir',description:'Accessoires',prix:22,image:'images/cl4.png',statut:'actif',categorie_nom:'Bébé'},
-    {id:5,nom:'Body Ourson',description:'Coton doux',prix:18,image:'images/cl5.png',statut:'actif',categorie_nom:'Bébé'},
-    {id:6,nom:'Set Baby',description:'5 types',prix:34,image:'images/cl6.png',statut:'attente',categorie_nom:'Bébé'}
-  ];
+function renderApiError(msg){
+  mesProduits=[];
   renderProduits();
+  KC.toast(msg,'err');
 }
 
 function cancelProd(i){
