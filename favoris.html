@@ -52,7 +52,7 @@
 </div>
 
 <nav class="navbar">
-  <a href="index.html" class="nav-logo"><img src="images/Kidcycle.png" alt="KidCycle"></a>
+  <a href="index.html" class="nav-logo"><img src="photos/Kidcycle.png" alt="KidCycle"></a>
   <div class="nav-links">
     <a href="index.html" class="nav-link">Acheter maintenant</a>
     <a href="nouveautes.html" class="nav-link">Nouveautés</a>
@@ -60,13 +60,13 @@
     <a href="mes-produits.html" class="nav-link">Mes produits</a>
   </div>
   <div class="nav-right">
-    <a href="panier.html" class="nav-cart"><img src="images/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
-    <a href="favoris.html" class="nav-icon-btn" style="background:var(--purple-pale);border-color:var(--purple)"><img src="images/icon-heart-fill.svg" alt=""></a>
-    <a href="profil.html" class="nav-icon-btn"><img src="images/icon-user.svg" alt=""></a>
+    <a href="panier.html" class="nav-cart"><img src="photos/icon-cart.svg" alt="">Mon Panier <span class="cart-badge js-cart-count">0</span></a>
+    <a href="favoris.html" class="nav-icon-btn" style="background:var(--purple-pale);border-color:var(--purple)"><img src="photos/icon-heart-fill.svg" alt=""></a>
+    <a href="profil.html" class="nav-icon-btn"><img src="photos/icon-user.svg" alt=""></a>
     <div class="nav-swaps">ii</div>
     <div class="nav-search-wrap" style="position:relative">
       <input type="text" placeholder="Search" id="search-input" autocomplete="off">
-      <button class="nav-search-btn" onclick="gotoSearch()"><img src="images/search.png" alt=""></button>
+      <button class="nav-search-btn" onclick="gotoSearch()"><img src="photos/search.png" alt=""></button>
       <div class="search-dropdown" id="search-dd"></div>
     </div>
   </div>
@@ -81,19 +81,19 @@
       <div class="sidebar-title">Mon compte</div>
       <nav class="sidebar-nav">
         <a href="favoris.html" class="sidebar-link active">
-          <img src="images/icon-heart.svg" alt="">
+          <img src="photos/icon-heart.svg" alt="">
           <span id="fav-label">Mes favoris</span>
         </a>
         <a href="panier.html" class="sidebar-link">
-          <img src="images/icon-cart.svg" alt="">
+          <img src="photos/icon-cart.svg" alt="">
           Mon panier
         </a>
         <a href="mes-produits.html" class="sidebar-link">
-          <img src="images/icon-avatar.svg" alt="">
+          <img src="photos/icon-avatar.svg" alt="">
           Mes produits
         </a>
         <a href="mes-commandes.html" class="sidebar-link">
-          <img src="images/icon-avatar.svg" alt="">
+          <img src="photos/icon-avatar.svg" alt="">
           Mes commandes
         </a>
       </nav>
@@ -133,8 +133,16 @@ function loadFavs(){
   if(KC.isLogged()){
     KC.GET('/favoris.php')
       .then(function(r){
-        if(r.ok&&r.data) KC.saveFavs(r.data);
-        renderFavs(KC.getFavs());
+        if(r.ok&&r.data){
+          var normalized=r.data.map(function(item){
+            item.image=KC.img(item.image||item.img||'photos/cl1.png');
+            return item;
+          });
+          KC.saveFavs(normalized);
+          renderFavs(normalized);
+        } else {
+          renderFavs(KC.getFavs());
+        }
       })
       .catch(function(){ renderFavs(KC.getFavs()); });
   } else {
@@ -154,12 +162,13 @@ function renderFavs(favs){
   g.innerHTML=favs.map(function(item,i){
     var pid=item.produit_id||item.id;
     var prix=parseFloat(item.prix_solde||item.prix||0);
+    var imgSrc=KC.img(item.image||item.img||'photos/cl1.png');
     var inCart=KC.getCart().some(function(c){return c.produit_id==pid;});
     return '<div class="fav-card">'
       +'<div class="fav-card-img" onclick="location.href=\'detail.html?id='+pid+'\'">'
-        +'<img src="'+item.image+'" alt="'+item.nom+'" onerror="this.src=\'images/cl1.png\'">'
+        +'<img src="'+imgSrc+'" alt="'+item.nom+'" onerror="this.src=\'photos/cl1.png\'">'
         +'<button class="fav-heart" onclick="event.stopPropagation();removeFav('+i+')" title="Retirer des favoris">'
-          +'<img src="images/icon-heart-fill.svg" alt="" style="filter:none">'
+          +'<img src="photos/icon-heart-fill.svg" alt="" style="filter:none">'
         +'</button>'
       +'</div>'
       +'<div class="fav-card-body">'
@@ -187,7 +196,7 @@ function addToCart(idx){
   var item=favs[idx];
   var pid=item.produit_id||item.id;
   var prix=parseFloat(item.prix_solde||item.prix||0);
-  var prod={id:pid,nom:item.nom,prix:prix,image:item.image};
+  var prod={id:pid,nom:item.nom,prix:prix,image:KC.img(item.image||item.img||'photos/cl1.png')};
   if(KC.addToCart(prod,'M','Standard',1)){
     var btn=document.getElementById('btn-add-'+idx);
     if(btn){btn.textContent='Dans mon panier';btn.classList.add('in-cart');}
